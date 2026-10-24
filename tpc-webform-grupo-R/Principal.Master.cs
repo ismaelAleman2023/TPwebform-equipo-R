@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace tpc_webform_grupo_R
 {
-    public partial class About : Page
+    public partial class Site1 : System.Web.UI.MasterPage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
