@@ -15,6 +15,15 @@ namespace tpc_webform_grupo_R
     {
 
         /// <summary>
+        /// Control updatePanelgrilla.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel updatePanelgrilla;
+
+        /// <summary>
         /// Control btnCat.
         /// </summary>
         /// <remarks>
@@ -123,13 +132,22 @@ namespace tpc_webform_grupo_R
         protected global::System.Web.UI.WebControls.Button btnEst;
 
         /// <summary>
-        /// Control dgvDatos.
+        /// Control ScriptManager1.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView dgvDatos;
+        protected global::System.Web.UI.ScriptManager ScriptManager1;
+
+        /// <summary>
+        /// Control dgvGrilla.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView dgvGrilla;
 
         /// <summary>
         /// Control btnAgregar.

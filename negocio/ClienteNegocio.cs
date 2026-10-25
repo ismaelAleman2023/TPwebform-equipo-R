@@ -66,12 +66,12 @@ namespace negocio
 
             try
             {
-                datos.consultaSql("select p.id,p.nombre_per,p.apellido_per,p.email_per,p.telefono_per,p.contraseña_per,p.fecha_nacimiento_per,p.estado_per,p.idroll_per,c.correoOk from personas p inner join clientes c on p.id=c.id_persona");
+                datos.consultaSql("select p.idPersona, p.nombre_per, p.apellido_per, p.email_per, p.telefono_per, p.contraseña_per, p.fecha_nacimiento_per, p.estado_per, p.idroll_per, c.correoOk from personas p inner join clientes c on p.idPersona = c.idPersona_cli");
                 datos.ejecutarLectura();
                 while (datos.Lector.Read())
                 {
                     Cliente aux = new Cliente();
-                    aux.IdPersona = (int)datos.Lector["id"];
+                    aux.IdPersona = (int)datos.Lector["idPersona"];
                     aux.Nombre = (string)datos.Lector["nombre_per"];
                     aux.Apellido = (string)datos.Lector["apellido_per"];
                     aux.Email = (string)datos.Lector["email_per"];
