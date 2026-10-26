@@ -39,7 +39,7 @@ namespace tpc_webform_grupo_R
                
                 ///agregar cartel de exito de registro 
 
-                Response.Redirect("Default.aspx");
+                Response.Redirect("Administrar.aspx");
 
             }
             catch (Exception)

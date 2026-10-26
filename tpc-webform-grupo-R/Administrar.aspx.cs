@@ -10,21 +10,36 @@ namespace tpc_webform_grupo_R
 {
     public partial class Administrar : System.Web.UI.Page
     {
+
+        
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            if (!IsPostBack)
+            {
+
+                if (Session["btnAgregar"] != null)
+                {
+                    int opcion = (int)Session["btnAgregar"];
+
+                    cargarGrillaSegunOpcion(opcion);
+
+                    Session.Remove("btnAdministrar");
+                    
+                }
+                
+            }
 
         }
 
         protected void SeleccionarTabla_Click(object sender, EventArgs e)
         {
-            // 1. Convertimos el "sender" genérico en el botón específico que hizo clic
+            //  Convertimos el "sender" genérico en el botón específico que hizo clic
             Button btn = (Button)sender;
 
-            // 2. Leemos el número que guardó en su CommandArgument en el HTML
+            // Leemos el número que guardó en su CommandArgument en el HTML
             int opcion = Convert.ToInt32(btn.CommandArgument);
 
-            // ¡Listo! Con esto C# ya sabe exactamente qué número de botón se presionó
+            // C# ya sabe exactamente qué número de botón se presionó
             ViewState["TablaActiva"] = opcion;
             
             cargarGrillaSegunOpcion(opcion);
@@ -33,8 +48,6 @@ namespace tpc_webform_grupo_R
 
         private void cargarGrillaSegunOpcion(int opcion)
         {
-            // Aquí puedes implementar la lógica para cargar la grilla según la opción seleccionada
-            // Por ejemplo:
             switch (opcion)
             {
                 case 1:
@@ -53,7 +66,7 @@ namespace tpc_webform_grupo_R
 
                     break;
                 case 6:
-
+                    cargarGrillaVendedor();
                     break;
                 case 7:
 
@@ -80,27 +93,84 @@ namespace tpc_webform_grupo_R
             }
         }
 
-        protected void dgvGrilla_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ViewState["IndiceFila"] = dgvGrilla.SelectedIndex;
-        }
-
         private void cargarGrillaCliente()
         {
             ClienteNegocio cliN = new ClienteNegocio();
             dgvGrilla.DataSource = cliN.listarClientes();
 
-            if (ViewState["IndiceFila"] != null)
-            {
-                dgvGrilla.SelectedIndex = Convert.ToInt32(ViewState["IndiceFila"]);
-            }
+           
+            dgvGrilla.DataBind();
+
+        }
+
+        private void cargarGrillaVendedor()
+        {
+
+            VendedorNegocio vendedorN = new VendedorNegocio();
+            dgvGrilla.DataSource = vendedorN.listarVendedores();
 
             dgvGrilla.DataBind();
 
         }
 
 
-      
 
+
+
+
+        protected void btnAgregar_Click(object sender, EventArgs e)
+        {
+            Session["btnAgregar"]= ViewState["TablaActiva"];
+
+            int aux = Convert.ToInt32(ViewState["TablaActiva"]);
+
+            switch (aux)
+            {
+                case 1://categorias
+
+                    break;
+                case 2://marcas
+
+                    break;
+                case 3://stock
+
+                    break;
+                case 4://tipo pago
+
+                    break;
+                case 5://productos
+
+                    break;
+                case 6://vendedores
+                    Response.Redirect("RegistroVA.aspx");
+
+                    break;
+                case 7://administradores
+                    Response.Redirect("RegistroVA.aspx");
+                    break;
+                case 8://clientes
+                    Response.Redirect("RegistroCliente.aspx");
+                    break;
+                case 9://direcciones
+
+                    break;
+                case 10:// ventas
+
+                    break;
+                case 11:// roles
+
+                    break;
+                case 12:// estados
+
+                    break;
+
+                default:
+                    break;
+            }
+
+           
+
+
+        }
     }
 }

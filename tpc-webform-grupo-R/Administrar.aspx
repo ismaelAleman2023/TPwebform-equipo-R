@@ -7,8 +7,8 @@
             /* Fuerza a que la fila seleccionada se pinte de amarillo dorado */
             .table-dark tr.selected td, 
             .table-dark .selected > td {
-                background-color: #ffc107 !important;
-                color: #000000 !important;
+                background-color: #151515 !important; 
+                color: #FFFFFF !important;
                 }
         </style>
 </asp:Content>
@@ -19,7 +19,7 @@
         <ContentTemplate>
                             
            <div class="container-fluid my-4">
-            <!-- Barra de navegación superior -->
+            <!-- Barra superior -->
             <nav class="navbar border rounded px-3 py-3 mb-3 shadow-sm" style="background-color: #000000; border: 1px solid #333 !important;">
                 <div class="container-fluid">
                     <div class="d-flex flex-wrap gap-2 py-1 justify-content-center w-100">
@@ -42,7 +42,7 @@
             <!-- Contenido Principal -->
             <div class="row g-3">
         
-                <!-- GridView de Datos (Izquierda - Fondo Negro, Borde Gris Medio Oscuro) -->
+                <!-- GridView -->
                 <div class="col-12 col-lg-9">
                     <div class="card shadow-sm h-100" style="background-color: #121212; border: 1px solid #333;">
                         <div class="card-header py-2.5" style="background-color: #1a1a1a; border-bottom: 1px solid #333;">
@@ -64,11 +64,11 @@
                     </div>
                 </div>
 
-                <!-- Botonera Lateral de Acciones (Derecha - Fondo Negro, Borde Gris Medio Oscuro) -->
+                <!-- Botones  derecha) -->
                 <div class="col-12 col-lg-3">
                     <div class="card shadow-sm p-3 h-100" style="background-color: #121212; border: 1px solid #333;">
                         <div class="d-grid gap-2">
-                            <asp:Button ID="btnAgregar" runat="server" Text="Agregar" CssClass="btn btn-success d-flex align-items-center justify-content-center gap-2" />
+                            <asp:Button ID="btnAgregar" runat="server" Text="Agregar" OnClick="btnAgregar_Click" CssClass="btn btn-success d-flex align-items-center justify-content-center gap-2" />
                             <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CssClass="btn btn-danger d-flex align-items-center justify-content-center gap-2" />
                             <asp:Button ID="btnModificar" runat="server" Text="Modificar" CssClass="btn btn-primary d-flex align-items-center justify-content-center gap-2" />
                             <asp:Button ID="btnListar" runat="server" Text="Listar" CssClass="btn btn-outline-light d-flex align-items-center justify-content-center gap-2" />
