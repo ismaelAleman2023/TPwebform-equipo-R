@@ -13,52 +13,67 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- FontAwesome para los iconos de Login, Carrito y Redes -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
     <link href="Content/estilos.css" rel="stylesheet" type="text/css" />
 
-
-
-    
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
-
 </head>
 <body>
     <form id="form1" runat="server">
     
        <!--NAVBAR-->
-    <nav class="navbar navbar-custom sticky-top">
-        <div class="navbar-layout">
+    <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+        <div class="navbar-layout container-fluid px-3">
             
             <!--LOGO IMAGEN A LA IZQUIERDA-->
-       <div class="logo-container">
-    <a href="Default.aspx">
-        <img runat="server" src="~/images/icons/dorregoDesign.png" alt="V.Dorrego Design" class="logo-img" />
-    </a>
-</div>
-            <!--BOTONES CENTRALES EN CAJITAS-->
-            <div class="nav-cajitas-wrapper">
-                <asp:HyperLink ID="lnkProductos" runat="server" NavigateUrl="~/" CssClass="nav-cajita">Productos</asp:HyperLink>
-                <asp:HyperLink ID="lnkDestacados" runat="server" NavigateUrl="~/" CssClass="nav-cajita">Destacados</asp:HyperLink>
-                <asp:HyperLink ID="lnkNovedades" runat="server" NavigateUrl="~/" CssClass="nav-cajita">Novedades</asp:HyperLink>
-                <asp:HyperLink ID="lnkSobreNosotros" runat="server" NavigateUrl="~/" CssClass="nav-cajita">Sobre nosotros</asp:HyperLink>
-                <asp:HyperLink ID="lnkComoComprar" runat="server" NavigateUrl="~/" CssClass="nav-cajita">Como comprar</asp:HyperLink>
-                <asp:HyperLink ID="lnkContactanos" runat="server" NavigateUrl="~/" CssClass="nav-cajita">Contactanos</asp:HyperLink>
-                <asp:HyperLink ID="lnkAdministrar" runat="server" NavigateUrl="~/Administrar.aspx" CssClass="nav-cajita">Administrar</asp:HyperLink>
+            <div class="logo-container">
+                <a href="Default.aspx">
+                    <img runat="server" src="~/images/icons/dorregoDesign.png" alt="V.Dorrego Design" class="logo-img" />
+                </a>
             </div>
 
-            <!--LOGIN Y CARRITO DERECHA -->
-            <div class="nav-actions-wrapper">
-                
+            <!-- BOTONES DERECHA EN MOBILE (PERFIL + CARRITO + HAMBURGUESA) -->
+            <div class="d-flex align-items-center gap-3 d-lg-none">
+                <!-- Login Móvil -->
+                <asp:HyperLink ID="lnkLoginMobile" runat="server" NavigateUrl="~/Administrar.aspx" CssClass="action-item">
+                    <i class="fa-solid fa-circle-user"></i>
+                </asp:HyperLink>
+
+                <!-- Carrito Móvil -->
+                <asp:HyperLink ID="lnkCarritoMobile" runat="server" NavigateUrl="~/" CssClass="action-item">
+                    <div class="carrito-circulo">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <span class="carrito-badge-num">0</span>
+                    </div>
+                </asp:HyperLink>
+
+                <!-- Botón Hamburguesa de Bootstrap -->
+                <button class="navbar-toggler border-0 text-warning shadow-none p-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavCajitas" aria-controls="navbarNavCajitas" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fa-solid fa-bars fs-2"></i>
+                </button>
+            </div>
+
+            <!-- BOTONES CENTRALES / MENÚ COLAPSIBLE -->
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNavCajitas">
+                <div class="nav-cajitas-wrapper py-2 py-lg-0">
+                    <asp:HyperLink ID="lnkProductos" runat="server" NavigateUrl="~/" CssClass="nav-cajita">Productos</asp:HyperLink>
+                    <asp:HyperLink ID="lnkDestacados" runat="server" NavigateUrl="~/" CssClass="nav-cajita">Destacados</asp:HyperLink>
+                    <asp:HyperLink ID="lnkNovedades" runat="server" NavigateUrl="~/" CssClass="nav-cajita">Novedades</asp:HyperLink>
+                    <asp:HyperLink ID="lnkSobreNosotros" runat="server" NavigateUrl="~/" CssClass="nav-cajita">Sobre nosotros</asp:HyperLink>
+                    <asp:HyperLink ID="lnkComoComprar" runat="server" NavigateUrl="~/" CssClass="nav-cajita">Como comprar</asp:HyperLink>
+                    <asp:HyperLink ID="lnkContactanos" runat="server" NavigateUrl="~/" CssClass="nav-cajita">Contactanos</asp:HyperLink>
+                    <asp:HyperLink ID="lnkAdministrar" runat="server" NavigateUrl="~/Administrar.aspx" CssClass="nav-cajita">Administrar</asp:HyperLink>
+                </div>
+            </div>
+
+            <!--LOGIN Y CARRITO ESCRITORIO (PC) -->
+            <div class="nav-actions-wrapper d-none d-lg-flex">
                 <asp:HyperLink ID="lnkLogin" runat="server" NavigateUrl="~/Administrar.aspx" CssClass="action-item">
                     <i class="fa-solid fa-circle-user"></i>
                     <span class="action-label">Login</span>
-                    
                 </asp:HyperLink>
 
-               
                 <asp:HyperLink ID="lnkCarrito" runat="server" NavigateUrl="~/" CssClass="action-item">
                     <div class="carrito-circulo">
                         <i class="fa-solid fa-cart-shopping"></i>
@@ -78,6 +93,6 @@
     </form>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
+   
 </body>
 </html>
