@@ -76,7 +76,7 @@ namespace tpc_webform_grupo_R
 
                     break;
                 case 9:
-
+                    cargarGrillaDireccion();
                     break;
                 case 10:
 
@@ -114,9 +114,13 @@ namespace tpc_webform_grupo_R
         }
 
 
-
-
-
+        private void cargarGrillaDireccion()
+        {
+            DireccionNegocio dirN = new DireccionNegocio();
+            dgvGrilla.DataSource = dirN.listarDirecciones();
+            dgvGrilla.DataKeyNames = new string[] { "IdDireccion" };
+            dgvGrilla.DataBind();
+        }
 
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
