@@ -34,12 +34,12 @@
 </div>
             <!--BOTONES CENTRALES EN CAJITAS-->
             <div class="nav-cajitas-wrapper">
-                <asp:HyperLink ID="lnkProductos" runat="server" NavigateUrl="~/" CssClass="nav-cajita">Productos</asp:HyperLink>
+                <asp:HyperLink ID="lnkProductos" runat="server" NavigateUrl="~/" CssClass="nav-cajita">Catalogo</asp:HyperLink>
                 <asp:HyperLink ID="lnkDestacados" runat="server" NavigateUrl="~/" CssClass="nav-cajita">Destacados</asp:HyperLink>
                 <asp:HyperLink ID="lnkNovedades" runat="server" NavigateUrl="~/" CssClass="nav-cajita">Novedades</asp:HyperLink>
                 <asp:HyperLink ID="lnkSobreNosotros" runat="server" NavigateUrl="~/" CssClass="nav-cajita">Sobre nosotros</asp:HyperLink>
                 <asp:HyperLink ID="lnkComoComprar" runat="server" NavigateUrl="~/" CssClass="nav-cajita">Como comprar</asp:HyperLink>
-                <asp:HyperLink ID="lnkContactanos" runat="server" NavigateUrl="~/" CssClass="nav-cajita">Contactanos</asp:HyperLink>
+                <asp:HyperLink ID="lnkContactanos" runat="server" NavigateUrl="~/Contactanos.aspx" CssClass="nav-cajita">Contactanos</asp:HyperLink>
                 <asp:HyperLink ID="lnkAdministrar" runat="server" NavigateUrl="~/Administrar.aspx" CssClass="nav-cajita">Administrar</asp:HyperLink>
             </div>
 

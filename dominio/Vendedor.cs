@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 
 
 namespace dominio
@@ -16,8 +18,8 @@ namespace dominio
 
 
         }
-
-        public int IdVendedor {  get; set; }
+        
+       
         public string Legajo { get; set; }
 
 
