@@ -49,9 +49,7 @@
                             <h5 class="mb-0 fw-semibold fs-6" style="color: #ffc107;">Vista de Datos</h5>
                         </div>
                         <div class="card-body p-0">
-                            <div class="table-responsive">
-                                
-                                <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>                                     
+                            <div class="table-responsive">                                  
                                 
                                 <asp:GridView ID="dgvGrilla" runat="server"  AutoGenerateSelectButton="true"   CssClass="table table-dark table-hover table-bordered mb-0 align-middle text-sm">
                                  

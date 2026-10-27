@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Principal.Master.cs" Inherits="tpc_webform_grupo_R.Site1" %>
+﻿﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Principal.Master.cs" Inherits="tpc_webform_grupo_R.Site1" %>
 
 <!DOCTYPE html>
 
@@ -21,6 +21,7 @@
 </head>
 <body>
     <form id="form1" runat="server">
+        <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>   
     
        <!--NAVBAR-->
     <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
@@ -45,7 +46,7 @@
 
             <!--LOGIN Y CARRITO ESCRITORIO (PC) -->
             <div class="nav-actions-wrapper d-none d-lg-flex">
-                <asp:HyperLink ID="lnkLogin" runat="server" NavigateUrl="~/Administrar.aspx" CssClass="action-item">
+                <asp:HyperLink ID="lnkLogin" runat="server" NavigateUrl="~/Login.aspx" CssClass="action-item">
                     <i class="fa-solid fa-circle-user"></i>
                     <span class="action-label">Login</span>
                 </asp:HyperLink>
