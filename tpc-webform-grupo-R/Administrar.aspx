@@ -53,7 +53,7 @@
                                 
                                 <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>                                     
                                 
-                                <asp:GridView ID="dgvGrilla" runat="server"  AutoGenerateSelectButton="true"  DataKeyNames="idPersona" CssClass="table table-dark table-hover table-bordered mb-0 align-middle text-sm">
+                                <asp:GridView ID="dgvGrilla" runat="server"  AutoGenerateSelectButton="true"   CssClass="table table-dark table-hover table-bordered mb-0 align-middle text-sm">
                                  
                                  <SelectedRowStyle CssClass="selected" /> 
                                 </asp:GridView>

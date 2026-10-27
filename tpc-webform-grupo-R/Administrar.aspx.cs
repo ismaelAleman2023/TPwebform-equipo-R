@@ -76,7 +76,7 @@ namespace tpc_webform_grupo_R
 
                     break;
                 case 9:
-
+                    cargarGrillaDireccion();
                     break;
                 case 10:
 
@@ -97,8 +97,7 @@ namespace tpc_webform_grupo_R
         {
             ClienteNegocio cliN = new ClienteNegocio();
             dgvGrilla.DataSource = cliN.listarClientes();
-
-           
+            dgvGrilla.DataKeyNames = new string[] { "IdPersona" };
             dgvGrilla.DataBind();
 
         }
@@ -108,15 +107,20 @@ namespace tpc_webform_grupo_R
 
             VendedorNegocio vendedorN = new VendedorNegocio();
             dgvGrilla.DataSource = vendedorN.listarVendedores();
-
+            dgvGrilla.DataKeyNames = new string[] { "IdPersona" };
             dgvGrilla.DataBind();
 
         }
 
+      
 
-
-
-
+        private void cargarGrillaDireccion()
+        {
+            DireccionNegocio dirN = new DireccionNegocio();
+            dgvGrilla.DataSource = dirN.listarDirecciones();
+            dgvGrilla.DataKeyNames = new string[] { "IdDireccion" };
+            dgvGrilla.DataBind();
+        }
 
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
