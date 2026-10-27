@@ -115,13 +115,13 @@ namespace negocio
 
             try
             {
-                if (lector != null)
+                if (lector != null && !lector.IsClosed)
                 {
 
                     conexion.Close();
 
                 }
-                if (conexion !=null) { 
+                if (conexion !=null && conexion.State == System.Data.ConnectionState.Open) { 
                 
                 conexion.Close();
                 }
