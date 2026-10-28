@@ -26,7 +26,7 @@ namespace negocio
                     Marca Marca = new Marca();
                     Marca.IdMarca = (int)datos.Lector["id_m"];
                     Marca.Descripcion = (string)datos.Lector["descripcion_m"];
-                    Marca.Estado = (bool)datos.Lector["estado_m"];
+                    Marca.Estado = (int)datos.Lector["estado_m"];
 
                     ListaM.Add(Marca);
                 }
@@ -54,8 +54,7 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.consultaSql("insert into marcas(id_m,descripcion_m,estado_m) values (@id,@descripcion,@estado)");
-                datos.setearParametros("@id", NuevaMarca.IdMarca);
+                datos.consultaSql("insert into marcas(descripcion_m,estado_m) values (@descripcion,@estado)");
                 datos.setearParametros("@descripcion", NuevaMarca.Descripcion);
                 datos.setearParametros("@estado", NuevaMarca.Estado);
                 datos.ejecutarAccion();
@@ -94,7 +93,7 @@ namespace negocio
 
             }
 
-            Mmodificar.Estado = false;
+            Mmodificar.Estado = 0;
 
             modificar(Mmodificar);
 
@@ -129,7 +128,7 @@ namespace negocio
 
         }
 
-        public bool EstadoMarca(int id) {
+        public int EstadoMarca(int id) {
            
             List<Marca> lista = ListarMarca();
 
@@ -137,19 +136,19 @@ namespace negocio
             {
                 if (marca.IdMarca == id)
                 {
-                    // Si el estado es false (dado de baja), devuelve TRUE. 
-                    // Si el estado es true (activo), devuelve FALSE.
-                    return !marca.Estado;
+                   
+                    return marca.Estado;
                 }
             }
 
-            return false;
+            return 0;
 
 
 
         }
-
-        public bool ExisteDescripcion(string descrip , int id) {
+        
+        //valida si la marca que quiere modificar es la misma del id
+        public bool EselMismo(string descrip , int id) {
 
             List<Marca> lista = ListarMarca();
 
@@ -161,16 +160,38 @@ namespace negocio
                    
                     if (marca.IdMarca != id)
                     {
-                        return true;
+                        return true;//si es el mismo id guarda la marca
                     }
                 }
             }
 
-            return false;
+            return false;//no es el mismo id por lo tanto no guarda
 
         }
 
-        
+        //Valida si se ingresa una marca ya existente
+        public bool ExisteDescripcion(string descrip)
+        {
+
+            List<Marca> lista = ListarMarca();
+
+            foreach (Marca marca in lista)
+            {
+                // Comparamos e ignoramos mayúsculas/minúsculas
+                if (marca.Descripcion.Equals(descrip, StringComparison.OrdinalIgnoreCase))
+                {
+
+                 
+                        return true;//ya existe
+                    
+                }
+            }
+
+            return false;//no existe
+
+        }
+
+
 
 
 

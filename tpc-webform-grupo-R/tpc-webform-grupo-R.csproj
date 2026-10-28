@@ -102,6 +102,7 @@
     <Content Include="images\icons\whatsap.png" />
     <Content Include="Login.aspx" />
     <Content Include="Principal.Master" />
+    <Content Include="RegistroMarca.aspx" />
     <Content Include="RegistroVA.aspx" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
@@ -228,6 +229,13 @@
     </Compile>
     <Compile Include="Principal.Master.designer.cs">
       <DependentUpon>Principal.Master</DependentUpon>
+    </Compile>
+    <Compile Include="RegistroMarca.aspx.cs">
+      <DependentUpon>RegistroMarca.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RegistroMarca.aspx.designer.cs">
+      <DependentUpon>RegistroMarca.aspx</DependentUpon>
     </Compile>
     <Compile Include="RegistroVA.aspx.cs">
       <DependentUpon>RegistroVA.aspx</DependentUpon>
