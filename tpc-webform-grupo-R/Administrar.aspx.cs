@@ -23,12 +23,14 @@ namespace tpc_webform_grupo_R
 
                     cargarGrillaSegunOpcion(opcion);
 
+                    ViewState["TablaActiva"] = Session["btnAgregar"];
+
                     Session.Remove("btnAdministrar");
                     
                 }
-                
-            }
 
+            }
+         
         }
 
         protected void SeleccionarTabla_Click(object sender, EventArgs e)
@@ -188,15 +190,15 @@ namespace tpc_webform_grupo_R
                 {
                     string nombreColumna = dgvGrilla.HeaderRow.Cells[i].Text;
 
-                    // Si la columna es el ID (idPersona, idCliente, idDireccion, etc.) la ocultamos
+                    // Si la columna es igual se oculata
                     if (nombreColumna.Equals("idPersona", StringComparison.OrdinalIgnoreCase) ||
                         nombreColumna.Equals("Password", StringComparison.OrdinalIgnoreCase) ||
                         nombreColumna.EndsWith("Id", StringComparison.OrdinalIgnoreCase))
                     {
-                        // Ocultamos la celda en el encabezado
+                        // encabezado
                         dgvGrilla.HeaderRow.Cells[i].Visible = false;
 
-                        // Ocultamos la celda en cada una de las filas de datos
+                        // celda en cada una de las filas 
                         foreach (GridViewRow row in dgvGrilla.Rows)
                         {
                             row.Cells[i].Visible = false;
