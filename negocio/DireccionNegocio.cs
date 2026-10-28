@@ -39,6 +39,31 @@ namespace negocio
             }
             return lista;
         }
+
+        public void agregarDireccion(Direccion dir)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.consultaSql("insert into direccionesEnvio(idcliente_dir, calle, numero, codigoPostal, localidad, provincia, observacion_dir) values(@idCliente, @calle, @numero, @codigoPostal, @localidad, @provincia, @observacion)");
+                datos.setearParametros("@idCliente", dir.IdCliente);
+                datos.setearParametros("@calle", dir.Calle);
+                datos.setearParametros("@numero", dir.Numero);
+                datos.setearParametros("@codigoPostal", dir.CodigoPostal);
+                datos.setearParametros("@localidad", dir.Localidad);
+                datos.setearParametros("@provincia", dir.Provincia);
+                datos.setearParametros("@observacion", dir.Observacion);
+                datos.ejecutarAccion();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 
 
