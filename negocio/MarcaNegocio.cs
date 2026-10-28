@@ -75,32 +75,45 @@ namespace negocio
 
         public void BajaMarca(int id)
         {
-
-            List<Marca> lista = new List<Marca>();
-            lista = ListarMarca();
-            Marca Mmodificar = null;
-            foreach (Marca Marca in lista)
+            
+            AccesoDatos Datos = new AccesoDatos();
+            try
             {
-
-                if (Marca.IdMarca == id)
-                {
-
-                    Mmodificar = Marca;
-
-
-                }
-
+                Datos.consultaSql("update Marcas set estado_m= 0 where id_m=@id");
+                Datos.setearParametros("@id", id);
+                Datos.ejecutarAccion();
 
             }
+            catch (Exception)
+            {
 
-            Mmodificar.Estado = 0;
-
-            modificar(Mmodificar);
-
-
-
-
+                throw;
+            }
+            finally { Datos.cerrarConexion(); }
         }
+
+
+
+        
+        public void AltaMarca(int id) { 
+        
+        AccesoDatos datos =new AccesoDatos();
+
+            try
+            {
+                datos.consultaSql("update Marcas set estado_m=1 where id_m=@id");
+                datos.setearParametros("@id", id);
+                datos.ejecutarAccion();
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally { datos.cerrarConexion(); }
+        }
+
 
         public void modificar(Marca modificado)
         {
@@ -143,12 +156,11 @@ namespace negocio
 
             return 0;
 
-
-
         }
+
         
         //valida si la marca que quiere modificar es la misma del id
-        public bool EselMismo(string descrip , int id) {
+        public bool valiModiM(string descrip , int id) {
 
             List<Marca> lista = ListarMarca();
 
@@ -158,7 +170,7 @@ namespace negocio
                 if (marca.Descripcion.Equals(descrip, StringComparison.OrdinalIgnoreCase))
                 {
                    
-                    if (marca.IdMarca != id)
+                    if (marca.IdMarca == id)
                     {
                         return true;//si es el mismo id guarda la marca
                     }

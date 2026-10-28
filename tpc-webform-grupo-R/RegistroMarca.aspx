@@ -4,8 +4,11 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <div class="container mt-5 mb-5">
 
+        <asp:UpdatePanel runat="server">
+            <ContentTemplate>
+
+    <div class="container mt-5 mb-5">
         <div class="row justify-content-center">
             <div class="col-md-6 col-lg-5">
                 <div class="card shadow-sm p-4 bg-white rounded mx-auto text-dark" style="max-width: 450px;">
@@ -39,6 +42,9 @@
             </div>
         </div>
     </div>
+            </ContentTemplate>
+        </asp:UpdatePanel>
+
 
 
 </asp:Content>
