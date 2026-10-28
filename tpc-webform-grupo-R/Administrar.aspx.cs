@@ -97,9 +97,9 @@ namespace tpc_webform_grupo_R
         {
             ClienteNegocio cliN = new ClienteNegocio();
             dgvGrilla.DataSource = cliN.listarClientes();
-
-           
+            dgvGrilla.DataKeyNames = new string[] { "IdPersona" };
             dgvGrilla.DataBind();
+            ocultarItems();            
 
         }
 
@@ -108,8 +108,9 @@ namespace tpc_webform_grupo_R
 
             VendedorNegocio vendedorN = new VendedorNegocio();
             dgvGrilla.DataSource = vendedorN.listarVendedores();
-
+            dgvGrilla.DataKeyNames = new string[] { "IdPersona" };
             dgvGrilla.DataBind();
+            ocultarItems();
 
         }
 
@@ -177,5 +178,36 @@ namespace tpc_webform_grupo_R
 
 
         }
+
+
+        private void ocultarItems()
+        {
+            if (dgvGrilla.HeaderRow != null)
+            {
+                for (int i = 0; i < dgvGrilla.HeaderRow.Cells.Count; i++)
+                {
+                    string nombreColumna = dgvGrilla.HeaderRow.Cells[i].Text;
+
+                    // Si la columna es el ID (idPersona, idCliente, idDireccion, etc.) la ocultamos
+                    if (nombreColumna.Equals("idPersona", StringComparison.OrdinalIgnoreCase) ||
+                        nombreColumna.Equals("Password", StringComparison.OrdinalIgnoreCase) ||
+                        nombreColumna.EndsWith("Id", StringComparison.OrdinalIgnoreCase))
+                    {
+                        // Ocultamos la celda en el encabezado
+                        dgvGrilla.HeaderRow.Cells[i].Visible = false;
+
+                        // Ocultamos la celda en cada una de las filas de datos
+                        foreach (GridViewRow row in dgvGrilla.Rows)
+                        {
+                            row.Cells[i].Visible = false;
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+
     }
 }

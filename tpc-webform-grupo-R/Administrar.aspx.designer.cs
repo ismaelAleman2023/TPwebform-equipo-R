@@ -24,6 +24,24 @@ namespace tpc_webform_grupo_R
         protected global::System.Web.UI.UpdatePanel updatePanelgrilla;
 
         /// <summary>
+        /// Control btnProd.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnProd;
+
+        /// <summary>
+        /// Control btnStk.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnStk;
+
+        /// <summary>
         /// Control btnCat.
         /// </summary>
         /// <remarks>
@@ -40,33 +58,6 @@ namespace tpc_webform_grupo_R
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnMarc;
-
-        /// <summary>
-        /// Control btnStk.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnStk;
-
-        /// <summary>
-        /// Control btnPago.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnPago;
-
-        /// <summary>
-        /// Control btnProd.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnProd;
 
         /// <summary>
         /// Control btnVend.
@@ -96,13 +87,13 @@ namespace tpc_webform_grupo_R
         protected global::System.Web.UI.WebControls.Button btnCli;
 
         /// <summary>
-        /// Control btnDir.
+        /// Control btnRol.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnDir;
+        protected global::System.Web.UI.WebControls.Button btnRol;
 
         /// <summary>
         /// Control btnVent.
@@ -114,13 +105,22 @@ namespace tpc_webform_grupo_R
         protected global::System.Web.UI.WebControls.Button btnVent;
 
         /// <summary>
-        /// Control btnRol.
+        /// Control btnPago.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnRol;
+        protected global::System.Web.UI.WebControls.Button btnPago;
+
+        /// <summary>
+        /// Control btnDir.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnDir;
 
         /// <summary>
         /// Control btnEst.
@@ -130,15 +130,6 @@ namespace tpc_webform_grupo_R
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnEst;
-
-        /// <summary>
-        /// Control ScriptManager1.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.ScriptManager ScriptManager1;
 
         /// <summary>
         /// Control dgvGrilla.
