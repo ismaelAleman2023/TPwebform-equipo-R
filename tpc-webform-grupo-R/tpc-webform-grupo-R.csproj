@@ -138,6 +138,7 @@
     <Content Include="images\products\producto2.svg" />
     <Content Include="images\products\producto3.svg" />
     <Content Include="RegistroCliente.aspx" />
+    <Content Include="RegistroDireccion.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -254,6 +255,13 @@
     </Compile>
     <Compile Include="RegistroCliente.aspx.designer.cs">
       <DependentUpon>RegistroCliente.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RegistroDireccion.aspx.cs">
+      <DependentUpon>RegistroDireccion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RegistroDireccion.aspx.designer.cs">
+      <DependentUpon>RegistroDireccion.aspx</DependentUpon>
     </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
