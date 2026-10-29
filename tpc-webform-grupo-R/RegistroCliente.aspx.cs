@@ -35,11 +35,12 @@ namespace tpc_webform_grupo_R
 
 
                 cliN.AgregarCliente(cli1);
+                Session["IdCliente"] = cli1.IdPersona;
 
                
                 ///agregar cartel de exito de registro 
 
-                Response.Redirect("Administrar.aspx");
+                Response.Redirect("RegistroDireccion.aspx");
 
             }
             catch (Exception)
