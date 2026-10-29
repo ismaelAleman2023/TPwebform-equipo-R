@@ -98,6 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Administrar.aspx" />
+    <Content Include="ComoComprar.aspx" />
     <Content Include="Contactanos.aspx" />
     <Content Include="images\icons\whatsap.png" />
     <Content Include="Login.aspx" />
@@ -139,6 +140,7 @@
     <Content Include="images\products\producto3.svg" />
     <Content Include="RegistroCliente.aspx" />
     <Content Include="RegistroDireccion.aspx" />
+    <Content Include="SobreNosotros.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -208,6 +210,13 @@
     <Compile Include="Administrar.aspx.designer.cs">
       <DependentUpon>Administrar.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ComoComprar.aspx.cs">
+      <DependentUpon>ComoComprar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ComoComprar.aspx.designer.cs">
+      <DependentUpon>ComoComprar.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Contactanos.aspx.cs">
       <DependentUpon>Contactanos.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -262,6 +271,13 @@
     </Compile>
     <Compile Include="RegistroDireccion.aspx.designer.cs">
       <DependentUpon>RegistroDireccion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SobreNosotros.aspx.cs">
+      <DependentUpon>SobreNosotros.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SobreNosotros.aspx.designer.cs">
+      <DependentUpon>SobreNosotros.aspx</DependentUpon>
     </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>

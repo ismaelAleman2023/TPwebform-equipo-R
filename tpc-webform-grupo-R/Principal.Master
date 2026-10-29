@@ -1,4 +1,4 @@
-﻿﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Principal.Master.cs" Inherits="tpc_webform_grupo_R.Site1" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Principal.Master.cs" Inherits="tpc_webform_grupo_R.Site1" %>
 
 <!DOCTYPE html>
 
@@ -38,8 +38,8 @@
                 <asp:HyperLink ID="lnkProductos" runat="server" NavigateUrl="~/" CssClass="nav-cajita">Catalogo</asp:HyperLink>
                 <asp:HyperLink ID="lnkDestacados" runat="server" NavigateUrl="~/" CssClass="nav-cajita">Destacados</asp:HyperLink>
                 <asp:HyperLink ID="lnkNovedades" runat="server" NavigateUrl="~/" CssClass="nav-cajita">Novedades</asp:HyperLink>
-                <asp:HyperLink ID="lnkSobreNosotros" runat="server" NavigateUrl="~/" CssClass="nav-cajita">Sobre nosotros</asp:HyperLink>
-                <asp:HyperLink ID="lnkComoComprar" runat="server" NavigateUrl="~/" CssClass="nav-cajita">Como comprar</asp:HyperLink>
+                <asp:HyperLink ID="lnkSobreNosotros" runat="server" NavigateUrl="~/SobreNosotros.aspx" CssClass="nav-cajita">Sobre nosotros</asp:HyperLink>
+                <asp:HyperLink ID="lnkComoComprar" runat="server" NavigateUrl="~/ComoComprar.aspx" CssClass="nav-cajita">Como comprar</asp:HyperLink>
                 <asp:HyperLink ID="lnkContactanos" runat="server" NavigateUrl="~/Contactanos.aspx" CssClass="nav-cajita">Contactanos</asp:HyperLink>
                 <asp:HyperLink ID="lnkAdministrar" runat="server" NavigateUrl="~/Administrar.aspx" CssClass="nav-cajita">Administrar</asp:HyperLink>
             </div>
