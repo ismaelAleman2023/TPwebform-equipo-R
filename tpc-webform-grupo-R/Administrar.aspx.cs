@@ -53,7 +53,7 @@ namespace tpc_webform_grupo_R
             switch (opcion)
             {
                 case 1:
-
+                    cargarGrillaCategoria();
                     break;
                 case 2:
                     cargarGrillaMarca();
@@ -137,6 +137,15 @@ namespace tpc_webform_grupo_R
         
         }
 
+        private void cargarGrillaCategoria() { 
+        
+            CategoriaNegocio cateNego=new CategoriaNegocio();
+            dgvGrilla.DataSource = cateNego.listarCate();
+            dgvGrilla.DataKeyNames = new string[] { "IdCategoria" };
+            dgvGrilla.DataBind();
+            ocultarItems();
+        
+        }
 
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
@@ -146,7 +155,7 @@ namespace tpc_webform_grupo_R
 
             switch (aux)
             {
-                case 1://categorias
+                case 1:Response.Redirect("RegistroCategoria.aspx");
 
                     break;
                 case 2:Response.Redirect("RegistroMarca.aspx");
@@ -205,6 +214,7 @@ namespace tpc_webform_grupo_R
                     // Si la columna es igual se oculata
                     if (nombreColumna.Equals("idPersona", StringComparison.OrdinalIgnoreCase) ||
                         nombreColumna.Equals("Password", StringComparison.OrdinalIgnoreCase) ||
+                        nombreColumna.Equals("IdCategoria", StringComparison.OrdinalIgnoreCase) ||
                         nombreColumna.EndsWith("IdMarca", StringComparison.OrdinalIgnoreCase)) 
                     {
                         // encabezado

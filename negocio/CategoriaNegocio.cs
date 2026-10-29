@@ -17,7 +17,7 @@ namespace negocio
 
             try
             {
-                datos.consultaSql("insert into categorias(descripcion_C=@descripcion ,estado_C=@estado)");
+                datos.consultaSql("insert into categorias(descripcion_C ,estado_C) values (@descripcion,@estado)");
                 datos.setearParametros("@descripcion", cateAg.Descripcion);
                 datos.setearParametros("@estado", cateAg.Estado);
                 datos.ejecutarAccion();
