@@ -23,12 +23,14 @@ namespace tpc_webform_grupo_R
 
                     cargarGrillaSegunOpcion(opcion);
 
+                    ViewState["TablaActiva"] = Session["btnAgregar"];
+
                     Session.Remove("btnAdministrar");
                     
                 }
-                
-            }
 
+            }
+         
         }
 
         protected void SeleccionarTabla_Click(object sender, EventArgs e)
@@ -51,9 +53,10 @@ namespace tpc_webform_grupo_R
             switch (opcion)
             {
                 case 1:
-
+                    cargarGrillaCategoria();
                     break;
                 case 2:
+                    cargarGrillaMarca();
 
                     break;
                 case 3:
@@ -124,6 +127,26 @@ namespace tpc_webform_grupo_R
             dgvGrilla.DataBind();
         }
 
+        private void cargarGrillaMarca() { 
+        
+        MarcaNegocio marcaNegocio = new MarcaNegocio();
+            dgvGrilla.DataSource=marcaNegocio.ListarMarca();
+            dgvGrilla.DataKeyNames = new string[] { "IdMarca" };
+            dgvGrilla.DataBind();
+            ocultarItems();
+        
+        }
+
+        private void cargarGrillaCategoria() { 
+        
+            CategoriaNegocio cateNego=new CategoriaNegocio();
+            dgvGrilla.DataSource = cateNego.listarCate();
+            dgvGrilla.DataKeyNames = new string[] { "IdCategoria" };
+            dgvGrilla.DataBind();
+            ocultarItems();
+        
+        }
+
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
             Session["btnAgregar"]= ViewState["TablaActiva"];
@@ -132,10 +155,10 @@ namespace tpc_webform_grupo_R
 
             switch (aux)
             {
-                case 1://categorias
+                case 1:Response.Redirect("RegistroCategoria.aspx");
 
                     break;
-                case 2://marcas
+                case 2:Response.Redirect("RegistroMarca.aspx");
 
                     break;
                 case 3://stock
@@ -188,15 +211,16 @@ namespace tpc_webform_grupo_R
                 {
                     string nombreColumna = dgvGrilla.HeaderRow.Cells[i].Text;
 
-                    // Si la columna es el ID (idPersona, idCliente, idDireccion, etc.) la ocultamos
+                    // Si la columna es igual se oculata
                     if (nombreColumna.Equals("idPersona", StringComparison.OrdinalIgnoreCase) ||
                         nombreColumna.Equals("Password", StringComparison.OrdinalIgnoreCase) ||
-                        nombreColumna.EndsWith("Id", StringComparison.OrdinalIgnoreCase))
+                        nombreColumna.Equals("IdCategoria", StringComparison.OrdinalIgnoreCase) ||
+                        nombreColumna.EndsWith("IdMarca", StringComparison.OrdinalIgnoreCase)) 
                     {
-                        // Ocultamos la celda en el encabezado
+                        // encabezado
                         dgvGrilla.HeaderRow.Cells[i].Visible = false;
 
-                        // Ocultamos la celda en cada una de las filas de datos
+                        // celda en cada una de las filas 
                         foreach (GridViewRow row in dgvGrilla.Rows)
                         {
                             row.Cells[i].Visible = false;
