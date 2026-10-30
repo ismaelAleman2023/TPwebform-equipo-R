@@ -108,7 +108,6 @@ namespace tpc_webform_grupo_R
 
         private void cargarGrillaVendedor()
         {
-
             VendedorNegocio vendedorN = new VendedorNegocio();
             dgvGrilla.DataSource = vendedorN.listarVendedores();
             dgvGrilla.DataKeyNames = new string[] { "IdPersona" };
@@ -155,10 +154,12 @@ namespace tpc_webform_grupo_R
 
             switch (aux)
             {
-                case 1:Response.Redirect("RegistroCategoria.aspx");
+                case 1:
+                    Response.Redirect("RegistroCategoria.aspx");
 
                     break;
-                case 2:Response.Redirect("RegistroMarca.aspx");
+                case 2:
+                    Response.Redirect("RegistroMarca.aspx");
 
                     break;
                 case 3://stock
@@ -229,6 +230,133 @@ namespace tpc_webform_grupo_R
                 }
             }
         }
+
+        protected void dgvGrilla_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int seleccion = int.Parse( dgvGrilla.SelectedDataKey.Value.ToString());
+            ViewState["eleccion"]= seleccion;
+            Session["btnAgregar"] = ViewState["TablaActiva"];
+        }
+
+        protected void btnEliminar_Click(object sender, EventArgs e)
+        {
+            if (ViewState["eleccion"] != null)
+            {
+
+                switch (ViewState["TablaActiva"])
+                {
+                    case 1://categoria
+
+                        break;
+                    case 2://marca
+
+                        break;
+                    case 3://stock
+
+                        break;
+                    case 4://tipo pago
+
+                        break;
+                    case 5://productos
+
+                        break;
+                    case 6://vendedores
+                        
+                        break;
+                    case 7://administradores
+                       
+                        break;
+                    case 8://clientes
+
+                        eliminarCliente();
+                        Response.Redirect("Administrar.aspx");
+                        break;
+                    case 9://direcciones
+
+                        break;
+                    case 10:// ventas
+
+                        break;
+                    case 11:// roles
+
+                        break;
+                    case 12:// estados
+
+                        break;
+
+                    default:
+                        break;
+                }
+
+                
+
+            }
+
+            
+        }
+
+        protected void btnModificar_Click(object sender, EventArgs e)
+        {
+            if (ViewState["eleccion"] != null)
+            {
+
+                switch (ViewState["TablaActiva"])
+                {
+                    case 1://categoria
+
+                        break;
+                    case 2://marca
+
+                        break;
+                    case 3://stock
+
+                        break;
+                    case 4://tipo pago
+
+                        break;
+                    case 5://productos
+
+                        break;
+                    case 6://vendedores
+
+                        break;
+                    case 7://administradores
+
+                        break;
+                    case 8://clientes
+                                            
+                        break;
+                    case 9://direcciones
+
+                        break;
+                    case 10:// ventas
+
+                        break;
+                    case 11:// roles
+
+                        break;
+                    case 12:// estados
+
+                        break;
+
+                    default:
+                        break;
+                }
+             }
+
+        }
+
+
+
+        private void eliminarCliente()
+        {
+            ClienteNegocio cliN = new ClienteNegocio();
+
+            cliN.eliminarCliente((int)ViewState["eleccion"]);
+
+            ViewState.Remove("eleccion");
+        }
+
 
 
 

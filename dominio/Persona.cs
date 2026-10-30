@@ -11,8 +11,6 @@ namespace dominio
     public class Persona
     {
         public Persona() { }
-
-
        
         public int IdPersona { get; set; }
         public string Nombre { get; set; } = string.Empty;

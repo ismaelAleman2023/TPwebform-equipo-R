@@ -44,6 +44,18 @@ namespace negocio
                 datos.ejecutarAccion();
 
 
+                if (cliente.direccion.Count!=0 && cliente.direccion!=null)
+                {
+                    DireccionNegocio dirN = new DireccionNegocio();
+
+                    foreach (Direccion dire in cliente.direccion)
+                    {
+                        dirN.agregarDireccion(dire);
+                    }
+
+                }
+
+
             }
             catch (Exception)
             {
@@ -81,6 +93,23 @@ namespace negocio
                     aux.Estado = (int)datos.Lector["estado_per"];
                     aux.IdRol = (int)datos.Lector["idroll_per"];
                     aux.CorreoOk = (bool)datos.Lector["correoOk"];
+                    
+                    DireccionNegocio dirN = new DireccionNegocio();
+                    List<Direccion> direccionAux = dirN.listarDirecciones();
+                    
+                    Direccion dirAux = new Direccion();
+                    List<Direccion> direccion = new List<Direccion>();
+
+                    if(direccionAux  != null && direccionAux.Count > 0)
+                    {
+
+                    }  
+
+
+
+
+
+
                     lista.Add(aux);
                 }
                 return lista;
@@ -99,6 +128,32 @@ namespace negocio
         }
 
 
+
+        public void eliminarCliente(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.consultaSql("update personas set estado_Per = 0 where idPersona = @id");
+                datos.setearParametros("id", id);
+                datos.ejecutarAccion();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+
+
+
+
+
+        }
 
 
     }

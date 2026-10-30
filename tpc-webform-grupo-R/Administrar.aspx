@@ -51,7 +51,7 @@
                         <div class="card-body p-0">
                             <div class="table-responsive">                                  
                                 
-                                <asp:GridView ID="dgvGrilla" runat="server"  AutoGenerateSelectButton="true"   CssClass="table table-dark table-hover table-bordered mb-0 align-middle text-sm">
+                                <asp:GridView ID="dgvGrilla" runat="server" OnSelectedIndexChanged="dgvGrilla_SelectedIndexChanged" AutoGenerateSelectButton="true"   CssClass="table table-dark table-hover table-bordered mb-0 align-middle text-sm">
                                  
                                  <SelectedRowStyle CssClass="selected" /> 
                                 </asp:GridView>
@@ -67,9 +67,9 @@
                     <div class="card shadow-sm p-3 h-100" style="background-color: #121212; border: 1px solid #333;">
                         <div class="d-grid gap-2">
                             <asp:Button ID="btnAgregar" runat="server" Text="Agregar" OnClick="btnAgregar_Click" CssClass="btn btn-success d-flex align-items-center justify-content-center gap-2" />
-                            <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CssClass="btn btn-danger d-flex align-items-center justify-content-center gap-2" />
-                            <asp:Button ID="btnModificar" runat="server" Text="Modificar" CssClass="btn btn-primary d-flex align-items-center justify-content-center gap-2" />
-                            <asp:Button ID="btnListar" runat="server" Text="Listar" CssClass="btn btn-outline-light d-flex align-items-center justify-content-center gap-2" />
+                            <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" OnClick="btnEliminar_Click" CssClass="btn btn-danger d-flex align-items-center justify-content-center gap-2" />
+                            <asp:Button ID="btnModificar" runat="server" Text="Modificar" OnClick="btnModificar_Click" CssClass="btn btn-primary d-flex align-items-center justify-content-center gap-2" />
+                            <!--<asp:Button ID="btnListar" runat="server" Text="Listar" CssClass="btn btn-outline-light d-flex align-items-center justify-content-center gap-2" />-->
                         </div>
                     </div>
                 </div>

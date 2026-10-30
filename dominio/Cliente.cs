@@ -18,5 +18,7 @@ namespace dominio
 
         public bool CorreoOk { get; set; }
 
+        public List<Direccion> direccion {get;} = new List<Direccion>();
+
     }
 }
