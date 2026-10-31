@@ -76,7 +76,7 @@ namespace negocio
             try
             {
                 datos.consultaSql("update categorias set estado_C=0 where id_C=@id");
-                datos.setearParametros("id_C", id);
+                datos.setearParametros("@id", id);
                 datos.ejecutarAccion();
 
             }

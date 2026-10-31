@@ -75,7 +75,7 @@ namespace negocio
 
         public void BajaMarca(int id)
         {
-            
+
             AccesoDatos Datos = new AccesoDatos();
             try
             {
@@ -94,10 +94,11 @@ namespace negocio
 
 
 
-        
-        public void AltaMarca(int id) { 
-        
-        AccesoDatos datos =new AccesoDatos();
+
+        public void AltaMarca(int id)
+        {
+
+            AccesoDatos datos = new AccesoDatos();
 
             try
             {
@@ -141,15 +142,16 @@ namespace negocio
 
         }
 
-        public int EstadoMarca(int id) {
-           
+        public int EstadoMarca(int id)
+        {
+
             List<Marca> lista = ListarMarca();
 
             foreach (Marca marca in lista)
             {
                 if (marca.IdMarca == id)
                 {
-                   
+
                     return marca.Estado;
                 }
             }
@@ -158,9 +160,10 @@ namespace negocio
 
         }
 
-        
+
         //valida si la marca que quiere modificar es la misma del id
-        public bool valiModiM(string descrip , int id) {
+        public bool valiModiM(string descrip, int id)
+        {
 
             List<Marca> lista = ListarMarca();
 
@@ -169,7 +172,7 @@ namespace negocio
                 // Comparamos e ignoramos mayúsculas/minúsculas
                 if (marca.Descripcion.Equals(descrip, StringComparison.OrdinalIgnoreCase))
                 {
-                   
+
                     if (marca.IdMarca == id)
                     {
                         return true;//si es el mismo id guarda la marca
@@ -193,15 +196,17 @@ namespace negocio
                 if (marca.Descripcion.Equals(descrip, StringComparison.OrdinalIgnoreCase))
                 {
 
-                 
-                        return true;//ya existe
-                    
+
+                    return true;//ya existe
+
                 }
             }
 
             return false;//no existe
 
         }
+
+       
 
 
 

@@ -11,7 +11,7 @@ namespace tpc_webform_grupo_R
     public partial class Administrar : System.Web.UI.Page
     {
 
-        
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -26,11 +26,13 @@ namespace tpc_webform_grupo_R
                     ViewState["TablaActiva"] = Session["btnAgregar"];
 
                     Session.Remove("btnAdministrar");
-                    
+
                 }
 
+
+
             }
-         
+
         }
 
         protected void SeleccionarTabla_Click(object sender, EventArgs e)
@@ -43,7 +45,7 @@ namespace tpc_webform_grupo_R
 
             // C# ya sabe exactamente qué número de botón se presionó
             ViewState["TablaActiva"] = opcion;
-            
+
             cargarGrillaSegunOpcion(opcion);
         }
 
@@ -102,7 +104,7 @@ namespace tpc_webform_grupo_R
             dgvGrilla.DataSource = cliN.listarClientes();
             dgvGrilla.DataKeyNames = new string[] { "IdPersona" };
             dgvGrilla.DataBind();
-            ocultarItems();            
+            ocultarItems();
 
         }
 
@@ -116,7 +118,7 @@ namespace tpc_webform_grupo_R
 
         }
 
-      
+
 
         private void cargarGrillaDireccion()
         {
@@ -126,29 +128,31 @@ namespace tpc_webform_grupo_R
             dgvGrilla.DataBind();
         }
 
-        private void cargarGrillaMarca() { 
-        
-        MarcaNegocio marcaNegocio = new MarcaNegocio();
-            dgvGrilla.DataSource=marcaNegocio.ListarMarca();
+        private void cargarGrillaMarca()
+        {
+
+            MarcaNegocio marcaNegocio = new MarcaNegocio();
+            dgvGrilla.DataSource = marcaNegocio.ListarMarca();
             dgvGrilla.DataKeyNames = new string[] { "IdMarca" };
             dgvGrilla.DataBind();
             ocultarItems();
-        
+
         }
 
-        private void cargarGrillaCategoria() { 
-        
-            CategoriaNegocio cateNego=new CategoriaNegocio();
+        private void cargarGrillaCategoria()
+        {
+
+            CategoriaNegocio cateNego = new CategoriaNegocio();
             dgvGrilla.DataSource = cateNego.listarCate();
             dgvGrilla.DataKeyNames = new string[] { "IdCategoria" };
             dgvGrilla.DataBind();
             ocultarItems();
-        
+
         }
 
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
-            Session["btnAgregar"]= ViewState["TablaActiva"];
+            Session["btnAgregar"] = ViewState["TablaActiva"];
 
             int aux = Convert.ToInt32(ViewState["TablaActiva"]);
 
@@ -198,7 +202,7 @@ namespace tpc_webform_grupo_R
                     break;
             }
 
-           
+
 
 
         }
@@ -216,7 +220,7 @@ namespace tpc_webform_grupo_R
                     if (nombreColumna.Equals("idPersona", StringComparison.OrdinalIgnoreCase) ||
                         nombreColumna.Equals("Password", StringComparison.OrdinalIgnoreCase) ||
                         nombreColumna.Equals("IdCategoria", StringComparison.OrdinalIgnoreCase) ||
-                        nombreColumna.EndsWith("IdMarca", StringComparison.OrdinalIgnoreCase)) 
+                        nombreColumna.EndsWith("IdMarca", StringComparison.OrdinalIgnoreCase))
                     {
                         // encabezado
                         dgvGrilla.HeaderRow.Cells[i].Visible = false;
@@ -233,8 +237,8 @@ namespace tpc_webform_grupo_R
 
         protected void dgvGrilla_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int seleccion = int.Parse( dgvGrilla.SelectedDataKey.Value.ToString());
-            ViewState["eleccion"]= seleccion;
+            int seleccion = int.Parse(dgvGrilla.SelectedDataKey.Value.ToString());
+            ViewState["eleccion"] = seleccion;
             Session["btnAgregar"] = ViewState["TablaActiva"];
         }
 
@@ -245,10 +249,12 @@ namespace tpc_webform_grupo_R
 
                 switch (ViewState["TablaActiva"])
                 {
-                    case 1://categoria
+                    case 1:eliminarCategoria();
+                        cargarGrillaCategoria();
 
                         break;
-                    case 2://marca
+                    case 2:eliminarMarca();
+                        cargarGrillaMarca();
 
                         break;
                     case 3://stock
@@ -261,15 +267,15 @@ namespace tpc_webform_grupo_R
 
                         break;
                     case 6://vendedores
-                        
+
                         break;
                     case 7://administradores
-                       
+
                         break;
                     case 8://clientes
 
                         eliminarCliente();
-                        Response.Redirect("Administrar.aspx");
+                        cargarGrillaCliente();
                         break;
                     case 9://direcciones
 
@@ -288,11 +294,11 @@ namespace tpc_webform_grupo_R
                         break;
                 }
 
-                
+
 
             }
 
-            
+
         }
 
         protected void btnModificar_Click(object sender, EventArgs e)
@@ -324,7 +330,7 @@ namespace tpc_webform_grupo_R
 
                         break;
                     case 8://clientes
-                                            
+
                         break;
                     case 9://direcciones
 
@@ -342,7 +348,7 @@ namespace tpc_webform_grupo_R
                     default:
                         break;
                 }
-             }
+            }
 
         }
 
@@ -356,6 +362,49 @@ namespace tpc_webform_grupo_R
 
             ViewState.Remove("eleccion");
         }
+
+        private void eliminarMarca()
+        {
+            try
+            {
+                MarcaNegocio marcaNegocio = new MarcaNegocio();
+               //falta el metodo para validar si esta asociado a un producto
+                marcaNegocio.BajaMarca((int)ViewState["eleccion"]);
+                ViewState.Remove("eleccion");
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaExito", "mostrarCartel('¡Marca eliminada correctamente!', 'success');", true);
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
+
+        private void eliminarCategoria() {
+
+
+            try
+            {
+            CategoriaNegocio cate= new CategoriaNegocio();
+                //falta el metodo para validar si esta asociado a un producto
+                cate.bajaCategoria((int)ViewState["eleccion"]);
+                ViewState.Remove("eleccion");
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaExito", "mostrarCartel('¡Marca eliminada correctamente!', 'success');", true);
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        
+        }
+
+        //Metodos para eliminar(baja) necesarios para Marca y Categoria
+       
+
 
 
 

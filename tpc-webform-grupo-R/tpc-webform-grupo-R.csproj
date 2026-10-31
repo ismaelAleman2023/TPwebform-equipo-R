@@ -105,9 +105,7 @@
     <Content Include="images\icons\whatsap.png" />
     <Content Include="Login.aspx" />
     <Content Include="Principal.Master" />
-
     <Content Include="RegistroCategoria.aspx" />
-
     <Content Include="RegistroMarca.aspx" />
     <Content Include="RegistroVA.aspx" />
     <Content Include="Content\bootstrap-grid.css" />
@@ -144,6 +142,7 @@
     <Content Include="images\products\producto3.svg" />
     <Content Include="RegistroCliente.aspx" />
     <Content Include="RegistroDireccion.aspx" />
+    <Content Include="Scripts\CartelFlotante.js" />
     <Content Include="SobreNosotros.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -242,7 +241,6 @@
     <Compile Include="Principal.Master.designer.cs">
       <DependentUpon>Principal.Master</DependentUpon>
     </Compile>
-
     <Compile Include="RegistroCategoria.aspx.cs">
       <DependentUpon>RegistroCategoria.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -250,7 +248,6 @@
     <Compile Include="RegistroCategoria.aspx.designer.cs">
       <DependentUpon>RegistroCategoria.aspx</DependentUpon>
     </Compile>
-
     <Compile Include="RegistroMarca.aspx.cs">
       <DependentUpon>RegistroMarca.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
