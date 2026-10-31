@@ -43,7 +43,6 @@ namespace negocio
                 datos.setearParametros("@correoOk", cliente.CorreoOk);
                 datos.ejecutarAccion();
 
-
                 if (cliente.direccion.Count!=0 && cliente.direccion!=null)
                 {
                     DireccionNegocio dirN = new DireccionNegocio();
@@ -52,10 +51,7 @@ namespace negocio
                     {
                         dirN.agregarDireccion(dire);
                     }
-
                 }
-
-
             }
             catch (Exception)
             {
@@ -75,9 +71,11 @@ namespace negocio
         {
             List<Cliente> lista = new List<Cliente>();
             AccesoDatos datos = new AccesoDatos();
-
             try
             {
+                DireccionNegocio dirN = new DireccionNegocio();
+                List<Direccion> listaDire = dirN.listarDirecciones();
+
                 datos.consultaSql("select p.idPersona, p.nombre_per, p.apellido_per, p.email_per, p.telefono_per, p.contraseña_per, p.fecha_nacimiento_per, p.estado_per, p.idroll_per, c.correoOk from personas p inner join clientes c on p.idPersona = c.idPersona_cli");
                 datos.ejecutarLectura();
                 while (datos.Lector.Read())
@@ -93,38 +91,27 @@ namespace negocio
                     aux.Estado = (int)datos.Lector["estado_per"];
                     aux.IdRol = (int)datos.Lector["idroll_per"];
                     aux.CorreoOk = (bool)datos.Lector["correoOk"];
-                    
-                    DireccionNegocio dirN = new DireccionNegocio();
-                    List<Direccion> direccionAux = dirN.listarDirecciones();
-                    
-                    Direccion dirAux = new Direccion();
-                    List<Direccion> direccion = new List<Direccion>();
 
-                    if(direccionAux  != null && direccionAux.Count > 0)
+                    foreach (Direccion dire in listaDire)
                     {
-
-                    }  
-
-
-
-
-
-
+                        if(dire.IdCliente== aux.IdPersona)
+                        {
+                            aux.direccion.Add(dire);
+                        }
+                    }
+                                                   
                     lista.Add(aux);
                 }
                 return lista;
-
             }
             catch (Exception)
             {
-
                 throw;
             }
             finally
             {
                 datos.cerrarConexion();
             }   
-
         }
 
 
@@ -140,20 +127,65 @@ namespace negocio
             }
             catch (Exception)
             {
-
                 throw;
             }
             finally
             {
                 datos.cerrarConexion();
             }
+        }
 
 
 
+        public void modificarCliente(Cliente cli, int id) 
+        {
+            AccesoDatos datos =new AccesoDatos();
+
+            try
+            {
+                datos.consultaSql("update personas set  p.nombre_per = @nombre, p.apellido_per = @apellido, p.email_per = @correo, p.telefono_per = @telefono, p.contraseña_per = @pass, p.fecha_nacimiento_per = @fecha where idPersona = @id");
+                datos.setearParametros("@nombre", cli.Nombre);
+                datos.setearParametros("@apellido", cli.Apellido);
+                datos.setearParametros("@correo", cli.Email);
+                datos.setearParametros("@telefono", cli.Telefono);
+                datos.setearParametros("@pass", cli.Password);
+                datos.setearParametros("@fecha", cli.FechaDeNacimiento);
+
+                datos.ejecutarAccion();
+                datos.cerrarConexion();
 
 
+                if( cli.Apellido != null && cli.direccion.Count>0 )
+                {
+                    foreach (Direccion item in cli.direccion)
+                    {
+                        Direccion dir = new Direccion();
+                        //dir.ModificarDireccion( cli.IdPersona,item);
+
+                    }
+
+                }
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
 
         }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     }

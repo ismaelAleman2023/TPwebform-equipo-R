@@ -10,10 +10,10 @@ namespace dominio
     public class Marca 
     {
         public int IdMarca { get; set; }
+        public string Descripcion { get; set; }
 
         public int Estado { get; set; }
 
-        public string Descripcion { get; set; }
 
         
         public Marca() {

@@ -15,6 +15,6 @@
     contenedor.style.display = "block";
 
     // Inicializamos y mostramos el componente Toast de Bootstrap
-    var toast = new bootstrap.Toast(alertaDiv, { delay: 4000 }); // Se oculta solo a los 4 segundos
+    var toast = new bootstrap.Toast(alertaDiv, { delay: 2500 }); // Se oculta solo a los 4 segundos
     toast.show();
 }

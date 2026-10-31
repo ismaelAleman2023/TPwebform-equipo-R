@@ -356,11 +356,21 @@ namespace tpc_webform_grupo_R
 
         private void eliminarCliente()
         {
-            ClienteNegocio cliN = new ClienteNegocio();
+            try
+            {
+                ClienteNegocio cliN = new ClienteNegocio();
 
-            cliN.eliminarCliente((int)ViewState["eleccion"]);
+                cliN.eliminarCliente((int)ViewState["eleccion"]);
 
-            ViewState.Remove("eleccion");
+                ViewState.Remove("eleccion");
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaExito", "mostrarCartel('¡Cliente eliminado correctamente!', 'error');", true);
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         private void eliminarMarca()
@@ -407,6 +417,11 @@ namespace tpc_webform_grupo_R
 
 
 
+
+        private void modificarCliente()
+        {
+
+        }
 
 
 
