@@ -110,18 +110,6 @@ namespace negocio
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
         }
 
         public void AltaoBajaProducto(int id, int estado)
@@ -171,12 +159,48 @@ namespace negocio
                 throw;
             }
             finally
-            {
+            { 
                 datos.cerrarConexion();
             }
         }
 
+        public Producto buscarProduc(int id) { 
+        
+            AccesoDatos datos = new AccesoDatos();
+            ImagenNegocio img=new ImagenNegocio();
+            Producto pro=new Producto();
 
+            try
+            {
+                datos.consultaSql("select codigoProducto_prod,nombre_prod,descripcion_prod,idMarca_prod," +
+                    "idCategoria_prod,precio_prod,ondemand_prod,estado_prod from productos where idProducto=@id");
+                datos.setearParametros("@id", id);
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read()) { 
+
+                    pro.IdProducto = (int)datos.Lector["idProducto"];
+                    pro.CodigoProducto=(int)datos.Lector["codidoProducto_prod"];
+                    pro.Nombre=(string)datos.Lector["nombre_prod"];
+                    pro.Descripcion =(string)datos.Lector["descripcion_prod"];
+                    pro.Marca = (int)datos.Lector["idMarca_prod"];
+                    pro.Categoria=(int)datos.Lector["idCategoria_prod"];
+                    pro.Precio= (decimal)datos.Lector["precio_prod"];
+                    pro.OnDemand= (bool)datos.Lector["ondemand_prod"];
+                    pro.Estado= (int)datos.Lector["estado_prod"];
+                    pro.ListaImagen = img.buscarXcodProduc(pro.CodigoProducto);
+
+                }
+
+                return pro;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally { datos.Lector.Close(); }   
+        }
 
 
 

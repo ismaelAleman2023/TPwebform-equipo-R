@@ -134,6 +134,38 @@ namespace negocio
 
         }
 
+        public Categoria buscarCategoria(int id) { 
+
+            AccesoDatos datos =new AccesoDatos();
+            Categoria cate=new Categoria();
+            try
+            {
+                datos.consultaSql("select id_C,descripcion_C,estado_c from categorias where id_C=@id");
+                datos.setearParametros("@id",id);
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    cate.IdCategoria = (int)datos.Lector["id_C"];
+                    cate.Descripcion = (string)datos.Lector["descripcion_C"];
+                    cate.Estado = (int)datos.Lector["estado_c"];
+
+                
+                }
+                    
+                    
+                    return cate;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+
+
         //validaciones para duplicado de categorias
 
         public int EstadoCategoria(int id)

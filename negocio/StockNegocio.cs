@@ -75,6 +75,38 @@ namespace negocio
 
         }
 
+        public Stock buscarStock(int id) { 
+        AccesoDatos datos =new AccesoDatos();
+            Stock st=new Stock();
+
+            try
+            {
+                datos.consultaSql("select id_stock,idProducto_stk ,cantidad_stk,estado_stk from stocks where id_stock=@id");
+                datos.setearParametros("@id", id);
+                datos.ejecutarLectura();
+
+
+                while (datos.Lector.Read())
+                {
+                    st.IdStock = (int)datos.Lector["id_stock"];
+                    st.Cantidad = (int)datos.Lector["cantidad_stk"];
+                    st.Estado = (int)datos.Lector["estodo_stk"];
+                }
+
+                return st;
+
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally { datos.cerrarConexion(); }
+        
+        
+        }
+
 
         public void modificar(Stock st) { 
         

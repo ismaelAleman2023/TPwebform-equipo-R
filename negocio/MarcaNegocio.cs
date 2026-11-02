@@ -160,6 +160,37 @@ namespace negocio
 
         }
 
+        public Marca buscarMarca(int id) {
+
+            AccesoDatos datos = new AccesoDatos();
+            Marca m=new Marca();
+            try
+            {
+                datos.consultaSql("select id_m,descripcion_m,estado_m from marcas where id_m=@id");
+                datos.setearParametros("@id", id);
+                datos.ejecutarLectura();
+                while (datos.Lector.Read()) {
+                    m.IdMarca = (int)datos.Lector["id_m"];
+                    m.Descripcion = (string)datos.Lector["descripcion_m"];
+                    m.Estado = (int)datos.Lector["estado_m"];
+            
+                }
+
+
+                return m;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally { datos.cerrarConexion(); }        
+
+        
+        }
+
+
+
 
         //valida si la marca que quiere modificar es la misma del id
         public bool valiModiM(string descrip, int id)
