@@ -143,15 +143,17 @@ namespace negocio
 
             try
             {
-                datos.consultaSql("update personas set  p.nombre_per = @nombre, p.apellido_per = @apellido, p.email_per = @correo, p.telefono_per = @telefono, p.contraseña_per = @pass, p.fecha_nacimiento_per = @fecha where idPersona = @id");
+                datos.consultaSql("update personas set  nombre_per = @nombre, apellido_per = @apellido, email_per = @correo, telefono_per = @telefono, contraseña_per = @pass, fecha_nacimiento_per = @fecha where idPersona = @id");
                 datos.setearParametros("@nombre", cli.Nombre);
                 datos.setearParametros("@apellido", cli.Apellido);
                 datos.setearParametros("@correo", cli.Email);
                 datos.setearParametros("@telefono", cli.Telefono);
                 datos.setearParametros("@pass", cli.Password);
                 datos.setearParametros("@fecha", cli.FechaDeNacimiento);
+                datos.setearParametros("@id", id);
 
                 datos.ejecutarAccion();
+
                 datos.cerrarConexion();
 
 
@@ -178,15 +180,48 @@ namespace negocio
 
 
 
-
-
-
-
-
-
-
-
-
-
+        public Cliente buscarCliente(int id)
+        {
+            Cliente aux = new Cliente();
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                DireccionNegocio dirN = new DireccionNegocio();
+                List<Direccion> listaDire = dirN.listarDirecciones();
+                datos.consultaSql("select p.idPersona, p.nombre_per, p.apellido_per, p.email_per, p.telefono_per, p.contraseña_per, p.fecha_nacimiento_per, p.estado_per, p.idroll_per, c.correoOk from personas p inner join clientes c on p.idPersona = c.idPersona_cli where p.idPersona = @id");
+                datos.setearParametros("@id", id);
+                datos.ejecutarLectura();
+                if (datos.Lector.Read())
+                {
+                    aux.IdPersona = (int)datos.Lector["idPersona"];
+                    aux.Nombre = (string)datos.Lector["nombre_per"];
+                    aux.Apellido = (string)datos.Lector["apellido_per"];
+                    aux.Email = (string)datos.Lector["email_per"];
+                    aux.Telefono = (string)datos.Lector["telefono_per"];
+                    aux.Password = (string)datos.Lector["contraseña_per"];
+                    aux.FechaDeNacimiento = (DateTime)datos.Lector["fecha_nacimiento_per"];
+                    aux.Estado = (int)datos.Lector["estado_per"];
+                    aux.IdRol = (int)datos.Lector["idroll_per"];
+                    aux.CorreoOk = (bool)datos.Lector["correoOk"];
+                   
+                    foreach (Direccion dire in listaDire)
+                    {
+                        if (dire.IdCliente == aux.IdPersona)
+                        {
+                            aux.direccion.Add(dire);
+                        }
+                    }
+                }
+                return aux;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }

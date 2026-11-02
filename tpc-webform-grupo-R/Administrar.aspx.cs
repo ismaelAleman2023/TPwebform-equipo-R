@@ -105,6 +105,7 @@ namespace tpc_webform_grupo_R
             dgvGrilla.DataKeyNames = new string[] { "IdPersona" };
             dgvGrilla.DataBind();
             ocultarItems();
+            ViewState.Remove("eleccion");
 
         }
 
@@ -115,6 +116,7 @@ namespace tpc_webform_grupo_R
             dgvGrilla.DataKeyNames = new string[] { "IdPersona" };
             dgvGrilla.DataBind();
             ocultarItems();
+            ViewState.Remove("eleccion");
 
         }
 
@@ -126,6 +128,7 @@ namespace tpc_webform_grupo_R
             dgvGrilla.DataSource = dirN.listarDirecciones();
             dgvGrilla.DataKeyNames = new string[] { "IdDireccion" };
             dgvGrilla.DataBind();
+            ViewState.Remove("eleccion");
         }
 
         private void cargarGrillaMarca()
@@ -136,6 +139,7 @@ namespace tpc_webform_grupo_R
             dgvGrilla.DataKeyNames = new string[] { "IdMarca" };
             dgvGrilla.DataBind();
             ocultarItems();
+            ViewState.Remove("eleccion");
 
         }
 
@@ -147,6 +151,7 @@ namespace tpc_webform_grupo_R
             dgvGrilla.DataKeyNames = new string[] { "IdCategoria" };
             dgvGrilla.DataBind();
             ocultarItems();
+            ViewState.Remove("eleccion");
 
         }
 
@@ -201,11 +206,9 @@ namespace tpc_webform_grupo_R
                 default:
                     break;
             }
-
-
-
-
         }
+
+
 
 
         private void ocultarItems()
@@ -239,7 +242,7 @@ namespace tpc_webform_grupo_R
         {
             int seleccion = int.Parse(dgvGrilla.SelectedDataKey.Value.ToString());
             ViewState["eleccion"] = seleccion;
-            Session["btnAgregar"] = ViewState["TablaActiva"];
+           // Session["btnAgregar"] = ViewState["TablaActiva"];
         }
 
         protected void btnEliminar_Click(object sender, EventArgs e)
@@ -251,6 +254,7 @@ namespace tpc_webform_grupo_R
                 {
                     case 1:eliminarCategoria();
                         cargarGrillaCategoria();
+
 
                         break;
                     case 2:eliminarMarca();
@@ -294,10 +298,7 @@ namespace tpc_webform_grupo_R
                         break;
                 }
 
-
-
             }
-
 
         }
 
@@ -305,7 +306,6 @@ namespace tpc_webform_grupo_R
         {
             if (ViewState["eleccion"] != null)
             {
-
                 switch (ViewState["TablaActiva"])
                 {
                     case 1://categoria
@@ -330,7 +330,7 @@ namespace tpc_webform_grupo_R
 
                         break;
                     case 8://clientes
-
+                        modificarCliente();
                         break;
                     case 9://direcciones
 
@@ -349,7 +349,6 @@ namespace tpc_webform_grupo_R
                         break;
                 }
             }
-
         }
 
 
@@ -368,7 +367,6 @@ namespace tpc_webform_grupo_R
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -386,7 +384,6 @@ namespace tpc_webform_grupo_R
             }
             catch (Exception)
             {
-
                 throw;
             }
 
@@ -406,7 +403,6 @@ namespace tpc_webform_grupo_R
             }
             catch (Exception)
             {
-
                 throw;
             }
         
@@ -415,13 +411,24 @@ namespace tpc_webform_grupo_R
         //Metodos para eliminar(baja) necesarios para Marca y Categoria
        
 
-
-
-
         private void modificarCliente()
         {
-
+            ClienteNegocio cliN = new ClienteNegocio();
+            try
+            {
+                int idCliente = (int)ViewState["eleccion"];
+                Session["btnAgregar"] = ViewState["TablaActiva"];
+                Session["clienteAModificar"] =cliN.buscarCliente(idCliente);
+                                
+                Response.Redirect("RegistroCliente.aspx");
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
+
+
 
 
 

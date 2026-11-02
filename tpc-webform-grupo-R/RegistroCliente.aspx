@@ -41,7 +41,7 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="txtPassword" class="form-label">Contraseña</label>
-                            <asp:TextBox ID="txtPassword" runat="server" TextMode="Password" CssClass="form-control" placeholder="••••••••" required="true"></asp:TextBox>
+                            <asp:TextBox ID="txtPassword" runat="server" TextMode="Password" CssClass="form-control" placeholder="••••••••" ></asp:TextBox>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="txtFechaNacimiento" class="form-label">Fecha de nacimiento</label>
