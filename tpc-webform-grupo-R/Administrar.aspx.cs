@@ -25,11 +25,13 @@ namespace tpc_webform_grupo_R
 
                     ViewState["TablaActiva"] = Session["btnAgregar"];
 
-                    Session.Remove("btnAdministrar");
+                    //Session.Remove("btnAdministrar");
+
+                    Session.Remove("clienteAModificar");
+                    Session.Remove("vendedorAModificar");
+                    Session.Remove("adminAModificar");
 
                 }
-
-
 
             }
 
@@ -74,6 +76,7 @@ namespace tpc_webform_grupo_R
                     cargarGrillaVendedor();
                     break;
                 case 7:
+                    cargarGrillaAdministrador();
 
                     break;
                 case 8:
@@ -121,6 +124,16 @@ namespace tpc_webform_grupo_R
         }
 
 
+        private void cargarGrillaAdministrador()
+        {
+            AdministrarNegocio adminN = new AdministrarNegocio();
+            dgvGrilla.DataSource = adminN.listarAdministradores();
+            dgvGrilla.DataKeyNames = new string[] { "IdPersona" };
+            dgvGrilla.DataBind();
+            ocultarItems();
+            ViewState.Remove("eleccion");
+        }
+
 
         private void cargarGrillaDireccion()
         {
@@ -157,6 +170,8 @@ namespace tpc_webform_grupo_R
 
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
+
+
             Session["btnAgregar"] = ViewState["TablaActiva"];
 
             int aux = Convert.ToInt32(ViewState["TablaActiva"]);
@@ -242,7 +257,7 @@ namespace tpc_webform_grupo_R
         {
             int seleccion = int.Parse(dgvGrilla.SelectedDataKey.Value.ToString());
             ViewState["eleccion"] = seleccion;
-           // Session["btnAgregar"] = ViewState["TablaActiva"];
+            // Session["btnAgregar"] = ViewState["TablaActiva"];
         }
 
         protected void btnEliminar_Click(object sender, EventArgs e)
@@ -252,12 +267,14 @@ namespace tpc_webform_grupo_R
 
                 switch (ViewState["TablaActiva"])
                 {
-                    case 1:eliminarCategoria();
+                    case 1:
+                        eliminarCategoria();
                         cargarGrillaCategoria();
 
 
                         break;
-                    case 2:eliminarMarca();
+                    case 2:
+                        eliminarMarca();
                         cargarGrillaMarca();
 
                         break;
@@ -271,17 +288,22 @@ namespace tpc_webform_grupo_R
 
                         break;
                     case 6://vendedores
+                        eliminarVendedor();
+                        cargarGrillaVendedor();
 
                         break;
                     case 7://administradores
+                        eliminarAdministrador();
+                        cargarGrillaAdministrador();
 
                         break;
                     case 8://clientes
-
                         eliminarCliente();
                         cargarGrillaCliente();
+
                         break;
                     case 9://direcciones
+                        // no lo usamos
 
                         break;
                     case 10:// ventas
@@ -324,10 +346,10 @@ namespace tpc_webform_grupo_R
 
                         break;
                     case 6://vendedores
-
+                        modificarVendedor();
                         break;
                     case 7://administradores
-
+                        modificarAdministrador();
                         break;
                     case 8://clientes
                         modificarCliente();
@@ -352,6 +374,7 @@ namespace tpc_webform_grupo_R
         }
 
 
+        // Eliminar....
 
         private void eliminarCliente()
         {
@@ -371,45 +394,72 @@ namespace tpc_webform_grupo_R
             }
         }
 
+        private void eliminarVendedor()
+        {
+            try
+            {
+                VendedorNegocio venN = new VendedorNegocio();
+                venN.eliminarVendedor((int)ViewState["eleccion"]);
+                ViewState.Remove("eleccion");
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaExito", "mostrarCartel('¡Vendedor eliminado correctamente!', 'error');", true);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         private void eliminarMarca()
         {
             try
             {
                 MarcaNegocio marcaNegocio = new MarcaNegocio();
-               //falta el metodo para validar si esta asociado a un producto
+                //falta el metodo para validar si esta asociado a un producto
                 marcaNegocio.BajaMarca((int)ViewState["eleccion"]);
                 ViewState.Remove("eleccion");
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaExito", "mostrarCartel('¡Marca eliminada correctamente!', 'success');", true);
-
             }
             catch (Exception)
             {
                 throw;
             }
-
         }
 
-        private void eliminarCategoria() {
-
-
+        private void eliminarCategoria()
+        {
             try
             {
-            CategoriaNegocio cate= new CategoriaNegocio();
+                CategoriaNegocio cate = new CategoriaNegocio();
                 //falta el metodo para validar si esta asociado a un producto
                 cate.bajaCategoria((int)ViewState["eleccion"]);
                 ViewState.Remove("eleccion");
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaExito", "mostrarCartel('¡Marca eliminada correctamente!', 'success');", true);
-
             }
             catch (Exception)
             {
                 throw;
             }
-        
         }
 
-        //Metodos para eliminar(baja) necesarios para Marca y Categoria
-       
+
+        private void eliminarAdministrador()
+        {
+            try
+            {
+                AdministrarNegocio adminN = new AdministrarNegocio();
+                adminN.eliminarAdministrador((int)ViewState["eleccion"]);
+                ViewState.Remove("eleccion");
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaExito", "mostrarCartel('¡Administrador eliminado correctamente!', 'error');", true);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+
+
+        //Modificar....
 
         private void modificarCliente()
         {
@@ -418,8 +468,8 @@ namespace tpc_webform_grupo_R
             {
                 int idCliente = (int)ViewState["eleccion"];
                 Session["btnAgregar"] = ViewState["TablaActiva"];
-                Session["clienteAModificar"] =cliN.buscarCliente(idCliente);
-                                
+                Session["clienteAModificar"] = cliN.buscarCliente(idCliente);
+
                 Response.Redirect("RegistroCliente.aspx");
             }
             catch (Exception)
@@ -429,8 +479,44 @@ namespace tpc_webform_grupo_R
         }
 
 
+        private void modificarVendedor()
+        {
+            VendedorNegocio venN = new VendedorNegocio();
+            try
+            {
+                int idVendedor = (int)ViewState["eleccion"];
+                Session["btnAgregar"] = ViewState["TablaActiva"];
+                Session["vendedorAModificar"] = venN.buscarVendedor(idVendedor);
+                Response.Redirect("RegistroVA.aspx");
+            }
+            catch (Exception)
+            {
+                throw;
+            }
 
 
+        }
+
+        private void modificarAdministrador()
+        {
+            AdministrarNegocio adminN = new AdministrarNegocio();
+            try
+            {
+                int idAdmin = (int)ViewState["eleccion"];
+                Session["btnAgregar"] = ViewState["TablaActiva"];
+                Session["adminAModificar"] = adminN.buscarAdministrador(idAdmin);
+                Response.Redirect("RegistroVA.aspx");
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+
+
+
+
+        }
 
     }
 }

@@ -107,7 +107,6 @@
     <Content Include="Principal.Master" />
     <Content Include="RegistroCategoria.aspx" />
     <Content Include="RegistroMarca.aspx" />
-    <Content Include="RegistroVA.aspx" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -142,6 +141,7 @@
     <Content Include="images\products\producto3.svg" />
     <Content Include="RegistroCliente.aspx" />
     <Content Include="RegistroDireccion.aspx" />
+    <Content Include="RegistroVA.aspx" />
     <Content Include="Scripts\CartelFlotante.js" />
     <Content Include="SobreNosotros.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -255,13 +255,6 @@
     <Compile Include="RegistroMarca.aspx.designer.cs">
       <DependentUpon>RegistroMarca.aspx</DependentUpon>
     </Compile>
-    <Compile Include="RegistroVA.aspx.cs">
-      <DependentUpon>RegistroVA.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="RegistroVA.aspx.designer.cs">
-      <DependentUpon>RegistroVA.aspx</DependentUpon>
-    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Default.aspx.cs">
@@ -288,6 +281,13 @@
     </Compile>
     <Compile Include="RegistroDireccion.aspx.designer.cs">
       <DependentUpon>RegistroDireccion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RegistroVA.aspx.cs">
+      <DependentUpon>RegistroVA.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RegistroVA.aspx.designer.cs">
+      <DependentUpon>RegistroVA.aspx</DependentUpon>
     </Compile>
     <Compile Include="SobreNosotros.aspx.cs">
       <DependentUpon>SobreNosotros.aspx</DependentUpon>

@@ -13,8 +13,8 @@
 
 
 
-                        <h2 class="fw-bold text-dark">Registrar <%= nombre %></h2>
-                        <p class="text-muted">Creá tu cuenta en V.DorregoDesign</p>
+                        <h2 class="fw-bold text-dark"><%= nombre %></h2>
+                        <p class="text-muted" runat="server" id="texto3">Creá tu cuenta en V.DorregoDesign</p>
                     </div>
 
                     <div class="row">
@@ -59,10 +59,17 @@
                         </div>
                     </div>
 
+                    <div class="row" id="cuitOculto" runat="server">
+                        <div class="col-md-12 mb-3">
+                            <label for="txtCuit" class="form-label">Cuit</label>
+                            <asp:TextBox ID="txtCuit" runat="server" CssClass="form-control" required="true"></asp:TextBox>
+                        </div>
+                    </div>
+
                     <!-- Botón Registrarse -->
                     <div class="row justify-content-center mt-4">
                         <div class="col-md-6 d-grid">
-                            <asp:Button ID="btnRegistrar" runat="server" Text="Registrarse" CssClass="btn btn-dark btn-lg" OnClick="btnRegistrar_Click" />
+                            <asp:Button ID="btnRegistrar" runat="server"  CssClass="btn btn-dark btn-lg" OnClick="btnRegistrar_Click" />
                         </div>
                     </div>
                         

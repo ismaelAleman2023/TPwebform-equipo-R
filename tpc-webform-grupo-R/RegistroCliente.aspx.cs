@@ -25,13 +25,19 @@ namespace tpc_webform_grupo_R
             {
                 Cli = Session["clienteAModificar"] as Cliente;
                 if (Cli != null)
-                {
-                    
+                {                   
                     cargarDatosCliente();
                     ViewState["modificar"] = true;
-                }else
+                    tipo.InnerText = "Modificar Cliente";
+                    btnRegistrar.Text = "Guardar";
+                    subtitulo.InnerText = "Modifique los datos y haga click en 'Guardar' .";
+                }
+                else
                 {
                     ViewState["modificar"] = false;
+                    tipo.InnerText = "Registrarse";
+                    btnRegistrar.Text = "Registrarse";
+                    subtitulo.InnerText = "Creá tu cuenta en V.DorregoDesign, completa los Datos";
                 }
             }
         }

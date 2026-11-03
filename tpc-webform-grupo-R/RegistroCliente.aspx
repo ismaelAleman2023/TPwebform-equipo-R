@@ -9,8 +9,8 @@
                 <div class="card shadow-sm p-4 bg-white rounded mx-auto" style="max-width: 800px;">
                 
                     <div class="text-center mb-4">
-                        <h2 class="fw-bold text-dark">Registrarse</h2>
-                        <p class="text-muted">Creá tu cuenta en V.DorregoDesign</p>
+                        <h2 class="fw-bold text-dark" runat="server" id="tipo"></h2>
+                        <p class="text-muted" runat="server" id="subtitulo"></p>
                     </div>
 
                     <!-- Nombre y Apellido -->
@@ -52,7 +52,7 @@
                     <!-- Botón Registrarse centrado -->
                     <div class="row justify-content-center mt-4">
                         <div class="col-md-6 d-grid">
-                            <asp:Button ID="btnRegistrar" runat="server" Text="Registrarse" CssClass="btn btn-dark btn-lg" OnClick="btnRegistrar_Click" />
+                            <asp:Button ID="btnRegistrar" runat="server"  CssClass="btn btn-dark btn-lg" OnClick="btnRegistrar_Click" />
                         </div>
                     </div>
 

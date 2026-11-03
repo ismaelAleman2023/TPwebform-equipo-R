@@ -11,7 +11,8 @@ namespace negocio
     {
         public VendedorNegocio() { }
 
-        public void agregarVendedor(Vendedor vendedorN) {
+        public void agregarVendedor(Vendedor vendedorN)
+        {
 
             AccesoDatos datos = new AccesoDatos();
 
@@ -26,7 +27,6 @@ namespace negocio
                 datos.setearParametros("@fechaNacimiento", vendedorN.FechaDeNacimiento);
                 datos.setearParametros("@estado", vendedorN.Estado);
                 datos.setearParametros("@roll", vendedorN.IdRol);
-
                 datos.ejecutarAccion();
                 datos.cerrarConexion();
 
@@ -55,8 +55,8 @@ namespace negocio
             finally
             {
                 datos.cerrarConexion();
-            }  
-        
+            }
+
         }
 
 
@@ -98,10 +98,94 @@ namespace negocio
             }
 
         }
-        
+
+        public void eliminarVendedor(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.consultaSql("update personas set estado_per=0 where idPersona=@id");
+                datos.setearParametros("@id", id);
+                datos.ejecutarAccion();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
+        public void modificarVendedor(Vendedor vendedorN, int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.consultaSql("update personas set nombre_per=@nombre, apellido_per=@apellido, email_per=@email, telefono_per=@telefono, contraseña_per=@pass, fecha_nacimiento_per=@fechaNacimiento where idPersona=@id");
+                datos.setearParametros("@nombre", vendedorN.Nombre);
+                datos.setearParametros("@apellido", vendedorN.Apellido);
+                datos.setearParametros("@email", vendedorN.Email);
+                datos.setearParametros("@telefono", vendedorN.Telefono);
+                datos.setearParametros("@pass", vendedorN.Password);
+                datos.setearParametros("@fechaNacimiento", vendedorN.FechaDeNacimiento);
+                datos.setearParametros("@id", id);
+                datos.ejecutarAccion();
+                datos.cerrarConexion();
+                datos.consultaSql("update vendedores set legajo_V=@legajo where idpersona_v=@id");
+                datos.setearParametros("@legajo", vendedorN.Legajo);
+                datos.setearParametros("@id", id);
+                datos.ejecutarAccion();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+        }
+
+        public Vendedor buscarVendedor(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            Vendedor vendedorN = new Vendedor();
+            try
+            {
+                datos.consultaSql("select p.idPersona, p.nombre_per, p.apellido_per, p.email_per, p.telefono_per, p.contraseña_per, p.fecha_nacimiento_per, p.estado_per, p.idroll_per, v.legajo_V from personas p inner join Vendedores v on p.idPersona = v.idPersona_V where p.idPersona=@id");
+                datos.setearParametros("@id", id);
+                datos.ejecutarLectura();
+                if (datos.Lector.Read())
+                {
+                    vendedorN.IdPersona = (int)datos.Lector["idPersona"];
+                    vendedorN.Nombre = (string)datos.Lector["nombre_per"];
+                    vendedorN.Apellido = (string)datos.Lector["apellido_per"];
+                    vendedorN.Email = (string)datos.Lector["email_per"];
+                    vendedorN.Telefono = (string)datos.Lector["telefono_per"];
+                    vendedorN.Password = (string)datos.Lector["contraseña_per"];
+                    vendedorN.FechaDeNacimiento = (DateTime)datos.Lector["fecha_nacimiento_per"];
+                    vendedorN.Estado = (int)datos.Lector["estado_per"];
+                    vendedorN.IdRol = (int)datos.Lector["idroll_per"];
+                    vendedorN.Legajo = (string)datos.Lector["legajo_V"];
+                }
+                return vendedorN;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
 
 
 
+        }
 
     }
 }
