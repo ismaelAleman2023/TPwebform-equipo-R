@@ -91,6 +91,25 @@ namespace negocio
             }
         }
 
+        public void EliminarDireccion(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.consultaSql("delete from direccionesEnvio where idDireccion = @id");
+                datos.setearParametros("@id", id);
+                datos.ejecutarAccion();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
         public Direccion buscarDireccion(int id)
         {
             Direccion dir = new Direccion();
