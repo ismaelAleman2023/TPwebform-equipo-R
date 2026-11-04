@@ -10,7 +10,7 @@ namespace dominio
     {
 
         public int IdStock { get; set; }
-        public int CodigoProducto { get; set; }
+        public int IdProducto_stk { get; set; }
 
         public int Cantidad { get; set; }
 

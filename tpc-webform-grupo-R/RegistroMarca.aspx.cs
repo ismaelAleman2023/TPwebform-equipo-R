@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using dominio;
+using Helper;
 namespace tpc_webform_grupo_R
 {
     public partial class RegistroMarca : System.Web.UI.Page

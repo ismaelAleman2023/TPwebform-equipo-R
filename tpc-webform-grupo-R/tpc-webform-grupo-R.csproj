@@ -201,6 +201,7 @@
     <Content Include="Scripts\WebForms\WebParts.js" />
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <Content Include="Site.Master" />
+    <Content Include="SumarStock.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
     <Content Include="Bundle.config" />
@@ -318,6 +319,13 @@
     <Compile Include="Site.Mobile.Master.designer.cs">
       <DependentUpon>Site.Mobile.Master</DependentUpon>
     </Compile>
+    <Compile Include="SumarStock.aspx.cs">
+      <DependentUpon>SumarStock.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SumarStock.aspx.designer.cs">
+      <DependentUpon>SumarStock.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -344,6 +352,10 @@
     <ProjectReference Include="..\dominio\dominio.csproj">
       <Project>{636d348d-557a-47c7-93e6-c04b247636aa}</Project>
       <Name>dominio</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Helper\Helper.csproj">
+      <Project>{1383908b-ca49-48d5-aca7-5693c662e3cb}</Project>
+      <Name>Helper</Name>
     </ProjectReference>
     <ProjectReference Include="..\negocio\negocio.csproj">
       <Project>{a4b38a4a-4fdd-4529-969d-f2722854c6ac}</Project>

@@ -26,7 +26,7 @@ namespace negocio
                  Imagen imagen= new Imagen();
 
                     imagen.IdImagen = (int)datos.Lector["id_img"];
-                    imagen.CodigoProducto = (int)datos.Lector["idProducto_img"];
+                    imagen.idProducto_img = (int)datos.Lector["idProducto_img"];
                     imagen.UrlImagen=(string)datos.Lector ["urlImagen"];
 
                     list.Add(imagen);
@@ -60,7 +60,7 @@ namespace negocio
             try
             {
 
-                datos.consultaSql("select id_img,idProducto_img,urlImagen from imagenes where id_img=@id");
+                datos.consultaSql("select id_img,idProducto_img,urlImagen from imagenes where idProducto_img=@id");
                 datos.setearParametros("@id", id);
                 datos.ejecutarLectura();
 
@@ -70,7 +70,7 @@ namespace negocio
                     Imagen imagen = new Imagen();
 
                     imagen.IdImagen = (int)datos.Lector["id_img"];
-                    imagen.CodigoProducto = (int)datos.Lector["idProducto_img"];
+                    imagen.idProducto_img = (int)datos.Lector["idProducto_img"];
                     imagen.UrlImagen = (string)datos.Lector["urlImagen"];
 
                     list.Add(imagen);
@@ -121,7 +121,7 @@ namespace negocio
             try
             {
                 datos.consultaSql("insert into imagenes(idProducto_img,urlImagen) values (@idprodu,@url)");
-                datos.setearParametros("@idprodu", imga.CodigoProducto);
+                datos.setearParametros("@idprodu", imga.idProducto_img);
                 datos.setearParametros("@url", imga.UrlImagen);
                 datos.ejecutarAccion();
             }

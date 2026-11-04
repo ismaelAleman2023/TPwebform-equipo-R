@@ -16,7 +16,7 @@ namespace negocio
             try
             {
                 datos.consultaSql("insert into (idProducto_stk,cantidad_stk,estado_stk) values (@idProduc ,@cantidad ,@estado)");
-                datos.setearParametros("@idProduc", st.CodigoProducto);
+                datos.setearParametros("@idProduc", st.IdProducto_stk);
                 datos.setearParametros("@cantidad", st.Cantidad);
                 datos.setearParametros("@estado", st.Estado);
                 datos.ejecutarAccion();
@@ -53,7 +53,7 @@ namespace negocio
                     Stock stock = new Stock();
 
                     stock.IdStock = (int)datos.Lector["id_stock"];
-                    stock.CodigoProducto = (int)datos.Lector["idProducto_stk"];
+                    stock.IdProducto_stk = (int)datos.Lector["idProducto_stk"];
                     stock.Cantidad = (int)datos.Lector["cantidad_stk"];
                     stock.Estado = (int)datos.Lector["estado_stk"];
 
@@ -86,14 +86,20 @@ namespace negocio
                 datos.ejecutarLectura();
 
 
-                while (datos.Lector.Read())
+                if (datos.Lector.Read())
                 {
                     st.IdStock = (int)datos.Lector["id_stock"];
+                    st.IdProducto_stk = (int)datos.Lector["idProducto_stk"];
                     st.Cantidad = (int)datos.Lector["cantidad_stk"];
-                    st.Estado = (int)datos.Lector["estodo_stk"];
-                }
+                    st.Estado = (int)datos.Lector["estado_stk"];
 
+                    return st;
+                }
+                else
+                {
                 return st;
+                    
+                }
 
 
             }
@@ -116,7 +122,7 @@ namespace negocio
             {
 
                 datos.consultaSql("update stocks  set idProducto_stk=@idProduc ,cantidad_stk=@cantidad ,estado_stk=@estado where id_stock=@id ");
-                datos.setearParametros("@idProduc", st.CodigoProducto);
+                datos.setearParametros("@idProduc", st.IdProducto_stk);
                 datos.setearParametros("@cantidad", st.Cantidad);
                 datos.setearParametros("@estado", st.Estado);
                 datos.setearParametros("id",st.IdStock);
@@ -188,7 +194,7 @@ namespace negocio
             foreach (Stock st in lista)
             {
 
-                if (st.CodigoProducto == idprod)
+                if (st.IdProducto_stk == idprod)
                 {
 
                     return true;

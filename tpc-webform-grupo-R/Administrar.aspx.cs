@@ -1,4 +1,5 @@
-﻿using negocio;
+﻿using dominio;
+using negocio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -64,13 +65,13 @@ namespace tpc_webform_grupo_R
 
                     break;
                 case 3:
-
+                    cargarGrillaStock();
                     break;
                 case 4:
                     cargarGrillaTipoPago();
                     break;
                 case 5:
-
+                    cargarGrillaProducto();
                     break;
                 case 6:
                     cargarGrillaVendedor();
@@ -188,7 +189,55 @@ namespace tpc_webform_grupo_R
             dgvGrilla.DataKeyNames = new string[] { "IdEstado" };
             dgvGrilla.DataBind();
             ViewState.Remove("eleccion");
-        }                   
+        }
+
+        private void cargarGrillaProducto() { 
+        ProductoNegocio pro=new ProductoNegocio();
+        MarcaNegocio marcaNeg=new MarcaNegocio();
+        CategoriaNegocio cateNeg=new CategoriaNegocio();
+
+            var listaMarcas = marcaNeg.ListarMarca();
+            var listaCategorias = cateNeg.listarCate();
+
+            var listaParaGrilla = pro.listarProduc().Select(p => new {
+                p.IdProducto,
+                p.CodigoProducto,
+                p.Nombre,
+                p.Descripcion,
+                Marca = listaMarcas.FirstOrDefault(m => m.IdMarca == p.Marca)?.Descripcion ?? "Sin Marca",
+                Categoria = listaCategorias.FirstOrDefault(c => c.IdCategoria == p.Categoria)?.Descripcion ?? "Sin Categoria",
+                p.Precio,
+                p.OnDemand,
+                p.Estado
+
+            }).ToList();
+
+
+            dgvGrilla.DataSource =listaParaGrilla;
+            dgvGrilla.DataKeyNames = new string[] {"IdProducto"};
+            dgvGrilla.DataBind();
+            ocultarItems();
+            ViewState.Remove("eleccion");
+
+        
+        
+        
+        }
+
+        private void cargarGrillaStock() { 
+        
+            StockNegocio stockNegocio = new StockNegocio();
+
+            dgvGrilla.DataSource=stockNegocio.listaStock();
+            dgvGrilla.DataKeyNames = new string[] { "IdStock" };
+            dgvGrilla.DataBind();
+            ocultarItems();
+            ViewState.Remove("eleccion");
+        
+        
+        
+        }
+
 
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
@@ -208,7 +257,7 @@ namespace tpc_webform_grupo_R
                     Response.Redirect("RegistroMarca.aspx");
 
                     break;
-                case 3://stock
+                case 3:sumarStock();
 
                     break;
                 case 4://tipo pago
@@ -257,7 +306,10 @@ namespace tpc_webform_grupo_R
                     string nombreColumna = dgvGrilla.HeaderRow.Cells[i].Text;
 
                     // Si la columna es igual se oculata
-                    if (nombreColumna.Equals("idPersona", StringComparison.OrdinalIgnoreCase) ||
+                    if (
+                       nombreColumna.Equals("IdStock",StringComparison.OrdinalIgnoreCase) ||
+                       nombreColumna.Equals("IdProducto",StringComparison.OrdinalIgnoreCase) ||
+                        nombreColumna.Equals("idPersona", StringComparison.OrdinalIgnoreCase) ||
                         nombreColumna.Equals("Password", StringComparison.OrdinalIgnoreCase) ||
                         nombreColumna.Equals("IdCategoria", StringComparison.OrdinalIgnoreCase) ||
                         nombreColumna.EndsWith("IdMarca", StringComparison.OrdinalIgnoreCase))
@@ -568,11 +620,48 @@ namespace tpc_webform_grupo_R
             {
                 throw;
             }
+        }
 
 
 
+        private void sumarStock() {
+
+            ProductoNegocio produc=new ProductoNegocio();
+            StockNegocio st = new StockNegocio();
 
 
+            try
+            {
+
+            if (ViewState["eleccion"]!=null) {
+
+                int idStock = (int)ViewState["eleccion"];
+                Stock stock = st.buscarStock(idStock);
+                 string nombre = produc.nombreprodu((int)stock.IdProducto_stk);
+
+                Session["btnAgregar"] = ViewState["TablaActiva"];
+                 Session["NombreProducto"] =nombre;
+
+                Response.Redirect("SumarStock.aspx?id="+stock.IdProducto_stk);
+
+
+            }
+            else{
+
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaExito", "mostrarCartel('¡Seleccione un stock de la grilla!', 'error');", true);
+
+
+            }
+        
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        
+        
         }
 
     }

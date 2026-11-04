@@ -10,7 +10,7 @@ namespace dominio
     {
 
         public int IdImagen { get; set; }
-        public int CodigoProducto { get; set; }
+        public int idProducto_img { get; set; }
         public string UrlImagen { get; set; }
 
         public override string ToString()

@@ -73,14 +73,14 @@ namespace negocio
             try
             {
                 datos.consultaSql("select idProducto,codigoProducto_prod,nombre_prod,descripcion_prod,idMarca_prod,idCategoria_prod," +
-                    "precio_prod,ondemand_prod,estado_prod from productos");
+                    "precio_prod,ondemand_prod,estado_prod from productos ");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
                 {
                     Producto pro = new Producto();
                     pro.IdProducto = (int)datos.Lector["idProducto"];
-                    pro.CodigoProducto = (int)datos.Lector["codigoProducto_prod"];
+                    pro.CodigoProducto = (string)datos.Lector["codigoProducto_prod"];
                     pro.Nombre = (string)datos.Lector["nombre_prod"];
                     pro.Descripcion = (string)datos.Lector["descripcion_prod"];
                     pro.Marca = (int)datos.Lector["idMarca_prod"];
@@ -88,7 +88,7 @@ namespace negocio
                     pro.Precio = (decimal)datos.Lector["precio_prod"];
                     pro.OnDemand = (bool)datos.Lector["ondemand_prod"];
                     pro.Estado = (int)datos.Lector["estado_prod"];
-                    pro.ListaImagen = img.buscarXcodProduc(pro.CodigoProducto);
+                    pro.ListaImagen = img.buscarXcodProduc(pro.IdProducto);
 
                     listPro.Add(pro);
 
@@ -172,7 +172,7 @@ namespace negocio
 
             try
             {
-                datos.consultaSql("select codigoProducto_prod,nombre_prod,descripcion_prod,idMarca_prod," +
+                datos.consultaSql("select idProducto,codigoProducto_prod,nombre_prod,descripcion_prod,idMarca_prod," +
                     "idCategoria_prod,precio_prod,ondemand_prod,estado_prod from productos where idProducto=@id");
                 datos.setearParametros("@id", id);
                 datos.ejecutarLectura();
@@ -180,7 +180,7 @@ namespace negocio
                 while (datos.Lector.Read()) { 
 
                     pro.IdProducto = (int)datos.Lector["idProducto"];
-                    pro.CodigoProducto=(int)datos.Lector["codidoProducto_prod"];
+                    pro.CodigoProducto=(string)datos.Lector["codigoProducto_prod"];
                     pro.Nombre=(string)datos.Lector["nombre_prod"];
                     pro.Descripcion =(string)datos.Lector["descripcion_prod"];
                     pro.Marca = (int)datos.Lector["idMarca_prod"];
@@ -188,7 +188,7 @@ namespace negocio
                     pro.Precio= (decimal)datos.Lector["precio_prod"];
                     pro.OnDemand= (bool)datos.Lector["ondemand_prod"];
                     pro.Estado= (int)datos.Lector["estado_prod"];
-                    pro.ListaImagen = img.buscarXcodProduc(pro.CodigoProducto);
+                    pro.ListaImagen = img.buscarXcodProduc(pro.IdProducto);
 
                 }
 
@@ -202,6 +202,42 @@ namespace negocio
             finally { datos.Lector.Close(); }   
         }
 
+        public string nombreprodu(int idProducto) { 
+        
+        AccesoDatos datos = new AccesoDatos();
+          
+            try
+            {
+
+                datos.consultaSql("select nombre_prod from productos where idProducto=@id");
+                datos.setearParametros("@id", idProducto);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+
+                    return (string)datos.Lector["nombre_prod"];
+                }
+                else { 
+                
+                return "vacio";
+                
+                
+                }
+
+                 
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally {
+
+                datos.cerrarConexion();
+            }
+
+        }
 
 
     }
