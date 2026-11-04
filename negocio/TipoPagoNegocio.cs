@@ -103,5 +103,64 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+
+        public TipoPago buscarTipoPago(int id)
+        {
+            TipoPago tp = new TipoPago();
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.consultaSql("select idTipoPago, descripcion_tipo, estado_tipo from tipoPagos where idTipoPago = @id");
+                datos.setearParametros("@id", id);
+                datos.ejecutarLectura();
+                if (datos.Lector.Read())
+                {
+                    tp.IdTipoPago = (int)datos.Lector["idTipoPago"];
+                    tp.Descripcion = (string)datos.Lector["descripcion_tipo"];
+                    tp.Estado = (int)datos.Lector["estado_tipo"];
+                }
+                return tp;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public void modificarTipoPago(TipoPago tp)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.consultaSql("update tipoPagos set descripcion_tipo = @descripcion where idTipoPago = @id");
+                datos.setearParametros("@descripcion", tp.Descripcion);
+                datos.setearParametros("@id", tp.IdTipoPago);
+                datos.ejecutarAccion();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public bool ExisteOtraDescripcion(string descrip, int id)
+        {
+            foreach (TipoPago tp in ListarTipoPago())
+            {
+                if (tp.IdTipoPago != id && tp.Descripcion.Equals(descrip, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }
