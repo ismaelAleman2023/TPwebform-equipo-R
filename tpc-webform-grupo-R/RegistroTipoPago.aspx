@@ -13,7 +13,7 @@
                         <div class="card shadow-sm p-4 bg-white rounded mx-auto text-dark" style="max-width: 450px;">
 
                             <div class="text-center mb-4">
-                                <h2 class="fw-bold">Registrar Tipo de Pago</h2>
+                                <h2 class="fw-bold"><%= titulo %></h2>
                             </div>
 
                             <div class="mb-3">

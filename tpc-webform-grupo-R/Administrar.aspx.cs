@@ -30,6 +30,7 @@ namespace tpc_webform_grupo_R
                     Session.Remove("clienteAModificar");
                     Session.Remove("vendedorAModificar");
                     Session.Remove("adminAModificar");
+                    Session.Remove("tipoPagoAModificar");
 
                 }
 
@@ -364,7 +365,7 @@ namespace tpc_webform_grupo_R
 
                         break;
                     case 4://tipo pago
-
+                        modificarTipoPago();
                         break;
                     case 5://productos
 
@@ -515,6 +516,22 @@ namespace tpc_webform_grupo_R
 
         //Modificar....
 
+
+        private void modificarTipoPago()
+        {
+            TipoPagoNegocio tpN = new TipoPagoNegocio();
+            try
+            {
+                int idTipoPago = (int)ViewState["eleccion"];
+                Session["btnAgregar"] = ViewState["TablaActiva"];
+                Session["tipoPagoAModificar"] = tpN.buscarTipoPago(idTipoPago);
+                Response.Redirect("RegistroTipoPago.aspx");
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
 
         private void modificarEstado()
         {
