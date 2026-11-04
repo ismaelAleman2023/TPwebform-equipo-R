@@ -67,7 +67,7 @@ namespace tpc_webform_grupo_R
 
                     break;
                 case 4:
-
+                    cargarGrillaTipoPago();
                     break;
                 case 5:
 
@@ -170,6 +170,16 @@ namespace tpc_webform_grupo_R
 
         }
 
+
+        private void cargarGrillaTipoPago()
+        {
+            TipoPagoNegocio tpN = new TipoPagoNegocio();
+            dgvGrilla.DataSource = tpN.ListarTipoPago();
+            dgvGrilla.DataKeyNames = new string[] { "IdTipoPago" };
+            dgvGrilla.DataBind();
+            ocultarItems();
+            ViewState.Remove("eleccion");
+        }
 
         private void cargarGrillaEstado()
         {
