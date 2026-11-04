@@ -100,6 +100,7 @@
     <Content Include="Administrar.aspx" />
     <Content Include="ComoComprar.aspx" />
     <Content Include="Contactanos.aspx" />
+    <Content Include="RegistroEstado.aspx" />
     <Content Include="images\icons\face.png" />
     <Content Include="images\icons\insta.png" />
     <Content Include="images\icons\whatsap.png" />
@@ -226,6 +227,13 @@
     </Compile>
     <Compile Include="Contactanos.aspx.designer.cs">
       <DependentUpon>Contactanos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RegistroEstado.aspx.cs">
+      <DependentUpon>RegistroEstado.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RegistroEstado.aspx.designer.cs">
+      <DependentUpon>RegistroEstado.aspx</DependentUpon>
     </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>

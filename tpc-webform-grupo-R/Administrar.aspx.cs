@@ -25,8 +25,8 @@ namespace tpc_webform_grupo_R
 
                     ViewState["TablaActiva"] = Session["btnAgregar"];
 
-                    //Session.Remove("btnAdministrar");
-
+                 
+                    Session.Remove("estadoAModificar");
                     Session.Remove("clienteAModificar");
                     Session.Remove("vendedorAModificar");
                     Session.Remove("adminAModificar");
@@ -74,6 +74,7 @@ namespace tpc_webform_grupo_R
                     break;
                 case 6:
                     cargarGrillaVendedor();
+
                     break;
                 case 7:
                     cargarGrillaAdministrador();
@@ -93,6 +94,7 @@ namespace tpc_webform_grupo_R
 
                     break;
                 case 12:
+                    cargarGrillaEstado();
 
                     break;
                 default:
@@ -168,6 +170,16 @@ namespace tpc_webform_grupo_R
 
         }
 
+
+        private void cargarGrillaEstado()
+        {
+            EstadoNegocio estadoN = new EstadoNegocio();
+            dgvGrilla.DataSource = estadoN.listarEstados();
+            dgvGrilla.DataKeyNames = new string[] { "IdEstado" };
+            dgvGrilla.DataBind();
+            ViewState.Remove("eleccion");
+        }                   
+
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
 
@@ -215,7 +227,7 @@ namespace tpc_webform_grupo_R
 
                     break;
                 case 12:// estados
-
+                    Response.Redirect("RegistroEstado.aspx");
                     break;
 
                 default:
@@ -257,7 +269,7 @@ namespace tpc_webform_grupo_R
         {
             int seleccion = int.Parse(dgvGrilla.SelectedDataKey.Value.ToString());
             ViewState["eleccion"] = seleccion;
-            // Session["btnAgregar"] = ViewState["TablaActiva"];
+           
         }
 
         protected void btnEliminar_Click(object sender, EventArgs e)
@@ -313,7 +325,8 @@ namespace tpc_webform_grupo_R
 
                         break;
                     case 12:// estados
-
+                        eliminarEstado();
+                        cargarGrillaEstado();
                         break;
 
                     default:
@@ -364,7 +377,7 @@ namespace tpc_webform_grupo_R
 
                         break;
                     case 12:// estados
-
+                        modificarEstado();
                         break;
 
                     default:
@@ -457,9 +470,43 @@ namespace tpc_webform_grupo_R
             }
         }
 
+        private void eliminarEstado()
+        {
+            try
+            {
+                EstadoNegocio estadoN = new EstadoNegocio();
+                estadoN.eliminarEstado((int)ViewState["eleccion"]);
+                ViewState.Remove("eleccion");
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaExito", "mostrarCartel('¡Estado eliminado correctamente!', 'error');", true);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
 
 
         //Modificar....
+
+
+        private void modificarEstado()
+        {
+            EstadoNegocio estadoN = new EstadoNegocio();
+            try
+            {
+                int idEstado = (int)ViewState["eleccion"];
+                Session["btnAgregar"] = ViewState["TablaActiva"];
+                Session["estadoAModificar"] = estadoN.buscarEstado(idEstado);
+                Response.Redirect("RegistroEstado.aspx");
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+
 
         private void modificarCliente()
         {

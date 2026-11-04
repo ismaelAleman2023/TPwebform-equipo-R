@@ -129,7 +129,6 @@ namespace negocio
             }
             catch (Exception)
             {
-
                 throw;
             }
 

@@ -46,6 +46,7 @@
     <Compile Include="Cliente.cs" />
     <Compile Include="Direccion.cs" />
     <Compile Include="Ayudante.cs" />
+    <Compile Include="Estado.cs" />
     <Compile Include="Imagen.cs" />
     <Compile Include="Marca.cs" />
     <Compile Include="Persona.cs" />
