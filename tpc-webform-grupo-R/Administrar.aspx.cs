@@ -212,7 +212,7 @@ namespace tpc_webform_grupo_R
 
                     break;
                 case 4://tipo pago
-
+                    Response.Redirect("RegistroTipoPago.aspx");
                     break;
                 case 5://productos
 
@@ -304,7 +304,8 @@ namespace tpc_webform_grupo_R
 
                         break;
                     case 4://tipo pago
-
+                        eliminarTipoPago();
+                        cargarGrillaTipoPago();
                         break;
                     case 5://productos
 
@@ -464,6 +465,21 @@ namespace tpc_webform_grupo_R
             }
         }
 
+
+        private void eliminarTipoPago()
+        {
+            try
+            {
+                TipoPagoNegocio tpN = new TipoPagoNegocio();
+                tpN.BajaTipoPago((int)ViewState["eleccion"]);
+                ViewState.Remove("eleccion");
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaExito", "mostrarCartel('Tipo de pago dado de baja correctamente', 'success');", true);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
 
         private void eliminarAdministrador()
         {
