@@ -58,10 +58,10 @@ namespace tpc_webform_grupo_R
         {
             switch (opcion)
             {
-                case 1:
+                case 1://categoria
                     cargarGrillaCategoria();
                     break;
-                case 2:
+                case 2://marca
                     cargarGrillaMarca();
 
                     break;
@@ -74,28 +74,28 @@ namespace tpc_webform_grupo_R
                 case 5:
                     cargarGrillaProducto();
                     break;
-                case 6:
+                case 6://vendedores
                     cargarGrillaVendedor();
 
                     break;
-                case 7:
+                case 7://administradores
                     cargarGrillaAdministrador();
 
                     break;
-                case 8:
+                case 8://clientes   
                     cargarGrillaCliente();
 
                     break;
-                case 9:
+                case 9://direcciones
                     cargarGrillaDireccion();
                     break;
-                case 10:
+                case 10://rolles
 
                     break;
-                case 11:
+                case 11://ventas
 
                     break;
-                case 12:
+                case 12://estados
                     cargarGrillaEstado();
 
                     break;
@@ -250,11 +250,11 @@ namespace tpc_webform_grupo_R
 
             switch (aux)
             {
-                case 1:
+                case 1://catergoria
                     Response.Redirect("RegistroCategoria.aspx");
 
                     break;
-                case 2:
+                case 2://marca
                     Response.Redirect("RegistroMarca.aspx");
 
                     break;
@@ -346,7 +346,6 @@ namespace tpc_webform_grupo_R
                         eliminarCategoria();
                         cargarGrillaCategoria();
 
-
                         break;
                     case 2:
                         eliminarMarca();
@@ -408,7 +407,7 @@ namespace tpc_webform_grupo_R
                 switch (ViewState["TablaActiva"])
                 {
                     case 1://categoria
-
+                      
                         break;
                     case 2://marca
 
@@ -635,7 +634,6 @@ namespace tpc_webform_grupo_R
             {
                 throw;
             }
-
 
         }
 

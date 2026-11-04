@@ -54,6 +54,7 @@
     <Compile Include="StockNegocio.cs" />
     <Compile Include="TipoPagoNegocio.cs" />
     <Compile Include="VendedorNegocio.cs" />
+    <Compile Include="VentaNegocio.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\dominio\dominio.csproj">
