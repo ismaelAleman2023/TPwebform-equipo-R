@@ -75,9 +75,10 @@ namespace negocio
 
         }
 
-        public Stock buscarStock(int id) { 
-        AccesoDatos datos =new AccesoDatos();
-            Stock st=new Stock();
+        public Stock buscarStock(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            Stock st = new Stock();
 
             try
             {
@@ -97,8 +98,8 @@ namespace negocio
                 }
                 else
                 {
-                return st;
-                    
+                    return st;
+
                 }
 
 
@@ -109,14 +110,15 @@ namespace negocio
                 throw;
             }
             finally { datos.cerrarConexion(); }
-        
-        
+
+
         }
 
 
-        public void modificar(Stock st) { 
-        
-            AccesoDatos datos=new AccesoDatos();
+        public void modificar(Stock st)
+        {
+
+            AccesoDatos datos = new AccesoDatos();
 
             try
             {
@@ -125,7 +127,7 @@ namespace negocio
                 datos.setearParametros("@idProduc", st.IdProducto_stk);
                 datos.setearParametros("@cantidad", st.Cantidad);
                 datos.setearParametros("@estado", st.Estado);
-                datos.setearParametros("id",st.IdStock);
+                datos.setearParametros("id", st.IdStock);
                 datos.ejecutarAccion();
 
 
@@ -135,23 +137,24 @@ namespace negocio
 
                 throw;
             }
-            finally { 
-            datos.cerrarConexion();
-            
+            finally
+            {
+                datos.cerrarConexion();
+
             }
-        
-        
+
+
         }
 
 
 
-        public void AltaoBajaStock(int id ,int estado)
+        public void AltaoBajaStock(int id, int estado)
         {
 
             AccesoDatos Datos = new AccesoDatos();
             try
             {
-                Datos.consultaSql("update stocks set estado_stk= "+estado+" where id_stock=@id");
+                Datos.consultaSql("update stocks set estado_stk= " + estado + " where id_stock=@id");
                 Datos.setearParametros("@id", id);
                 Datos.ejecutarAccion();
 
@@ -209,8 +212,8 @@ namespace negocio
 
 
         public void ModificarStockCantidad(int idProducto, int cantidad, string operacion)
-        { 
-        AccesoDatos datos = new AccesoDatos();
+        {
+            AccesoDatos datos = new AccesoDatos();
 
 
             try
@@ -226,25 +229,96 @@ namespace negocio
 
                 throw;
             }
-            finally {
+            finally
+            {
                 datos.cerrarConexion();
-            
+
             }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        }
+
+
+
+        public List<Stock> listaActivos()
+        {
+
+            AccesoDatos datos = new AccesoDatos();
+            List<Stock> lst = new List<Stock>();
+
+            try
+            {
+
+                datos.consultaSql("select id_stock ,idProducto_stk,cantidad_stk,estado_stk from stocks where estado_stk= 1");
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Stock stock = new Stock();
+
+                    stock.IdStock = (int)datos.Lector["id_stock"];
+                    stock.IdProducto_stk = (int)datos.Lector["idProducto_stk"];
+                    stock.Cantidad = (int)datos.Lector["cantidad_stk"];
+                    stock.Estado = (int)datos.Lector["estado_stk"];
+
+
+                    lst.Add(stock);
+
+                }
+
+
+                return lst;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+
+        }
+
+
+        public List<Stock> listaInactivos()
+        {
+
+            AccesoDatos datos = new AccesoDatos();
+            List<Stock> lst = new List<Stock>();
+
+            try
+            {
+
+                datos.consultaSql("select id_stock ,idProducto_stk,cantidad_stk,estado_stk from stocks where estado_stk= 0");
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Stock stock = new Stock();
+
+                    stock.IdStock = (int)datos.Lector["id_stock"];
+                    stock.IdProducto_stk = (int)datos.Lector["idProducto_stk"];
+                    stock.Cantidad = (int)datos.Lector["cantidad_stk"];
+                    stock.Estado = (int)datos.Lector["estado_stk"];
+
+
+                    lst.Add(stock);
+
+                }
+
+
+                return lst;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+
         }
 
 
 
 
-
-        }
+    }
 }

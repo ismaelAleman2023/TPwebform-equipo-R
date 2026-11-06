@@ -42,7 +42,18 @@ namespace Helper
             return pro.Descripcion;
         
         }
-            
+
+
+        public static string idxCategoria(int idCategoria) { 
+        
+            CategoriaNegocio cate=new CategoriaNegocio();
+            Categoria categoria=cate.buscarCategoria(idCategoria);
+            return categoria.Descripcion;
+        
+        }
+
+
+        
 
 
     }
