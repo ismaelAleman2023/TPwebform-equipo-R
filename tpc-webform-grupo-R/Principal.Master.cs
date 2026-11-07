@@ -1,4 +1,5 @@
-﻿using System;
+﻿using dominio;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,6 +12,18 @@ namespace tpc_webform_grupo_R
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+
+
+            if (Session["listaCarrito"] != null)
+            {
+                List<Producto> carrito = (List<Producto>)Session["listaCarrito"];
+                actualizarContador(carrito.Count);
+            }
+            else
+            {
+                actualizarContador(0);
+            }
+
             if (!IsPostBack)
             {
                 // 1. Obtiene el nombre de la página actual sin el ".aspx" (Ej: "Productos", "Clientes", "Administrar")
@@ -26,6 +39,9 @@ namespace tpc_webform_grupo_R
                     lnk.Style["color"] = "#000";
                     lnk.Style["border"] = "1px solid #ffc107";
                 }
+
+               
+                
             }
         }
 
@@ -33,5 +49,18 @@ namespace tpc_webform_grupo_R
         {
 
         }
+
+
+        public void actualizarContador(int cantidad)
+        {
+            lblContadorCarrito.Text = cantidad.ToString();
+        }
+
+        public string ObtenerIdContador()
+        {
+            return lblContadorCarrito.ClientID;
+        }
+
+
     }
 }

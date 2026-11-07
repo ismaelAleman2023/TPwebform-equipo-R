@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="Catálogo" Language="C#" MasterPageFile="~/Principal.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="tpc_webform_grupo_R.Default" %>
+<%@ MasterType VirtualPath="~/Principal.master" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -57,6 +58,7 @@
                                         <!-- Imagen con tamaño equilibrado para PC (~140px) -->
                                         <div class="bg-secondary rounded mb-3 d-flex align-items-center justify-content-center" style="height: 140px;">
                                             <span class="text-dark small">[ IMAGEN ]</span>
+                                            <asp:Image ID="imgCard" ImageUrl="" runat="server" />
                                         </div>
 
                                         <!-- Nombre y Precio -->
@@ -65,8 +67,8 @@
 
                                         <!-- Botones de acción inferiores con controles ASP.NET -->
                                         <div class="mt-auto d-flex gap-2">
-                                            <asp:Button ID="btnDetalle" runat="server" Text="Ver Detalle" CssClass="btn btn-outline-light btn-sm w-50 py-1" CommandArgument='<%#Eval("IdProducto") %>' CommandName="IdProd" OnClick="btnDetalle_Click" />
-                                            <asp:Button ID="btnAgregar" runat="server" Text="Agregar" CssClass="btn btn-warning btn-sm w-50 fw-bold text-dark py-1" Style="font-size: 0.8rem;" />
+                                            <asp:Button ID="btnDetalle" runat="server" Text="Ver Detalle" CssClass="btn btn-outline-light btn-sm w-50 py-1" CommandArgument='<%#Eval("IdProducto") %>' OnClick="btnDetalle_Click" />
+                                            <asp:Button ID="btnAgregar" runat="server" Text="Agregar" CssClass="btn btn-warning btn-sm w-50 fw-bold text-dark py-1" CommandArgument='<%#Eval("IdProducto") %>'  Onclick="btnAgregar_Click"  Style="font-size: 0.8rem;"  />
                                         </div>
 
                                     </div>

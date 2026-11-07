@@ -123,6 +123,15 @@ namespace tpc_webform_grupo_R
         protected global::System.Web.UI.WebControls.HyperLink lnkCarrito;
 
         /// <summary>
+        /// Control lblContadorCarrito.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblContadorCarrito;
+
+        /// <summary>
         /// Control ContentPlaceHolder1.
         /// </summary>
         /// <remarks>

@@ -13,26 +13,36 @@ namespace tpc_webform_grupo_R
 {
     public partial class Default : System.Web.UI.Page
     {
-        public List<Producto> listaProductos;
+       
+        private List<Producto> carritoCompra; 
+        
+        
       
         protected void Page_Load(object sender, EventArgs e)
-        {
-
+        {                                     
             ProductoNegocio negocio = new ProductoNegocio();
-                           
-            listaProductos = negocio.listarProduc();
-          
-            
-            Session.Add("listaProductos", listaProductos);
-            
+            List<Producto>listaProductos = negocio.listarProduc();
+
             if (!IsPostBack)
-            {               
-                reapet.DataSource = listaProductos;
-                reapet.DataBind();
+            {
+                Session["listaprod"] = listaProductos;
+
+                cargarGrillaCard();
+
+                if (Session["listaCarrito"] == null)
+                {
+                    Session["listaCarrito"] = new List<Producto>();
+
+                }
             }
 
+            carritoCompra = (List<Producto>)Session["listaCarrito"];
 
+            Master.actualizarContador(carritoCompra.Count);
 
+          
+            string script = $"document.getElementById('{Master.FindControl("lblContadorCarrito").ClientID}').innerText = '{carritoCompra.Count}';";
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "ActualizarBadge", script, true);
         }
 
         protected void btnDetalle_Click(object sender, EventArgs e)
@@ -56,6 +66,60 @@ namespace tpc_webform_grupo_R
 
             ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "var myModal = new bootstrap.Modal(document.getElementById('productoModal')); myModal.show();", true);
         }
+
+        protected void btnAgregar_Click(object sender, EventArgs e)
+        {
+
+            Button btn = (Button)sender;
+            int seleccionProd = int.Parse(btn.CommandArgument);
+
+            carritoCompra = (List<Producto>)Session["listaCarrito"];
+
+            carritoCompra.Add(buscarProducto(seleccionProd));
+
+            Session["listaCarrito"]=carritoCompra;
+
+            int totalActual = carritoCompra.Count;
+
+            
+            
+            // Forzamos la actualización mediante el ScriptManager nativo vinculado al UpdatePanel actual
+            string idControl = Master.ObtenerIdContador();
+            string script = $"document.getElementById('{idControl}').innerText = '{totalActual}';";
+
+            // Cambiamos 'this.GetType()' por un identificador único para que el navegador no lo ignore
+            ScriptManager.RegisterStartupScript(UpdatePanel1, UpdatePanel1.GetType(), "ActualizarBadgeKey", script, true);
+
+           
+
+            cargarGrillaCard();
+
+        }
+
+
+        private Producto buscarProducto(int id)
+        {
+            Producto prod = null;
+            List<Producto> listaProd = (List < Producto > )Session["listaprod"];
+
+            foreach (Producto item in listaProd)
+            {
+                if (id == item.IdProducto)
+                {
+                    prod = item;
+                    return prod;
+                }
+            }
+            return prod;
+        }            
+
+        private void cargarGrillaCard()
+        {
+            reapet.DataSource = Session["listaprod"];
+            reapet.DataBind();
+        }
+
+
     }
 
 }

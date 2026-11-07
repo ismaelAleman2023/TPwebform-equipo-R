@@ -42,10 +42,7 @@ namespace tpc_webform_grupo_R
                 }
 
 
-            }
-            
-            
-            
+            }      
             
             
 
@@ -120,7 +117,24 @@ namespace tpc_webform_grupo_R
         private void cargarGrillaCliente()
         {
             ClienteNegocio cliN = new ClienteNegocio();
-            dgvGrilla.DataSource = cliN.listarClientes();
+            EstadoNegocio estadoN = new EstadoNegocio();
+
+            var listaClientesGrilla = cliN.listarClientes().Select(c => new
+            {
+                c.IdPersona,
+                c.Nombre,
+                c.Apellido,
+                c.Email,
+                c.FechaDeNacimiento,
+                c.Password,
+                c.Telefono,
+                c.IdRol,
+                correoOk = c.CorreoOk ? "Verificado" : "no verifi",
+                Estado = estadoN.buscarEstado(c.Estado).Descripcion_estado
+
+            }).ToList();
+
+            dgvGrilla.DataSource = listaClientesGrilla;
             dgvGrilla.DataKeyNames = new string[] { "IdPersona" };
             dgvGrilla.DataBind();
             ocultarItems();
@@ -130,8 +144,26 @@ namespace tpc_webform_grupo_R
 
         private void cargarGrillaVendedor()
         {
+            EstadoNegocio estadoN = new EstadoNegocio();
             VendedorNegocio vendedorN = new VendedorNegocio();
-            dgvGrilla.DataSource = vendedorN.listarVendedores();
+
+            var listaVendedoresGrilla = vendedorN.listarVendedores().Select(v => new
+            {
+                v.Legajo,
+                v.IdPersona,
+                v.Nombre,
+                v.Apellido,
+                v.Email,
+                v.FechaDeNacimiento,
+                v.Password,
+                v.Telefono,
+                v.IdRol,
+                Estado = estadoN.buscarEstado(v.Estado).Descripcion_estado
+
+            }).ToList();
+
+
+            dgvGrilla.DataSource = listaVendedoresGrilla;
             dgvGrilla.DataKeyNames = new string[] { "IdPersona" };
             dgvGrilla.DataBind();
             ocultarItems();
@@ -141,9 +173,28 @@ namespace tpc_webform_grupo_R
 
 
         private void cargarGrillaAdministrador()
-        {
+        {   
+           
+            EstadoNegocio estadoN = new EstadoNegocio();
             AdministrarNegocio adminN = new AdministrarNegocio();
-            dgvGrilla.DataSource = adminN.listarAdministradores();
+
+            var listaAdministradoresGrilla = adminN.listarAdministradores().Select(a => new
+            {
+                
+                a.IdPersona,
+                a.Nombre,
+                a.Apellido,
+                a.Cuil,
+                a.Email,
+                a.FechaDeNacimiento,
+                a.Password,
+                a.Telefono,
+                a.IdRol,
+                Estado = estadoN.buscarEstado(a.Estado).Descripcion_estado
+
+            }).ToList();
+
+            dgvGrilla.DataSource = listaAdministradoresGrilla;
             dgvGrilla.DataKeyNames = new string[] { "IdPersona" };
             dgvGrilla.DataBind();
             ocultarItems();
@@ -210,8 +261,6 @@ namespace tpc_webform_grupo_R
             MarcaNegocio marcaNeg=new MarcaNegocio();
             CategoriaNegocio cateNeg=new CategoriaNegocio();
 
-
-
             var listaParaGrilla = pro.listarProduc().Select(p => new {
                 p.IdProducto,
                 p.CodigoProducto,
@@ -220,7 +269,7 @@ namespace tpc_webform_grupo_R
                 Marca = Helper.Ayudante.idXmarca(p.Marca),
                 Categoria = Helper.Ayudante.idxCategoria(p.Categoria),
                 p.Precio,
-                p.OnDemand,
+                OnDemand = p.OnDemand ? "Si" : "NO",
                 p.Estado
 
             }).ToList();
@@ -721,6 +770,10 @@ namespace tpc_webform_grupo_R
         
         
         }
+
+
+
+
 
     }
 }

@@ -67,13 +67,14 @@
                     <asp:HyperLink ID="lnkCarrito" runat="server" NavigateUrl="~/Carrito.aspx" CssClass="action-item">
                         <div class="carrito-circulo">
                             <i class="fa-solid fa-cart-shopping"></i>
-                            <span class="carrito-badge-num">0</span>
+
+                            <!-- <span class="carrito-badge-num">0</span> -->
+                            <asp:Label ID="lblContadorCarrito" runat="server" ></asp:Label>
                         </div>
                         <span class="action-label mt-1">Mi carrito</span>
                     </asp:HyperLink>
                 </div>
-               
-                  
+                            
 
 
 

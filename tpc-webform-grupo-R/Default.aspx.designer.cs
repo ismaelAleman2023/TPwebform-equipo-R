@@ -157,5 +157,19 @@ namespace tpc_webform_grupo_R
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblModalDescripcion;
+
+        /// <summary>
+        /// Propiedad Master.
+        /// </summary>
+        /// <remarks>
+        /// Propiedad generada automáticamente.
+        /// </remarks>
+        public new tpc_webform_grupo_R.Site1 Master
+        {
+            get
+            {
+                return ((tpc_webform_grupo_R.Site1)(base.Master));
+            }
+        }
     }
 }

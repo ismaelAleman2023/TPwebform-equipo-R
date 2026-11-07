@@ -15,14 +15,10 @@ namespace Helper
 
             if (vali.Any(char.IsDigit))
             {
-
                 return true;//contiene numero
-
-
             }
 
             return false;//no contiene numero
-
         }
 
 
