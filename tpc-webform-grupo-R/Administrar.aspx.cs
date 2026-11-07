@@ -9,8 +9,11 @@ using System.Web.UI.WebControls;
 
 namespace tpc_webform_grupo_R
 {
+
     public partial class Administrar : System.Web.UI.Page
     {
+
+       
 
 
         protected void Page_Load(object sender, EventArgs e)
@@ -26,16 +29,25 @@ namespace tpc_webform_grupo_R
 
                     ViewState["TablaActiva"] = Session["btnAgregar"];
 
-                 
+
                     Session.Remove("estadoAModificar");
                     Session.Remove("clienteAModificar");
                     Session.Remove("vendedorAModificar");
                     Session.Remove("adminAModificar");
                     Session.Remove("tipoPagoAModificar");
+                    Session.Remove("NombreProducto");
+                    Session.Remove("Stock");
+                    Session.Remove("AgMd");
 
                 }
 
+
             }
+            
+            
+            
+            
+            
 
         }
 
@@ -193,20 +205,20 @@ namespace tpc_webform_grupo_R
         }
 
         private void cargarGrillaProducto() { 
-        ProductoNegocio pro=new ProductoNegocio();
-        MarcaNegocio marcaNeg=new MarcaNegocio();
-        CategoriaNegocio cateNeg=new CategoriaNegocio();
 
-            var listaMarcas = marcaNeg.ListarMarca();
-            var listaCategorias = cateNeg.listarCate();
+            ProductoNegocio pro=new ProductoNegocio();
+            MarcaNegocio marcaNeg=new MarcaNegocio();
+            CategoriaNegocio cateNeg=new CategoriaNegocio();
+
+
 
             var listaParaGrilla = pro.listarProduc().Select(p => new {
                 p.IdProducto,
                 p.CodigoProducto,
                 p.Nombre,
                 p.Descripcion,
-                Marca = listaMarcas.FirstOrDefault(m => m.IdMarca == p.Marca)?.Descripcion ?? "Sin Marca",
-                Categoria = listaCategorias.FirstOrDefault(c => c.IdCategoria == p.Categoria)?.Descripcion ?? "Sin Categoria",
+                Marca = Helper.Ayudante.idXmarca(p.Marca),
+                Categoria = Helper.Ayudante.idxCategoria(p.Categoria),
                 p.Precio,
                 p.OnDemand,
                 p.Estado
@@ -219,17 +231,23 @@ namespace tpc_webform_grupo_R
             dgvGrilla.DataBind();
             ocultarItems();
             ViewState.Remove("eleccion");
-
-        
-        
+      
         
         }
 
-        private void cargarGrillaStock() { 
-        
+        private void cargarGrillaStock() {
+
             StockNegocio stockNegocio = new StockNegocio();
 
-            dgvGrilla.DataSource=stockNegocio.listaStock();
+            var listaActivos = stockNegocio.listaActivos().Select(s => new {
+                s.IdStock,
+                Producto=Helper.Ayudante.idxNproduc(s.IdProducto_stk),
+                s.Cantidad,
+                s.Estado
+            }).ToList();
+
+
+            dgvGrilla.DataSource = listaActivos;
             dgvGrilla.DataKeyNames = new string[] { "IdStock" };
             dgvGrilla.DataBind();
             ocultarItems();
@@ -258,7 +276,7 @@ namespace tpc_webform_grupo_R
                     Response.Redirect("RegistroMarca.aspx");
 
                     break;
-                case 3:sumarStock();
+                case 3:sumarStock("agregar");
 
                     break;
                 case 4://tipo pago
@@ -342,17 +360,18 @@ namespace tpc_webform_grupo_R
 
                 switch (ViewState["TablaActiva"])
                 {
-                    case 1:
+                    case 1://categoria
                         eliminarCategoria();
                         cargarGrillaCategoria();
 
                         break;
-                    case 2:
+                    case 2://marca
                         eliminarMarca();
                         cargarGrillaMarca();
 
                         break;
                     case 3://stock
+                        
 
                         break;
                     case 4://tipo pago
@@ -378,6 +397,7 @@ namespace tpc_webform_grupo_R
 
                         break;
                     case 9://direcciones
+
                         // no lo usamos
 
                         break;
@@ -413,7 +433,7 @@ namespace tpc_webform_grupo_R
 
                         break;
                     case 3://stock
-
+                        sumarStock("modificar");
                         break;
                     case 4://tipo pago
                         modificarTipoPago();
@@ -655,7 +675,7 @@ namespace tpc_webform_grupo_R
 
 
 
-        private void sumarStock() {
+        private void sumarStock(string agmd) {
 
             ProductoNegocio produc=new ProductoNegocio();
             StockNegocio st = new StockNegocio();
@@ -666,20 +686,26 @@ namespace tpc_webform_grupo_R
 
             if (ViewState["eleccion"]!=null) {
 
+
                 int idStock = (int)ViewState["eleccion"];
                 Stock stock = st.buscarStock(idStock);
                  string nombre = produc.nombreprodu((int)stock.IdProducto_stk);
 
+                    if (stock.Estado!=1) {
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaExito", "mostrarCartel('¡No se puede agregar o modificar stock a un producto no existente!', 'error');", true);
+                        return;
+                    }
+
+
                 Session["btnAgregar"] = ViewState["TablaActiva"];
-                 Session["NombreProducto"] =nombre;
-
-                Response.Redirect("SumarStock.aspx?id="+stock.IdProducto_stk);
-
-
+                Session["NombreProducto"] =nombre;
+                Session["Stock"] = stock;
+                Session["AgMd"] = agmd;
+                Response.Redirect("SumarStock.aspx");
             }
             else{
 
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaExito", "mostrarCartel('¡Seleccione un stock de la grilla!', 'error');", true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaExito", "mostrarCartel('¡Seleccione un producto de la grilla , al cual quiera agregarle stock!', 'error');", true);
 
 
             }
