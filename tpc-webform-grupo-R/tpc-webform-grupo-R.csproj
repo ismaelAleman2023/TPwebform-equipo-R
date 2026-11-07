@@ -101,6 +101,7 @@
     <Content Include="Carrito.aspx" />
     <Content Include="ComoComprar.aspx" />
     <Content Include="Contactanos.aspx" />
+    <Content Include="Default.aspx" />
     <Content Include="RegistroEstado.aspx" />
     <Content Include="images\icons\face.png" />
     <Content Include="images\icons\insta.png" />
@@ -128,7 +129,6 @@
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\estilos.css" />
     <Content Include="Content\Site.css" />
-    <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="images\icons\carrusel_1.jpg" />
@@ -238,6 +238,13 @@
     <Compile Include="Contactanos.aspx.designer.cs">
       <DependentUpon>Contactanos.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
     <Compile Include="RegistroEstado.aspx.cs">
       <DependentUpon>RegistroEstado.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -282,13 +289,6 @@
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Default.aspx.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Default.aspx.designer.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

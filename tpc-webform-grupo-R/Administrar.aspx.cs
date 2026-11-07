@@ -276,7 +276,8 @@ namespace tpc_webform_grupo_R
                     Response.Redirect("RegistroMarca.aspx");
 
                     break;
-                case 3:sumarStock("agregar");
+                case 3://Stock
+                    sumarStock("agregar");
 
                     break;
                 case 4://tipo pago
