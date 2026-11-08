@@ -1,4 +1,6 @@
 ﻿<%@ Page Title="Catálogo" Language="C#" MasterPageFile="~/Principal.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="tpc_webform_grupo_R.Default" %>
+
+
 <%@ MasterType VirtualPath="~/Principal.master" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -68,7 +70,7 @@
                                         <!-- Botones de acción inferiores con controles ASP.NET -->
                                         <div class="mt-auto d-flex gap-2">
                                             <asp:Button ID="btnDetalle" runat="server" Text="Ver Detalle" CssClass="btn btn-outline-light btn-sm w-50 py-1" CommandArgument='<%#Eval("IdProducto") %>' OnClick="btnDetalle_Click" />
-                                            <asp:Button ID="btnAgregar" runat="server" Text="Agregar" CssClass="btn btn-warning btn-sm w-50 fw-bold text-dark py-1" CommandArgument='<%#Eval("IdProducto") %>'  Onclick="btnAgregar_Click"  Style="font-size: 0.8rem;"  />
+                                            <asp:Button ID="btnAgregar" runat="server" Text="Agregar" CssClass="btn btn-warning btn-sm w-50 fw-bold text-dark py-1" CommandArgument='<%#Eval("IdProducto") %>' OnClick="btnAgregar_Click" Style="font-size: 0.8rem;" />
                                         </div>
 
                                     </div>
@@ -84,17 +86,25 @@
                     <hr class="border-secondary my-4" />
 
 
-                    <!-- Modal de Detalle de Producto con Colores Unificados -->
-                    <div class="modal fade" id="productoModal" tabindex="-1" aria-labelledby="productoModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-lg modal-dialog-centered">
-                            <!-- Reemplazamos bg-light/text-dark por bg-dark text-light y agregamos borde secundario del proyecto -->
-                            <div class="modal-content text-uppercase bg-dark text-light border border-secondary shadow-lg" style="background-color: #212529 !important;">
+                </ContentTemplate>
+                
+            </asp:UpdatePanel>
+
+
+            <!-- Modal de Detalle de Producto con Colores Unificados -->
+            <div class="modal fade" id="productoModal" tabindex="-1" aria-labelledby="productoModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <!-- Reemplazamos bg-light/text-dark por bg-dark text-light y agregamos borde secundario del proyecto -->
+                    <div class="modal-content text-uppercase bg-dark text-light border border-secondary shadow-lg" style="background-color: #212529 !important;">
+
+                        <asp:UpdatePanel ID="UpdatePanelModal" runat="server" UpdateMode="Conditional">
+                            <ContentTemplate>
                                 <!--   <div class="modal-body p-4">     -->
                                 <div class="modal-body py-4 px-4">
                                     <div class="row row-cols-1 row-cols-md-2 g-4">
 
                                         <!-- COLUMNA IZQUIERDA (IMAGEN + NAVEGACIÓN) -->
-                                        
+
                                         <div class="col d-flex flex-column justify-content-between" style="height: 370px;">
                                             <!-- Marca y Categoría -->
                                             <div style="height: 80px;">
@@ -128,7 +138,7 @@
                                         </div>
 
                                         <!-- COLUMNA DERECHA (DATOS + ACCIONES PRINCIPALES) -->
-                                       
+
                                         <div class="col d-flex flex-column justify-content-between" style="height: 370px;">
 
                                             <!-- Nombre y Precio usando el característico tono Amarillo/Warning de tu web -->
@@ -137,7 +147,7 @@
                                                     <asp:Label ID="lblModalNombre" runat="server"></asp:Label></span>
                                                 </h5>
                                                 <p class="fs-5 text-warning fw-bold mb-0">
-                                                    Precio: <span class="fw-bold"> 
+                                                    Precio: <span class="fw-bold">
                                                         <asp:Label ID="lblModalPrecio" runat="server"></asp:Label></span>
                                                 </p>
                                             </div>
@@ -153,7 +163,9 @@
 
                                             <!-- Botones de Acción adaptados: Agregar (Amarillo/Warning) y Salir (Esquema claro) -->
                                             <div class="d-flex gap-2 mt-3 " style="height: 45px;">
-                                                <button type="button" class="btn btn-warning fw-bold text-dark px-4 py-2 w-50" style="font-size: 0.9rem;">Agregar</button>
+                                                <!-- <button type="button" class="btn btn-warning fw-bold text-dark px-4 py-2 w-50" style="font-size: 0.9rem;" CommandArgument='<%# Eval("Id") %>' OnClick="" >Agregar</button> -->
+                                                <asp:Button ID="btnAgregarModal" runat="server" Text="Agregar" CssClass="btn btn-warning btn-sm w-50 fw-bold text-dark py-1" OnClick="btnAgregarModal_Click" Style="font-size: 0.8rem;" />
+
                                                 <button type="button" class="btn btn-outline-light px-4 py-2 w-50" data-bs-dismiss="modal">Salir</button>
                                             </div>
                                         </div>
@@ -161,16 +173,12 @@
                                     </div>
                                 </div>
 
-                            </div>
+                                </div>
                         </div>
                     </div>
 
-
-
-
-                </ContentTemplate>
-            </asp:UpdatePanel>
-
+                            </ContentTemplate>
+                        </asp:UpdatePanel>
         </section>
 
 

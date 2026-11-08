@@ -16,6 +16,8 @@
     
     <link href="Content/estilos.css" rel="stylesheet" type="text/css" />
 
+
+
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
@@ -118,6 +120,8 @@
             </div>
         </div>
     </footer>
+
+
 
 
     

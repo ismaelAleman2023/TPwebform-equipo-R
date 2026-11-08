@@ -78,6 +78,15 @@ namespace tpc_webform_grupo_R
         protected global::System.Web.UI.WebControls.Repeater reapet;
 
         /// <summary>
+        /// Control UpdatePanelModal.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanelModal;
+
+        /// <summary>
         /// Control lblModalMarca.
         /// </summary>
         /// <remarks>
@@ -157,6 +166,15 @@ namespace tpc_webform_grupo_R
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblModalDescripcion;
+
+        /// <summary>
+        /// Control btnAgregarModal.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAgregarModal;
 
         /// <summary>
         /// Propiedad Master.

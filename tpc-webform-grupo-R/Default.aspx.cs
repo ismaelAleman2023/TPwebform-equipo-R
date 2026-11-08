@@ -1,11 +1,12 @@
-﻿using System;
+﻿using dominio;
+using negocio;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Optimization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using dominio;
-using negocio;
 
 
 
@@ -56,13 +57,14 @@ namespace tpc_webform_grupo_R
             Marca marca = negocioM.buscarMarca(prod.Marca);
             Categoria categoria = negocioC.buscarCategoria(prod.Categoria);
 
+            btnAgregarModal.CommandArgument = valor.ToString() ;
             lblModalCategoria.Text = categoria.Descripcion;
             lblModalMarca.Text = marca.Descripcion; 
             lblModalNombre.Text = prod.Nombre;
             lblModalDescripcion.Text = prod.Descripcion;
             lblModalPrecio.Text = prod.Precio.ToString("C");
 
-            UpdatePanel1.Update();
+            UpdatePanelModal.Update();
 
             ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "var myModal = new bootstrap.Modal(document.getElementById('productoModal')); myModal.show();", true);
         }
@@ -73,28 +75,11 @@ namespace tpc_webform_grupo_R
             Button btn = (Button)sender;
             int seleccionProd = int.Parse(btn.CommandArgument);
 
-            carritoCompra = (List<Producto>)Session["listaCarrito"];
-
-            carritoCompra.Add(buscarProducto(seleccionProd));
-
-            Session["listaCarrito"]=carritoCompra;
-
-            int totalActual = carritoCompra.Count;
-
-            
-            
-            // Forzamos la actualización mediante el ScriptManager nativo vinculado al UpdatePanel actual
-            string idControl = Master.ObtenerIdContador();
-            string script = $"document.getElementById('{idControl}').innerText = '{totalActual}';";
-
-            // Cambiamos 'this.GetType()' por un identificador único para que el navegador no lo ignore
-            ScriptManager.RegisterStartupScript(UpdatePanel1, UpdatePanel1.GetType(), "ActualizarBadgeKey", script, true);
-
-           
+            agregarProducto(seleccionProd);
 
             cargarGrillaCard();
 
-        }
+         }
 
 
         private Producto buscarProducto(int id)
@@ -118,6 +103,42 @@ namespace tpc_webform_grupo_R
             reapet.DataSource = Session["listaprod"];
             reapet.DataBind();
         }
+
+        protected void btnAgregarModal_Click(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            int idSeleccion = int.Parse(btn.CommandArgument);
+            agregarProducto(idSeleccion);
+            
+            cargarGrillaCard();
+            UpdatePanelModal.Update();
+
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "CerrarModal", "bootstrap.Modal.getInstance(document.getElementById('productoModal')).hide();", true);
+        }
+            
+        
+
+
+
+        private void agregarProducto(int seleccionProd)
+        {
+            carritoCompra = (List<Producto>)Session["listaCarrito"];
+
+            carritoCompra.Add(buscarProducto(seleccionProd));
+
+            Session["listaCarrito"] = carritoCompra;
+
+            int totalActual = carritoCompra.Count;
+
+
+            // Forzamos la actualización mediante el ScriptManager 
+            string idControl = Master.ObtenerIdContador();
+            string script = $"document.getElementById('{idControl}').innerText = '{totalActual}';";
+
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "ActualizarBadgeKey", script, true);
+
+        }
+
 
 
     }
