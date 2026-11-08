@@ -62,18 +62,23 @@
                 
                 <div class="nav-actions-wrapper d-none d-lg-flex">
                     <asp:HyperLink ID="lnkLogin" runat="server" NavigateUrl="~/Login.aspx" CssClass="action-item">
-                        <i class="fa-solid fa-circle-user"></i>
+                        <i class="fa-solid fa-circle-user" "></i>
                         <span class="action-label">Login</span>
                     </asp:HyperLink>
 
                     <asp:HyperLink ID="lnkCarrito" runat="server" NavigateUrl="~/Carrito.aspx" CssClass="action-item">
-                        <div class="carrito-circulo">
-                            <i class="fa-solid fa-cart-shopping"></i>
+                        
+                        <div class="carrito-circulo ">
+                          <i class="fa-solid fa-cart-shopping mt-1 " ></i>                                                     
 
-                            <!-- <span class="carrito-badge-num">0</span> -->
-                            <asp:Label ID="lblContadorCarrito" runat="server" ></asp:Label>
+                            <div class="circulo-contador"> 
+                                <!-- contador carrito -->
+                               <asp:Label ID="lblContadorCarrito" CssClass="contador-Carrito" runat="server" style="font-size: 1rem ; font-weight: 700 ; font-family: Arial, sans-serif  " ></asp:Label>
+                            </div>
                         </div>
-                        <span class="action-label mt-1">Mi carrito</span>
+
+
+                        <span class="action-label micarrito ">Mi carrito</span>
                     </asp:HyperLink>
                 </div>
                             

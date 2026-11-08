@@ -23,25 +23,30 @@
         <!-- 2. SECCIÓN CATÁLOGO Y FILTROS -->
         <section class="mb-5">
             <h3 class="mb-3">Catálogo</h3>
-            <p class="text-muted small mb-3">Encontrá tu favorito</p>
+            <p class=" small mb-3">Encontrá tu favorito</p>
 
-            <!-- Barra de botones de filtro redondeados con Bootstrap (Pills) -->
+            
+         <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
+           <ContentTemplate>
+            <!-- Barra de botones de filtro -->
             <div class="d-flex flex-wrap gap-2 mb-4">
-                <asp:Button ID="btnFiltroTodo" runat="server" Text="Todos" CssClass="btn btn-warning btn-sm rounded-pill px-3 fw-bold text-dark" />
-                <asp:Button ID="btnFiltroPolyfan" runat="server" Text="Polyfan" CssClass="btn btn-outline-secondary btn-sm rounded-pill px-3 text-light" />
-                <asp:Button ID="btnFiltroImpresion" runat="server" Text="Impresión 3D" CssClass="btn btn-outline-secondary btn-sm rounded-pill px-3 text-light" />
-                <asp:Button ID="btnFiltroPapeleria" runat="server" Text="Papelería" CssClass="btn btn-outline-secondary btn-sm rounded-pill px-3 text-light" />
-                <asp:Button ID="btnFiltroOtros" runat="server" Text="Otros" CssClass="btn btn-outline-secondary btn-sm rounded-pill px-3 text-light" />
+                <asp:Button ID="btnFiltroTodo" runat="server" Text="Todos" CommandArgument='0' OnClick="btnFiltroTodo_Click" CssClass="btn btn-warning btn-sm rounded-pill px-3 fw-bold text-dark" />
+                <asp:Button ID="btnFiltroPolyfan" runat="server" Text="Polyfan" CommandArgument='6' OnClick="btnFiltroTodo_Click" CssClass="btn btn-outline-secondary btn-sm rounded-pill px-3 text-light" />
+                <asp:Button ID="btnFiltroImpresion" runat="server" Text="Impresión 3D" CommandArgument='1' OnClick="btnFiltroTodo_Click" CssClass="btn btn-outline-secondary btn-sm rounded-pill px-3 text-light" />
+                <asp:Button ID="btnFiltroPapeleria" runat="server" Text="Papelería" CommandArgument='5' OnClick="btnFiltroTodo_Click" CssClass="btn btn-outline-secondary btn-sm rounded-pill px-3 text-light" />
+                <asp:Button ID="btnFiltroCorteLaser" runat="server" Text="Conte Laser" CommandArgument='2' OnClick="btnFiltroTodo_Click" CssClass="btn btn-outline-secondary btn-sm rounded-pill px-3 text-light" />
+                <asp:Button ID="btnFiltroEgrasados" runat="server" Text="Egresados" CommandArgument='3' OnClick="btnFiltroTodo_Click" CssClass="btn btn-outline-secondary btn-sm rounded-pill px-3 text-light" />
+                <asp:Button ID="btnFiltroOtros" runat="server" Text="Otros" CommandArgument='4' OnClick="btnFiltroTodo_Click" CssClass="btn btn-outline-secondary btn-sm rounded-pill px-3 text-light" />
+
+
             </div>
 
-            <!-- Línea de separación limpia entre el filtro y el catálogo -->
+            <!-- Línea de separación  -->
             <hr class="border-secondary my-4" />
 
 
-            <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
-                <ContentTemplate>
 
-                    <!-- Grilla de Tarjetas: 1 en celular, 2 en tablet, 4 en PC -->
+                    <!-- Grilla de Tarjetas -->
                     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
 
                         <asp:Repeater runat="server" ID="reapet">
@@ -67,7 +72,7 @@
                                         <h6 class="card-title fw-bold mb-1 text-truncate"><%#Eval("Nombre")   %> </h6>
                                         <p class="text-warning fw-bold mb-2">$<%#Eval("Precio") %></p>
 
-                                        <!-- Botones de acción inferiores con controles ASP.NET -->
+                                        <!-- Botones  -->
                                         <div class="mt-auto d-flex gap-2">
                                             <asp:Button ID="btnDetalle" runat="server" Text="Ver Detalle" CssClass="btn btn-outline-light btn-sm w-50 py-1" CommandArgument='<%#Eval("IdProducto") %>' OnClick="btnDetalle_Click" />
                                             <asp:Button ID="btnAgregar" runat="server" Text="Agregar" CssClass="btn btn-warning btn-sm w-50 fw-bold text-dark py-1" CommandArgument='<%#Eval("IdProducto") %>' OnClick="btnAgregar_Click" Style="font-size: 0.8rem;" />
@@ -87,25 +92,27 @@
 
 
                 </ContentTemplate>
-                
+
             </asp:UpdatePanel>
 
 
-            <!-- Modal de Detalle de Producto con Colores Unificados -->
+            <!-- Modal -->
             <div class="modal fade" id="productoModal" tabindex="-1" aria-labelledby="productoModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg modal-dialog-centered">
-                    <!-- Reemplazamos bg-light/text-dark por bg-dark text-light y agregamos borde secundario del proyecto -->
+
                     <div class="modal-content text-uppercase bg-dark text-light border border-secondary shadow-lg" style="background-color: #212529 !important;">
 
                         <asp:UpdatePanel ID="UpdatePanelModal" runat="server" UpdateMode="Conditional">
                             <ContentTemplate>
-                                <!--   <div class="modal-body p-4">     -->
+
+
                                 <div class="modal-body py-4 px-4">
                                     <div class="row row-cols-1 row-cols-md-2 g-4">
 
                                         <!-- COLUMNA IZQUIERDA (IMAGEN + NAVEGACIÓN) -->
 
                                         <div class="col d-flex flex-column justify-content-between" style="height: 370px;">
+
                                             <!-- Marca y Categoría -->
                                             <div style="height: 80px;">
                                                 <h5 class="fw-bold mb-1 text-truncate">Marca: <span class="fw-normal ">
@@ -123,25 +130,25 @@
 
                                             </div>
 
-                                            <!-- Contenedor de la Imagen acoplado al estilo de tus tarjetas (bg-secondary) -->
+                                            <!-- Contenedor de la Imagen -->
                                             <div class="bg-secondary rounded d-flex align-items-center justify-content-center flex-shrink-0"
                                                 style="height: 200px; border-radius: 4px;">
                                                 <asp:Image ID="imgModalProducto" runat="server" CssClass="img-fluid h-100 w-100" Style="object-fit: contain;" AlternateText="Imagen del producto" />
 
                                             </div>
 
-                                            <!-- Flechas de Navegación integradas a la estética oscura -->
+                                            <!-- Flechas de Navegación -->
                                             <div class="d-flex gap-2 justify-content-center mt-3" style="height: 45px;">
                                                 <asp:Button ID="btnImgAnterior" runat="server" Text="&larr;" CssClass="btn btn-outline-light px-3 py-2 fw-bold" Style="width: 50px;" />
                                                 <asp:Button ID="btnImgSiguiente" runat="server" Text="&rarr;" CssClass="btn btn-outline-light px-3 py-2 fw-bold" Style="width: 50px;" />
                                             </div>
                                         </div>
 
-                                        <!-- COLUMNA DERECHA (DATOS + ACCIONES PRINCIPALES) -->
+                                        <!-- COLUMNA DERECHA -->
 
                                         <div class="col d-flex flex-column justify-content-between" style="height: 370px;">
 
-                                            <!-- Nombre y Precio usando el característico tono Amarillo/Warning de tu web -->
+                                            <!-- Nombre y Precio -->
                                             <div class="mb-2" style="height: 85px;">
                                                 <h5 class="fw-bold mb-1 text-truncate">Nombre: <span class="fw-normal text-light">
                                                     <asp:Label ID="lblModalNombre" runat="server"></asp:Label></span>
@@ -161,9 +168,8 @@
                                                 </div>
                                             </div>
 
-                                            <!-- Botones de Acción adaptados: Agregar (Amarillo/Warning) y Salir (Esquema claro) -->
+                                            <!-- Botones -->
                                             <div class="d-flex gap-2 mt-3 " style="height: 45px;">
-                                                <!-- <button type="button" class="btn btn-warning fw-bold text-dark px-4 py-2 w-50" style="font-size: 0.9rem;" CommandArgument='<%# Eval("Id") %>' OnClick="" >Agregar</button> -->
                                                 <asp:Button ID="btnAgregarModal" runat="server" Text="Agregar" CssClass="btn btn-warning btn-sm w-50 fw-bold text-dark py-1" OnClick="btnAgregarModal_Click" Style="font-size: 0.8rem;" />
 
                                                 <button type="button" class="btn btn-outline-light px-4 py-2 w-50" data-bs-dismiss="modal">Salir</button>
@@ -174,11 +180,15 @@
                                 </div>
 
                                 </div>
+                                
                         </div>
                     </div>
 
                             </ContentTemplate>
                         </asp:UpdatePanel>
+                        </div>
+                    </div>
+                </div>
         </section>
 
 

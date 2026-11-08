@@ -20,12 +20,13 @@ namespace tpc_webform_grupo_R
         
       
         protected void Page_Load(object sender, EventArgs e)
-        {                                     
-            ProductoNegocio negocio = new ProductoNegocio();
-            List<Producto>listaProductos = negocio.listarProduc();
+        {
 
             if (!IsPostBack)
             {
+
+                ProductoNegocio negocio = new ProductoNegocio();
+                List<Producto> listaProductos = negocio.listarProduc();
                 Session["listaprod"] = listaProductos;
 
                 cargarGrillaCard();
@@ -35,6 +36,7 @@ namespace tpc_webform_grupo_R
                     Session["listaCarrito"] = new List<Producto>();
 
                 }
+
             }
 
             carritoCompra = (List<Producto>)Session["listaCarrito"];
@@ -49,6 +51,7 @@ namespace tpc_webform_grupo_R
         protected void btnDetalle_Click(object sender, EventArgs e)
         {
            int valor = int.Parse(((Button)sender).CommandArgument);
+
            ProductoNegocio negocioP = new ProductoNegocio();
            MarcaNegocio negocioM = new MarcaNegocio();
            CategoriaNegocio negocioC = new CategoriaNegocio();
@@ -77,7 +80,7 @@ namespace tpc_webform_grupo_R
 
             agregarProducto(seleccionProd);
 
-            cargarGrillaCard();
+            aplicarFiltroActual();
 
          }
 
@@ -96,7 +99,8 @@ namespace tpc_webform_grupo_R
                 }
             }
             return prod;
-        }            
+        }
+
 
         private void cargarGrillaCard()
         {
@@ -110,14 +114,26 @@ namespace tpc_webform_grupo_R
             int idSeleccion = int.Parse(btn.CommandArgument);
             agregarProducto(idSeleccion);
             
-            cargarGrillaCard();
+            aplicarFiltroActual();
             UpdatePanelModal.Update();
 
             ScriptManager.RegisterStartupScript(this, this.GetType(), "CerrarModal", "bootstrap.Modal.getInstance(document.getElementById('productoModal')).hide();", true);
         }
-            
-        
 
+
+
+        private void aplicarFiltroActual()
+        {
+            if (ViewState["filtroActual"] != null)
+            {
+                int filtro = (int)ViewState["filtroActual"];
+                cargaFiltrada(filtro);
+            }
+            else
+            {
+                cargarGrillaCard();
+            }
+        }
 
 
         private void agregarProducto(int seleccionProd)
@@ -136,6 +152,44 @@ namespace tpc_webform_grupo_R
             string script = $"document.getElementById('{idControl}').innerText = '{totalActual}';";
 
             ScriptManager.RegisterStartupScript(this, this.GetType(), "ActualizarBadgeKey", script, true);
+
+        }
+
+        protected void btnFiltroTodo_Click(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+
+            int filtro = int.Parse(btn.CommandArgument);
+            ViewState["filtroActual"] = filtro;
+            cargaFiltrada(filtro);
+
+        }
+
+
+
+        private void cargaFiltrada(int filtro)
+        {
+
+            if (filtro > 0 && filtro <7)
+            {
+                List<Producto> listaP = (List<Producto>)Session["listaprod"];
+                List<Producto> listAux = new List<Producto>();
+                foreach (Producto prod in listaP)
+                {
+                    if (prod.IdProducto == filtro)
+                    {
+                        listAux.Add(prod);
+                    }
+                }
+
+                reapet.DataSource = listAux;
+                reapet.DataBind();
+            }
+            else
+            {
+                cargarGrillaCard();
+            }
+
 
         }
 

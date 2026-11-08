@@ -57,7 +57,8 @@ namespace tpc_webform_grupo_R
 
         public string ObtenerIdContador()
         {
-            return lblContadorCarrito.ClientID;
+             return lblContadorCarrito.ClientID;
+           
         }
 
 

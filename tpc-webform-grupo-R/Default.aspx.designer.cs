@@ -15,6 +15,15 @@ namespace tpc_webform_grupo_R
     {
 
         /// <summary>
+        /// Control UpdatePanel1.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
+
+        /// <summary>
         /// Control btnFiltroTodo.
         /// </summary>
         /// <remarks>
@@ -51,6 +60,24 @@ namespace tpc_webform_grupo_R
         protected global::System.Web.UI.WebControls.Button btnFiltroPapeleria;
 
         /// <summary>
+        /// Control btnFiltroCorteLaser.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnFiltroCorteLaser;
+
+        /// <summary>
+        /// Control btnFiltroEgrasados.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnFiltroEgrasados;
+
+        /// <summary>
         /// Control btnFiltroOtros.
         /// </summary>
         /// <remarks>
@@ -58,15 +85,6 @@ namespace tpc_webform_grupo_R
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnFiltroOtros;
-
-        /// <summary>
-        /// Control UpdatePanel1.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
 
         /// <summary>
         /// Control reapet.
