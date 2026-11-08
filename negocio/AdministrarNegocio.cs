@@ -15,7 +15,7 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.consultaSql("insert into personas(nombre_per,apellido_per,email_per,telefono_per,contraseña_per,fecha_nacimiento_per,estado_per,idroll_per) values(@nombre,@apellido,@email,@telefono,@pass,@fechaNacimiento,@estado,@roll)");
+                datos.consultaSql("insert into personas(nombre_per,apellido_per,email_per,telefono_per,contrasenia_per,fecha_nacimiento_per,estado_per,idroll_per) values(@nombre,@apellido,@email,@telefono,@pass,@fechaNacimiento,@estado,@roll)");
                 datos.setearParametros("@nombre", admin.Nombre);
                 datos.setearParametros("@apellido", admin.Apellido);
                 datos.setearParametros("@email", admin.Email);
@@ -57,7 +57,7 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.consultaSql("select p.idPersona, p.nombre_per, p.apellido_per, p.email_per, p.telefono_per, p.contraseña_per, p.fecha_nacimiento_per, p.estado_per, a.cuil_admin from personas p inner join administradores a on p.idPersona = a.idpersona_admin");
+                datos.consultaSql("select p.idPersona, p.nombre_per, p.apellido_per, p.email_per, p.telefono_per, p.contrasenia_per, p.fecha_nacimiento_per, p.estado_per, a.cuil_admin from personas p inner join administradores a on p.idPersona = a.idpersona_admin");
                 datos.ejecutarLectura();
                 while (datos.Lector.Read())
                 {
@@ -67,10 +67,10 @@ namespace negocio
                     aux.Apellido = (string)datos.Lector["apellido_per"];
                     aux.Email = (string)datos.Lector["email_per"];
                     aux.Telefono = (string)datos.Lector["telefono_per"];
-                    aux.Password = (string)datos.Lector["contraseña_per"];
+                    aux.Password = (string)datos.Lector["contrasenia_per"];
                     aux.FechaDeNacimiento = (DateTime)datos.Lector["fecha_nacimiento_per"];
                     aux.Estado = (int)datos.Lector["estado_per"];
-                    aux.Cuil = (string)datos.Lector["cuil_admin"];
+                    aux.Cuil = datos.Lector["cuil_admin"].ToString();
                     lista.Add(aux);
                 }
                 return lista;
@@ -91,7 +91,7 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.consultaSql("select p.idPersona, p.nombre_per, p.apellido_per, p.email_per, p.telefono_per, p.contraseña_per, p.fecha_nacimiento_per, p.estado_per, a.cuil_admin from personas p inner join administradores a on p.idPersona = a.idpersona_admin where p.idPersona = @idPersona");
+                datos.consultaSql("select p.idPersona, p.nombre_per, p.apellido_per, p.email_per, p.telefono_per, p.contrasenia_per, p.fecha_nacimiento_per, p.estado_per, a.cuil_admin from personas p inner join administradores a on p.idPersona = a.idpersona_admin where p.idPersona = @idPersona");
                 datos.setearParametros("@idPersona", idPersona);
                 datos.ejecutarLectura();
                 if (datos.Lector.Read())
@@ -101,7 +101,7 @@ namespace negocio
                     admin.Apellido = (string)datos.Lector["apellido_per"];
                     admin.Email = (string)datos.Lector["email_per"];
                     admin.Telefono = (string)datos.Lector["telefono_per"];
-                    admin.Password = (string)datos.Lector["contraseña_per"];
+                    admin.Password = (string)datos.Lector["contrasenia_per"];
                     admin.FechaDeNacimiento = (DateTime)datos.Lector["fecha_nacimiento_per"];
                     admin.Estado = (int)datos.Lector["estado_per"];
                     admin.Cuil = (string)datos.Lector["cuil_admin"];
@@ -139,7 +139,7 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.consultaSql("update personas set nombre_per=@nombre, apellido_per=@apellido, email_per=@email, telefono_per=@telefono, contraseña_per=@pass, fecha_nacimiento_per=@fechaNacimiento where idPersona=@idPersona");
+                datos.consultaSql("update personas set nombre_per=@nombre, apellido_per=@apellido, email_per=@email, telefono_per=@telefono, contrasenia_per=@pass, fecha_nacimiento_per=@fechaNacimiento where idPersona=@idPersona");
                 datos.setearParametros("@nombre", admin.Nombre);
                 datos.setearParametros("@apellido", admin.Apellido);
                 datos.setearParametros("@email", admin.Email);

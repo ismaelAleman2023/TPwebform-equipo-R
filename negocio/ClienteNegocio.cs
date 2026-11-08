@@ -15,7 +15,7 @@ namespace negocio
 
             try
             {
-                datos.consultaSql("insert into personas(nombre_per,apellido_per,email_per,telefono_per,contraseña_per,fecha_nacimiento_per,estado_per,idroll_per) values(@nombre,@apellido,@email,@telefono,@pass,@fechaNacimiento,@estado,@roll)");
+                datos.consultaSql("insert into personas(nombre_per,apellido_per,email_per,telefono_per,contrasenia_per,fecha_nacimiento_per,estado_per,idroll_per) values(@nombre,@apellido,@email,@telefono,@pass,@fechaNacimiento,@estado,@roll)");
                 datos.setearParametros("@nombre", cliente.Nombre);
                 datos.setearParametros("@apellido", cliente.Apellido);
                 datos.setearParametros("@email", cliente.Email);
@@ -76,7 +76,7 @@ namespace negocio
                 DireccionNegocio dirN = new DireccionNegocio();
                 List<Direccion> listaDire = dirN.listarDirecciones();
 
-                datos.consultaSql("select p.idPersona, p.nombre_per, p.apellido_per, p.email_per, p.telefono_per, p.contraseña_per, p.fecha_nacimiento_per, p.estado_per, p.idroll_per, c.correoOk from personas p inner join clientes c on p.idPersona = c.idPersona_cli");
+                datos.consultaSql("select p.idPersona, p.nombre_per, p.apellido_per, p.email_per, p.telefono_per, p.contrasenia_per, p.fecha_nacimiento_per, p.estado_per, p.idroll_per, c.correoOk from personas p inner join clientes c on p.idPersona = c.idPersona_cli");
                 datos.ejecutarLectura();
                 while (datos.Lector.Read())
                 {
@@ -86,7 +86,7 @@ namespace negocio
                     aux.Apellido = (string)datos.Lector["apellido_per"];
                     aux.Email = (string)datos.Lector["email_per"];
                     aux.Telefono = (string)datos.Lector["telefono_per"];
-                    aux.Password = (string)datos.Lector["contraseña_per"];
+                    aux.Password = (string)datos.Lector["contrasenia_per"];
                     aux.FechaDeNacimiento = (DateTime)datos.Lector["fecha_nacimiento_per"];
                     aux.Estado = (int)datos.Lector["estado_per"];
                     aux.IdRol = (int)datos.Lector["idroll_per"];
@@ -143,7 +143,7 @@ namespace negocio
 
             try
             {
-                datos.consultaSql("update personas set  nombre_per = @nombre, apellido_per = @apellido, email_per = @correo, telefono_per = @telefono, contraseña_per = @pass, fecha_nacimiento_per = @fecha where idPersona = @id");
+                datos.consultaSql("update personas set  nombre_per = @nombre, apellido_per = @apellido, email_per = @correo, telefono_per = @telefono, contrasenia_per = @pass, fecha_nacimiento_per = @fecha where idPersona = @id");
                 datos.setearParametros("@nombre", cli.Nombre);
                 datos.setearParametros("@apellido", cli.Apellido);
                 datos.setearParametros("@correo", cli.Email);
@@ -188,7 +188,7 @@ namespace negocio
             {
                 DireccionNegocio dirN = new DireccionNegocio();
                 List<Direccion> listaDire = dirN.listarDirecciones();
-                datos.consultaSql("select p.idPersona, p.nombre_per, p.apellido_per, p.email_per, p.telefono_per, p.contraseña_per, p.fecha_nacimiento_per, p.estado_per, p.idroll_per, c.correoOk from personas p inner join clientes c on p.idPersona = c.idPersona_cli where p.idPersona = @id");
+                datos.consultaSql("select p.idPersona, p.nombre_per, p.apellido_per, p.email_per, p.telefono_per, p.contrasenia_per, p.fecha_nacimiento_per, p.estado_per, p.idroll_per, c.correoOk from personas p inner join clientes c on p.idPersona = c.idPersona_cli where p.idPersona = @id");
                 datos.setearParametros("@id", id);
                 datos.ejecutarLectura();
                 if (datos.Lector.Read())
@@ -198,7 +198,7 @@ namespace negocio
                     aux.Apellido = (string)datos.Lector["apellido_per"];
                     aux.Email = (string)datos.Lector["email_per"];
                     aux.Telefono = (string)datos.Lector["telefono_per"];
-                    aux.Password = (string)datos.Lector["contraseña_per"];
+                    aux.Password = (string)datos.Lector["contrasenia_per"];
                     aux.FechaDeNacimiento = (DateTime)datos.Lector["fecha_nacimiento_per"];
                     aux.Estado = (int)datos.Lector["estado_per"];
                     aux.IdRol = (int)datos.Lector["idroll_per"];

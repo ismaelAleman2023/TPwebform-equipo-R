@@ -18,7 +18,7 @@ namespace negocio
 
             try
             {
-                datos.consultaSql("insert into personas(nombre_per,apellido_per,email_per,telefono_per,contraseña_per,fecha_nacimiento_per,estado_per,idroll_per) values(@nombre,@apellido,@email,@telefono,@pass,@fechaNacimiento,@estado,@roll)");
+                datos.consultaSql("insert into personas(nombre_per,apellido_per,email_per,telefono_per,contrasenia_per,fecha_nacimiento_per,estado_per,idroll_per) values(@nombre,@apellido,@email,@telefono,@pass,@fechaNacimiento,@estado,@roll)");
                 datos.setearParametros("@nombre", vendedorN.Nombre);
                 datos.setearParametros("@apellido", vendedorN.Apellido);
                 datos.setearParametros("@email", vendedorN.Email);
@@ -68,7 +68,7 @@ namespace negocio
 
             try
             {
-                datos.consultaSql("select p.idPersona, p.nombre_per, p.apellido_per, p.email_per, p.telefono_per, p.contraseña_per, p.fecha_nacimiento_per, p.estado_per, p.idroll_per, v.legajo_V from personas p inner join Vendedores v on p.idPersona = v.idPersona_V");
+                datos.consultaSql("select p.idPersona, p.nombre_per, p.apellido_per, p.email_per, p.telefono_per, p.contrasenia_per, p.fecha_nacimiento_per, p.estado_per, p.idroll_per, v.legajo_V from personas p inner join Vendedores v on p.idPersona = v.idPersona_V");
                 datos.ejecutarLectura();
                 while (datos.Lector.Read())
                 {
@@ -78,7 +78,7 @@ namespace negocio
                     aux.Apellido = (string)datos.Lector["apellido_per"];
                     aux.Email = (string)datos.Lector["email_per"];
                     aux.Telefono = (string)datos.Lector["telefono_per"];
-                    aux.Password = (string)datos.Lector["contraseña_per"];
+                    aux.Password = (string)datos.Lector["contrasenia_per"];
                     aux.FechaDeNacimiento = (DateTime)datos.Lector["fecha_nacimiento_per"];
                     aux.Estado = (int)datos.Lector["estado_per"];
                     aux.IdRol = (int)datos.Lector["idroll_per"];
@@ -124,7 +124,7 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.consultaSql("update personas set nombre_per=@nombre, apellido_per=@apellido, email_per=@email, telefono_per=@telefono, contraseña_per=@pass, fecha_nacimiento_per=@fechaNacimiento where idPersona=@id");
+                datos.consultaSql("update personas set nombre_per=@nombre, apellido_per=@apellido, email_per=@email, telefono_per=@telefono, contrasenia_per=@pass, fecha_nacimiento_per=@fechaNacimiento where idPersona=@id");
                 datos.setearParametros("@nombre", vendedorN.Nombre);
                 datos.setearParametros("@apellido", vendedorN.Apellido);
                 datos.setearParametros("@email", vendedorN.Email);
@@ -156,7 +156,7 @@ namespace negocio
             Vendedor vendedorN = new Vendedor();
             try
             {
-                datos.consultaSql("select p.idPersona, p.nombre_per, p.apellido_per, p.email_per, p.telefono_per, p.contraseña_per, p.fecha_nacimiento_per, p.estado_per, p.idroll_per, v.legajo_V from personas p inner join Vendedores v on p.idPersona = v.idPersona_V where p.idPersona=@id");
+                datos.consultaSql("select p.idPersona, p.nombre_per, p.apellido_per, p.email_per, p.telefono_per, p.contrasenia_per, p.fecha_nacimiento_per, p.estado_per, p.idroll_per, v.legajo_V from personas p inner join Vendedores v on p.idPersona = v.idPersona_V where p.idPersona=@id");
                 datos.setearParametros("@id", id);
                 datos.ejecutarLectura();
                 if (datos.Lector.Read())
@@ -166,7 +166,7 @@ namespace negocio
                     vendedorN.Apellido = (string)datos.Lector["apellido_per"];
                     vendedorN.Email = (string)datos.Lector["email_per"];
                     vendedorN.Telefono = (string)datos.Lector["telefono_per"];
-                    vendedorN.Password = (string)datos.Lector["contraseña_per"];
+                    vendedorN.Password = (string)datos.Lector["contrasenia_per"];
                     vendedorN.FechaDeNacimiento = (DateTime)datos.Lector["fecha_nacimiento_per"];
                     vendedorN.Estado = (int)datos.Lector["estado_per"];
                     vendedorN.IdRol = (int)datos.Lector["idroll_per"];

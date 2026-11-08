@@ -15,6 +15,24 @@ namespace tpc_webform_grupo_R
     {
 
         /// <summary>
+        /// Control detalleCarrito.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl detalleCarrito;
+
+        /// <summary>
+        /// Control precioCarrito.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl precioCarrito;
+
+        /// <summary>
         /// Control btnRestar.
         /// </summary>
         /// <remarks>

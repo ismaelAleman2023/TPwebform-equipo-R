@@ -27,8 +27,9 @@
                             <div class="col-md-5 d-flex align-items-center gap-3">
                                 <img src="images/icons/dorregoDesign.png" alt="Producto" class="m-3 " style="width: 50px; height: 50px; object-fit: cover;" />
                                 <div>
-                                    <h5 class="mb-1 fs-6">Letrero Polifan Personalizado</h5>
-                                    <span class="text-warning fw-bold">$15.000</span>
+                                    <h5 runat="server" id="detalleCarrito" class="mb-1 fs-6">Letrero Polifan Personalizado</h5>
+
+                                    <span runat="server" id="precioCarrito" class="text-warning fw-bold">$15.000</span>
                                 </div>
                             </div>
 
