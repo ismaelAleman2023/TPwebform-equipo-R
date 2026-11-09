@@ -37,7 +37,7 @@ namespace Helper
 
             ProductoNegocio productoNegocio = new ProductoNegocio();
             Producto pro = productoNegocio.buscarProduc(idProducto);
-            return pro.Descripcion;
+            return pro.Nombre;
 
         }
 

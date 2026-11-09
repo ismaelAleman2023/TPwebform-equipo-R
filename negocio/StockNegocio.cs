@@ -82,7 +82,7 @@ namespace negocio
 
             try
             {
-                datos.consultaSql("select id_stock,idProducto_stk ,cantidad_stk,estado_stk from stocks where idProducto_stk=@id");
+                datos.consultaSql("select id_stock,idProducto_stk ,cantidad_stk,estado_stk from stocks where id_stock=@id");
                 datos.setearParametros("@id", id);
                 datos.ejecutarLectura();
 
@@ -114,6 +114,44 @@ namespace negocio
 
         }
 
+        public Stock buscarStockProd(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            Stock st = new Stock();
+
+            try
+            {
+                datos.consultaSql("select id_stock,idProducto_stk ,cantidad_stk,estado_stk from stocks where idProducto_stk=@id");
+                datos.setearParametros("@id", id);
+                datos.ejecutarLectura();
+
+
+                if (datos.Lector.Read())
+                {
+                    st.IdStock = (int)datos.Lector["id_stock"];
+                    st.IdProducto_stk = (int)datos.Lector["idProducto_stk"];
+                    st.Cantidad = (int)datos.Lector["cantidad_stk"];
+                    st.Estado = (int)datos.Lector["estado_stk"];
+
+                    return st;
+                }
+                else
+                {
+                    return st;
+
+                }
+
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally { datos.cerrarConexion(); }
+
+
+        }
 
         public void modificar(Stock st)
         {

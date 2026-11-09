@@ -28,13 +28,7 @@ namespace tpc_webform_grupo_R
                     cargarGrillaSegunOpcion(opcion);
 
                     ViewState["TablaActiva"] = Session["btnAgregar"];
-
-
-                    Session.Remove("estadoAModificar");
-                    Session.Remove("clienteAModificar");
-                    Session.Remove("vendedorAModificar");
-                    Session.Remove("adminAModificar");
-                    Session.Remove("tipoPagoAModificar");
+                    removerSessionModificar();                                        
                     Session.Remove("NombreProducto");
                     Session.Remove("Stock");
                     Session.Remove("AgMd");
@@ -62,6 +56,14 @@ namespace tpc_webform_grupo_R
             cargarGrillaSegunOpcion(opcion);
         }
 
+        private void removerSessionModificar()
+        {
+            Session.Remove("estadoAModificar");
+            Session.Remove("clienteAModificar");
+            Session.Remove("vendedorAModificar");
+            Session.Remove("adminAModificar");
+            Session.Remove("tipoPagoAModificar");
+        }
 
         private void cargarGrillaSegunOpcion(int opcion)
         {
@@ -309,7 +311,8 @@ namespace tpc_webform_grupo_R
 
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
-          
+
+            removerSessionModificar();
 
             Session["btnAgregar"] = ViewState["TablaActiva"];
 
@@ -752,6 +755,7 @@ namespace tpc_webform_grupo_R
 
 
                 int idStock = (int)ViewState["eleccion"];
+
                 Stock stock = st.buscarStock(idStock);
                  string nombre = produc.nombreprodu((int)stock.IdProducto_stk);
 

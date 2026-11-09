@@ -35,7 +35,7 @@
                                 <div>
                                     <h5 runat="server" id="detalleCarrito" class="mb-1 fs-6"> <%# obtenerNombreProducto(Convert.ToInt32(Eval("IdProducto"))) %>  </h5>
 
-                                    <span runat="server" id="precioCarrito" class="text-warning fw-bold"> <%#Eval("PrecioUnitario") %> </span>
+                                    <span runat="server" id="precioCarrito" class="text-warning fw-bold">$ <%#Eval("PrecioUnitario") %> </span>
                                 </div>
 
 
@@ -93,7 +93,7 @@
                     </div>
 
                     <div class="d-grid">
-                        <asp:Button ID="btnContinuar" runat="server" Text="Continuar" CssClass="btn btn-warning fw-bold py-2 text-dark" />
+                        <asp:Button ID="btnContinuar" OnClick="btnContinuar_Click"  runat="server" Text="Continuar" CssClass="btn btn-warning fw-bold py-2 text-dark" />
                     </div>
 
                 </div>

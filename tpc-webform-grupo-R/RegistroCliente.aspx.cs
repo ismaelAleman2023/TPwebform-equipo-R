@@ -23,7 +23,8 @@ namespace tpc_webform_grupo_R
         {
             if (!IsPostBack)
             {
-                Cli = Session["clienteAModificar"] as Cliente;
+                Cli = (Cliente)Session["clienteAModificar"];
+
                 if (Cli != null)
                 {                   
                     cargarDatosCliente();

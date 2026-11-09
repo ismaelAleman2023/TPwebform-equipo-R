@@ -77,7 +77,7 @@ namespace tpc_webform_grupo_R
             }
             else
             {
-                Stock stk = negocioStk.buscarStock(valor);
+                Stock stk = negocioStk.buscarStockProd(valor);
                 if (stk != null && stk.Cantidad > 0) {
                      LblModalDisponibles.Text = stk.Cantidad.ToString();
                 }

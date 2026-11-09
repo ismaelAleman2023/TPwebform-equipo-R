@@ -7,21 +7,23 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-
+    <div id="destacado1" style="position: relative; top: -150px; visibility: hidden;"></div>
     <div class="container my-4 text-light">
 
         <!-- 1. SECCIÓN DESTACADOS -->
-        <section class="mb-5">
+        <section class="mb-5" >
             <h3 class="border-bottom border-secondary pb-2 mb-3">Destacados</h3>
+
             <div class="p-4 bg-dark border border-secondary rounded text-center">
+
                 <p class="text-muted mb-0">[ Espacio o Carrusel para Productos Destacados ]</p>
             </div>
         </section>
-
+        <div id="catalogo1" style="position: relative; top: -100px; visibility: hidden;"></div>
         <hr class="border-secondary my-4" />
 
         <!-- 2. SECCIÓN CATÁLOGO Y FILTROS -->
-        <section class="mb-5">
+        <section class="mb-5" >
             <h3 class="mb-3">Catálogo</h3>
             <p class=" small mb-3">Encontrá tu favorito</p>
 
@@ -197,7 +199,7 @@
 
 
         <!-- 3. SECCIÓN NOVEDADES -->
-        <section class="mb-4">
+        <section class="mb-4" id="novedades1">
             <h3 class="border-bottom border-secondary pb-2 mb-3">Promociones / Novedades</h3>
             <div class="p-4 bg-dark border border-secondary rounded text-center">
                 <p class="text-muted mb-0">[ Espacio para sección de Novedades ]</p>
@@ -205,5 +207,7 @@
         </section>
 
     </div>
+
+
 
 </asp:Content>

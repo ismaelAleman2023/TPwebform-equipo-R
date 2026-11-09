@@ -36,12 +36,7 @@ namespace tpc_webform_grupo_R
 
         private void cargarCard(List<DetalleVenta> listaCarrito)
         {
-            //ProductoNegocio prodN = new ProductoNegocio();
-            //ImagenNegocio imgN = new ImagenNegocio();
-            //Producto pro;
-            //List<Imagen> imgL;
-            //Imagen img;
-
+           
             decimal subtotal = 0;
             decimal total = 0;
 
@@ -55,8 +50,8 @@ namespace tpc_webform_grupo_R
 
             total = subtotal;
 
-            lblSubtotal.Text = subtotal.ToString();
-            lblTotal.Text = total.ToString();
+            lblSubtotal.Text = subtotal.ToString("C");
+            lblTotal.Text = total.ToString("C");
             lblCant.Text = listaCarrito.Count.ToString();
 
         }
@@ -138,7 +133,7 @@ namespace tpc_webform_grupo_R
                 {
                     if (!proN.onDemand(item.IdProducto))
                     {
-                        stk = stkN.buscarStock(item.IdProducto);
+                        stk = stkN.buscarStockProd (item.IdProducto);
 
                         if (item.Cantidad + 1 <= stk.Cantidad)
                         {
@@ -188,6 +183,14 @@ namespace tpc_webform_grupo_R
             Session["listaCarrito"] = listaDeta;
             listaProdCarrito = listaDeta;
             cargarCard(listaProdCarrito);
+
+        }
+
+        protected void btnContinuar_Click(object sender, EventArgs e)
+        {
+
+            Response.Redirect("FinalizarCompra.aspx");
+
 
         }
     }
