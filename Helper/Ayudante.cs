@@ -49,7 +49,41 @@ namespace Helper
         }
 
 
-        
+        public static bool ExisteProduc(string CodProduc) {
+            ProductoNegocio productoNegocio=new ProductoNegocio();
+            
+            try
+            {
+                List<Producto> listprodu = productoNegocio.listarProduc();
+
+                foreach (Producto pro in listprodu) {
+
+                    if (pro.CodigoProducto.Equals(CodProduc)) {
+
+                        return true;
+
+                    }
+                
+                }
+
+                return false;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+
+
+        }
+
+        public static bool esVacio(string valor) {
+
+            return string.IsNullOrWhiteSpace(valor);
+
+        }
+
 
 
     }

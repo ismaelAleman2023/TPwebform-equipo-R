@@ -15,7 +15,7 @@ namespace negocio
 
             try
             {
-                datos.consultaSql("insert into (idProducto_stk,cantidad_stk,estado_stk) values (@idProduc ,@cantidad ,@estado)");
+                datos.consultaSql("insert into stocks (idProducto_stk,cantidad_stk,estado_stk) values (@idProduc ,@cantidad ,@estado)");
                 datos.setearParametros("@idProduc", st.IdProducto_stk);
                 datos.setearParametros("@cantidad", st.Cantidad);
                 datos.setearParametros("@estado", st.Estado);

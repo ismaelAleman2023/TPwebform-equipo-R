@@ -288,7 +288,7 @@ namespace tpc_webform_grupo_R
 
             StockNegocio stockNegocio = new StockNegocio();
 
-            var listaActivos = stockNegocio.listaActivos().Select(s => new {
+            var listaActivos = stockNegocio.listaStock().Select(s => new {
                 s.IdStock,
                 Producto=Helper.Ayudante.idxNproduc(s.IdProducto_stk),
                 s.Cantidad,
@@ -309,7 +309,7 @@ namespace tpc_webform_grupo_R
 
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
-
+          
 
             Session["btnAgregar"] = ViewState["TablaActiva"];
 
@@ -333,7 +333,7 @@ namespace tpc_webform_grupo_R
                     Response.Redirect("RegistroTipoPago.aspx");
                     break;
                 case 5://productos
-
+                    Response.Redirect("RegistrarProducto.aspx");
                     break;
                 case 6://vendedores
                     Response.Redirect("RegistroVA.aspx");
@@ -405,10 +405,16 @@ namespace tpc_webform_grupo_R
 
         protected void btnEliminar_Click(object sender, EventArgs e)
         {
+            if (ViewState["eleccion"] == null)
+            {
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaError", "mostrarCartel('¡Seleccione un elemento de la grilla para modificar!', 'error');", true);
+                return;
+            }
+
             if (ViewState["eleccion"] != null)
             {
 
-                switch (ViewState["TablaActiva"])
+                switch ((int)ViewState["TablaActiva"])
                 {
                     case 1://categoria
                         eliminarCategoria();
@@ -472,9 +478,14 @@ namespace tpc_webform_grupo_R
 
         protected void btnModificar_Click(object sender, EventArgs e)
         {
-            if (ViewState["eleccion"] != null)
+            if (ViewState["eleccion"] == null)
             {
-                switch (ViewState["TablaActiva"])
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaError", "mostrarCartel('¡Seleccione un elemento de la grilla para modificar!', 'error');", true);
+                return; 
+            }
+            Session["btnAgregar"] = ViewState["TablaActiva"];
+
+            switch (ViewState["TablaActiva"])
                 {
                     case 1://categoria
                       
@@ -516,7 +527,8 @@ namespace tpc_webform_grupo_R
                     default:
                         break;
                 }
-            }
+          
+            
         }
 
 
@@ -712,7 +724,7 @@ namespace tpc_webform_grupo_R
             AdministrarNegocio adminN = new AdministrarNegocio();
             try
             {
-                int idAdmin = (int)ViewState["eleccion"];
+                int idAdmin =(int)ViewState["eleccion"];
                 Session["btnAgregar"] = ViewState["TablaActiva"];
                 Session["adminAModificar"] = adminN.buscarAdministrador(idAdmin);
                 Response.Redirect("RegistroVA.aspx");
@@ -729,12 +741,14 @@ namespace tpc_webform_grupo_R
 
             ProductoNegocio produc=new ProductoNegocio();
             StockNegocio st = new StockNegocio();
-
+            if (ViewState["eleccion"] == null)
+            {
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaError", "mostrarCartel('¡Seleccione un elemento de la grilla!', 'error');", true);
+                return;
+            }
 
             try
             {
-
-            if (ViewState["eleccion"]!=null) {
 
 
                 int idStock = (int)ViewState["eleccion"];
@@ -752,13 +766,8 @@ namespace tpc_webform_grupo_R
                 Session["Stock"] = stock;
                 Session["AgMd"] = agmd;
                 Response.Redirect("SumarStock.aspx");
-            }
-            else{
-
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaExito", "mostrarCartel('¡Seleccione un producto de la grilla , al cual quiera agregarle stock!', 'error');", true);
-
-
-            }
+            
+         
         
             }
             catch (Exception)

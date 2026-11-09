@@ -1,10 +1,11 @@
-﻿using System;
+﻿using dominio;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Data.SqlClient;
-using System.ComponentModel.Design;
 
 namespace negocio
 {
@@ -20,14 +21,16 @@ namespace negocio
         }
 
 
-        public AccesoDatos() {
+        public AccesoDatos()
+        {
 
             conexion = new SqlConnection("server= .\\SQLEXPRESS; database=ecommerceDB; integrated security = true");
             comando = new SqlCommand();
 
         }
 
-        public void setearParametros(string nombre, object valor) {
+        public void setearParametros(string nombre, object valor)
+        {
 
             try
             {
@@ -39,17 +42,18 @@ namespace negocio
 
                 throw;
             }
-           
+
         }
 
 
-        public void consultaSql(string consulta ) {
+        public void consultaSql(string consulta)
+        {
 
 
             try
             {
-            comando.CommandType=System.Data.CommandType.Text;
-            comando.CommandText=consulta;
+                comando.CommandType = System.Data.CommandType.Text;
+                comando.CommandText = consulta;
 
             }
             catch (InvalidOperationException)
@@ -57,36 +61,39 @@ namespace negocio
 
                 throw;
             }
-        
+
         }
 
-        public void  ejecutarLectura() {
-           comando.Connection = conexion;
+        public void ejecutarLectura()
+        {
+            comando.Connection = conexion;
 
             try
             {
                 conexion.Open();
-                lector= comando.ExecuteReader();
+                lector = comando.ExecuteReader();
 
 
 
             }
-            catch (SqlException )
+            catch (SqlException)
             {
 
                 throw;
             }
-            catch(InvalidOperationException ) {
+            catch (InvalidOperationException)
+            {
 
                 throw;
             }
-        
-        
+
+
         }
 
 
-        public void ejecutarAccion() { 
-        comando.Connection=conexion;
+        public void ejecutarAccion()
+        {
+            comando.Connection = conexion;
 
             try
             {
@@ -99,19 +106,21 @@ namespace negocio
 
                 throw;
             }
-            catch (InvalidOperationException) {
+            catch (InvalidOperationException)
+            {
 
                 throw;
-            
+
             }
-        
-        
-        
+
+
+
         }
 
 
 
-        public void cerrarConexion() {
+        public void cerrarConexion()
+        {
 
             try
             {
@@ -121,25 +130,28 @@ namespace negocio
                     conexion.Close();
 
                 }
-                if (conexion !=null && conexion.State == System.Data.ConnectionState.Open) { 
-                
-                conexion.Close();
+                if (conexion != null && conexion.State == System.Data.ConnectionState.Open)
+                {
+
+                    conexion.Close();
                 }
 
             }
             catch (SqlException)
             {
 
-                throw ;
+                throw;
             }
-            catch (InvalidOperationException){
+            catch (InvalidOperationException)
+            {
 
                 throw;
             }
-           
+
         }
 
 
+      
 
     }
-}
+    }

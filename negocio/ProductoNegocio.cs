@@ -31,14 +31,24 @@ namespace negocio
                 datos.ejecutarAccion();
 
 
-                //cargamos las imagenes
-                foreach (Imagen img in produ.ListaImagen)
+
+
+              int  idProductoNuevo = ultimoId();
+                
+                
+
+               
+
+                if (produ.ListaImagen != null && produ.ListaImagen.Count > 0)
                 {
+                    foreach (Imagen img in produ.ListaImagen)
+                    {
+                        
+                        img.idProducto_img = idProductoNuevo;
 
-                    ImagenNegocio imgneg = new ImagenNegocio();
-
-                    imgneg.agregarImagen(img);
-
+                        ImagenNegocio imgNeg = new ImagenNegocio();
+                        imgNeg.agregarImagen(img);
+                    }
                 }
 
 
@@ -152,23 +162,24 @@ namespace negocio
 
                 datos.ejecutarAccion();
 
-               
+
             }
             catch (Exception)
             {
                 throw;
             }
             finally
-            { 
+            {
                 datos.cerrarConexion();
             }
         }
 
-        public Producto buscarProduc(int id) { 
-        
+        public Producto buscarProduc(int id)
+        {
+
             AccesoDatos datos = new AccesoDatos();
-            ImagenNegocio img=new ImagenNegocio();
-            Producto pro=new Producto();
+            ImagenNegocio img = new ImagenNegocio();
+            Producto pro = new Producto();
 
             try
             {
@@ -177,17 +188,18 @@ namespace negocio
                 datos.setearParametros("@id", id);
                 datos.ejecutarLectura();
 
-                while (datos.Lector.Read()) { 
+                while (datos.Lector.Read())
+                {
 
                     pro.IdProducto = (int)datos.Lector["idProducto"];
-                    pro.CodigoProducto=(string)datos.Lector["codigoProducto_prod"];
-                    pro.Nombre=(string)datos.Lector["nombre_prod"];
-                    pro.Descripcion =(string)datos.Lector["descripcion_prod"];
+                    pro.CodigoProducto = (string)datos.Lector["codigoProducto_prod"];
+                    pro.Nombre = (string)datos.Lector["nombre_prod"];
+                    pro.Descripcion = (string)datos.Lector["descripcion_prod"];
                     pro.Marca = (int)datos.Lector["idMarca_prod"];
-                    pro.Categoria=(int)datos.Lector["idCategoria_prod"];
-                    pro.Precio= (decimal)datos.Lector["precio_prod"];
-                    pro.OnDemand= (bool)datos.Lector["ondemand_prod"];
-                    pro.Estado= (int)datos.Lector["estado_prod"];
+                    pro.Categoria = (int)datos.Lector["idCategoria_prod"];
+                    pro.Precio = (decimal)datos.Lector["precio_prod"];
+                    pro.OnDemand = (bool)datos.Lector["ondemand_prod"];
+                    pro.Estado = (int)datos.Lector["estado_prod"];
                     pro.ListaImagen = img.buscarXcodProduc(pro.IdProducto);
 
                 }
@@ -199,13 +211,14 @@ namespace negocio
 
                 throw;
             }
-            finally { datos.Lector.Close(); }   
+            finally { datos.cerrarConexion(); }
         }
 
-        public string nombreprodu(int idProducto) { 
-        
-        AccesoDatos datos = new AccesoDatos();
-          
+        public string nombreprodu(int idProducto)
+        {
+
+            AccesoDatos datos = new AccesoDatos();
+
             try
             {
 
@@ -218,21 +231,23 @@ namespace negocio
 
                     return (string)datos.Lector["nombre_prod"];
                 }
-                else { 
-                
-                return "vacio";
-                
-                
+                else
+                {
+
+                    return "vacio";
+
+
                 }
 
-                 
+
             }
             catch (Exception)
             {
 
                 throw;
             }
-            finally {
+            finally
+            {
 
                 datos.cerrarConexion();
             }
@@ -240,5 +255,36 @@ namespace negocio
         }
 
 
+        public int ultimoId()
+        {
+            AccesoDatos datos = new AccesoDatos();
+            int idProductoNuevo = 0;
+
+            try
+            {
+                datos.consultaSql("select max(idProducto) from productos");
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read() && !(datos.Lector[0] is DBNull))
+                {
+                    idProductoNuevo = (int)datos.Lector[0];
+                }
+
+                return idProductoNuevo;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
+
+
     }
 }
+

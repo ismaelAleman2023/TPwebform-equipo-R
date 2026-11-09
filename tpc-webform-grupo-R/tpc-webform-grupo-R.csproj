@@ -101,12 +101,29 @@
     <Content Include="Carrito.aspx" />
     <Content Include="ComoComprar.aspx" />
     <Content Include="Contactanos.aspx" />
+<<<<<<< Updated upstream
     <Content Include="Default.aspx" />
     <Content Include="Principal.Master" />
     <Content Include="RegistroEstado.aspx" />
+=======
+    <Content Include="images\icons\carrusel_1.jpg" />
+    <Content Include="images\icons\carrusel_2.jpg" />
+    <Content Include="images\icons\carrusel_3.jpg" />
+    <Content Include="images\icons\carrusel_4.jpg" />
+    <Content Include="images\icons\carrusel_5.jpg" />
+    <Content Include="images\icons\carrusel_6.jpg" />
+    <Content Include="images\icons\dorregoDesign.png" />
+>>>>>>> Stashed changes
     <Content Include="images\icons\face.png" />
+    <Content Include="images\icons\IngreseImagen.jpg" />
     <Content Include="images\icons\insta.png" />
+    <Content Include="images\icons\logoDorregoDesign.jpg" />
     <Content Include="images\icons\whatsap.png" />
+    <Content Include="images\products\producto1.svg" />
+    <Content Include="images\products\producto2.svg" />
+    <Content Include="images\products\producto3.svg" />
+    <Content Include="RegistrarProducto.aspx" />
+    <Content Include="RegistroEstado.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="RegistroCategoria.aspx" />
     <Content Include="RegistroMarca.aspx" />
@@ -131,17 +148,6 @@
     <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="images\icons\carrusel_1.jpg" />
-    <Content Include="images\icons\carrusel_2.jpg" />
-    <Content Include="images\icons\carrusel_3.jpg" />
-    <Content Include="images\icons\carrusel_4.jpg" />
-    <Content Include="images\icons\carrusel_5.jpg" />
-    <Content Include="images\icons\carrusel_6.jpg" />
-    <Content Include="images\icons\dorregoDesign.png" />
-    <Content Include="images\icons\logoDorregoDesign.jpg" />
-    <Content Include="images\products\producto1.svg" />
-    <Content Include="images\products\producto2.svg" />
-    <Content Include="images\products\producto3.svg" />
     <Content Include="RegistroCliente.aspx" />
     <Content Include="RegistroDireccion.aspx" />
     <Content Include="RegistroVA.aspx" />
@@ -238,6 +244,7 @@
     <Compile Include="Contactanos.aspx.designer.cs">
       <DependentUpon>Contactanos.aspx</DependentUpon>
     </Compile>
+<<<<<<< Updated upstream
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -251,6 +258,14 @@
     </Compile>
     <Compile Include="Principal.Master.designer.cs">
       <DependentUpon>Principal.Master</DependentUpon>
+=======
+    <Compile Include="RegistrarProducto.aspx.cs">
+      <DependentUpon>RegistrarProducto.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RegistrarProducto.aspx.designer.cs">
+      <DependentUpon>RegistrarProducto.aspx</DependentUpon>
+>>>>>>> Stashed changes
     </Compile>
     <Compile Include="RegistroEstado.aspx.cs">
       <DependentUpon>RegistroEstado.aspx</DependentUpon>
