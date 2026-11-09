@@ -101,11 +101,8 @@
     <Content Include="Carrito.aspx" />
     <Content Include="ComoComprar.aspx" />
     <Content Include="Contactanos.aspx" />
-<<<<<<< Updated upstream
     <Content Include="Default.aspx" />
     <Content Include="Principal.Master" />
-    <Content Include="RegistroEstado.aspx" />
-=======
     <Content Include="images\icons\carrusel_1.jpg" />
     <Content Include="images\icons\carrusel_2.jpg" />
     <Content Include="images\icons\carrusel_3.jpg" />
@@ -113,7 +110,6 @@
     <Content Include="images\icons\carrusel_5.jpg" />
     <Content Include="images\icons\carrusel_6.jpg" />
     <Content Include="images\icons\dorregoDesign.png" />
->>>>>>> Stashed changes
     <Content Include="images\icons\face.png" />
     <Content Include="images\icons\IngreseImagen.jpg" />
     <Content Include="images\icons\insta.png" />
@@ -244,7 +240,6 @@
     <Compile Include="Contactanos.aspx.designer.cs">
       <DependentUpon>Contactanos.aspx</DependentUpon>
     </Compile>
-<<<<<<< Updated upstream
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -258,14 +253,13 @@
     </Compile>
     <Compile Include="Principal.Master.designer.cs">
       <DependentUpon>Principal.Master</DependentUpon>
-=======
+    </Compile>
     <Compile Include="RegistrarProducto.aspx.cs">
       <DependentUpon>RegistrarProducto.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="RegistrarProducto.aspx.designer.cs">
       <DependentUpon>RegistrarProducto.aspx</DependentUpon>
->>>>>>> Stashed changes
     </Compile>
     <Compile Include="RegistroEstado.aspx.cs">
       <DependentUpon>RegistroEstado.aspx</DependentUpon>
@@ -418,13 +412,6 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>Este proyecto hace referencia a los paquetes NuGet que faltan en este equipo. Use la restauración de paquetes NuGet para descargarlos. Para obtener más información, consulte http://go.microsoft.com/fwlink/?LinkID=322105. El archivo que falta es {0}.</ErrorText>
