@@ -15,76 +15,40 @@ namespace tpc_webform_grupo_R
     {
 
         /// <summary>
-        /// Control detalleCarrito.
+        /// Control reapetCarrito.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl detalleCarrito;
+        protected global::System.Web.UI.WebControls.Repeater reapetCarrito;
 
         /// <summary>
-        /// Control precioCarrito.
+        /// Control lblCant.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl precioCarrito;
+        protected global::System.Web.UI.WebControls.Label lblCant;
 
         /// <summary>
-        /// Control btnRestar.
+        /// Control lblSubtotal.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnRestar;
+        protected global::System.Web.UI.WebControls.Label lblSubtotal;
 
         /// <summary>
-        /// Control btnSumar.
+        /// Control lblTotal.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSumar;
-
-        /// <summary>
-        /// Control btnEliminar.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnEliminar;
-
-        /// <summary>
-        /// Control lblCantResumen.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblCantResumen;
-
-        /// <summary>
-        /// Control lblSubtotalResumen.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSubtotalResumen;
-
-        /// <summary>
-        /// Control lblTotalResumen.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTotalResumen;
+        protected global::System.Web.UI.WebControls.Label lblTotal;
 
         /// <summary>
         /// Control btnContinuar.

@@ -283,7 +283,15 @@ namespace negocio
         }
 
 
+        public bool onDemand(int idProd)
+        {
+            Producto prod = buscarProduc(idProd);
 
+             if(prod.OnDemand) { return true; }
+             
+            return false;
+
+        }
 
     }
 }

@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using negocio;
 using dominio;
+
+
 namespace Helper
 {
     public static class Ayudante
@@ -31,27 +33,27 @@ namespace Helper
 
         }
 
-        public static string idxNproduc(int idProducto) { 
-        
-        ProductoNegocio productoNegocio   = new ProductoNegocio();
+        public static string idxNproduc(int idProducto) {
+
+            ProductoNegocio productoNegocio = new ProductoNegocio();
             Producto pro = productoNegocio.buscarProduc(idProducto);
             return pro.Descripcion;
-        
+
         }
 
 
-        public static string idxCategoria(int idCategoria) { 
-        
-            CategoriaNegocio cate=new CategoriaNegocio();
-            Categoria categoria=cate.buscarCategoria(idCategoria);
+        public static string idxCategoria(int idCategoria) {
+
+            CategoriaNegocio cate = new CategoriaNegocio();
+            Categoria categoria = cate.buscarCategoria(idCategoria);
             return categoria.Descripcion;
-        
+
         }
 
 
         public static bool ExisteProduc(string CodProduc) {
-            ProductoNegocio productoNegocio=new ProductoNegocio();
-            
+            ProductoNegocio productoNegocio = new ProductoNegocio();
+
             try
             {
                 List<Producto> listprodu = productoNegocio.listarProduc();
@@ -63,7 +65,7 @@ namespace Helper
                         return true;
 
                     }
-                
+
                 }
 
                 return false;
@@ -85,7 +87,12 @@ namespace Helper
         }
 
 
+    
+
+
 
     }
+
+
 
 }

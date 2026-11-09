@@ -63,10 +63,13 @@
                                         </div>
 
                                         <!-- Imagen con tamaño equilibrado para PC (~140px) -->
-                                        <div class="bg-secondary rounded mb-3 d-flex align-items-center justify-content-center" style="height: 140px;">
-                                            <span class="text-dark small">[ IMAGEN ]</span>
-                                            <asp:Image ID="imgCard" ImageUrl="" runat="server" />
-                                        </div>
+                                       <div class="bg-secondary rounded mb-3 d-flex align-items-center justify-content-center position-relative" style="height: 140px; overflow: hidden;">
+                                       
+                                        <asp:Image ID="imgCard" runat="server" 
+                                            ImageUrl='<%# ObtenerImagenProducto(Convert.ToInt32(Eval("IdProducto"))) %>' 
+                                            style="width: 100%; height: 100%; object-fit: cover;" 
+                                            alt="Producto" />
+                                    </div>
 
                                         <!-- Nombre y Precio -->
                                         <h6 class="card-title fw-bold mb-1 text-truncate"><%#Eval("Nombre")   %> </h6>
@@ -124,7 +127,8 @@
                                                 </p>
 
                                                 <p class="small mb-0">
-                                                    Disponibles: <span class="fw-bold text-warning">algunos<asp:Label ID="lblModalStock" runat="server"></asp:Label></span>
+                                                    Disponibles: <span ><asp:Label ID="lblModalStock" runat="server"></asp:Label></span>
+                                                    <asp:Label ID="LblModalDisponibles" runat="server" class="fw-bold text-warning" >Disponibles: </asp:Label>
                                                 </p>
 
 

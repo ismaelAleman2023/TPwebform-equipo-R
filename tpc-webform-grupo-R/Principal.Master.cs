@@ -16,7 +16,7 @@ namespace tpc_webform_grupo_R
 
             if (Session["listaCarrito"] != null)
             {
-                List<Producto> carrito = (List<Producto>)Session["listaCarrito"];
+                List<DetalleVenta> carrito = (List<DetalleVenta>)Session["listaCarrito"];
                 actualizarContador(carrito.Count);
             }
             else

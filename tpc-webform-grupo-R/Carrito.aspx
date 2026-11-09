@@ -18,27 +18,37 @@
                 
                 <div class="d-flex flex-column gap-3">
                    
-                    
+                    <asp:Repeater ID="reapetCarrito" runat="server">
+                        <ItemTemplate>
+
+
+                        
                    <!-- CARD DE PRODUCTO (Acá después irá un Repeater o GridView de ASP.NET) -->
                     <div class="card bg-dark text-light border-secondary p-3">
                         <div class="row align-items-center">
                             
                             <!-- Imagen y Nombre -->
                             <div class="col-md-5 d-flex align-items-center gap-3">
-                                <img src="images/icons/dorregoDesign.png" alt="Producto" class="m-3 " style="width: 50px; height: 50px; object-fit: cover;" />
-                                <div>
-                                    <h5 runat="server" id="detalleCarrito" class="mb-1 fs-6">Letrero Polifan Personalizado</h5>
 
-                                    <span runat="server" id="precioCarrito" class="text-warning fw-bold">$15.000</span>
+                          
+                                <asp:Image ID="imgCarrito" ImageUrl='<%# obtenerImagenProducto(Convert.ToInt32(Eval("IdProducto"))) %>' runat="server" alt="Producto" class="m-0 " style="width: 100px; height: 100px; object-fit: cover;" />
+                                <div>
+                                    <h5 runat="server" id="detalleCarrito" class="mb-1 fs-6"> <%# obtenerNombreProducto(Convert.ToInt32(Eval("IdProducto"))) %>  </h5>
+
+                                    <span runat="server" id="precioCarrito" class="text-warning fw-bold"> <%#Eval("PrecioUnitario") %> </span>
                                 </div>
+
+
                             </div>
 
                             <!-- Centro: Control de Cantidad [- Cant +] -->
                             <div class="col-md-4 d-flex justify-content-center my-2 my-md-0">
                                 <div class="input-group input-group-sm w-auto">
-                                    <asp:Button ID="btnRestar" runat="server" Text="-" CssClass="btn btn-outline-secondary text-light px-3" />
-                                    <span class="input-group-text bg-secondary text-light border-secondary px-3">1</span>
-                                    <asp:Button ID="btnSumar" runat="server" Text="+" CssClass="btn btn-outline-secondary text-light px-3" />
+                                    <asp:Button ID="btnRestar" runat="server" Text="-" CssClass="btn btn-outline-secondary text-light px-3" CommandArgument='<%# Eval("IdProducto") %>' Onclick="btnRestar_Click" />
+                                    
+                                    <span class="input-group-text bg-secondary text-light border-secondary px-3" runat="server"><%#Eval("Cantidad") %></span>
+                                    
+                                    <asp:Button ID="btnSumar" runat="server" Text="+" CssClass="btn btn-outline-secondary text-light px-3" CommandArgument='<%# Eval("IdProducto") %>' OnClick="btnSumar_Click" />
                                 </div>
                             </div>
 
@@ -52,6 +62,8 @@
                         </div>
                     </div>
                     <!-- Fin de la Card -->
+            </ItemTemplate>
+         </asp:Repeater>
 
                 </div>
 
@@ -64,8 +76,8 @@
                     <h4 class="border-bottom border-secondary pb-3 mb-3">Resumen Compra</h4>
                     
                     <div class="d-flex justify-content-between mb-2">
-                        <span>Productos (<asp:Label ID="lblCantResumen" runat="server" Text="1"></asp:Label>)</span>
-                        <asp:Label ID="lblSubtotalResumen" runat="server" Text="$15.000"></asp:Label>
+                        <span>Productos (<asp:Label ID="lblCant" runat="server" ></asp:Label>)</span>
+                        <asp:Label ID="lblSubtotal" runat="server" ></asp:Label>
                     </div>
 
                     <div class="d-flex justify-content-between mb-3 text-muted small">
@@ -77,7 +89,7 @@
 
                     <div class="d-flex justify-content-between fs-4 fw-bold mb-4">
                         <span>TOTAL:</span>
-                        <asp:Label ID="lblTotalResumen" runat="server" Text="$15.000" CssClass="text-warning"></asp:Label>
+                        <asp:Label ID="lblTotal" runat="server"  CssClass="text-warning"></asp:Label>
                     </div>
 
                     <div class="d-grid">

@@ -82,7 +82,7 @@ namespace negocio
 
             try
             {
-                datos.consultaSql("select id_stock,idProducto_stk ,cantidad_stk,estado_stk from stocks where id_stock=@id");
+                datos.consultaSql("select id_stock,idProducto_stk ,cantidad_stk,estado_stk from stocks where idProducto_stk=@id");
                 datos.setearParametros("@id", id);
                 datos.ejecutarLectura();
 
