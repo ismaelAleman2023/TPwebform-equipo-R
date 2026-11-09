@@ -101,11 +101,9 @@
     <Content Include="Carrito.aspx" />
     <Content Include="ComoComprar.aspx" />
     <Content Include="Contactanos.aspx" />
-
     <Content Include="Default.aspx" />
     <Content Include="Principal.Master" />
     <Content Include="RegistroEstado.aspx" />
-
     <Content Include="images\icons\carrusel_1.jpg" />
     <Content Include="images\icons\carrusel_2.jpg" />
     <Content Include="images\icons\carrusel_3.jpg" />
@@ -113,7 +111,6 @@
     <Content Include="images\icons\carrusel_5.jpg" />
     <Content Include="images\icons\carrusel_6.jpg" />
     <Content Include="images\icons\dorregoDesign.png" />
-
     <Content Include="images\icons\face.png" />
     <Content Include="images\icons\IngreseImagen.jpg" />
     <Content Include="images\icons\insta.png" />
@@ -244,7 +241,6 @@
     <Compile Include="Contactanos.aspx.designer.cs">
       <DependentUpon>Contactanos.aspx</DependentUpon>
     </Compile>
-
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -256,18 +252,15 @@
       <DependentUpon>Principal.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    
-	  <Compile Include="Principal.Master.designer.cs">
+    <Compile Include="Principal.Master.designer.cs">
       <DependentUpon>Principal.Master</DependentUpon>
-	  </Compile>
-		  
+    </Compile>
     <Compile Include="RegistrarProducto.aspx.cs">
       <DependentUpon>RegistrarProducto.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="RegistrarProducto.aspx.designer.cs">
       <DependentUpon>RegistrarProducto.aspx</DependentUpon>
-
     </Compile>
     <Compile Include="RegistroEstado.aspx.cs">
       <DependentUpon>RegistroEstado.aspx</DependentUpon>

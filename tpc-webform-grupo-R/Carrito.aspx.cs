@@ -164,11 +164,31 @@ namespace tpc_webform_grupo_R
 
         }
 
+        protected void btnEliminarCarrito_Click(object sender, EventArgs e)
+        {
+            LinkButton btn = (LinkButton)sender;
+            int idProd = int.Parse(btn.CommandArgument);
 
+            List<DetalleVenta> listaDeta = (List<DetalleVenta>)Session["listaCarrito"];
 
+            int posi = 0;
+            int contador = listaDeta.Count;
 
+            for (int i = 0; i < contador; i++)
+            {
+                if(listaDeta[i].IdProducto == idProd)
+                {
+                    posi = i;
+                    break;
+                }
+            }
 
+            listaDeta.RemoveAt(posi);
 
+            Session["listaCarrito"] = listaDeta;
+            listaProdCarrito = listaDeta;
+            cargarCard(listaProdCarrito);
 
+        }
     }
 }

@@ -54,7 +54,7 @@
 
                             <!-- Derecha: Tacho de basura para eliminar -->
                             <div class="col-md-3 text-end">
-                                <asp:LinkButton ID="btnEliminar" runat="server" CssClass="btn btn-outline-danger btn-sm">
+                                <asp:LinkButton ID="btnEliminarCarrito" CommandArgument='<%# Eval("IdProducto") %>' OnClick="btnEliminarCarrito_Click" runat="server" CssClass="btn btn-outline-danger btn-sm">
                                     <i class="fa-solid fa-trash-can"></i> Eliminar
                                 </asp:LinkButton>
                             </div>
