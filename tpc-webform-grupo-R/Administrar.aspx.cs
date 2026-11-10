@@ -32,6 +32,7 @@ namespace tpc_webform_grupo_R
                     Session.Remove("NombreProducto");
                     Session.Remove("Stock");
                     Session.Remove("AgMd");
+        
 
                 }
 
@@ -63,6 +64,7 @@ namespace tpc_webform_grupo_R
             Session.Remove("vendedorAModificar");
             Session.Remove("adminAModificar");
             Session.Remove("tipoPagoAModificar");
+            Session.Remove("ProductoAmodificar");
         }
 
         private void cargarGrillaSegunOpcion(int opcion)
@@ -503,7 +505,7 @@ namespace tpc_webform_grupo_R
                         modificarTipoPago();
                         break;
                     case 5://productos
-
+                        ModificarProducto();
                         break;
                     case 6://vendedores
                         modificarVendedor();
@@ -738,6 +740,25 @@ namespace tpc_webform_grupo_R
             }
         }
 
+        private void ModificarProducto() { 
+        
+        ProductoNegocio pro=new ProductoNegocio();
+
+            try
+            {
+                int idproducto = (int)ViewState["eleccion"];
+                Session["btnAgregar"] = ViewState["TablaActiva"];
+                Session["ProductoAmodificar"] = pro.buscarProduc(idproducto);
+                Response.Redirect("RegistrarProducto.aspx");
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        
+        
+        }
 
 
         private void sumarStock(string agmd) {

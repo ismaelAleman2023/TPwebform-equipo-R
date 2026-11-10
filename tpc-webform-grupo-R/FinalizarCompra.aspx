@@ -20,9 +20,11 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
                                 <p class="mb-1 text-muted">Dirección de envío:</p>
-                                <asp:Label ID="lblDireccionEnvio" runat="server" CssClass="fw-bold fs-5" Text="Calle XXX 2018"></asp:Label>
+                                <asp:Label ID="lblDireccionEnvio" runat="server" CssClass="fw-bold fs-5" >  </asp:Label>
                             </div>
-                            <asp:Button ID="btnCambiarDireccion" runat="server" CssClass="btn btn-outline-secondary btn-sm" Text="Cambiar Dirección"  />
+                                                       
+                            <asp:Button ID="btnDireccion" runat="server" CssClass="btn btn-outline-secondary btn-sm" OnClick="btnDireccion_Click"    />
+                        
                         </div>
                     </div>
                 </div>
@@ -32,11 +34,22 @@
                     <div class="card-body">
                         <h5 class="card-title text-primary mb-3">Medio de Pago</h5>
                         <div class="mb-3">
-                            <asp:RadioButtonList ID="rblMedioPago" runat="server" CssClass="form-check" RepeatLayout="Flow">
-                                <asp:ListItem Text=" Tarjeta de Crédito / Débito" Value="Tarjeta" Selected="True" />
-                                <asp:ListItem Text=" Transferencia Bancaria" Value="Transferencia" />
-                                <asp:ListItem Text=" Efectivo (Pago en destino / Retiro)" Value="Efectivo" />
-                            </asp:RadioButtonList>
+
+
+                <asp:Repeater ID="repetformaPago" runat="server">
+                <ItemTemplate>
+                    <div class="form-check mb-2">
+                        <!-- Input radio nativo de HTML con el mismo 'name' para que sean excluyentes -->
+                        <input class="form-check-input" type="radio" name="grupoPago" value='<%# Eval("IdTipoPago") %>' id='<%# "radio_" + Eval("IdTipoPago") %>' />
+                        
+                        <!-- Label asociado por el 'for' con el id único de cada elemento -->
+                        <label class="form-check-label" for='<%# "radio_" + Eval("IdTipoPago") %>'>
+                            <%# Eval("Descripcion") %>
+                        </label>
+                    </div>
+                </ItemTemplate>
+            </asp:Repeater>
+
                         </div>
                     </div>
                 </div>
@@ -51,8 +64,8 @@
                         
                         <!-- Detalle de Productos -->
                         <div class="d-flex justify-content-between mb-2">
-                            <span>Productos (<asp:Label ID="lblCantidadItems" runat="server" Text="3"></asp:Label>)</span>
-                            <span><asp:Label ID="lblSubtotal" runat="server" Text="$ XXX"></asp:Label></span>
+                            <span>Productos (<asp:Label ID="lblCantidadItems" runat="server" ></asp:Label>)</span>
+                            <span><asp:Label ID="lblSubtotal" runat="server" Text=""></asp:Label></span>
                         </div>
 
                         <!-- Costo de Envío -->

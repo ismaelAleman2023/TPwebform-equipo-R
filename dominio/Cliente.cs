@@ -11,7 +11,7 @@ namespace dominio
     {
         public Cliente() {
             
-            this.IdRol = 1;
+            this.IdRol = 2;
             this.Estado = 1;
             CorreoOk = false;
         }

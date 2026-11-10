@@ -33,13 +33,13 @@ namespace tpc_webform_grupo_R
         protected global::System.Web.UI.WebControls.TextBox txtCorreoLogin;
 
         /// <summary>
-        /// Control txtPasswordLogin.
+        /// Control txtPassLogin.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtPasswordLogin;
+        protected global::System.Web.UI.WebControls.TextBox txtPassLogin;
 
         /// <summary>
         /// Control lblErrorLogin.

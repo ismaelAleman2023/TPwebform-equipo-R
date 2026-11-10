@@ -51,7 +51,10 @@
                         <asp:HyperLink ID="lnkSobreNosotros" runat="server" NavigateUrl="~/SobreNosotros.aspx" CssClass="nav-cajita">Sobre nosotros</asp:HyperLink>
                         <asp:HyperLink ID="lnkComoComprar" runat="server" NavigateUrl="~/ComoComprar.aspx" CssClass="nav-cajita">Como comprar</asp:HyperLink>
                         <asp:HyperLink ID="lnkContactanos" runat="server" NavigateUrl="~/Contactanos.aspx" CssClass="nav-cajita">Contactanos</asp:HyperLink>
+                        <asp:HyperLink ID="lnkPerfil" runat="server" NavigateUrl="~/Perfil.aspx" CssClass="nav-cajita">Perfil</asp:HyperLink>
                         <asp:HyperLink ID="lnkAdministrar" runat="server" NavigateUrl="~/Administrar.aspx" CssClass="nav-cajita">Administrar</asp:HyperLink>
+                        <asp:HyperLink ID="lnkInformes" runat="server" NavigateUrl="~/Informes.aspx" CssClass="nav-cajita">Informes</asp:HyperLink>
+                    
                     </div>
                 </div>
 

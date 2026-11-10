@@ -8,7 +8,10 @@ namespace dominio
 {
     public  class Administrador : Persona
     {
-        public Administrador() { }
+        public Administrador() {
+            this.IdRol = 1;
+            this.Estado = 1;
+        }
 
         public String Cuil { get; set; }
 

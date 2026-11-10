@@ -113,6 +113,30 @@ namespace negocio
 
         }
 
+        public void eliminarImagenesXproductos(int id) {
+
+           
+            List<Imagen> list = buscarXcodProduc(id);
+            try
+            {
+                foreach (Imagen imagen in list)
+                {
+
+                    bajaXcodProduc(imagen.idProducto_img);
+
+
+                }
+                
+                
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        
+        }
 
         public void agregarImagen(Imagen imga) { 
         

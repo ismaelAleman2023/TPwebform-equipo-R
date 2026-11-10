@@ -103,6 +103,8 @@
     <Content Include="Contactanos.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="FinalizarCompra.aspx" />
+    <Content Include="Informes.aspx" />
+    <Content Include="Perfil.aspx" />
     <Content Include="Principal.Master" />
     <Content Include="RegistroEstado.aspx" />
     <Content Include="images\icons\carrusel_1.jpg" />
@@ -255,6 +257,20 @@
     </Compile>
     <Compile Include="FinalizarCompra.aspx.designer.cs">
       <DependentUpon>FinalizarCompra.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Informes.aspx.cs">
+      <DependentUpon>Informes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Informes.aspx.designer.cs">
+      <DependentUpon>Informes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Perfil.aspx.cs">
+      <DependentUpon>Perfil.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Perfil.aspx.designer.cs">
+      <DependentUpon>Perfil.aspx</DependentUpon>
     </Compile>
     <Compile Include="Principal.Master.cs">
       <DependentUpon>Principal.Master</DependentUpon>

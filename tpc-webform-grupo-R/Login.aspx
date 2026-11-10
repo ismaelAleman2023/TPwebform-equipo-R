@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Principal.Master" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="tpc_webform_grupo_R.Login" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+       <script src="Scripts/CartelFlotante.js"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -26,7 +27,7 @@
                             <!-- Contraseña -->
                             <div class="mb-3">
                                 <label for="txtPasswordLogin" class="form-label fw-semibold">Contraseña</label>
-                                <asp:TextBox ID="txtPasswordLogin" runat="server" TextMode="Password" CssClass="form-control" placeholder="••••••••" required="true"></asp:TextBox>
+                                <asp:TextBox ID="txtPassLogin" runat="server" TextMode="Password" CssClass="form-control" placeholder="••••••••" required="true"></asp:TextBox>
                             </div>
 
                             <!-- Se deja label para mas adelante mostrar un texto de error o contra incorrecta-->
@@ -54,6 +55,16 @@
     </div>
 
 
-
+    
+            <div id="contenedorAlerta" class="position-fixed top-50 start-50 translate-middle p-3" style="z-index: 1050; display: none;">
+                <div id="miAlerta" class="toast align-items-center text-white bg-dark border-0 shadow-lg" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="d-flex">
+                        <div id="textoAlerta" class="toast-body fw-semibold px-4 py-3">
+                            <!-- Aquí se inyecta el mensaje dinámicamente -->
+                        </div>
+                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                </div>
+            </div>
 
 </asp:Content>
