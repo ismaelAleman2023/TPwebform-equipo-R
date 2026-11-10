@@ -65,6 +65,7 @@ namespace tpc_webform_grupo_R
             Session.Remove("adminAModificar");
             Session.Remove("tipoPagoAModificar");
             Session.Remove("ProductoAmodificar");
+            Session.Remove("rolAModificar");
         }
 
         private void cargarGrillaSegunOpcion(int opcion)
@@ -102,11 +103,11 @@ namespace tpc_webform_grupo_R
                 case 9://direcciones
                     cargarGrillaDireccion();
                     break;
-                case 10://rolles
+                case 10://ventas
 
                     break;
-                case 11://ventas
-
+                case 11://roles
+                    cargarGrillaRol();
                     break;
                 case 12://estados
                     cargarGrillaEstado();
@@ -250,6 +251,15 @@ namespace tpc_webform_grupo_R
             ViewState.Remove("eleccion");
         }
 
+        private void cargarGrillaRol()
+        {
+            RolNegocio rolN = new RolNegocio();
+            dgvGrilla.DataSource = rolN.ListarRol();
+            dgvGrilla.DataKeyNames = new string[] { "IdRol" };
+            dgvGrilla.DataBind();
+            ViewState.Remove("eleccion");
+        }
+
         private void cargarGrillaEstado()
         {
             EstadoNegocio estadoN = new EstadoNegocio();
@@ -357,7 +367,7 @@ namespace tpc_webform_grupo_R
 
                     break;
                 case 11:// roles
-
+                    Response.Redirect("RegistroRol.aspx");
                     break;
                 case 12:// estados
                     Response.Redirect("RegistroEstado.aspx");
@@ -466,7 +476,8 @@ namespace tpc_webform_grupo_R
 
                         break;
                     case 11:// roles
-
+                        eliminarRol();
+                        cargarGrillaRol();
                         break;
                     case 12:// estados
                         eliminarEstado();
@@ -523,7 +534,7 @@ namespace tpc_webform_grupo_R
 
                         break;
                     case 11:// roles
-
+                        modificarRol();
                         break;
                     case 12:// estados
                         modificarEstado();
@@ -635,6 +646,21 @@ namespace tpc_webform_grupo_R
             }
         }
 
+        private void eliminarRol()
+        {
+            try
+            {
+                RolNegocio rolN = new RolNegocio();
+                rolN.BajaRol((int)ViewState["eleccion"]);
+                ViewState.Remove("eleccion");
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaExito", "mostrarCartel('Rol dado de baja correctamente', 'success');", true);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         private void eliminarEstado()
         {
             try
@@ -664,6 +690,22 @@ namespace tpc_webform_grupo_R
                 Session["btnAgregar"] = ViewState["TablaActiva"];
                 Session["tipoPagoAModificar"] = tpN.buscarTipoPago(idTipoPago);
                 Response.Redirect("RegistroTipoPago.aspx");
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        private void modificarRol()
+        {
+            RolNegocio rolN = new RolNegocio();
+            try
+            {
+                int idRol = (int)ViewState["eleccion"];
+                Session["btnAgregar"] = ViewState["TablaActiva"];
+                Session["rolAModificar"] = rolN.buscarRol(idRol);
+                Response.Redirect("RegistroRol.aspx");
             }
             catch (Exception)
             {
