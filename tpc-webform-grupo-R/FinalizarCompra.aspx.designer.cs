@@ -24,22 +24,22 @@ namespace tpc_webform_grupo_R
         protected global::System.Web.UI.WebControls.Label lblDireccionEnvio;
 
         /// <summary>
-        /// Control btnCambiarDireccion.
+        /// Control btnDireccion.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCambiarDireccion;
+        protected global::System.Web.UI.WebControls.Button btnDireccion;
 
         /// <summary>
-        /// Control rblMedioPago.
+        /// Control repetformaPago.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButtonList rblMedioPago;
+        protected global::System.Web.UI.WebControls.Repeater repetformaPago;
 
         /// <summary>
         /// Control lblCantidadItems.

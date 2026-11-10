@@ -13,7 +13,7 @@ namespace dominio
     {
         public Vendedor()
         {
-            this.IdRol =2;
+            this.IdRol =3;
             this.Estado = 1;
 
 

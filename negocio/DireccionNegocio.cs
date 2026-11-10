@@ -142,6 +142,52 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+
+
+
+
+        public List<Direccion> buscarDireccionCliente(int idCliente)
+        {
+            List<Direccion> listaDire = new List<Direccion>();
+            Direccion dir = null;
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.consultaSql("select idDireccion, idcliente_dir, calle, numero, codigoPostal, localidad, provincia, observacion_dir from direccionesEnvio where idcliente_dir= @id");
+                datos.setearParametros("@id", idCliente);
+                datos.ejecutarLectura();
+                
+                while (datos.Lector.Read())
+                {
+                    dir = new Direccion();
+                    dir.IdDireccion = (int)datos.Lector["idDireccion"];
+                    dir.IdCliente = (int)datos.Lector["idcliente_dir"];
+                    dir.Calle = (string)datos.Lector["calle"];
+                    dir.Numero = (string)datos.Lector["numero"];
+                    dir.CodigoPostal = (string)datos.Lector["codigoPostal"];
+                    dir.Localidad = (string)datos.Lector["localidad"];
+                    dir.Provincia = (string)datos.Lector["provincia"];
+                    
+                    if (!(datos.Lector["observacion_dir"] is DBNull))
+                        dir.Observacion = (string)datos.Lector["observacion_dir"];
+                  
+                    listaDire.Add(dir);
+                }
+                return listaDire;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
+
+
     }
 
 

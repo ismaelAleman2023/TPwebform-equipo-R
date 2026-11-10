@@ -25,6 +25,7 @@ namespace tpc_webform_grupo_R
             if (!IsPostBack)
             {
 
+
                 ProductoNegocio negocio = new ProductoNegocio();
                 ImagenNegocio imgN = new ImagenNegocio();
                 List<Producto> listaProductos = negocio.listarProduc();
@@ -90,6 +91,7 @@ namespace tpc_webform_grupo_R
 
                 UpdatePanelModal.Update();
 
+            // abrir el modal
             ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "var myModal = new bootstrap.Modal(document.getElementById('productoModal')); myModal.show();", true);
         }
 

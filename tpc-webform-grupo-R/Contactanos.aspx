@@ -24,7 +24,7 @@
                     <div class="col-md-6 mb-3">
                    
                         <div>
-                             <h3 Style="text-align:center">Estamos Hubicado</h3>
+                             <h3 Style="text-align:center">Estamos ubicado</h3>
                         </div>
                          <h4 Style="text-align:center">en</h4>
                      

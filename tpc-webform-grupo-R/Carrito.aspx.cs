@@ -189,7 +189,17 @@ namespace tpc_webform_grupo_R
         protected void btnContinuar_Click(object sender, EventArgs e)
         {
 
-            Response.Redirect("FinalizarCompra.aspx");
+            if (Session["usuarioActivo"] != null)
+            {
+                 Response.Redirect("FinalizarCompra.aspx");
+
+            }
+            else
+            {
+                Session["urlVolver"]= (string)"Carrito.aspx"; 
+                Response.Redirect("Login.aspx");
+            }
+
 
 
         }

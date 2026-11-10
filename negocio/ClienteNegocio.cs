@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using dominio;
@@ -222,6 +223,50 @@ namespace negocio
             {
                 datos.cerrarConexion();
             }
+
+
+            
         }
+
+
+        public bool validarInicio(string correo, string pass, ref int idPersona, ref int rol)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.consultaSql("select idPersona,idroll_per from Personas where email_per = @correo and contrasenia_per = @pass");
+                datos.setearParametros("@correo", correo);
+                datos.setearParametros("@pass", pass);
+                datos.ejecutarLectura();
+                if (datos.Lector.Read())
+                {
+                    idPersona = (int)datos.Lector["idPersona"];
+                    rol = (int)datos.Lector["idroll_per"];
+                    return true;
+                }
+
+                return false;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally {
+                datos.cerrarConexion();
+            }
+
+        }
+
+
+
+
+
+
+
+
+
+
     }
 }
