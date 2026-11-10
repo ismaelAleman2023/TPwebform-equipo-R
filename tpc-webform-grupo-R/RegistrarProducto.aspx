@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Principal.Master" AutoEventWireup="true" CodeBehind="RegistrarProducto.aspx.cs" Inherits="tpc_webform_grupo_R.RegistrarProducto" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Principal.Master" AutoEventWireup="true" CodeBehind="RegistrarProducto.aspx.cs" Inherits="tpc_webform_grupo_R.RegistrarProducto" Culture="en-US" UICulture="en-US" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -7,7 +7,7 @@
    <asp:UpdatePanel runat="server">
     <ContentTemplate>
 <div class="container my-4">
-            <!-- Fila principal que divide la pantalla en dos grandes bloques / contenedores blancos -->
+            
             <div class="row justify-content-center g-4">
                 
                 <!-- CONTENEDOR BLANCO 1: Formulario del Producto (Izquierda) -->
