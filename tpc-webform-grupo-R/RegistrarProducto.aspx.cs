@@ -14,39 +14,102 @@ namespace tpc_webform_grupo_R
     public partial class RegistrarProducto : System.Web.UI.Page
     {
         private static List<string> listImg = new List<string>();
-        private CategoriaNegocio categoriaNegocio=new CategoriaNegocio();
-        private MarcaNegocio marcaNegocio= new MarcaNegocio();
+        private CategoriaNegocio categoriaNegocio = new CategoriaNegocio();
+        private MarcaNegocio marcaNegocio = new MarcaNegocio();
         private static int indiceActual = 0;
+        private Producto pro = null;
 
         protected void Page_Load(object sender, EventArgs e)
         {
 
             if (!IsPostBack)
             {
-                ddlCategoria.DataSource =categoriaNegocio.listarCate();
+                ddlCategoria.DataSource = categoriaNegocio.listarCate();
                 ddlCategoria.DataTextField = "Descripcion";
                 ddlCategoria.DataValueField = "IdCategoria";
                 ddlCategoria.DataBind();
-                ddlMarca.DataSource=marcaNegocio.ListarMarca();
+                ddlMarca.DataSource = marcaNegocio.ListarMarca();
                 ddlMarca.DataTextField = "Descripcion";
                 ddlMarca.DataValueField = "IdMarca";
                 ddlMarca.DataBind();
                 listImg.Clear();
-                indiceActual = 0;
-                actualizarPreviewImagen(); // <--- Esto carga el estado inicial en cero
+
+
+                pro = (Producto)Session["ProductoAmodificar"];
+
+                if (pro != null)
+                {
+                    CargarProducto();
+                    Session["modi"] = true;
+                    btnRegistrar.Text = "Modificar Producto";
+                    txtStock.ReadOnly = true;
+                    txtCodigo.ReadOnly = true;
+                    chkOnDemand.Enabled = false;
+                }
+                else
+                {
+                    listImg.Clear();
+                    Session["modi"] = false;
+                    btnRegistrar.Text = "Registrar Producto";
+                    indiceActual = 0;
+
+
+                }
+
+
+
+
+
+                actualizarPreviewImagen();
+
+
             }
 
         }
+
+        public void CargarProducto()
+        {
+            StockNegocio st = new StockNegocio();
+
+
+            txtCodigo.Text = pro.CodigoProducto;
+            txtNombre.Text = pro.Nombre;
+            txtDescripcion.Text = pro.Descripcion;
+            txtPrecio.Text = pro.Precio.ToString();
+
+            ddlMarca.SelectedValue = pro.Marca.ToString();
+            ddlCategoria.SelectedValue = pro.Categoria.ToString();
+            chkOnDemand.Checked = pro.OnDemand;
+
+            Stock stNuevo = st.buscarStockProd(pro.IdProducto);
+            txtStock.Text = stNuevo.Cantidad.ToString();
+
+            ImagenNegocio imgNeg = new ImagenNegocio();
+            List<Imagen> imagenesBD = imgNeg.buscarXcodProduc(pro.IdProducto);
+
+            listImg.Clear();
+            if (imagenesBD != null && imagenesBD.Count > 0)
+            {
+                foreach (Imagen img in imagenesBD)
+                {
+                    listImg.Add(img.UrlImagen);
+                }
+                indiceActual = 0;
+            }
+
+
+        }
+
 
         protected void btnRegistrar_Click(object sender, EventArgs e)
         {
             ProductoNegocio proNeg = new ProductoNegocio();
             Producto pro = new Producto();
             StockNegocio st = new StockNegocio();
-            Stock stock = new Stock();
-      
 
-            if (Helper.Ayudante.esVacio(txtNombre.Text) || Helper.Ayudante.esVacio(txtCodigo.Text) || Helper.Ayudante.esVacio(txtPrecio.Text) 
+
+
+            if (Helper.Ayudante.esVacio(txtNombre.Text) || Helper.Ayudante.esVacio(txtCodigo.Text) || Helper.Ayudante.esVacio(txtPrecio.Text)
                 || Helper.Ayudante.esVacio(txtDescripcion.Text))
             {
 
@@ -59,7 +122,7 @@ namespace tpc_webform_grupo_R
             string codigo = txtCodigo.Text;
             string nombre = txtNombre.Text;
             string descripcion = txtDescripcion.Text;
-            int marca =int.Parse(ddlMarca.SelectedValue);
+            int marca = int.Parse(ddlMarca.SelectedValue);
             int categoria = int.Parse(ddlCategoria.SelectedValue);
 
 
@@ -92,21 +155,32 @@ namespace tpc_webform_grupo_R
             try
             {
 
-                if (Helper.Ayudante.ExisteProduc(codigo))
+                bool esModificar = false;
+
+                if (Session["modi"] != null && (bool)Session["modi"] == true)
                 {
-                    lblMensaje.Text = "Esta producto ya se encuentra registrado";
-                    txtCodigo.Text = string.Empty;
-                    return;
+
+                    esModificar = true;
+
                 }
 
-             
 
-                if (Helper.Ayudante.ValidarNoNumero(nombre))
+                if (esModificar)
                 {
-                    lblMensaje.Text = "El nombre no puedo contener un numero";
-                    txtNombre.Text = string.Empty;
-                    return;
+
+                    pro = (Producto)Session["ProductoAmodificar"];
                 }
+                else
+                {
+                    if (Helper.Ayudante.ExisteProduc(codigo))
+                    {
+                        lblMensaje.Text = "Este producto ya se encuentra registrado";
+                        txtCodigo.Text = string.Empty;
+                        return;
+                    }
+                    pro = new Producto();
+                }
+
 
                 pro.CodigoProducto = codigo;
                 pro.Nombre = nombre;
@@ -115,6 +189,31 @@ namespace tpc_webform_grupo_R
                 pro.Categoria = categoria;
                 pro.Estado = 1;
                 pro.Precio = precio;
+                pro.OnDemand = ondemand;
+
+                if (esModificar)
+                {
+
+
+                    proNeg.modificarProducto(pro);
+
+                    ImagenNegocio imgn= new ImagenNegocio();
+                    imgn.eliminarImagenesXproductos(pro.IdProducto);
+                    foreach(string url in listImg)
+                    {
+                    Imagen imgM= new Imagen();
+                        imgM.idProducto_img = pro.IdProducto;
+                        imgM.UrlImagen=url;
+                        imgn.agregarImagen(imgM);
+                    
+                    }
+
+                    lblMensaje.Text = "¡Producto modificado correctamente!";
+                    lblMensaje.CssClass = "small fw-semibold text-success";
+                }
+                else
+                {
+
 
                 List<Imagen> lista = new List<Imagen>();
                 foreach (string url in listImg)
@@ -125,23 +224,29 @@ namespace tpc_webform_grupo_R
                 }
                 pro.ListaImagen = lista;
 
-                proNeg.agregarProducto(pro);
+                    proNeg.agregarProducto(pro);
 
-                if (!ondemand)
-                {
-                    int ultiId = proNeg.ultimoId();
-
-                    stock.IdProducto_stk = ultiId;
-                    stock.Cantidad = cantidad;
-                    stock.Estado = 1;
-                    st.agregarStock(stock);
+                    if (!ondemand)
+                    {
+                        Stock stock = new Stock();
+                        int ultiId = proNeg.ultimoId();
+                        stock.IdProducto_stk = ultiId;
+                        stock.Cantidad = cantidad;
+                        stock.Estado = 1;
+                        st.agregarStock(stock);
+                    }
+                    lblMensaje.Text = "¡Producto agregado correctamente!";
+                    lblMensaje.CssClass = "small fw-semibold text-success";
                 }
+
+
 
                 listImg.Clear();
                 indiceActual = 0;
 
-                lblMensaje.Text = "¡Producto agregado correctamente!";
-                lblMensaje.CssClass = "small fw-semibold text-success";
+                Session.Remove("productoAModificar");
+                Session["modi"] = false;
+
             }
             catch (Exception)
             {
@@ -152,7 +257,8 @@ namespace tpc_webform_grupo_R
         protected void btnAgregarImagen_Click(object sender, EventArgs e)
         {
             string url = txtImagenUrl.Text.Trim();//trim elimina los espacios que pueden haber quedado 
-            if (!string.IsNullOrEmpty(url)) {
+            if (!string.IsNullOrEmpty(url))
+            {
 
                 listImg.Add(url);
                 indiceActual = listImg.Count - 1;
@@ -167,8 +273,9 @@ namespace tpc_webform_grupo_R
         protected void btnEliminarImagen_Click(object sender, EventArgs e)
         {
             //verificamos que la lista no este vacia y que el indice sea mayor a 0 pero menor al total de listImg
-            if (listImg != null && listImg.Count > 0 && indiceActual >=0 && indiceActual < listImg.Count) {
-                
+            if (listImg != null && listImg.Count > 0 && indiceActual >= 0 && indiceActual < listImg.Count)
+            {
+
                 listImg.RemoveAt(indiceActual);
 
                 if (indiceActual >= listImg.Count && listImg.Count > 0)
@@ -177,11 +284,12 @@ namespace tpc_webform_grupo_R
                     indiceActual = listImg.Count - 1;
 
                 }
-                else {
+                else
+                {
 
 
                     indiceActual = 0;
-                
+
                 }
 
                 actualizarPreviewImagen();
@@ -195,11 +303,13 @@ namespace tpc_webform_grupo_R
 
         }
 
-    
 
-        protected void actualizarPreviewImagen() {
 
-            if (listImg !=null && listImg.Count>0) {
+        protected void actualizarPreviewImagen()
+        {
+
+            if (listImg != null && listImg.Count > 0)
+            {
                 if (indiceActual >= listImg.Count)
                 {
                     indiceActual = listImg.Count - 1;
@@ -211,11 +321,12 @@ namespace tpc_webform_grupo_R
 
                 imgPrevisualizacion.ImageUrl = listImg[indiceActual];
 
-              
+
                 lblContadorImagen.Text = $"{indiceActual + 1} / {listImg.Count}";//se actualiza el contador visual de la cantidad de imagenes y posicion actual
 
             }
-            else{
+            else
+            {
 
                 imgPrevisualizacion.ImageUrl = "https://us.123rf.com/450wm/koblizeek/koblizeek2204/koblizeek220400315/185376169-no-image-vector-symbol-missing-available-icon-no-gallery-for-this-moment-placeholder.jpg";
                 lblContadorImagen.Text = "0 / 0";
@@ -228,7 +339,8 @@ namespace tpc_webform_grupo_R
 
         protected void btnAnterior_Click(object sender, EventArgs e)
         {
-            if (listImg != null && listImg.Count >0 && indiceActual > 0) {
+            if (listImg != null && listImg.Count > 0 && indiceActual > 0)
+            {
 
 
                 if (indiceActual == 0)
@@ -237,16 +349,17 @@ namespace tpc_webform_grupo_R
                     indiceActual = listImg.Count - 1;
 
                 }
-                else { 
-                
-                indiceActual--;
-                
+                else
+                {
+
+                    indiceActual--;
+
                 }
 
 
                 actualizarPreviewImagen();
 
-            } 
+            }
 
 
         }
@@ -255,7 +368,8 @@ namespace tpc_webform_grupo_R
         {
 
 
-            if (listImg != null && listImg.Count > 0 ) {
+            if (listImg != null && listImg.Count > 0)
+            {
 
                 if (indiceActual != listImg.Count - 1)
                 {
@@ -263,7 +377,7 @@ namespace tpc_webform_grupo_R
                     indiceActual++;
 
                 }
-              
+
                 actualizarPreviewImagen();
 
             }
