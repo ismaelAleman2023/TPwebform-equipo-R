@@ -32,7 +32,8 @@ namespace tpc_webform_grupo_R
                     Session.Remove("NombreProducto");
                     Session.Remove("Stock");
                     Session.Remove("AgMd");
-        
+                    Session.Remove("EsAgregar");
+
 
                 }
 
@@ -326,7 +327,7 @@ namespace tpc_webform_grupo_R
         {
 
             removerSessionModificar();
-
+            Session["EsAgregar"] = true;
             Session["btnAgregar"] = ViewState["TablaActiva"];
 
             int aux = Convert.ToInt32(ViewState["TablaActiva"]);
@@ -500,6 +501,8 @@ namespace tpc_webform_grupo_R
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaError", "mostrarCartel('¡Seleccione un elemento de la grilla para modificar!', 'error');", true);
                 return; 
             }
+            Session["EsAgregar"] = false;
+
             Session["btnAgregar"] = ViewState["TablaActiva"];
 
             switch (ViewState["TablaActiva"])

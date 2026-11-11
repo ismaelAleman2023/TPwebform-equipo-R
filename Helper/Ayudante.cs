@@ -51,20 +51,26 @@ namespace Helper
         }
 
 
-        public static bool ExisteProduc(string CodProduc) {
+
+
+        public static bool ExisteProduc(string CodProduco)//para validar en el agregar
+        {
             ProductoNegocio productoNegocio = new ProductoNegocio();
 
             try
             {
                 List<Producto> listprodu = productoNegocio.listarProduc();
 
-                foreach (Producto pro in listprodu) {
+                foreach (Producto pro in listprodu)
+                {
 
-                    if (pro.CodigoProducto.Equals(CodProduc)) {
+                    if (pro.CodigoProducto.Equals(CodProduco))
+                    {
 
                         return true;
 
                     }
+
 
                 }
 

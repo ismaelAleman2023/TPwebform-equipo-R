@@ -157,7 +157,7 @@ namespace tpc_webform_grupo_R
 
                 bool esModificar = false;
 
-                if (Session["modi"] != null && (bool)Session["modi"] == true)
+                if (ViewState["modi"] != null && (bool)ViewState["modi"] == true)
                 {
 
                     esModificar = true;
@@ -169,15 +169,17 @@ namespace tpc_webform_grupo_R
                 {
 
                     pro = (Producto)Session["ProductoAmodificar"];
-                }
-                else
-                {
+
                     if (Helper.Ayudante.ExisteProduc(codigo))
                     {
                         lblMensaje.Text = "Este producto ya se encuentra registrado";
                         txtCodigo.Text = string.Empty;
                         return;
                     }
+                }
+                else
+                {
+                 
                     pro = new Producto();
                 }
 
@@ -214,8 +216,15 @@ namespace tpc_webform_grupo_R
                 else
                 {
 
+                    if (Helper.Ayudante.ExisteProduc(codigo))
+                    {
+                        lblMensaje.Text = "Este producto ya se encuentra registrado";
+                        txtCodigo.Text = string.Empty;
+                        return;
+                    }
 
-                List<Imagen> lista = new List<Imagen>();
+
+                    List<Imagen> lista = new List<Imagen>();
                 foreach (string url in listImg)
                 {
                     Imagen img = new Imagen();

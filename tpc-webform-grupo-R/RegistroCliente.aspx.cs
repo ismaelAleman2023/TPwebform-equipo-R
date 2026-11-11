@@ -13,44 +13,100 @@ namespace tpc_webform_grupo_R
     {
 
         Cliente Cli = null;
+        Cliente clieActivo = null;
+        public string UrlVolver = null;
+        public string textInicio = null;
+        public string textFinal = null;
         public RegistroCliente()
         {
-            
+
         }
 
-        
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
                 Cli = (Cliente)Session["clienteAModificar"];
+                clieActivo = (Cliente)Session["usuarioActivo"];
 
-                if (Cli != null)
-                {                   
+                if ((bool)Session["EsAgregar"])
+                {
+
+                    ViewState["modificar"] = false;
+                    tipo.InnerText = "Registrarse";
+                    btnRegistrar.Text = "Registrarse";
+                    subtitulo.InnerText = "Creá tu cuenta en V.DorregoDesign, completa los Datos";
+
+                    textInicio = "<--- Volver a ";
+                    textFinal = "Admistrador";
+                    UrlVolver = "Administrar.aspx";
+
+                }
+                else if (Cli != null)
+                {
                     cargarDatosCliente();
                     ViewState["modificar"] = true;
                     tipo.InnerText = "Modificar Cliente";
                     btnRegistrar.Text = "Guardar";
                     subtitulo.InnerText = "Modifique los datos y haga click en 'Guardar' .";
+
+                    textInicio = "<--- Volver a ";
+                    textFinal = "Admistrador";
+                    UrlVolver = "Administrar.aspx";
+
                 }
-                else
+                else if (clieActivo != null)
                 {
-                    ViewState["modificar"] = false;
-                    tipo.InnerText = "Registrarse";
-                    btnRegistrar.Text = "Registrarse";
-                    subtitulo.InnerText = "Creá tu cuenta en V.DorregoDesign, completa los Datos";
+                    cargarDatosCliente();
+                    ViewState["modificar"] = true;
+                    tipo.InnerText = "Modificar perfil";
+                    btnRegistrar.Text = "Guardar";
+                    subtitulo.InnerText = "Modifique los datos y haga click en 'Guardar' .";
+
+                    UrlVolver = (string)Session["VolverPerfil"];
+                    textInicio = "<--- Volver a ";
+                    textFinal = "Perfil";
                 }
+
+
+
+
+
+
+
+
+
             }
         }
 
         private void cargarDatosCliente()
-        {            
+        {
+
+            Cli = (Cliente)Session["clienteAModificar"];
+            clieActivo = (Cliente)Session["usuarioActivo"];
+            if (Cli != null)
+            {
+
                 txtNombre.Text = Cli.Nombre;
                 txtApellido.Text = Cli.Apellido;
                 txtCorreo.Text = Cli.Email;
                 txtTelefono.Text = Cli.Telefono;
                 txtPassword.Text = Cli.Password;
                 txtFechaNacimiento.Text = Cli.FechaDeNacimiento.ToString("yyyy-MM-dd");
+
+            }
+            else if (clieActivo != null)
+            {
+
+                txtNombre.Text = clieActivo.Nombre;
+                txtApellido.Text = clieActivo.Apellido;
+                txtCorreo.Text = clieActivo.Email;
+                txtTelefono.Text = clieActivo.Telefono;
+                txtPassword.Text = clieActivo.Password;
+                txtFechaNacimiento.Text = clieActivo.FechaDeNacimiento.ToString("yyyy-MM-dd");
+
+            }
         }
 
         protected System.Web.UI.WebControls.Button btnRegistrar;
@@ -60,7 +116,10 @@ namespace tpc_webform_grupo_R
             try
             {
                 ClienteNegocio cliN = new ClienteNegocio();
-               
+
+
+
+
 
                 if ((bool)ViewState["modificar"])
                 {
@@ -83,6 +142,28 @@ namespace tpc_webform_grupo_R
                         Session["IdCliente"] = Cli.IdPersona;
                         ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaExito", "mostrarCartel('¡Cliente modificado correctamente!', 'success');", true);
                     }
+
+                    clieActivo = Session["usuarioActivo"] as Cliente;
+
+                    if (clieActivo != null)
+                    {
+                        clieActivo.Nombre = txtNombre.Text;
+                        clieActivo.Apellido = txtApellido.Text;
+                        clieActivo.Email = txtCorreo.Text;
+                        clieActivo.Telefono = txtTelefono.Text;
+                        clieActivo.FechaDeNacimiento = DateTime.Parse(txtFechaNacimiento.Text);
+                        if (!string.IsNullOrWhiteSpace(txtPassword.Text))
+                        {
+                            clieActivo.Password = txtPassword.Text;
+                        }
+
+
+                        cliN.modificarCliente(clieActivo, clieActivo.IdPersona);
+                        Session["IdCliente"] = clieActivo.IdPersona;
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaExito", "mostrarCartel('¡Cliente modificado correctamente!', 'success');", true);
+                    }
+
+
                 }
                 else
 
@@ -110,8 +191,14 @@ namespace tpc_webform_grupo_R
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaExito", "mostrarCartel('¡Cliente agregado correctamente!', 'success');", true);
 
                 }
+                if (clieActivo != null)
+                {
+                    Response.Redirect("Perfil.aspx");
+
+                }
 
                 Response.Redirect("Administrar.aspx");
+
             }
             catch (Exception)
             {
