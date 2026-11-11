@@ -116,7 +116,7 @@ namespace tpc_webform_grupo_R
 
 
 
-        ///seguir desde aca accion de boton 
+    
         protected void btnDireccion_Click(object sender, EventArgs e)
         {
             DireccionNegocio direN = new DireccionNegocio();
@@ -137,6 +137,24 @@ namespace tpc_webform_grupo_R
 
            
 
+        protected void rbRetiroTienda_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbRetiroTienda.Checked)
+            {
+                pnlDireccionEnvio.Enabled = false;
+                pnlDireccionEnvio.CssClass = "opacity-50";
+                Session["conEnvio"] = false;
+
+            }
+            else if (rbConEnvio.Checked)
+            {
+                pnlDireccionEnvio.Enabled = true;
+                pnlDireccionEnvio.CssClass = "";
+                Session["conEnvio"]=true;            
+            }
+
+
+        }
             
 
         
@@ -148,5 +166,6 @@ namespace tpc_webform_grupo_R
           
             // Session["volverfinal"] = "FinalizarCompra.aspx";
         }
+
     }
 }
