@@ -237,8 +237,33 @@ namespace negocio
 
         }
 
-       
 
+        public bool existeOtraMarca(string descri, int idActual)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.consultaSql("select id_m from marcas where descripcion_m = @descripcion and id_m != @id");
+                datos.setearParametros("@descripcion", descri);
+                datos.setearParametros("@id", idActual);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    return true; 
+                }
+
+                return false;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
 
 
 

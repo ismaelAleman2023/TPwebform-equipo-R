@@ -65,6 +65,7 @@ namespace tpc_webform_grupo_R
             Session.Remove("adminAModificar");
             Session.Remove("tipoPagoAModificar");
             Session.Remove("ProductoAmodificar");
+            Session.Remove("MarcaModi");
         }
 
         private void cargarGrillaSegunOpcion(int opcion)
@@ -493,10 +494,10 @@ namespace tpc_webform_grupo_R
             switch (ViewState["TablaActiva"])
                 {
                     case 1://categoria
-                      
+                    modificarCategoria();
                         break;
                     case 2://marca
-
+                    modificarMarca();
                         break;
                     case 3://stock
                         sumarStock("modificar");
@@ -759,6 +760,52 @@ namespace tpc_webform_grupo_R
         
         
         }
+
+        private void modificarMarca() {
+            MarcaNegocio marcaNegocio = new MarcaNegocio();
+
+            try
+            {
+                int IdMarca = (int)ViewState["eleccion"];
+                Session["btnAgregar"] = ViewState["TablaActiva"];
+                Session["MarcaModi"] = marcaNegocio.buscarMarca(IdMarca);
+                Response.Redirect("RegistroMarca.aspx");
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        
+        
+        }
+
+        private void modificarCategoria() { 
+        
+        CategoriaNegocio cate=new CategoriaNegocio();
+            try
+            {
+                int idCategoria = (int)ViewState["eleccion"];
+                Session["btnAgregar"] = ViewState["TablaActiva"];
+                Session["CategoriaModi"]=cate.buscarCategoria(idCategoria);
+                Response.Redirect("RegistroCategoria.aspx");
+
+
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        
+        
+        
+        
+        
+        }
+
 
 
         private void sumarStock(string agmd) {

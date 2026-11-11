@@ -115,11 +115,11 @@ namespace negocio
 
             try
             {
-                datos.consultaSql("update categorias set id_C=@id ,descripcion_C=@descripcion, estado_C=@estado");
+                datos.consultaSql("update categorias set descripcion_C = @descripcion, estado_C = @estado where id_C = @id");
                 datos.setearParametros("@id", modiCate.IdCategoria);
                 datos.setearParametros("@descripcion", modiCate.Descripcion);
                 datos.setearParametros("@estado", modiCate.Estado);
-                datos.ejecutarLectura();
+                datos.ejecutarAccion();
             }
             catch (Exception)
             {
@@ -237,6 +237,35 @@ namespace negocio
             return false;
 
         }
+
+        public bool existeOtraCategoria(string descri, int idActual)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.consultaSql("select id_C from categorias where descripcion_C = @descripcion and id_C != @id");
+                datos.setearParametros("@descripcion", descri);
+                datos.setearParametros("@id", idActual);
+                datos.ejecutarLectura();
+
+                
+                if (datos.Lector.Read())
+                {
+                    return true; 
+                }
+
+                return false; 
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
 
 
 
