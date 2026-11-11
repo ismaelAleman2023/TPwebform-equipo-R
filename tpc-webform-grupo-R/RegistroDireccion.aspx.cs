@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using dominio;
 using negocio;
 
@@ -22,15 +23,22 @@ namespace tpc_webform_grupo_R
             dir.Provincia = txtProvincia.Text;
             dir.Observacion = txtObservacion.Text;
 
-            if (Session["IdCliente"] == null)
-            {
-                Response.Redirect("RegistroCliente.aspx");
-                return;
-            }
 
-            dir.IdCliente = (int)Session["IdCliente"];
-            dirN.agregarDireccion(dir);
-            Response.Redirect("Default.aspx");
+
+            dir.IdCliente = (int)Session["idActivo"];
+            dirN.agregarDireccion(dir);                   
+
+
+            Session["direccionActivo"] = dirN.buscarDireccionCliente((int)Session["idActivo"]);
+         
+            Response.Redirect("DireccionEnvio.aspx");                      
+
+
         }
+
+
+
+
+
     }
 }

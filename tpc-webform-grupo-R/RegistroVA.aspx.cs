@@ -12,7 +12,7 @@ namespace tpc_webform_grupo_R
     public partial class AgregarVA : System.Web.UI.Page
     {
         public string nombre = string.Empty;
-        int valor = 0;
+        //int valor = 0;
         
 
         protected void Page_Load(object sender, EventArgs e)

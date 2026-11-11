@@ -12,7 +12,7 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.consultaSql("select idDireccion, idcliente_dir, calle, numero, codigoPostal, localidad, provincia, observacion_dir from direccionesEnvio");
+                datos.consultaSql("select idDireccion, idcliente_dir, calle, numero, codigoPostal, localidad, provincia, observacion_dir, estado from direccionesEnvio");
                 datos.ejecutarLectura();
                 while (datos.Lector.Read())
                 {
@@ -25,7 +25,23 @@ namespace negocio
                     aux.Localidad = (string)datos.Lector["localidad"];
                     aux.Provincia = (string)datos.Lector["provincia"];
                     if (!(datos.Lector["observacion_dir"] is DBNull))
+                    {
                         aux.Observacion = (string)datos.Lector["observacion_dir"];
+                    }
+                    else
+                    {
+                        aux.Observacion = "";
+                    }
+
+                                   
+                    if (!(datos.Lector["estado"] is DBNull))
+                    {
+                        aux.estado = (bool)datos.Lector["estado"];
+                    }
+                    else
+                    {
+                        aux.estado = false;
+                    }
                     lista.Add(aux);
                 }
             }
@@ -45,7 +61,7 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.consultaSql("insert into direccionesEnvio(idcliente_dir, calle, numero, codigoPostal, localidad, provincia, observacion_dir) values(@idCliente, @calle, @numero, @codigoPostal, @localidad, @provincia, @observacion)");
+                datos.consultaSql("insert into direccionesEnvio(idcliente_dir, calle, numero, codigoPostal, localidad, provincia, observacion_dir, estado) values(@idCliente, @calle, @numero, @codigoPostal, @localidad, @provincia, @observacion, @estado)");
                 datos.setearParametros("@idCliente", dir.IdCliente);
                 datos.setearParametros("@calle", dir.Calle);
                 datos.setearParametros("@numero", dir.Numero);
@@ -53,6 +69,7 @@ namespace negocio
                 datos.setearParametros("@localidad", dir.Localidad);
                 datos.setearParametros("@provincia", dir.Provincia);
                 datos.setearParametros("@observacion", dir.Observacion);
+                datos.setearParametros("@estado", dir.estado);
                 datos.ejecutarAccion();
             }
             catch (Exception)
@@ -70,13 +87,14 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.consultaSql("update direccionesEnvio set calle = @calle, numero = @numero, codigoPostal = @codigoPostal, localidad = @localidad, provincia = @provincia, observacion_dir = @observacion where idDireccion = @idDireccion and idcliente_dir = @idCliente");
+                datos.consultaSql("update direccionesEnvio set calle = @calle, numero = @numero, codigoPostal = @codigoPostal, localidad = @localidad, provincia = @provincia, observacion_dir = @observacion , estado = @estado where idDireccion = @idDireccion and idcliente_dir = @idCliente");
                 datos.setearParametros("@calle", dir.Calle);
                 datos.setearParametros("@numero", dir.Numero);
                 datos.setearParametros("@codigoPostal", dir.CodigoPostal);
                 datos.setearParametros("@localidad", dir.Localidad);
                 datos.setearParametros("@provincia", dir.Provincia);
                 datos.setearParametros("@observacion", dir.Observacion);
+                datos.setearParametros("@estado", dir.estado);
                 datos.setearParametros("@idDireccion", dir.IdDireccion);
                 datos.setearParametros("@idCliente", idCliente);
                 datos.ejecutarAccion();
@@ -116,7 +134,7 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.consultaSql("select idDireccion, idcliente_dir, calle, numero, codigoPostal, localidad, provincia, observacion_dir from direccionesEnvio where idDireccion = @id");
+                datos.consultaSql("select idDireccion, idcliente_dir, calle, numero, codigoPostal, localidad, provincia, observacion_dir, estado from direccionesEnvio where idDireccion = @id");
                 datos.setearParametros("@id", id);
                 datos.ejecutarLectura();
                 if (datos.Lector.Read())
@@ -128,8 +146,25 @@ namespace negocio
                     dir.CodigoPostal = (string)datos.Lector["codigoPostal"];
                     dir.Localidad = (string)datos.Lector["localidad"];
                     dir.Provincia = (string)datos.Lector["provincia"];
+                  
+
                     if (!(datos.Lector["observacion_dir"] is DBNull))
+                    {
                         dir.Observacion = (string)datos.Lector["observacion_dir"];
+                    }
+                    else
+                    {
+                        dir.Observacion = "";
+                    }
+
+                    if (!(datos.Lector["estado"] is DBNull))
+                    {
+                        dir.estado = (bool)datos.Lector["estado"];
+                    }
+                    else
+                    {
+                        dir.estado = false;
+                    }
                 }
                 return dir;
             }
@@ -153,7 +188,7 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.consultaSql("select idDireccion, idcliente_dir, calle, numero, codigoPostal, localidad, provincia, observacion_dir from direccionesEnvio where idcliente_dir= @id");
+                datos.consultaSql("select idDireccion, idcliente_dir, calle, numero, codigoPostal, localidad, provincia, observacion_dir, estado from direccionesEnvio where idcliente_dir= @id");
                 datos.setearParametros("@id", idCliente);
                 datos.ejecutarLectura();
                 
@@ -167,10 +202,25 @@ namespace negocio
                     dir.CodigoPostal = (string)datos.Lector["codigoPostal"];
                     dir.Localidad = (string)datos.Lector["localidad"];
                     dir.Provincia = (string)datos.Lector["provincia"];
-                    
+
                     if (!(datos.Lector["observacion_dir"] is DBNull))
+                    {
                         dir.Observacion = (string)datos.Lector["observacion_dir"];
-                  
+                    }
+                    else
+                    {
+                        dir.Observacion = "";
+                    }
+
+                    if (!(datos.Lector["estado"] is DBNull))
+                    {
+                        dir.estado = (bool)datos.Lector["estado"];
+                    }
+                    else
+                    {
+                        dir.estado = false;
+                    }
+
                     listaDire.Add(dir);
                 }
                 return listaDire;
@@ -185,6 +235,51 @@ namespace negocio
             }
         }
 
+
+
+
+        public void direccionDesactivar(int idPer)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+
+                datos.consultaSql("update DireccionesEnvio set estado = 0 where idcliente_dir = @idcliente");
+                datos.setearParametros("@idcliente", idPer);
+                datos.ejecutarAccion();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+        }
+
+
+        public void direccionReActivar(int idDire)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.consultaSql("update DireccionesEnvio set estado = @estado where idDireccion =@idDire");
+                datos.setearParametros("@idDire", idDire);
+                datos.setearParametros("@estado", true);
+                datos.ejecutarAccion();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+        }
 
 
 
