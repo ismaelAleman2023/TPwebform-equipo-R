@@ -40,7 +40,7 @@ namespace tpc_webform_grupo_R
                 if (pro != null)
                 {
                     CargarProducto();
-                    Session["modi"] = true;
+                    ViewState["modi"] = true;
                     btnRegistrar.Text = "Modificar Producto";
                     txtStock.ReadOnly = true;
                     txtCodigo.ReadOnly = true;
@@ -49,7 +49,7 @@ namespace tpc_webform_grupo_R
                 else
                 {
                     listImg.Clear();
-                    Session["modi"] = false;
+                    ViewState["modi"] = false;
                     btnRegistrar.Text = "Registrar Producto";
                     indiceActual = 0;
 
