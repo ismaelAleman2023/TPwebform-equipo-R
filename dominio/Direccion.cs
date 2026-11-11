@@ -2,6 +2,7 @@ namespace dominio
 {
     public class Direccion
     {
+       
         public int IdDireccion { get; set; }
         public int IdCliente { get; set; }
         public string Calle { get; set; } = string.Empty;
@@ -10,5 +11,6 @@ namespace dominio
         public string Localidad { get; set; } = string.Empty;
         public string Provincia { get; set; } = string.Empty;
         public string Observacion { get; set; } = string.Empty;
+        public bool estado {  get; set; } = false;
     }
 }

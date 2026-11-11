@@ -110,7 +110,7 @@ namespace tpc_webform_grupo_R
 
         private Producto buscarProducto(int id)
         {
-            DetalleVenta detaven =null;
+            
             Producto prod = null;
             List<Producto> listaProd = (List < Producto > )Session["listaprod"];
 

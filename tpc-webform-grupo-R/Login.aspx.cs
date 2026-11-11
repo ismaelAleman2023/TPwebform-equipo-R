@@ -15,9 +15,8 @@ namespace tpc_webform_grupo_R
         {
             
 
-
-
         }
+
 
         protected void btnLogin_Click(object sender, EventArgs e)
         {
@@ -45,16 +44,17 @@ namespace tpc_webform_grupo_R
             else if (rol == 2)
             {    
                 Session["usuarioActivo"] = cliN.buscarCliente(idPersona);
+                Session["idActivo"] = idPersona;
             }
             else if (rol==3)
             {
                 VendedorNegocio venN = new VendedorNegocio();
-
                 Session["usuarioActivo"] = venN.buscarVendedor(idPersona);
                 
             }
 
 
+            
             Session["rolActivo"] = rol;
 
             if (Session["urlVolver"]!= null)

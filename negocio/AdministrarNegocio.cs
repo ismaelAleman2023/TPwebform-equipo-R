@@ -104,7 +104,7 @@ namespace negocio
                     admin.Password = (string)datos.Lector["contrasenia_per"];
                     admin.FechaDeNacimiento = (DateTime)datos.Lector["fecha_nacimiento_per"];
                     admin.Estado = (int)datos.Lector["estado_per"];
-                    admin.Cuil = (string)datos.Lector["cuil_admin"];
+                    admin.Cuil = datos.Lector["Cuil_admin"].ToString();
                 }
                 return admin;
             }

@@ -102,6 +102,7 @@
     <Content Include="ComoComprar.aspx" />
     <Content Include="Contactanos.aspx" />
     <Content Include="Default.aspx" />
+    <Content Include="DireccionEnvio.aspx" />
     <Content Include="FinalizarCompra.aspx" />
     <Content Include="Informes.aspx" />
     <Content Include="Perfil.aspx" />
@@ -251,6 +252,13 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DireccionEnvio.aspx.cs">
+      <DependentUpon>DireccionEnvio.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DireccionEnvio.aspx.designer.cs">
+      <DependentUpon>DireccionEnvio.aspx</DependentUpon>
     </Compile>
     <Compile Include="FinalizarCompra.aspx.cs">
       <DependentUpon>FinalizarCompra.aspx</DependentUpon>

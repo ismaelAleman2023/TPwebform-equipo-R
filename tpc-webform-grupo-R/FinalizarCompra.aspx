@@ -81,7 +81,7 @@
                         </div>
 
                         <!-- Botón Pagar y Finalizar -->
-                        <asp:Button ID="btnPagarYFinalizar" runat="server" CssClass="btn btn-success w-100 py-2 fw-bold fs-5" Text="Pagar y Finalizar" />
+                        <asp:Button ID="btnPagarYFinalizar" runat="server" CssClass="btn btn-success w-100 py-2 fw-bold fs-5" Text="Pagar y Finalizar" OnClick="btnPagarYFinalizar_Click" />
                     </div>
                 </div>
             </div>

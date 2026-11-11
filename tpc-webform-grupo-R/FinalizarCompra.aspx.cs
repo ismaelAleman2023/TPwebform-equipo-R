@@ -16,7 +16,7 @@ namespace tpc_webform_grupo_R
             if (!IsPostBack) { 
 
                 cargarTipoPago();
-                cargarDireccion(5);
+                cargarDireccion();
                 if (Session["listaCarrito"] == null)
                 {
                     cargaInicial();
@@ -74,45 +74,79 @@ namespace tpc_webform_grupo_R
 
         }
 
-        private void cargarDireccion(int idCliente)
+        private void cargarDireccion()
         {
-            DireccionNegocio direN = new DireccionNegocio();
-            List<Direccion> listaDire = direN.buscarDireccionCliente(idCliente);
-
-            if (listaDire.Count > 0)
+            if (Session["rolActivo"]!= null && (int)Session["rolActivo"] == 2)
             {
-                btnDireccion.Text = "cambiar direccion";
-                lblDireccionEnvio.Text = listaDire[0].Calle.ToString() + " " +listaDire[0].Numero.ToString();
+                DireccionNegocio direN = new DireccionNegocio();
+                List<Direccion> listaDire = direN.buscarDireccionCliente((int)Session["idActivo"]);
+                btnPagarYFinalizar.Enabled = true;
+                btnDireccion.Enabled = true;
+
+                if (listaDire.Count > 0)
+                {
+                    Session["direccionActivo"] = listaDire;
+                    foreach (Direccion item in listaDire)
+                    {
+                        if (item.estado)
+                        {
+                            btnDireccion.Text = "cambiar direccion";
+                            lblDireccionEnvio.Text = item.Calle.ToString() + " " + item.Numero.ToString();
+
+                        }
+
+                    }
+                }
+                else
+                {
+                    Session["direccionActivo"] = null;
+                    lblDireccionEnvio.Text = "No posee";
+                    btnDireccion.Text = "agregar Direccion";
+                }
             }
             else
             {
+                Session["direccionActivo"] = null;
                 lblDireccionEnvio.Text = "No posee";
                 btnDireccion.Text = "agregar Direccion";
-
+                btnDireccion.Enabled = false;
+                btnPagarYFinalizar.Enabled = false;
             }
         }
 
+
+
+        ///seguir desde aca accion de boton 
         protected void btnDireccion_Click(object sender, EventArgs e)
         {
             DireccionNegocio direN = new DireccionNegocio();
 
-            ///falta validacion de usuario logueado
+            List<Direccion> listaDire = direN.buscarDireccionCliente((int)Session["idActivo"]);
 
-            List<Direccion> listaDire = direN.buscarDireccionCliente(3); 
-
-            if (listaDire.Count > 0)
+            if (Session["direccionActivo"] == null)
             {
-                btnDireccion.Text = "cambiar direccion";
-                lblDireccionEnvio.Text = listaDire[0].Calle.ToString() + listaDire[0].Numero.ToString();
+                Response.Redirect("RegistroDireccion.aspx");
             }
             else
             {
-
-                btnDireccion.Text = "agregar Direccion";
-
+                Response.Redirect("DireccionEnvio.aspx");
             }
 
 
+        }
+
+           
+
+            
+
+        
+
+        protected void btnPagarYFinalizar_Click(object sender, EventArgs e)
+        {
+                  
+            
+          
+            // Session["volverfinal"] = "FinalizarCompra.aspx";
         }
     }
 }
