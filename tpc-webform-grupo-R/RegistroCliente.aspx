@@ -58,7 +58,7 @@
 
                     <!-- Enlace para iniciar sesión -->
                     <div class="text-center mt-3">
-                        <small class="text-muted">¿Ya tenés cuenta? <a href="Login.aspx" class="text-decoration-none text-dark fw-bold">Iniciar sesión</a></small>
+                        <small class="text-muted"><%: textInicio %> <a href=<%: UrlVolver %> class="text-decoration-none text-dark fw-bold"><%: textFinal %></a></small>
                     </div>
 
                 </div>
