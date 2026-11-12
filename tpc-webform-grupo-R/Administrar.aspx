@@ -73,8 +73,23 @@
                                 <asp:Button ID="btnAgregar" runat="server" Text="Agregar" OnClick="btnAgregar_Click" CssClass="btn btn-success d-flex align-items-center justify-content-center gap-2" />
                                 <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" OnClick="btnEliminar_Click" CssClass="btn btn-danger d-flex align-items-center justify-content-center gap-2" />
                                 <asp:Button ID="btnModificar" runat="server" Text="Modificar" OnClick="btnModificar_Click" CssClass="btn btn-primary d-flex align-items-center justify-content-center gap-2" />
-                                <!--<asp:Button ID="btnListar" runat="server" Text="Listar" CssClass="btn btn-outline-light d-flex align-items-center justify-content-center gap-2" />-->
+                                <asp:Button ID="btnReactivar" runat="server" Text="reactivar" Onclick="btnReactivar_Click" CssClass="btn btn-warning d-flex align-items-center justify-content-center gap-2" />
                             </div>
+
+                            
+                                     <div class="card-body p-3" style="background-color: #121212; border: 1px solid #333;">
+    
+                            <!-- TÍTULO UBICADO ARRIBA DE LOS BOTONES -->
+                            <h5 class="text-white mb-3 text-center">Filtros de Estado</h5>
+
+                            <!-- Tu contenedor de botones actual -->
+                            <div class="d-flex gap-2 justify-content-center">
+                                <asp:Button ID="BtnTodos" runat="server" Text="Todos" CssClass="btn btn-secondary" />
+                                <asp:Button ID="BtnActivos" runat="server" Text="Activos" CssClass="btn btn-secondary" />
+                                <asp:Button ID="BtnEliminados" runat="server" Text="Eliminados" CssClass="btn btn-secondary" />
+                            </div>
+
+                                </div>
                         </div>
                     </div>
 

@@ -86,7 +86,7 @@
                     </div>
                     <!-- Único botón a la derecha del bloque -->
                     <div class="col-md-2 text-center mt-4 mt-md-0">
-                        <asp:Button ID="btnEditarFoto" runat="server" Text="✏️ Editar" CssClass="btn btn-outline-primary w-100 py-3" OnClick="btnEditarFoto_Click" />
+                        <asp:Button ID="btnEditarFoto" runat="server" Text="✏️ Cambiar" CssClass="btn btn-outline-primary w-100 py-3" OnClick="btnEditarFoto_Click" />
                     </div>
                 </div>
             </div>

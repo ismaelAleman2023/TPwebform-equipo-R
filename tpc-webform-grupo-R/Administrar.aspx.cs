@@ -897,9 +897,145 @@ namespace tpc_webform_grupo_R
         
         }
 
+        protected void btnReactivar_Click(object sender, EventArgs e)
+        {
+
+            if (ViewState["eleccion"] == null)
+            {
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaError", "mostrarCartel('¡Seleccione un elemento de la grilla para reactivar!', 'error');", true);
+                return;
+            }
+
+            if (ViewState["eleccion"] != null)
+            {
+
+                switch ((int)ViewState["TablaActiva"])
+                {
+                    case 1://categoria
+                        eliminarCategoria();
+                        cargarGrillaCategoria();
+
+                        break;
+                    case 2://marca
+                        eliminarMarca();
+                        cargarGrillaMarca();
+
+                        break;
+                    case 3://stock
+
+
+                        break;
+                    case 4://tipo pago
+                        eliminarTipoPago();
+                        cargarGrillaTipoPago();
+                        break;
+                    case 5://productos
+
+                        break;
+                    case 6://vendedores
+                        eliminarVendedor();
+                        cargarGrillaVendedor();
+
+                        break;
+                    case 7://administradores
+                        eliminarAdministrador();
+                        cargarGrillaAdministrador();
+
+                        break;
+                    case 8://clientes
+                        eliminarCliente();
+                        cargarGrillaCliente();
+
+                        break;
+                    case 9://direcciones
+
+                        // no lo usamos
+
+                        break;
+                    case 10:// ventas
+
+                        break;
+                    case 11:// roles
+                        eliminarRol();
+                        cargarGrillaRol();
+                        break;
+                    case 12:// estados
+                        eliminarEstado();
+                        cargarGrillaEstado();
+                        break;
+
+                    default:
+                        break;
+                }
+
+            }
 
 
 
+        }
 
+        /// reactivar
+       
+        private void reactivarCliente()
+        {
+            try
+            {
+                ClienteNegocio cliN = new ClienteNegocio();
+
+                cliN.ReactivarCliente((int)ViewState["eleccion"]);
+
+                ViewState.Remove("eleccion");
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaExito", "mostrarCartel('¡Cliente reactivado!', 'success');", true);
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
+
+        private void reactivarAdmin()
+        {
+            try
+            {
+                AdministrarNegocio adminN = new AdministrarNegocio();
+                adminN.reactivarAdministrador((int)ViewState["eleccion"]);
+                ViewState.Remove("eleccion");
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
+
+        private void reactivarVendedor()
+        {
+            VendedorNegocio venN = new VendedorNegocio();
+            venN.reactivarVendedor((int)ViewState["eleccion"]);
+
+
+        }
+
+        private void reactivarCategoria()
+        {
+            CategoriaNegocio catN = new CategoriaNegocio();
+            catN.AltaCategoria((int)ViewState["eleccion"]);
+        }
+
+        private void reactivarMarca()
+        {
+            MarcaNegocio marN =    new MarcaNegocio();
+            marN.AltaMarca((int)ViewState["eleccion"]);
+            
+        }
+
+      
+
+       
     }
 }

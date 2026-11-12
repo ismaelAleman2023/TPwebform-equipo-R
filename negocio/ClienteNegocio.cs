@@ -142,6 +142,27 @@ namespace negocio
             }
         }
 
+        public void ReactivarCliente(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.consultaSql("update personas set estado_Per = 1 where idPersona = @id");
+                datos.setearParametros("id", id);
+                datos.ejecutarAccion();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
+
 
 
         public void modificarCliente(Cliente cli, int id) 

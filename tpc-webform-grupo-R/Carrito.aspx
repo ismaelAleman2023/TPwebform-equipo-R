@@ -21,7 +21,10 @@
                     <asp:Repeater ID="reapetCarrito" runat="server">
                         <ItemTemplate>
 
+               <asp:UpdatePanel runat="server">
+                 <ContentTemplate>
 
+                                    
                         
                    <!-- CARD DE PRODUCTO (Acá después irá un Repeater o GridView de ASP.NET) -->
                     <div class="card bg-dark text-light border-secondary p-3">
@@ -62,6 +65,8 @@
                         </div>
                     </div>
                     <!-- Fin de la Card -->
+        </ContentTemplate>
+    </asp:UpdatePanel>
             </ItemTemplate>
          </asp:Repeater>
 

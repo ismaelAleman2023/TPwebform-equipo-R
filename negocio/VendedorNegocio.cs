@@ -118,6 +118,25 @@ namespace negocio
             }
         }
 
+        public void reactivarVendedor(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.consultaSql("update personas set estado_per=1 where idPersona=@id");
+                datos.setearParametros("@id", id);
+                datos.ejecutarAccion();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
 
         public void modificarVendedor(Vendedor vendedorN, int id)
         {

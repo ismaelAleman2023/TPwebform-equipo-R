@@ -71,12 +71,6 @@ namespace tpc_webform_grupo_R
 
 
 
-
-
-
-
-
-
             }
         }
 
@@ -123,7 +117,7 @@ namespace tpc_webform_grupo_R
 
                 if ((bool)ViewState["modificar"])
                 {
-                    Cli = Session["clienteAModificar"] as Cliente;
+                    Cli = (Cliente)Session["clienteAModificar"] ;
 
                     if (Cli != null)
                     {
@@ -143,7 +137,7 @@ namespace tpc_webform_grupo_R
                         ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaExito", "mostrarCartel('¡Cliente modificado correctamente!', 'success');", true);
                     }
 
-                    clieActivo = Session["usuarioActivo"] as Cliente;
+                    clieActivo = (Cliente)Session["usuarioActivo"] ;
 
                     if (clieActivo != null)
                     {

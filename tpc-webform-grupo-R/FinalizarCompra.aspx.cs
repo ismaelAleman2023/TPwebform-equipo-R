@@ -126,6 +126,7 @@ namespace tpc_webform_grupo_R
             if (Session["direccionActivo"] == null)
             {
                 Response.Redirect("RegistroDireccion.aspx");
+               
             }
             else
             {
@@ -164,7 +165,7 @@ namespace tpc_webform_grupo_R
                   
             
           
-            // Session["volverfinal"] = "FinalizarCompra.aspx";
+            
         }
 
     }

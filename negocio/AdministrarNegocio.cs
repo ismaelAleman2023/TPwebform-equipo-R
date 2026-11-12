@@ -134,6 +134,23 @@ namespace negocio
 
         }
 
+        public void reactivarAdministrador(int idPersona)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.consultaSql("update Personas set estado_per = 1 where idpersona = @idPersona");
+                datos.setearParametros("@idPersona", idPersona);
+                datos.ejecutarAccion();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
+
+
         public void modificarAdministrador(Administrador admin)
         {
             AccesoDatos datos = new AccesoDatos();
