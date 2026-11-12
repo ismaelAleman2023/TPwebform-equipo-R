@@ -77,7 +77,7 @@ namespace negocio
                 DireccionNegocio dirN = new DireccionNegocio();
                 List<Direccion> listaDire = dirN.listarDirecciones();
 
-                datos.consultaSql("select p.idPersona, p.nombre_per, p.apellido_per, p.email_per, p.telefono_per, p.contrasenia_per, p.fecha_nacimiento_per, p.estado_per, p.idroll_per, c.correoOk from personas p inner join clientes c on p.idPersona = c.idPersona_cli");
+                datos.consultaSql("select c.imgPerfil,p.idPersona, p.nombre_per, p.apellido_per, p.email_per, p.telefono_per, p.contrasenia_per, p.fecha_nacimiento_per, p.estado_per, p.idroll_per, c.correoOk from personas p inner join clientes c on p.idPersona = c.idPersona_cli");
                 datos.ejecutarLectura();
                 while (datos.Lector.Read())
                 {
@@ -91,6 +91,12 @@ namespace negocio
                     aux.FechaDeNacimiento = (DateTime)datos.Lector["fecha_nacimiento_per"];
                     aux.Estado = (int)datos.Lector["estado_per"];
                     aux.IdRol = (int)datos.Lector["idroll_per"];
+                    if (!(datos.Lector["imgPerfil"] is DBNull))
+                    {
+
+                    aux.FotoPerfil = (string)datos.Lector["imgPerfil"];
+
+                    }
                     aux.CorreoOk = (bool)datos.Lector["correoOk"];
 
                     foreach (Direccion dire in listaDire)
@@ -152,6 +158,7 @@ namespace negocio
                 datos.setearParametros("@pass", cli.Password);
                 datos.setearParametros("@fecha", cli.FechaDeNacimiento);
                 datos.setearParametros("@id", id);
+                
 
                 datos.ejecutarAccion();
 
@@ -189,7 +196,7 @@ namespace negocio
             {
                 DireccionNegocio dirN = new DireccionNegocio();
                 List<Direccion> listaDire = dirN.listarDirecciones();
-                datos.consultaSql("select p.idPersona, p.nombre_per, p.apellido_per, p.email_per, p.telefono_per, p.contrasenia_per, p.fecha_nacimiento_per, p.estado_per, p.idroll_per, c.correoOk from personas p inner join clientes c on p.idPersona = c.idPersona_cli where p.idPersona = @id");
+                datos.consultaSql("select p.idPersona, p.nombre_per, p.apellido_per, p.email_per, p.telefono_per, p.contrasenia_per, p.fecha_nacimiento_per, p.estado_per, p.idroll_per,c.imgPerfil,c.correoOk from personas p inner join clientes c on p.idPersona = c.idPersona_cli where p.idPersona = @id");
                 datos.setearParametros("@id", id);
                 datos.ejecutarLectura();
                 if (datos.Lector.Read())
@@ -204,6 +211,12 @@ namespace negocio
                     aux.Estado = (int)datos.Lector["estado_per"];
                     aux.IdRol = (int)datos.Lector["idroll_per"];
                     aux.CorreoOk = (bool)datos.Lector["correoOk"];
+
+                    if (!(datos.Lector["imgPerfil"] is DBNull))
+                    {
+                    aux.FotoPerfil = (string)datos.Lector["imgPerfil"];
+                    }
+
                    
                     foreach (Direccion dire in listaDire)
                     {
@@ -259,6 +272,30 @@ namespace negocio
 
         }
 
+        public void modificarFtPerfil(Cliente cli) {
+
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.consultaSql("update Clientes set imgPerfil=@imgPerfil where idPersona_cli=@idpersona ");
+                datos.setearParametros("@imgPerfil", cli.FotoPerfil);
+                datos.setearParametros("idpersona",cli.IdPersona);
+                datos.ejecutarAccion();
+
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally {
+
+                datos.cerrarConexion();
+            }
+        
+        
+        }
 
 
 

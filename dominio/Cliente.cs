@@ -17,7 +17,7 @@ namespace dominio
         }
 
         public bool CorreoOk { get; set; }
-
+        public string FotoPerfil { get; set; }
         public List<Direccion> direccion {get;} = new List<Direccion>();
 
     }

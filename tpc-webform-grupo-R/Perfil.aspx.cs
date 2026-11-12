@@ -16,10 +16,11 @@ namespace tpc_webform_grupo_R
         {
             if (!IsPostBack)
             {
+                cargarDireccion();
 
                 clie = (Cliente)Session["usuarioActivo"];
 
-                cargarDireccion();
+
                 if (clie != null)
                 {
                     Session["VolverPerfil"] = "Perfil.aspx";
@@ -28,7 +29,19 @@ namespace tpc_webform_grupo_R
                     txtEmail.Text = clie.Email;
                     txtTelefomo.Text = clie.Telefono;
 
+                    if (clie.FotoPerfil ==null) {
 
+                        imgPerfil.ImageUrl= "~/Images/Perfiles/fotoDefault.jpg";
+
+
+                    }
+                    else{
+
+                        imgPerfil.ImageUrl ="~/images/Perfiles/" + clie.FotoPerfil; ;
+
+
+                    }
+                
                 }
                 else
                 {
@@ -40,6 +53,7 @@ namespace tpc_webform_grupo_R
 
 
                 }
+                Session.Remove("esPerfil");
 
             }
 
@@ -50,13 +64,50 @@ namespace tpc_webform_grupo_R
 
         protected void btnEditarDireccion_Click(object sender, EventArgs e)
         {
+            Session["esPerfil"] = true;
             Response.Redirect("DireccionEnvio.aspx");
 
         }
 
         protected void btnEditarFoto_Click(object sender, EventArgs e)
         {
+            try
+            {
+                //escribir
+                if (txtImagenPerf.PostedFile != null && txtImagenPerf.PostedFile.ContentLength >0)
+                {
 
+                    ClienteNegocio clieNe = new ClienteNegocio();
+                    string ruta = Server.MapPath("~/images/Perfiles/");
+                    Cliente cli = (Cliente)Session["usuarioActivo"];
+
+                    txtImagenPerf.PostedFile.SaveAs(ruta + "Perfil-" + cli.IdPersona + ".jpg");
+
+
+                    cli.FotoPerfil = "Perfil-" + cli.IdPersona + ".jpg";
+                    clieNe.modificarFtPerfil(cli);
+
+                    imgPerfil.ImageUrl = "~/images/Perfiles/" + cli.FotoPerfil;
+
+                    //leer
+                    Image img = (Image)Master.FindControl("imgUserPerfil");
+
+                    if (img != null)
+                    {
+                        img.ImageUrl = "~/images/Perfiles/" + cli.FotoPerfil;
+
+                    }
+                }
+            
+
+
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
 
 
 
@@ -72,7 +123,6 @@ namespace tpc_webform_grupo_R
 
         private void cargarDireccion()
         {
-
             try
             {
 

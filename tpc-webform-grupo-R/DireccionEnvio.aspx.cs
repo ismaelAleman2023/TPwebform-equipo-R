@@ -36,9 +36,20 @@ namespace tpc_webform_grupo_R
                 actualizarEleccion(idDire);
 
                 Session["IdDireccionEnUso"] = idDire;
+
             
-          
+            if (!(bool)Session["esPerfil"] || Session["esPerfil"]==null) { 
+            
+            
             Response.Redirect("FinalizarCompra.aspx");
+            
+            }
+            else{
+
+                Response.Redirect("Perfil.aspx");
+
+            }
+          
         }
 
 
@@ -61,7 +72,19 @@ namespace tpc_webform_grupo_R
 
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
-            Response.Redirect("FinalizarCompra.aspx");
+            if (!(bool)Session["esPerfil"] || Session["esPerfil"] == null)
+            {
+
+
+                Response.Redirect("FinalizarCompra.aspx");
+
+            }
+            else
+            {
+
+                Response.Redirect("Perfil.aspx");
+
+            }
         }
 
 
