@@ -62,7 +62,7 @@
                                 <!-- Panel de Stock: Se muestra si NO es On Demand -->
                                 <asp:Panel ID="pnlStock" runat="server" Visible="true">
                                     <label for="txtStock" class="form-label small fw-semibold text-muted">Stock inicial</label>
-                                    <asp:TextBox ID="txtStock" runat="server" TextMode="Number" min="1" CssClass="form-control form-control-sm" placeholder="Ej: 10"></asp:TextBox>
+                                    <asp:TextBox ID="txtStock" runat="server" TextMode="Number" min="1" max="<%: Max %>" CssClass="form-control form-control-sm" placeholder="Ej: 10"></asp:TextBox>
                                 </asp:Panel>
                             </div>
                         </div>

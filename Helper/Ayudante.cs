@@ -24,7 +24,8 @@ namespace Helper
         }
 
 
-        public static string idXmarca(int idMarca) {
+        public static string idXmarca(int idMarca)
+        {
 
             MarcaNegocio marcaNegocio = new MarcaNegocio();
             Marca mar = marcaNegocio.buscarMarca(idMarca);
@@ -33,7 +34,8 @@ namespace Helper
 
         }
 
-        public static string idxNproduc(int idProducto) {
+        public static string idxNproduc(int idProducto)
+        {
 
             ProductoNegocio productoNegocio = new ProductoNegocio();
             Producto pro = productoNegocio.buscarProduc(idProducto);
@@ -42,7 +44,8 @@ namespace Helper
         }
 
 
-        public static string idxCategoria(int idCategoria) {
+        public static string idxCategoria(int idCategoria)
+        {
 
             CategoriaNegocio cate = new CategoriaNegocio();
             Categoria categoria = cate.buscarCategoria(idCategoria);
@@ -85,15 +88,89 @@ namespace Helper
 
 
         }
+        public static bool ExisteOtroProduc(string CodProduco, int idprodu)//para validar en el agregar
+        {
+            ProductoNegocio productoNegocio = new ProductoNegocio();
 
-        public static bool esVacio(string valor) {
+            try
+            {
+                List<Producto> listprodu = productoNegocio.listarProduc();
+
+                foreach (Producto pro in listprodu)
+                {
+
+                    if (pro.CodigoProducto.Equals(CodProduco) && idprodu != pro.IdProducto)
+                    {
+
+                        return true;
+
+                    }
+
+
+                }
+
+                return false;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+
+
+        }
+
+        public static bool esVacio(string valor)
+        {
 
             return string.IsNullOrWhiteSpace(valor);
 
         }
 
 
-      
+
+
+        public static bool validadStock(int cantidad)
+        {
+
+            if (cantidad == 0)
+            {
+                return true;
+            }
+
+            return false;
+
+        }
+
+        public static void cambiarEstadoProducto(int idproducto, string AlBj)
+        {
+
+            ProductoNegocio proN = new ProductoNegocio();
+            Producto pro = proN.buscarProduc(idproducto);
+
+            if (AlBj.Equals("alta"))
+            {
+                if (pro.Estado == 0)
+                {
+                    proN.AltaoBajaProducto(pro.IdProducto, 1);
+
+                }
+            } else if (AlBj.Equals("baja")) {
+               
+                if (pro.Estado == 1)
+                {
+                    proN.AltaoBajaProducto(pro.IdProducto, 0);
+
+                }
+
+
+            }
+
+        }
+
+
+
     }
 
 
