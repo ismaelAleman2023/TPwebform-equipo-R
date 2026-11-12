@@ -51,13 +51,25 @@ namespace negocio
             }
         }
 
-        public List<Administrador> listarAdministradores()
+        public List<Administrador> listarAdministradores(int estado)
         {
             List<Administrador> lista = new List<Administrador>();
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.consultaSql("select p.idPersona, p.nombre_per, p.apellido_per, p.email_per, p.telefono_per, p.contrasenia_per, p.fecha_nacimiento_per, p.estado_per, a.cuil_admin from personas p inner join administradores a on p.idPersona = a.idpersona_admin");
+                string consulta = "select p.idPersona, p.nombre_per, p.apellido_per, p.email_per, p.telefono_per, p.contrasenia_per, p.fecha_nacimiento_per, p.estado_per, a.cuil_admin from personas p inner join administradores a on p.idPersona = a.idpersona_admin";
+
+
+                if (estado == 0 || estado == 1)
+                {
+                    consulta += " where p.estado_per = @estado";
+                    datos.setearParametros("estado",estado);
+                }
+
+
+
+                datos.consultaSql(consulta);
+
                 datos.ejecutarLectura();
                 while (datos.Lector.Read())
                 {

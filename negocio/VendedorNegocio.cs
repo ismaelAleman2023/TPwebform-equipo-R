@@ -60,7 +60,7 @@ namespace negocio
         }
 
 
-        public List<Vendedor> listarVendedores()
+        public List<Vendedor> listarVendedores(int estado)
         {
             List<Vendedor> listVendedor = new List<Vendedor>();
 
@@ -68,7 +68,17 @@ namespace negocio
 
             try
             {
-                datos.consultaSql("select p.idPersona, p.nombre_per, p.apellido_per, p.email_per, p.telefono_per, p.contrasenia_per, p.fecha_nacimiento_per, p.estado_per, p.idroll_per, v.legajo_V from personas p inner join Vendedores v on p.idPersona = v.idPersona_V");
+                string consulta = "select p.idPersona, p.nombre_per, p.apellido_per, p.email_per, p.telefono_per, p.contrasenia_per, p.fecha_nacimiento_per, p.estado_per, p.idroll_per, v.legajo_V from personas p inner join Vendedores v on p.idPersona = v.idPersona_V";
+
+                if (estado == 0 || estado == 1)
+                {
+                    consulta += " where p.estado_per = @estado";
+                    datos.setearParametros("estado", estado);
+                }
+
+
+
+                datos.consultaSql(consulta);
                 datos.ejecutarLectura();
                 while (datos.Lector.Read())
                 {

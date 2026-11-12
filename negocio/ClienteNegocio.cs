@@ -68,7 +68,7 @@ namespace negocio
 
 
 
-        public List<Cliente> listarClientes()
+        public List<Cliente> listarClientes(int estado )
         {
             List<Cliente> lista = new List<Cliente>();
             AccesoDatos datos = new AccesoDatos();
@@ -76,8 +76,17 @@ namespace negocio
             {
                 DireccionNegocio dirN = new DireccionNegocio();
                 List<Direccion> listaDire = dirN.listarDirecciones();
+                string consulta = "select c.imgPerfil,p.idPersona, p.nombre_per, p.apellido_per, p.email_per, p.telefono_per, p.contrasenia_per, p.fecha_nacimiento_per, p.estado_per, p.idroll_per, c.correoOk from personas p inner join clientes c on p.idPersona = c.idPersona_cli";
 
-                datos.consultaSql("select c.imgPerfil,p.idPersona, p.nombre_per, p.apellido_per, p.email_per, p.telefono_per, p.contrasenia_per, p.fecha_nacimiento_per, p.estado_per, p.idroll_per, c.correoOk from personas p inner join clientes c on p.idPersona = c.idPersona_cli");
+                if (estado == 0 || estado == 1)
+                {
+                    consulta += " where p.estado_per = @estado";
+                    datos.setearParametros("estado", estado);
+                }
+
+
+
+                datos.consultaSql(consulta);
                 datos.ejecutarLectura();
                 while (datos.Lector.Read())
                 {

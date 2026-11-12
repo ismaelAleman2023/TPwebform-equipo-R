@@ -80,6 +80,28 @@ namespace negocio
 
         }
 
+        public void reactivarEstado(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.consultaSql("update estados set activo = 1 where idEstado = @id");
+                datos.setearParametros("@id", id);
+                datos.ejecutarAccion();
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+
+            }
+
+        }
+
         public void eliminarEstado (int id)
         {
             AccesoDatos datos = new AccesoDatos();

@@ -8,11 +8,15 @@ namespace negocio
     {
         public List<TipoPago> ListarTipoPago()
         {
+
             List<TipoPago> lista = new List<TipoPago>();
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.consultaSql("select idTipoPago, descripcion_tipo, estado_tipo from tipoPagos");
+                string consulta = "select idTipoPago, descripcion_tipo, estado_tipo from tipoPagos";
+                               
+
+                datos.consultaSql(consulta);
                 datos.ejecutarLectura();
                 while (datos.Lector.Read())
                 {

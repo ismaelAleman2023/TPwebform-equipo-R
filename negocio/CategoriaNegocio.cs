@@ -41,7 +41,9 @@ namespace negocio
 
             try
             {
-                datos.consultaSql("select id_C,descripcion_C,estado_C from categorias");
+                string consulta="select id_C,descripcion_C,estado_C from categorias";
+
+                datos.consultaSql(consulta);
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())

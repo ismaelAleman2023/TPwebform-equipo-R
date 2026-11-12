@@ -17,7 +17,10 @@ namespace negocio
 
             try
             {
-                datos.consultaSql("select id_m ,descripcion_m,estado_m from marcas");
+                string consulta = "select id_m ,descripcion_m,estado_m from marcas";
+              
+
+                datos.consultaSql(consulta);
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())

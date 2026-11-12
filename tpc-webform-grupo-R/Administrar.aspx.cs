@@ -18,13 +18,18 @@ namespace tpc_webform_grupo_R
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["eleccionfiltro"] == null)
+            {
+                Session["eleccionfiltro"] = 2;
+            }
+
             if (!IsPostBack)
             {
 
                 if (Session["btnAgregar"] != null)
                 {
                     int opcion = (int)Session["btnAgregar"];
-
+                    //Session["eleccionfiltro"] = 2;
                     cargarGrillaSegunOpcion(opcion);
 
                     ViewState["TablaActiva"] = Session["btnAgregar"];
@@ -125,8 +130,8 @@ namespace tpc_webform_grupo_R
         {
             ClienteNegocio cliN = new ClienteNegocio();
             EstadoNegocio estadoN = new EstadoNegocio();
-
-            var listaClientesGrilla = cliN.listarClientes().Select(c => new
+            int seleccion = (int)Session["eleccionfiltro"];
+            var listaClientesGrilla = cliN.listarClientes(seleccion).Select(c => new
             {
                 c.IdPersona,
                 c.Nombre,
@@ -153,8 +158,9 @@ namespace tpc_webform_grupo_R
         {
             EstadoNegocio estadoN = new EstadoNegocio();
             VendedorNegocio vendedorN = new VendedorNegocio();
+            int seleccion = (int)Session["eleccionfiltro"];
 
-            var listaVendedoresGrilla = vendedorN.listarVendedores().Select(v => new
+            var listaVendedoresGrilla = vendedorN.listarVendedores(seleccion).Select(v => new
             {
                 v.Legajo,
                 v.IdPersona,
@@ -184,8 +190,9 @@ namespace tpc_webform_grupo_R
            
             EstadoNegocio estadoN = new EstadoNegocio();
             AdministrarNegocio adminN = new AdministrarNegocio();
+            int seleccion = (int)Session["eleccionfiltro"];
 
-            var listaAdministradoresGrilla = adminN.listarAdministradores().Select(a => new
+            var listaAdministradoresGrilla = adminN.listarAdministradores(seleccion).Select(a => new
             {
                 
                 a.IdPersona,
@@ -363,6 +370,7 @@ namespace tpc_webform_grupo_R
                     Response.Redirect("RegistroCliente.aspx");
                     break;
                 case 9://direcciones
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaExito", "mostrarCartel('No disponible', 'error');", true);
 
                     break;
                 case 10:// ventas
@@ -444,7 +452,8 @@ namespace tpc_webform_grupo_R
 
                         break;
                     case 3://stock
-                        
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaExito", "mostrarCartel('No disponible', 'error');", true);
+
 
                         break;
                     case 4://tipo pago
@@ -471,6 +480,7 @@ namespace tpc_webform_grupo_R
 
                         break;
                     case 9://direcciones
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaExito", "mostrarCartel('No disponible', 'error');", true);
 
                         // no lo usamos
 
@@ -984,11 +994,9 @@ namespace tpc_webform_grupo_R
                         cargarGrillaRol();
                         break;
                     case 12:// estados
-
-                        ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaExito", "mostrarCartel('No disponible', 'error');", true);
-
-                        // no se usa
-
+                        reactivarEstado();
+                        cargarGrillaEstado();
+                          
                         break;
 
                     default:
@@ -1174,8 +1182,47 @@ namespace tpc_webform_grupo_R
             }
         }
 
-      
+        private void reactivarEstado()
+        {
+            try
+            {
+                EstadoNegocio estN = new EstadoNegocio();
+                estN.reactivarEstado((int)ViewState["eleccion"]);
+                ViewState.Remove("eleccion");
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaExito", "mostrarCartel('¡Estado reactivado!', 'success');", true);
 
-       
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+
+        protected void btnFiltros_Click(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            int filtro = int.Parse(btn.CommandArgument);
+
+            if (filtro == 1)
+            {
+                Session["eleccionfiltro"] = 1;
+            }
+            else if (filtro == 2)
+            {
+                Session["eleccionfiltro"] = 2;
+            }
+            else if (filtro == 0)
+            {
+                Session["eleccionfiltro"] = 0; 
+            }
+
+            cargarGrillaSegunOpcion((int)ViewState["TablaActiva"]);
+        }
+
+
+
+
     }
 }

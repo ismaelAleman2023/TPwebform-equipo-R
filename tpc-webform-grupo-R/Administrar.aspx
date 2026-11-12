@@ -84,9 +84,11 @@
 
                             <!-- Tu contenedor de botones actual -->
                             <div class="d-flex gap-2 justify-content-center">
-                                <asp:Button ID="BtnTodos" runat="server" Text="Todos" CssClass="btn btn-secondary" />
-                                <asp:Button ID="BtnActivos" runat="server" Text="Activos" CssClass="btn btn-secondary" />
-                                <asp:Button ID="BtnEliminados" runat="server" Text="Eliminados" CssClass="btn btn-secondary" />
+                                <asp:Button ID="BtnTodos" commandArgument="2" onclick="btnFiltros_Click" runat="server" Text="Todos" CssClass="btn btn-secondary" />
+                                <asp:Button ID="BtnActivos" commandArgument="1" onclick="btnFiltros_Click"  runat="server" Text="Activos" CssClass="btn btn-secondary" />
+                                <asp:Button ID="BtnEliminados" CommandArgument="0" OnClick="btnFiltros_Click" runat="server" Text="Eliminados" CssClass="btn btn-secondary" />
+                          
+                                
                             </div>
 
                                 </div>

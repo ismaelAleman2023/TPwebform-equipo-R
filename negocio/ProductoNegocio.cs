@@ -82,8 +82,12 @@ namespace negocio
 
             try
             {
-                datos.consultaSql("select idProducto,codigoProducto_prod,nombre_prod,descripcion_prod,idMarca_prod,idCategoria_prod," +
-                    "precio_prod,ondemand_prod,estado_prod from productos ");
+                string consulta = "select idProducto,codigoProducto_prod,nombre_prod,descripcion_prod,idMarca_prod,idCategoria_prod," +
+                    "precio_prod,ondemand_prod,estado_prod from productos ";
+
+
+                datos.consultaSql(consulta);
+
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())

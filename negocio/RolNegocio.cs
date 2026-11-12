@@ -12,7 +12,9 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.consultaSql("select idRoll, descripcion_rol, estado_rol from roles");
+                string consulta = "select idRoll, descripcion_rol, estado_rol from roles";
+             
+                datos.consultaSql(consulta);
                 datos.ejecutarLectura();
                 while (datos.Lector.Read())
                 {
