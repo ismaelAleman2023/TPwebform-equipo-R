@@ -67,7 +67,8 @@
             </div>
         </div>
 
-        <!-- BLOQUE 3: FOTO DE PERFIL -->
+     
+
         <div class="card shadow-sm mb-4 border-0">
             <div class="card-body">
                 <div class="row align-items-center">
@@ -76,7 +77,7 @@
                         <h5 class="card-title text-secondary mb-3 fw-semibold fs-6">Foto de Perfil</h5>
                         <div class="row align-items-center">
                             <div class="col-md-3 text-center mb-2 mb-md-0">
-                                <asp:Image ID="imgPerfil" runat="server" CssClass="rounded-circle img-thumbnail shadow-sm" Style="width: 80px; height: 80px; object-fit: cover;" ImageUrl="https://i.pinimg.com/474x/3c/13/98/3c139858ade16fe6bf2b3c8f7f2cd0fd.jpg?nii=t" />
+                                <asp:Image ID="imgPerfil" runat="server" CssClass="rounded-circle img-thumbnail shadow-sm" Style="width: 80px;  height: 80px; object-fit: cover;" ImageUrl="~/Images/Perfiles/fotoDefault.jpg" />
                             </div>
                             <div class="col-md-9">
                                 <input type="file" id="txtImagenPerf" runat="server" class="form-control" />
@@ -90,6 +91,8 @@
                 </div>
             </div>
         </div>
+
+            
 
     </div>
 

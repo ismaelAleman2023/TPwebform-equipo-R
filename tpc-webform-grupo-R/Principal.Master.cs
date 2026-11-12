@@ -12,6 +12,16 @@ namespace tpc_webform_grupo_R
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+                if (Session["usuarioActivo"] != null)
+                {
+                string v= "~/images/Perfiles/" + ((Cliente)Session["usuarioActivo"]).FotoPerfil;
+                imgUserPerfil.ImageUrl = v;
+                }
+                else
+                {
+
+                    imgUserPerfil.ImageUrl = "~/images/Perfiles/fotoDefault.jpg";
+                }
 
 
             if (Session["listaCarrito"] != null)
@@ -26,6 +36,8 @@ namespace tpc_webform_grupo_R
 
             if (!IsPostBack)
             {
+
+
                 // 1. Obtiene el nombre de la página actual sin el ".aspx" (Ej: "Productos", "Clientes", "Administrar")
                 string nombrePagina = System.IO.Path.GetFileNameWithoutExtension(Request.Url.AbsolutePath);
 
@@ -39,8 +51,9 @@ namespace tpc_webform_grupo_R
                     lnk.Style["color"] = "#000";
                     lnk.Style["border"] = "1px solid #ffc107";
                 }
-                      
+
                 
+
             }
         }
 
@@ -60,7 +73,6 @@ namespace tpc_webform_grupo_R
              return lblContadorCarrito.ClientID;
            
         }
-
 
     }
 }

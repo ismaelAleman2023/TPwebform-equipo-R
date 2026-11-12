@@ -6,14 +6,14 @@
 
 <head runat="server">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>V.Dorrego Design</title>
-    
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- FontAwesome para los iconos de Login, Carrito y Redes -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
     <link href="Content/estilos.css" rel="stylesheet" type="text/css" />
 
 
@@ -23,12 +23,12 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>   
-    
+        <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+
         <!--NAVBAR-->
         <nav class="navbar navbar-expand-lg navbar-dark navbar-custom sticky-top">
             <div class="navbar-layout container-fluid px-3">
-                
+
                 <!--LOGO IMAGEN A LA IZQUIERDA-->
                 <div class="logo-container">
                     <a href="Default.aspx">
@@ -54,29 +54,35 @@
                         <asp:HyperLink ID="lnkPerfil" runat="server" NavigateUrl="~/Perfil.aspx" CssClass="nav-cajita">Perfil</asp:HyperLink>
                         <asp:HyperLink ID="lnkAdministrar" runat="server" NavigateUrl="~/Administrar.aspx" CssClass="nav-cajita">Administrar</asp:HyperLink>
                         <asp:HyperLink ID="lnkInformes" runat="server" NavigateUrl="~/Informes.aspx" CssClass="nav-cajita">Informes</asp:HyperLink>
-                    
+
                     </div>
                 </div>
 
 
-                                
+
                 <!--LOGIN Y CARRITO ESCRITORIO (PC) -->
 
-                
+
                 <div class="nav-actions-wrapper d-none d-lg-flex">
-                    <asp:HyperLink ID="lnkLogin" runat="server" NavigateUrl="~/Login.aspx" CssClass="action-item">
-                        <i class="fa-solid fa-circle-user" "></i>
+
+                    <asp:HyperLink ID="lnkLogin" runat="server" NavigateUrl="~/Login.aspx" CssClass="action-item text-decoration-none d-flex align-items-center">
+                        <asp:Image ID="imgUserPerfil" runat="server" CssClass="rounded-circle shadow-sm" Style="width: 32px; height: 32px; object-fit: cover;" />
                         <span class="action-label">Login</span>
                     </asp:HyperLink>
 
-                    <asp:HyperLink ID="lnkCarrito" runat="server" NavigateUrl="~/Carrito.aspx" CssClass="action-item">
-                        
-                        <div class="carrito-circulo ">
-                          <i class="fa-solid fa-cart-shopping mt-1 " ></i>                                                     
+                    <%-- <asp:HyperLink ID="lnkLogin" runat="server" NavigateUrl="~/Login.aspx" CssClass="action-item">
+                        <i class="fa-solid fa-circle-user" "></i>
+                        <span class="action-label">Login</span>
+                    </asp:HyperLink>--%>
 
-                            <div class="circulo-contador"> 
+                    <asp:HyperLink ID="lnkCarrito" runat="server" NavigateUrl="~/Carrito.aspx" CssClass="action-item">
+
+                        <div class="carrito-circulo ">
+                            <i class="fa-solid fa-cart-shopping mt-1 "></i>
+
+                            <div class="circulo-contador">
                                 <!-- contador carrito -->
-                               <asp:Label ID="lblContadorCarrito" CssClass="contador-Carrito" runat="server" style="font-size: 1rem ; font-weight: 700 ; font-family: Arial, sans-serif  " ></asp:Label>
+                                <asp:Label ID="lblContadorCarrito" CssClass="contador-Carrito" runat="server" Style="font-size: 1rem; font-weight: 700; font-family: Arial, sans-serif"></asp:Label>
                             </div>
                         </div>
 
@@ -84,13 +90,13 @@
                         <span class="action-label micarrito ">Mi carrito</span>
                     </asp:HyperLink>
                 </div>
-                            
+
 
 
 
             </div>
         </nav>
-      
+
         <div class="Content">
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
             </asp:ContentPlaceHolder>
@@ -106,17 +112,17 @@
     <footer class="bg-dark text-light pt-4 pb-3 mt-auto">
         <div class="container">
             <div class="row">
-              
+
 
                 <div class="col-md-4 mb-3 mb-md-1">
                     <asp:Label runat="server" Text="Label">siguenos </asp:Label>
-                    
+
                     <asp:Image ID="Image1" src="images/icons/face.png" runat="server" Height="30px" />
                     <asp:Image ID="Image2" src="images/icons/insta.png" runat="server" Height="30px" Style="margin-left: 10px" />
                     <asp:Image ID="Image3" src="images/icons/whatsap.png" runat="server" Height="37px" Style="margin-left: 10px" />
                 </div>
 
-                
+
             </div>
 
             <hr class="bg-secondary my-1" />
@@ -132,7 +138,7 @@
 
 
 
-    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
