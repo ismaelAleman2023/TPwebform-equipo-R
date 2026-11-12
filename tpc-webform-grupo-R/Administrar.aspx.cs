@@ -452,7 +452,8 @@ namespace tpc_webform_grupo_R
                         cargarGrillaTipoPago();
                         break;
                     case 5://productos
-
+                        eliminarProducto();
+                        cargarGrillaProducto();
                         break;
                     case 6://vendedores
                         eliminarVendedor();
@@ -676,6 +677,28 @@ namespace tpc_webform_grupo_R
             }
             catch (Exception)
             {
+                throw;
+            }
+        }
+
+        private void eliminarProducto()
+        {
+            try
+            {
+                StockNegocio stkN = new StockNegocio();
+                Stock stk = stkN.buscarStockProd((int)ViewState["eleccion"]);
+                ProductoNegocio prodN = new ProductoNegocio();
+                prodN.AltaoBajaProducto((int)ViewState["eleccion"], 0);
+                stkN.AltaoBajaStock(stk.IdStock,0);
+                ViewState.Remove("eleccion");
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaExito", "mostrarCartel('¡Producto eliminado correctamente!', 'error');", true);
+
+
+
+            }
+            catch (Exception)
+            {
+
                 throw;
             }
         }
@@ -912,56 +935,60 @@ namespace tpc_webform_grupo_R
                 switch ((int)ViewState["TablaActiva"])
                 {
                     case 1://categoria
-                        eliminarCategoria();
+                        reactivarCliente();
                         cargarGrillaCategoria();
 
                         break;
                     case 2://marca
-                        eliminarMarca();
+                        reactivarMarca();
                         cargarGrillaMarca();
 
                         break;
                     case 3://stock
-
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaExito", "mostrarCartel('No disponible', 'error');", true);
 
                         break;
                     case 4://tipo pago
-                        eliminarTipoPago();
+                        reactivarTipoPago();
                         cargarGrillaTipoPago();
                         break;
                     case 5://productos
-
+                        reactivarProducto();
+                        cargarGrillaProducto();
                         break;
                     case 6://vendedores
-                        eliminarVendedor();
+                        reactivarVendedor();
                         cargarGrillaVendedor();
 
                         break;
-                    case 7://administradores
-                        eliminarAdministrador();
+                    case 7://administrador
+                        reactivarAdmin();
                         cargarGrillaAdministrador();
 
                         break;
                     case 8://clientes
-                        eliminarCliente();
+                        reactivarCliente();
                         cargarGrillaCliente();
 
                         break;
                     case 9://direcciones
 
-                        // no lo usamos
-
+                        reactivarDireccion();
+                        cargarGrillaDireccion();
                         break;
                     case 10:// ventas
 
                         break;
                     case 11:// roles
-                        eliminarRol();
+                        reactivarRol();
                         cargarGrillaRol();
                         break;
                     case 12:// estados
-                        eliminarEstado();
-                        cargarGrillaEstado();
+
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaExito", "mostrarCartel('No disponible', 'error');", true);
+
+                        // no se usa
+
                         break;
 
                     default:
@@ -981,7 +1008,6 @@ namespace tpc_webform_grupo_R
             try
             {
                 ClienteNegocio cliN = new ClienteNegocio();
-
                 cliN.ReactivarCliente((int)ViewState["eleccion"]);
 
                 ViewState.Remove("eleccion");
@@ -1003,6 +1029,7 @@ namespace tpc_webform_grupo_R
                 AdministrarNegocio adminN = new AdministrarNegocio();
                 adminN.reactivarAdministrador((int)ViewState["eleccion"]);
                 ViewState.Remove("eleccion");
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaExito", "mostrarCartel('¡Administrador reactivado!', 'success');", true);
 
             }
             catch (Exception)
@@ -1015,23 +1042,136 @@ namespace tpc_webform_grupo_R
 
         private void reactivarVendedor()
         {
-            VendedorNegocio venN = new VendedorNegocio();
-            venN.reactivarVendedor((int)ViewState["eleccion"]);
+            try
+            {
+                VendedorNegocio venN = new VendedorNegocio();
+                venN.reactivarVendedor((int)ViewState["eleccion"]);
+                ViewState.Remove("eleccion");
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaExito", "mostrarCartel('¡Vendedor reactivado!', 'success');", true);
+
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
 
 
         }
 
         private void reactivarCategoria()
         {
-            CategoriaNegocio catN = new CategoriaNegocio();
-            catN.AltaCategoria((int)ViewState["eleccion"]);
+            try
+            {
+                CategoriaNegocio catN = new CategoriaNegocio();
+                catN.AltaCategoria((int)ViewState["eleccion"]);
+                ViewState.Remove("eleccion");
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaExito", "mostrarCartel('¡Categoria reactivada!', 'success');", true);
+
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         private void reactivarMarca()
         {
-            MarcaNegocio marN =    new MarcaNegocio();
-            marN.AltaMarca((int)ViewState["eleccion"]);
+            try
+            {
+                MarcaNegocio marN =    new MarcaNegocio();
+                marN.AltaMarca((int)ViewState["eleccion"]);
+                ViewState.Remove("eleccion");
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaExito", "mostrarCartel('¡Marca reactivada!', 'success');", true);
+
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
             
+        }
+
+        private void reactivarRol()
+        {
+            try
+            {
+                RolNegocio rolN = new RolNegocio();
+                
+                ViewState.Remove("eleccion");
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaExito", "mostrarCartel('¡Rol reactivado!', 'success');", true);
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        private void reactivarTipoPago()
+        {
+            try
+            {
+                TipoPagoNegocio tipoN = new TipoPagoNegocio();
+                tipoN.AltaTipoPago((int)ViewState["eleccion"]);
+                ViewState.Remove("eleccion");
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaExito", "mostrarCartel('¡Tipo pago reactivada!', 'success');", true);
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
+
+        private void reactivarProducto()
+        {
+            try
+            {
+                StockNegocio stkN = new StockNegocio();
+                Stock stock = stkN.buscarStockProd((int)ViewState["eleccion"]);
+
+                ProductoNegocio prodN = new ProductoNegocio();
+                prodN.AltaoBajaProducto((int)ViewState["eleccion"], 1);
+
+                stkN.AltaoBajaStock(stock.IdStock, 1);
+               
+                ViewState.Remove("eleccion");
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaExito", "mostrarCartel('¡producto reactivado!', 'success');", true);
+
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
+        private void reactivarDireccion()
+        {
+            try
+            {
+                DireccionNegocio direN = new DireccionNegocio();
+                direN.direccionReActivar((int)ViewState["eleccion"]);
+                ViewState.Remove("eleccion");
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaExito", "mostrarCartel('¡Direccion reactivada!', 'success');", true);
+
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
       
