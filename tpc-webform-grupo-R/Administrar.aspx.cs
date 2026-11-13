@@ -59,8 +59,10 @@ namespace tpc_webform_grupo_R
 
             // C# ya sabe exactamente qué número de botón se presionó
             ViewState["TablaActiva"] = opcion;
+            resaltarBordesEleccion(opcion);
 
             cargarGrillaSegunOpcion(opcion);
+
         }
 
         private void removerSessionModificar()
@@ -1240,6 +1242,66 @@ namespace tpc_webform_grupo_R
         }
 
 
+        private void resaltarBordesEleccion(int eleccionBtn)
+        {
+            btnProd.Style["border"] = "1px solid #333";
+            btnStk.Style["border"] = "1px solid #333";
+            btnCat.Style["border"] = "1px solid #333";
+            btnMarc.Style["border"] = "1px solid #333";
+            btnVend.Style["border"] = "1px solid #333";
+            btnAdmin.Style["border"] = "1px solid #333";
+            btnCli.Style["border"] = "1px solid #333";
+            btnRol.Style["border"] = "1px solid #333";
+            btnVent.Style["border"] = "1px solid #333";
+            btnPago.Style["border"] = "1px solid #333";
+            btnDir.Style["border"] = "1px solid #333";
+            btnEst.Style["border"] = "1px solid #333";
+
+
+            switch (eleccionBtn)
+            {
+                case 1://categoria
+                    btnCat.Style["border"] = "2px solid #ffc107";
+                    break;
+                case 2://marca
+                    btnMarc.Style["border"] = "2px solid #ffc107";
+                    break;
+                case 3://stock
+                    btnStk.Style["border"] = "2px solid #ffc107";
+                    break;
+                case 4://tipo pago
+                    btnPago.Style["border"] = "2px solid #ffc107";
+                    break;
+                case 5://PRODUCTO
+                    btnProd.Style["border"] = "2px solid #ffc107";
+                    break;//vendedores
+                case 6:
+                    btnVend.Style["border"] = "2px solid #ffc107";
+                    break;
+                case 7://administradores
+                    btnAdmin.Style["border"] = "2px solid #ffc107";
+                    break;
+                case 8://cliente
+                    btnCli.Style["border"] = "2px solid #ffc107";
+                    break;
+                case 9://direccin
+                    btnDir.Style["border"] = "2px solid #ffc107";
+                    break;
+                case 10://venta
+                    btnVent.Style["border"] = "2px solid #ffc107";
+                    break;
+                case 11://rol
+                    btnRol.Style["border"] = "2px solid #ffc107";
+                    break;
+                case 12://estado
+                    btnEst.Style["border"] = "2px solid #ffc107";
+                    break;
+                default:
+                    break;
+            }
+
+
+        }
 
 
     }

@@ -48,7 +48,7 @@ namespace tpc_webform_grupo_R
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink lnkDestacados;
+        protected global::System.Web.UI.WebControls.LinkButton lnkDestacados;
 
         /// <summary>
         /// Control lnkProductos.
@@ -57,7 +57,7 @@ namespace tpc_webform_grupo_R
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink lnkProductos;
+        protected global::System.Web.UI.WebControls.LinkButton lnkProductos;
 
         /// <summary>
         /// Control lnkNovedades.
@@ -66,7 +66,7 @@ namespace tpc_webform_grupo_R
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink lnkNovedades;
+        protected global::System.Web.UI.WebControls.LinkButton lnkNovedades;
 
         /// <summary>
         /// Control lnkSobreNosotros.
@@ -75,7 +75,7 @@ namespace tpc_webform_grupo_R
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink lnkSobreNosotros;
+        protected global::System.Web.UI.WebControls.LinkButton lnkSobreNosotros;
 
         /// <summary>
         /// Control lnkComoComprar.
@@ -84,7 +84,7 @@ namespace tpc_webform_grupo_R
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink lnkComoComprar;
+        protected global::System.Web.UI.WebControls.LinkButton lnkComoComprar;
 
         /// <summary>
         /// Control lnkContactanos.
@@ -93,7 +93,7 @@ namespace tpc_webform_grupo_R
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink lnkContactanos;
+        protected global::System.Web.UI.WebControls.LinkButton lnkContactanos;
 
         /// <summary>
         /// Control lnkPerfil.
@@ -102,7 +102,7 @@ namespace tpc_webform_grupo_R
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink lnkPerfil;
+        protected global::System.Web.UI.WebControls.LinkButton lnkPerfil;
 
         /// <summary>
         /// Control lnkAdministrar.
@@ -111,7 +111,7 @@ namespace tpc_webform_grupo_R
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink lnkAdministrar;
+        protected global::System.Web.UI.WebControls.LinkButton lnkAdministrar;
 
         /// <summary>
         /// Control lnkInformes.
@@ -120,7 +120,7 @@ namespace tpc_webform_grupo_R
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink lnkInformes;
+        protected global::System.Web.UI.WebControls.LinkButton lnkInformes;
 
         /// <summary>
         /// Control lnkLogin.
@@ -139,6 +139,15 @@ namespace tpc_webform_grupo_R
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Image imgUserPerfil;
+
+        /// <summary>
+        /// Control lblLogin.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblLogin;
 
         /// <summary>
         /// Control lnkCarrito.

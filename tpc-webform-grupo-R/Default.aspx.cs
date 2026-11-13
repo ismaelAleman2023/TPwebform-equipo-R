@@ -14,11 +14,11 @@ namespace tpc_webform_grupo_R
 {
     public partial class Default : System.Web.UI.Page
     {
-       
-        private List<DetalleVenta> carritoCompra; 
-        
-        
-      
+
+        private List<DetalleVenta> carritoCompra;
+
+
+
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -47,49 +47,49 @@ namespace tpc_webform_grupo_R
 
             Master.actualizarContador(carritoCompra.Count);
 
-          
+
             string script = $"document.getElementById('{Master.FindControl("lblContadorCarrito").ClientID}').innerText = '{carritoCompra.Count}';";
             ScriptManager.RegisterStartupScript(this, this.GetType(), "ActualizarBadge", script, true);
         }
 
         protected void btnDetalle_Click(object sender, EventArgs e)
         {
-           int valor = int.Parse(((Button)sender).CommandArgument);
+            int valor = int.Parse(((Button)sender).CommandArgument);
 
-           ProductoNegocio negocioP = new ProductoNegocio();
-           MarcaNegocio negocioM = new MarcaNegocio();
-           CategoriaNegocio negocioC = new CategoriaNegocio();
-           StockNegocio negocioStk = new StockNegocio();
-           
-            Producto prod = negocioP.buscarProduc(valor);    
+            ProductoNegocio negocioP = new ProductoNegocio();
+            MarcaNegocio negocioM = new MarcaNegocio();
+            CategoriaNegocio negocioC = new CategoriaNegocio();
+            StockNegocio negocioStk = new StockNegocio();
+
+            Producto prod = negocioP.buscarProduc(valor);
             Marca marca = negocioM.buscarMarca(prod.Marca);
             Categoria categoria = negocioC.buscarCategoria(prod.Categoria);
-            
 
-            btnAgregarModal.CommandArgument = valor.ToString() ;
+
+            btnAgregarModal.CommandArgument = valor.ToString();
             lblModalCategoria.Text = categoria.Descripcion;
-            lblModalMarca.Text = marca.Descripcion; 
+            lblModalMarca.Text = marca.Descripcion;
             lblModalNombre.Text = prod.Nombre;
             lblModalDescripcion.Text = prod.Descripcion;
             lblModalPrecio.Text = prod.Precio.ToString("C");
             if (prod.OnDemand)
             {
-                LblModalDisponibles.Text ="OnDemand";
+                LblModalDisponibles.Text = "OnDemand";
             }
             else
             {
                 Stock stk = negocioStk.buscarStockProd(valor);
                 if (stk != null && stk.Cantidad > 0) {
-                     LblModalDisponibles.Text = stk.Cantidad.ToString();
+                    LblModalDisponibles.Text = stk.Cantidad.ToString();
                 }
                 else
                 {
-                    LblModalDisponibles.Text ="Sin stock";
+                    LblModalDisponibles.Text = "Sin stock";
                 }
 
             }
 
-                UpdatePanelModal.Update();
+            UpdatePanelModal.Update();
 
             // abrir el modal
             ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "var myModal = new bootstrap.Modal(document.getElementById('productoModal')); myModal.show();", true);
@@ -105,14 +105,14 @@ namespace tpc_webform_grupo_R
 
             aplicarFiltroActual();
 
-         }
+        }
 
 
         private Producto buscarProducto(int id)
         {
-            
+
             Producto prod = null;
-            List<Producto> listaProd = (List < Producto > )Session["listaprod"];
+            List<Producto> listaProd = (List<Producto>)Session["listaprod"];
 
             foreach (Producto item in listaProd)
             {
@@ -132,7 +132,7 @@ namespace tpc_webform_grupo_R
             reapet.DataBind();
         }
 
-      
+
         public string ObtenerImagenProducto(int idProducto)
         {
             List<Imagen> listaImagenes = (List<Imagen>)Session["listaimg"];
@@ -153,7 +153,7 @@ namespace tpc_webform_grupo_R
             Button btn = (Button)sender;
             int idSeleccion = int.Parse(btn.CommandArgument);
             agregarProducto(idSeleccion);
-            
+
             aplicarFiltroActual();
             UpdatePanelModal.Update();
 
@@ -185,9 +185,9 @@ namespace tpc_webform_grupo_R
             Producto pro = buscarProducto(seleccionProd);
             bool enlista = false;
 
-            foreach ( DetalleVenta item in carritoCompra)
+            foreach (DetalleVenta item in carritoCompra)
             {
-                if(item.IdProducto == pro.IdProducto)
+                if (item.IdProducto == pro.IdProducto)
                 {
                     enlista = true;
                     item.Cantidad++;
@@ -197,15 +197,15 @@ namespace tpc_webform_grupo_R
             }
 
 
-            if(!enlista) 
-             {
+            if (!enlista)
+            {
                 detaven.IdProducto = pro.IdProducto;
                 detaven.PrecioUnitario = pro.Precio;
                 detaven.Cantidad = 1;
                 detaven.Subtotal = pro.Precio * detaven.Cantidad;
                 carritoCompra.Add(detaven);
 
-             }
+            }
 
 
             Session["listaCarrito"] = carritoCompra;
@@ -221,7 +221,7 @@ namespace tpc_webform_grupo_R
 
         }
 
-       
+
         protected void btnFiltroTodo_Click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
@@ -230,6 +230,17 @@ namespace tpc_webform_grupo_R
             ViewState["filtroActual"] = filtro;
             cargaFiltrada(filtro);
 
+            btnFiltroTodo.CssClass = "btn btn-outline-secondary btn-sm rounded-pill px-3 text-light";
+            btnFiltroPolyfan.CssClass = "btn btn-outline-secondary btn-sm rounded-pill px-3 text-light";
+            btnFiltroImpresion.CssClass = "btn btn-outline-secondary btn-sm rounded-pill px-3 text-light";
+            btnFiltroPapeleria.CssClass = "btn btn-outline-secondary btn-sm rounded-pill px-3 text-light";
+            btnFiltroCorteLaser.CssClass = "btn btn-outline-secondary btn-sm rounded-pill px-3 text-light";
+            btnFiltroEgrasados.CssClass = "btn btn-outline-secondary btn-sm rounded-pill px-3 text-light";
+            btnFiltroOtros.CssClass = "btn btn-outline-secondary btn-sm rounded-pill px-3 text-light";
+
+            // 3. Pintar de amarillo brillante únicamente el botón que se presionó
+            btn.CssClass = "btn btn-warning btn-sm rounded-pill px-3 fw-bold text-dark";
+
         }
 
 
@@ -237,7 +248,7 @@ namespace tpc_webform_grupo_R
         private void cargaFiltrada(int filtro)
         {
 
-            if (filtro > 0 && filtro <7)
+            if (filtro > 0 && filtro < 7)
             {
                 List<Producto> listaP = (List<Producto>)Session["listaprod"];
                 List<Producto> listAux = new List<Producto>();
@@ -260,6 +271,8 @@ namespace tpc_webform_grupo_R
 
         }
 
+
+      
 
 
     }

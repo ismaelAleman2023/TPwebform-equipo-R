@@ -45,15 +45,15 @@
                 <div class="collapse navbar-collapse justify-content-center" id="navbarContent">
                     <!--BOTONES CENTRALES EN CAJITAS-->
                     <div class="nav-cajitas-wrapper">
-                        <asp:HyperLink ID="lnkDestacados" runat="server" NavigateUrl="~/Default.aspx#destacado1" CssClass="nav-cajita">Destacados</asp:HyperLink>
-                        <asp:HyperLink ID="lnkProductos" runat="server" NavigateUrl="~/Default.aspx#catalogo1" CssClass="nav-cajita">Catalogo</asp:HyperLink>
-                        <asp:HyperLink ID="lnkNovedades" runat="server" NavigateUrl="~/Default.aspx#novedades1" CssClass="nav-cajita">Novedades</asp:HyperLink>
-                        <asp:HyperLink ID="lnkSobreNosotros" runat="server" NavigateUrl="~/SobreNosotros.aspx" CssClass="nav-cajita">Sobre nosotros</asp:HyperLink>
-                        <asp:HyperLink ID="lnkComoComprar" runat="server" NavigateUrl="~/ComoComprar.aspx" CssClass="nav-cajita">Como comprar</asp:HyperLink>
-                        <asp:HyperLink ID="lnkContactanos" runat="server" NavigateUrl="~/Contactanos.aspx" CssClass="nav-cajita">Contactanos</asp:HyperLink>
-                        <asp:HyperLink ID="lnkPerfil" runat="server" NavigateUrl="~/Perfil.aspx" CssClass="nav-cajita">Perfil</asp:HyperLink>
-                        <asp:HyperLink ID="lnkAdministrar" runat="server" NavigateUrl="~/Administrar.aspx" CssClass="nav-cajita">Administrar</asp:HyperLink>
-                        <asp:HyperLink ID="lnkInformes" runat="server" NavigateUrl="~/Informes.aspx" CssClass="nav-cajita">Informes</asp:HyperLink>
+                       <asp:LinkButton ID="lnkDestacados" runat="server" CommandArgument="b1" OnClick="btnBar_click" CssClass="nav-cajita">Destacados</asp:LinkButton>
+                        <asp:LinkButton ID="lnkProductos" runat="server" CommandArgument="b2" OnClick="btnBar_click" CssClass="nav-cajita">Catalogo</asp:LinkButton>
+                        <asp:LinkButton ID="lnkNovedades" runat="server" CommandArgument="b3" OnClick="btnBar_click" CssClass="nav-cajita">Novedades</asp:LinkButton>
+                        <asp:LinkButton ID="lnkSobreNosotros" runat="server" CommandArgument="b4" OnClick="btnBar_click" CssClass="nav-cajita">Sobre nosotros</asp:LinkButton>
+                        <asp:LinkButton ID="lnkComoComprar" runat="server" CommandArgument="b5" OnClick="btnBar_click" CssClass="nav-cajita">Como comprar</asp:LinkButton>
+                        <asp:LinkButton ID="lnkContactanos" runat="server" CommandArgument="b6" OnClick="btnBar_click" CssClass="nav-cajita">Contactanos</asp:LinkButton>
+                        <asp:LinkButton ID="lnkPerfil" runat="server" CommandArgument="b7" OnClick="btnBar_click" CssClass="nav-cajita">Perfil</asp:LinkButton>
+                        <asp:LinkButton ID="lnkAdministrar" runat="server" CommandArgument="b8" OnClick="btnBar_click" CssClass="nav-cajita">Administrar</asp:LinkButton>
+                        <asp:LinkButton ID="lnkInformes" runat="server" CommandArgument="b9" OnClick="btnBar_click" CssClass="nav-cajita">Informes</asp:LinkButton>
 
                     </div>
                 </div>
@@ -66,8 +66,10 @@
                 <div class="nav-actions-wrapper d-none d-lg-flex">
 
                     <asp:HyperLink ID="lnkLogin" runat="server" NavigateUrl="~/Login.aspx" CssClass="action-item text-decoration-none d-flex align-items-center">
-                        <asp:Image ID="imgUserPerfil" runat="server" CssClass="rounded-circle shadow-sm" Style="width: 32px; height: 32px; object-fit: cover;" />
-                        <span class="action-label">Login</span>
+                        <asp:Image ID="imgUserPerfil" runat="server" CssClass="rounded-circle shadow-sm mb-2" Style="width: 40px; height: 40px; object-fit: cover; " />
+                       
+                        
+                        <span class="action-label " id="lblLogin" runat="server" > </span>
                     </asp:HyperLink>
 
                     <%-- <asp:HyperLink ID="lnkLogin" runat="server" NavigateUrl="~/Login.aspx" CssClass="action-item">
