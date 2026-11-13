@@ -3,6 +3,7 @@ using Microsoft.Ajax.Utilities;
 using negocio;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Policy;
 using System.Web;
@@ -19,6 +20,8 @@ namespace tpc_webform_grupo_R
         private static int indiceActual = 0;
         private Producto pro = null;
 
+        public int Max=0;
+
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -28,6 +31,7 @@ namespace tpc_webform_grupo_R
                 ddlCategoria.DataTextField = "Descripcion";
                 ddlCategoria.DataValueField = "IdCategoria";
                 ddlCategoria.DataBind();
+
                 ddlMarca.DataSource = marcaNegocio.ListarMarca();
                 ddlMarca.DataTextField = "Descripcion";
                 ddlMarca.DataValueField = "IdMarca";
@@ -59,7 +63,7 @@ namespace tpc_webform_grupo_R
 
 
 
-
+                
                 actualizarPreviewImagen();
 
 
@@ -83,6 +87,7 @@ namespace tpc_webform_grupo_R
 
             Stock stNuevo = st.buscarStockProd(pro.IdProducto);
             txtStock.Text = stNuevo.Cantidad.ToString();
+            Max = stNuevo.Cantidad;
 
             ImagenNegocio imgNeg = new ImagenNegocio();
             List<Imagen> imagenesBD = imgNeg.buscarXcodProduc(pro.IdProducto);
@@ -170,7 +175,7 @@ namespace tpc_webform_grupo_R
 
                     pro = (Producto)Session["ProductoAmodificar"];
 
-                    if (Helper.Ayudante.ExisteProduc(codigo))
+                    if (Helper.Ayudante.ExisteOtroProduc(codigo,pro.IdProducto))
                     {
                         lblMensaje.Text = "Este producto ya se encuentra registrado";
                         txtCodigo.Text = string.Empty;
@@ -255,7 +260,23 @@ namespace tpc_webform_grupo_R
 
                 Session.Remove("productoAModificar");
                 Session["modi"] = false;
+              
+                txtNombre.ReadOnly=true;
+                txtDescripcion.ReadOnly=true;
+                txtImagenUrl.ReadOnly=true;
+                txtPrecio.ReadOnly=true;
 
+                btnAgregarImagen.Enabled=false;
+                btnAnterior.Enabled=false;
+                btnEliminarImagen.Enabled=false;
+                btnRegistrar.Enabled=false;
+                btnSiguiente.Enabled=false;
+
+                ddlCategoria.Enabled=false;
+                ddlMarca.Enabled=false;
+               
+                
+                
             }
             catch (Exception)
             {
@@ -392,5 +413,11 @@ namespace tpc_webform_grupo_R
             }
 
         }
+
+
+     
+
+       
+
     }
 }

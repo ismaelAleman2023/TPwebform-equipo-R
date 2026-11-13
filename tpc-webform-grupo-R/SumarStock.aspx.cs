@@ -57,8 +57,19 @@ namespace tpc_webform_grupo_R
 
                 if ((string)Session["AgMd"] == "agregar")
                 {
+                    if (Helper.Ayudante.validadStock(st.Cantidad)) {
+
+                        Helper.Ayudante.cambiarEstadoProducto(st.IdProducto_stk,"alta");
+               
+                    
+                    }
+
 
                     stNego.ModificarStockCantidad(st.IdProducto_stk, cantidad, "+");
+
+
+
+
 
                     lblMensaje.Text = "¡Stock actualizado correctamente!";
                     lblMensaje.CssClass = "d-block text-center mt-3 text-success";
@@ -67,7 +78,34 @@ namespace tpc_webform_grupo_R
                 }
                 else if ((string)Session["AgMd"] == "modificar") {
 
+                    if (cantidad <=st.Cantidad) {
+
+                        int queda = st.Cantidad - cantidad;
+
+                        if (queda==0) {
+
+                            Helper.Ayudante.cambiarEstadoProducto(st.IdProducto_stk,"baja");
+                          
+                        }
+
                     stNego.ModificarStockCantidad(st.IdProducto_stk, cantidad, "-");
+
+                        
+
+
+                    }
+                    else{
+
+
+                        lblMensaje.Text = "¡No se puede restar mas del stock total!";
+                        lblMensaje.CssClass = "d-block text-center mt-3 text-danger";
+                        return;
+
+                    }
+
+
+
+
 
                     lblMensaje.Text = "¡Stock actualizado correctamente!";
                     lblMensaje.CssClass = "d-block text-center mt-3 text-success";

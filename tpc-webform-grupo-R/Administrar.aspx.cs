@@ -288,7 +288,6 @@ namespace tpc_webform_grupo_R
                 p.IdProducto,
                 p.CodigoProducto,
                 p.Nombre,
-                p.Descripcion,
                 Marca = Helper.Ayudante.idXmarca(p.Marca),
                 Categoria = Helper.Ayudante.idxCategoria(p.Categoria),
                 p.Precio,
@@ -406,6 +405,7 @@ namespace tpc_webform_grupo_R
                         nombreColumna.Equals("idPersona", StringComparison.OrdinalIgnoreCase) ||
                         nombreColumna.Equals("Password", StringComparison.OrdinalIgnoreCase) ||
                         nombreColumna.Equals("IdCategoria", StringComparison.OrdinalIgnoreCase) ||
+                        nombreColumna.Equals("descripcion_prod", StringComparison.OrdinalIgnoreCase) ||
                         nombreColumna.EndsWith("IdMarca", StringComparison.OrdinalIgnoreCase))
                     {
                         // encabezado
