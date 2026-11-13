@@ -263,7 +263,7 @@ namespace tpc_webform_grupo_R
         private void cargarGrillaRol()
         {
             RolNegocio rolN = new RolNegocio();
-            dgvGrilla.DataSource = rolN.ListarRol();
+            dgvGrilla.DataSource = rolN.ListarRol((int)Session["eleccionfiltro"]);
             dgvGrilla.DataKeyNames = new string[] { "IdRol" };
             dgvGrilla.DataBind();
             ViewState.Remove("eleccion");
@@ -284,7 +284,7 @@ namespace tpc_webform_grupo_R
             MarcaNegocio marcaNeg=new MarcaNegocio();
             CategoriaNegocio cateNeg=new CategoriaNegocio();
 
-            var listaParaGrilla = pro.listarProduc().Select(p => new {
+            var listaParaGrilla = pro.listarProduc((int)Session["eleccionfiltro"]).Select(p => new {
                 p.IdProducto,
                 p.CodigoProducto,
                 p.Nombre,
@@ -1205,20 +1205,38 @@ namespace tpc_webform_grupo_R
             Button btn = (Button)sender;
             int filtro = int.Parse(btn.CommandArgument);
 
-            if (filtro == 1)
+            try
             {
-                Session["eleccionfiltro"] = 1;
+                if (ViewState["TablaActiva"] == null)
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaExito", "mostrarCartel('Debe seleccionar una tabla/grilla para poder filtrar', 'error');", true);
+
+                    return;
+                }
+
+                if (filtro == 1)
+                {
+                    Session["eleccionfiltro"] = 1;
+                }
+                else if (filtro == 2)
+                {
+                    Session["eleccionfiltro"] = 2;
+                }
+                else if (filtro == 0)
+                {
+                    Session["eleccionfiltro"] = 0;
+                }
+
+                cargarGrillaSegunOpcion((int)ViewState["TablaActiva"]);
+
             }
-            else if (filtro == 2)
+            catch (Exception)
             {
-                Session["eleccionfiltro"] = 2;
-            }
-            else if (filtro == 0)
-            {
-                Session["eleccionfiltro"] = 0; 
+
+                throw;
             }
 
-            cargarGrillaSegunOpcion((int)ViewState["TablaActiva"]);
+            
         }
 
 

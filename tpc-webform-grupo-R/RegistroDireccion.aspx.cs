@@ -31,7 +31,11 @@ namespace tpc_webform_grupo_R
 
             Session["direccionActivo"] = dirN.buscarDireccionCliente((int)Session["idActivo"]);
          
-            Response.Redirect("DireccionEnvio.aspx");                      
+            
+
+              Response.Redirect("DireccionEnvio.aspx");      
+
+            
 
 
         }

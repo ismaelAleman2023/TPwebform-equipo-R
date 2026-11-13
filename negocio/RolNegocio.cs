@@ -6,14 +6,22 @@ namespace negocio
 {
     public class RolNegocio
     {
-        public List<Rol> ListarRol()
+        public List<Rol> ListarRol(int estado =2)
         {
             List<Rol> lista = new List<Rol>();
             AccesoDatos datos = new AccesoDatos();
             try
             {
+
                 string consulta = "select idRoll, descripcion_rol, estado_rol from roles";
-             
+
+
+                if (estado == 0 || estado == 1)
+                {
+                    consulta += " where estado_rol = @estado";
+                    datos.setearParametros("@estado", estado);
+                }
+                
                 datos.consultaSql(consulta);
                 datos.ejecutarLectura();
                 while (datos.Lector.Read())

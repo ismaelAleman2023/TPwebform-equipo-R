@@ -38,13 +38,18 @@ namespace tpc_webform_grupo_R
                 Session["IdDireccionEnUso"] = idDire;
 
             
-            if (Session["vieneDePerfil"] != null && (bool)Session["vieneDePerfil"] == true) { 
+            if (Session["esPerfil"] != null && (bool)Session["esPerfil"] == true) { 
             
+                Session.Remove("esPerfil");
                 Response.Redirect("Perfil.aspx");
-                       
+
             }
-            
-            Response.Redirect("FinalizarCompra.aspx");
+            else
+            {
+
+                Response.Redirect("FinalizarCompra.aspx");
+            }
+
 
             
           

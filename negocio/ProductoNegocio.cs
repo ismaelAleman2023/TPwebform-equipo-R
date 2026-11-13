@@ -20,6 +20,9 @@ namespace negocio
             {
                 datos.consultaSql("insert into productos (codigoProducto_prod,nombre_prod,descripcion_prod,idMarca_prod,idCategoria_prod," +
                     "precio_prod,ondemand_prod,estado_prod) values (@codprod,@nombre,@descripcion,@idmarca,@idcate,@precio,@ondemand,@estado)");
+                
+                               
+                
                 datos.setearParametros("@codprod", produ.CodigoProducto);
                 datos.setearParametros("@nombre", produ.Nombre);
                 datos.setearParametros("@descripcion", produ.Descripcion);
@@ -64,17 +67,9 @@ namespace negocio
                 datos.cerrarConexion();
             }
 
-
-
-
-
-
-
-
-
         }
 
-        public List<Producto> listarProduc()
+        public List<Producto> listarProduc(int estado = 2)
         {
             AccesoDatos datos = new AccesoDatos();
             ImagenNegocio img = new ImagenNegocio();
@@ -84,6 +79,13 @@ namespace negocio
             {
                 string consulta = "select idProducto,codigoProducto_prod,nombre_prod,descripcion_prod,idMarca_prod,idCategoria_prod," +
                     "precio_prod,ondemand_prod,estado_prod from productos ";
+
+                if (estado == 0 || estado == 1)
+                {
+
+                    consulta += " where estado_prod = @estado";
+                    datos.setearParametros("@estado", estado);
+                }
 
 
                 datos.consultaSql(consulta);

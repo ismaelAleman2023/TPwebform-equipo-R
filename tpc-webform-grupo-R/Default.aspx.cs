@@ -28,7 +28,7 @@ namespace tpc_webform_grupo_R
 
                 ProductoNegocio negocio = new ProductoNegocio();
                 ImagenNegocio imgN = new ImagenNegocio();
-                List<Producto> listaProductos = negocio.listarProduc();
+                List<Producto> listaProductos = negocio.listarProduc(1);
                 List<Imagen> listaImagen = imgN.ListaImagen();
                 Session["listaprod"] = listaProductos;
                 Session["listaimg"] = listaImagen;
@@ -221,11 +221,12 @@ namespace tpc_webform_grupo_R
 
         }
 
+       
         protected void btnFiltroTodo_Click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
-
             int filtro = int.Parse(btn.CommandArgument);
+
             ViewState["filtroActual"] = filtro;
             cargaFiltrada(filtro);
 
