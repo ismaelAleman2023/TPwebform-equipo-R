@@ -15,7 +15,7 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.consultaSql("insert into estados(descripcion_estado) values(@descripcion)");
+                datos.consultaSql("insert into estadoPedidos(descripcion_estado) values(@descripcion)");
                 datos.setearParametros("@descripcion", estado.Descripcion_estado);
                 datos.ejecutarAccion();
             }
@@ -37,7 +37,7 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.consultaSql("select idEstado, descripcion_estado from estados");
+                datos.consultaSql("select idEstado, descripcion_estado from estadopedidos");
                 datos.ejecutarLectura();
                 while (datos.Lector.Read())
                 {
@@ -58,56 +58,14 @@ namespace negocio
             }
         }
 
-        public void bajaEstado(int id)
-        {
-            AccesoDatos datos = new AccesoDatos();
-            try
-            {
-                datos.consultaSql("update estados set activo = 0 where idEstado = @id");
-                datos.setearParametros("@id", id);
-                datos.ejecutarAccion();
-
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            finally
-            {
-                datos.cerrarConexion();
-
-            }
-
-        }
-
-        public void reactivarEstado(int id)
-        {
-            AccesoDatos datos = new AccesoDatos();
-            try
-            {
-                datos.consultaSql("update estados set activo = 1 where idEstado = @id");
-                datos.setearParametros("@id", id);
-                datos.ejecutarAccion();
-
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            finally
-            {
-                datos.cerrarConexion();
-
-            }
-
-        }
+      
 
         public void eliminarEstado (int id)
         {
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.consultaSql("delete from estados where idEstado = @id");
+                datos.consultaSql("delete from estadopedidos where idEstado = @id");
                 datos.setearParametros("@id", id);
                 datos.ejecutarAccion();
 
@@ -131,7 +89,7 @@ namespace negocio
             Estado aux = new Estado();
             try
             {
-                datos.consultaSql("select idEstado, descripcion_estado from estados where idEstado = @id");
+                datos.consultaSql("select idEstado, descripcion_estado from estadopedidos where idEstado = @id");
                 datos.setearParametros("@id", id);
                 datos.ejecutarLectura();
                 if (datos.Lector.Read())
@@ -160,7 +118,7 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.consultaSql("update estados set descripcion_estado = @descripcion where idEstado = @id");
+                datos.consultaSql("update estadopedidos set descripcion_estado = @descripcion where idEstado = @id");
                 datos.setearParametros("@descripcion", estado.Descripcion_estado);
                 datos.setearParametros("@id", estado.IdEstado);
                 datos.ejecutarAccion();

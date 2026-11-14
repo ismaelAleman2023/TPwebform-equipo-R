@@ -92,6 +92,7 @@ namespace tpc_webform_grupo_R
                         {
                             btnDireccion.Text = "cambiar direccion";
                             lblDireccionEnvio.Text = item.Calle.ToString() + " " + item.Numero.ToString();
+                            Session["direccionUso"]= item ;
 
                         }
 

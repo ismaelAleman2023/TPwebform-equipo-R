@@ -836,8 +836,7 @@ namespace tpc_webform_grupo_R
             {
 
                 throw;
-            }
-        
+            }        
         
         }
 
@@ -856,8 +855,7 @@ namespace tpc_webform_grupo_R
             {
 
                 throw;
-            }
-        
+            }        
         
         }
 
@@ -870,19 +868,12 @@ namespace tpc_webform_grupo_R
                 Session["btnAgregar"] = ViewState["TablaActiva"];
                 Session["CategoriaModi"]=cate.buscarCategoria(idCategoria);
                 Response.Redirect("RegistroCategoria.aspx");
-
-
-
             }
             catch (Exception)
             {
 
                 throw;
-            }
-        
-        
-        
-        
+            }          
         
         }
 
@@ -900,8 +891,6 @@ namespace tpc_webform_grupo_R
 
             try
             {
-
-
                 int idStock = (int)ViewState["eleccion"];
 
                 Stock stock = st.buscarStock(idStock);
@@ -996,9 +985,9 @@ namespace tpc_webform_grupo_R
                         cargarGrillaRol();
                         break;
                     case 12:// estados
-                        reactivarEstado();
-                        cargarGrillaEstado();
-                          
+
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaExito", "mostrarCartel('No disponible', 'error');", true);
+
                         break;
 
                     default:
@@ -1184,22 +1173,7 @@ namespace tpc_webform_grupo_R
             }
         }
 
-        private void reactivarEstado()
-        {
-            try
-            {
-                EstadoNegocio estN = new EstadoNegocio();
-                estN.reactivarEstado((int)ViewState["eleccion"]);
-                ViewState.Remove("eleccion");
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaExito", "mostrarCartel('¡Estado reactivado!', 'success');", true);
-
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
+     
 
 
         protected void btnFiltros_Click(object sender, EventArgs e)

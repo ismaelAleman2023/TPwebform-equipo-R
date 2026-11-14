@@ -14,58 +14,74 @@ namespace negocio
         {
 			AccesoDatos datos = new AccesoDatos();
             try
-			{
-                datos.consultaSql("INSERT INTO VENTAS (IdCliente_Venta, FechaVenta_Venta, Total_venta, TipoPago_Venta, Estado_Venta) VALUES (@IdCliente, @FechaVenta, @TotalPago, @TipoPago, @EstadoVenta)");
+            {
+                datos.consultaSql("INSERT INTO VENTAS (IdCliente_Venta, FechaVenta_Venta, Total_venta, TipoPago_Venta, Estado_Venta, estadoPedido_venta) VALUES (@IdCliente, @FechaVenta, @TotalPago, @TipoPago, @EstadoVenta, @EstadoPedido)");
                 datos.setearParametros("@IdCliente", venta.IdCliente_V);
-                datos.setearParametros("@FechaVenta", venta.FechaVenta_V);                      
-                datos.setearParametros("@TotalPago", venta.TotalPago_V);    
+                datos.setearParametros("@FechaVenta", venta.FechaVenta_V);
+                datos.setearParametros("@TotalPago", venta.TotalPago_V);
                 datos.setearParametros("@TipoPago", venta.TipoPago_V);
-                datos.setearParametros("@EstadoVenta", venta.Estado_Venta_V); 
-                datos.ejecutarAccion();
-                datos.cerrarConexion();
+                datos.setearParametros("@EstadoVenta", venta.Estado_V);
+                datos.setearParametros("@EstadoPedido", venta.EstadoPedido_v);
+                datos.ejecutarAccion();               
 
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally 
+            { 
+            
+                datos.cerrarConexion();
+            }
+        }
+
+        public int ultimoIdVenta()
+        {
+                AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                int ultimoId = 0;
 
                 datos.consultaSql("select max(idVenta) from Ventas");
                 datos.ejecutarLectura();
 
-                if (datos.Lector.Read()){
-                   venta.IdVenta_V = (int)datos.Lector[0];
-                }
-                datos.cerrarConexion();
-
-                /* detalle venta
-                 
-                if (venta.DetalleVenta != null && venta.DetalleVenta.Count > 0)
+                if (datos.Lector.Read())
                 {
-                    DetalleVentaNegocio detalleNegocio = new DetalleVentaNegocio();
-                    foreach (DetalleVenta detalle in venta.DetalleVenta)
-                    {
-                        detalle.IdVenta_Detalle = obtenerUltimoIdVenta();
-                        detalleNegocio.agregar(detalle);
-                    }
+                    ultimoId = (int)datos.Lector[0];
                 }
-                */
-
+                return ultimoId;
             }
-			catch (Exception)
-			{
-
-				throw;
-			}
+            catch (Exception)
+            {
+                throw;
+            }
+            finally 
+            {
+                datos.cerrarConexion();
+            }
         }
 
 
-        public List<Venta> listarVentas()
+        public List<Venta> listarVentas(int estado=2)
         {
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.consultaSql("SELECT IdVenta, IdCliente_Venta, FechaVenta, Total_venta, TipoPago_Venta, Estado_Venta FROM VENTAS");
-                datos.ejecutarLectura();
+                string consulta = "SELECT IdVenta, IdCliente_Venta, FechaVenta, Total_venta, TipoPago_Venta, Estado_Venta , estadoPedido_venta FROM VENTAS";
 
-                //DetalleVentaNegocio detalleNegocio = new DetalleVentaNegocio();
-                List<Venta> ventas = new List<Venta>();
-                //List<DetalleVenta> detalleVentaslist = detalleNegocio.listarDetalleVenta();
+
+                if(estado==0 || estado == 1)
+                {
+                    consulta = " where Estado_Venta = @estado";
+                    datos.setearParametros("@estado", estado);
+                }
+
+                datos.consultaSql(consulta);
+                datos.ejecutarLectura();
+               
+                List<Venta> ventas = new List<Venta>();              
 
                 while (datos.Lector.Read())
                 {
@@ -75,23 +91,11 @@ namespace negocio
                     ven.FechaVenta_V = (DateTime)datos.Lector["FechaVenta_Venta"];
                     ven.TotalPago_V = (decimal)datos.Lector["Total_venta"];
                     ven.TipoPago_V = (int)datos.Lector["TipoPago_Venta"];
-                    ven.Estado_Venta_V = (int)datos.Lector["Estado_Venta"];
-                    
-                    /*                 
-                    
-                    foreach(DetalleVenta detalle in detalleVentaslist)
-                    {
-                        if (detalle.IdVenta_Detalle == ven.IdVenta_V)
-                        {
-                            ven.DetalleVenta.Add(detalle);
-                        }
-                    }
-
-                    */
+                    ven.Estado_V = (bool)datos.Lector["Estado_Venta"];
+                    ven.EstadoPedido_v = (int)datos.Lector["EstadoPedido_venta"];                              
 
                     ventas.Add(ven);
-                }
-                datos.cerrarConexion();
+                }              
 
                 return ventas;
             }
@@ -109,7 +113,7 @@ namespace negocio
         }
 
 
-        public void eliminarVenta(int id)
+        public void BajaVenta(int id)
         {
             AccesoDatos datos = new AccesoDatos();
             try
@@ -128,8 +132,30 @@ namespace negocio
             }
         }
 
-        /*
-        public Venta buscarVenta(int id)
+        public void ReactivarVenta(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.consultaSql("update ventas set Estado_Venta = 1 where IdVenta = @id");
+                datos.setearParametros("id", id);
+                datos.ejecutarAccion();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
+
+
+
+        public Venta buscarVenta(int idCliente)
         {
             AccesoDatos datos = new AccesoDatos();
             try
@@ -138,10 +164,11 @@ namespace negocio
                 DetalleVentaNegocio detalleNegocio = new DetalleVentaNegocio();
 
                 List<DetalleVenta> detalleVentaslist = detalleNegocio.listarDetalleVenta();
-
-                datos.consultaSql("SELECT IdVenta, IdCliente_Venta, FechaVenta, Total_venta, TipoPago_Venta, Estado_Venta FROM VENTAS WHERE IdVenta = @id");
-                datos.setearParametros("id", id);
+                datos.consultaSql("SELECT IdVenta, IdCliente_Venta, FechaVenta, Total_venta, TipoPago_Venta, Estado_Venta , estadoPedido_venta FROM VENTAS WHERE IdVenta = @id");
+               
+                datos.setearParametros("id", idCliente);
                 datos.ejecutarLectura();
+
                 if (datos.Lector.Read())
                 {
                     ven.IdVenta_V = (int)datos.Lector["IdVenta"];
@@ -149,17 +176,9 @@ namespace negocio
                     ven.FechaVenta_V = (DateTime)datos.Lector["FechaVenta_Venta"];
                     ven.TotalPago_V = (decimal)datos.Lector["Total_venta"];
                     ven.TipoPago_V = (int)datos.Lector["TipoPago_Venta"];
-                    ven.Estado_Venta_V = (int)datos.Lector["Estado_Venta"];
-
-
-                    foreach (DetalleVenta deta in detalleVentaslist)
-                    {
-                        if (deta.IdVenta_Detalle == ven.IdVenta_V)
-                        {
-                            ven.DetalleVenta.Add(deta);
-                        }
-
-                    }
+                    ven.Estado_V = (bool)datos.Lector["Estado_Venta"];
+                    ven.EstadoPedido_v = (int)datos.Lector["EstadoPedido_venta"];
+                                                 
                     return ven;
                 }
 
@@ -176,7 +195,32 @@ namespace negocio
             }
         }
 
-        */
+
+        public void modificarEstadoPedido(int estadoPedido)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.consultaSql("update ventas set estadoPedido_venta = @estadoPedido");
+                datos.setearParametros("@estadoPedido", estadoPedido);
+                datos.ejecutarAccion();
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+        }
+
+        
+
+        
 
 
     }

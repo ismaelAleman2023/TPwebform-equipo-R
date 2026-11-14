@@ -14,7 +14,9 @@ namespace dominio
         public decimal TotalPago_V { get; set; }
         public int TipoPago_V { get; set; }
         
-        public int Estado_Venta_V { get; set; }
+        public bool Estado_V { get; set; }
+
+        public int EstadoPedido_v {  get; set; }
 
 
     }
