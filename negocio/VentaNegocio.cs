@@ -7,7 +7,7 @@ using dominio;
 
 namespace negocio
 {
-    internal class VentaNegocio
+    public class VentaNegocio
     {
 
         public void agregar(Venta venta)
@@ -155,7 +155,7 @@ namespace negocio
 
 
 
-        public Venta buscarVenta(int idCliente)
+        public Venta buscarVenta(int idVenta)
         {
             AccesoDatos datos = new AccesoDatos();
             try
@@ -166,7 +166,7 @@ namespace negocio
                 List<DetalleVenta> detalleVentaslist = detalleNegocio.listarDetalleVenta();
                 datos.consultaSql("SELECT IdVenta, IdCliente_Venta, FechaVenta, Total_venta, TipoPago_Venta, Estado_Venta , estadoPedido_venta FROM VENTAS WHERE IdVenta = @id");
                
-                datos.setearParametros("id", idCliente);
+                datos.setearParametros("id", idVenta);
                 datos.ejecutarLectura();
 
                 if (datos.Lector.Read())
@@ -194,6 +194,49 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+
+        public List<Venta> buscarVentasXCliente(int idCliente)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+             
+
+               List<Venta> listaVentas= new List<Venta>();  
+                datos.consultaSql("SELECT IdVenta, IdCliente_Venta, FechaVenta, Total_venta, TipoPago_Venta, Estado_Venta , estadoPedido_venta FROM VENTAS WHERE idCliente_venta = @id");
+
+                datos.setearParametros("id", idCliente);
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Venta ven = new Venta();
+                    ven.IdVenta_V = (int)datos.Lector["IdVenta"];
+                    ven.IdCliente_V = (int)datos.Lector["IdCliente_Venta"];
+                    ven.FechaVenta_V = (DateTime)datos.Lector["fechaVenta"];
+                    ven.TotalPago_V = (decimal)datos.Lector["Total_venta"];
+                    ven.TipoPago_V = (int)datos.Lector["TipoPago_Venta"];
+                    ven.Estado_V = (bool)datos.Lector["Estado_Venta"];
+                    ven.EstadoPedido_v = (int)datos.Lector["EstadoPedido_venta"];
+
+                    listaVentas.Add(ven);
+                }
+
+                return listaVentas;
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
+
 
 
         public void modificarEstadoPedido(int estadoPedido)

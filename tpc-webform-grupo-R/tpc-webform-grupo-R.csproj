@@ -105,6 +105,7 @@
     <Content Include="DireccionEnvio.aspx" />
     <Content Include="FinalizarCompra.aspx" />
     <Content Include="Informes.aspx" />
+    <Content Include="MisPedidos.aspx" />
     <Content Include="Perfil.aspx" />
     <Content Include="Principal.Master" />
     <Content Include="RegistroEstado.aspx" />
@@ -273,6 +274,13 @@
     </Compile>
     <Compile Include="Informes.aspx.designer.cs">
       <DependentUpon>Informes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MisPedidos.aspx.cs">
+      <DependentUpon>MisPedidos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MisPedidos.aspx.designer.cs">
+      <DependentUpon>MisPedidos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Perfil.aspx.cs">
       <DependentUpon>Perfil.aspx</DependentUpon>
