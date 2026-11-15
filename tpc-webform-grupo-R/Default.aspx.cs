@@ -60,10 +60,12 @@ namespace tpc_webform_grupo_R
             MarcaNegocio negocioM = new MarcaNegocio();
             CategoriaNegocio negocioC = new CategoriaNegocio();
             StockNegocio negocioStk = new StockNegocio();
+            ImagenNegocio imgN = new ImagenNegocio();
 
             Producto prod = negocioP.buscarProduc(valor);
             Marca marca = negocioM.buscarMarca(prod.Marca);
             Categoria categoria = negocioC.buscarCategoria(prod.Categoria);
+            Imagen imgDetalle = new Imagen();
 
 
             btnAgregarModal.CommandArgument = valor.ToString();
@@ -72,6 +74,21 @@ namespace tpc_webform_grupo_R
             lblModalNombre.Text = prod.Nombre;
             lblModalDescripcion.Text = prod.Descripcion;
             lblModalPrecio.Text = prod.Precio.ToString("C");
+
+            List<Imagen> listaImagendetalle = imgN.buscarXcodProduc(valor);
+
+            Session["listaDetalleActual"] = listaImagendetalle;
+            Session["posicion"] = 0;
+
+            if (listaImagendetalle.Count > 0)
+            {
+                imgModalProducto.ImageUrl = listaImagendetalle[0].UrlImagen;
+            }
+            else
+            {
+                imgModalProducto.ImageUrl = "https://i.pinimg.com/736x/42/65/d9/4265d9b9ee10196f62e9ac38cafc1a24.jpg";
+            }
+
             if (prod.OnDemand)
             {
                 LblModalDisponibles.Text = "OnDemand";
@@ -79,7 +96,8 @@ namespace tpc_webform_grupo_R
             else
             {
                 Stock stk = negocioStk.buscarStockProd(valor);
-                if (stk != null && stk.Cantidad > 0) {
+                if (stk != null && stk.Cantidad > 0)
+                {
                     LblModalDisponibles.Text = stk.Cantidad.ToString();
                 }
                 else
@@ -213,7 +231,7 @@ namespace tpc_webform_grupo_R
             int totalActual = carritoCompra.Count;
 
 
-            // Forzamos la actualización mediante el ScriptManager 
+            
             string idControl = Master.ObtenerIdContador();
             string script = $"document.getElementById('{idControl}').innerText = '{totalActual}';";
 
@@ -238,7 +256,7 @@ namespace tpc_webform_grupo_R
             btnFiltroEgrasados.CssClass = "btn btn-outline-secondary btn-sm rounded-pill px-3 text-light";
             btnFiltroOtros.CssClass = "btn btn-outline-secondary btn-sm rounded-pill px-3 text-light";
 
-            // 3. Pintar de amarillo brillante únicamente el botón que se presionó
+
             btn.CssClass = "btn btn-warning btn-sm rounded-pill px-3 fw-bold text-dark";
 
         }
@@ -254,7 +272,7 @@ namespace tpc_webform_grupo_R
                 List<Producto> listAux = new List<Producto>();
                 foreach (Producto prod in listaP)
                 {
-                    if (prod.IdProducto == filtro)
+                    if (prod.Categoria == filtro)
                     {
                         listAux.Add(prod);
                     }
@@ -271,11 +289,49 @@ namespace tpc_webform_grupo_R
 
         }
 
+        protected void btnImgAnterior_Click(object sender, EventArgs e)
+        {
 
-      
+            List<Imagen> listaImagendetalle = (List<Imagen>)Session["listaDetalleActual"];
+            int posicion = Session["posicion"] != null ? (int)Session["posicion"] : 0;
 
+            if (listaImagendetalle != null && listaImagendetalle.Count > 0)
+            {
+                posicion--;
+                if (posicion < 0)
+                {
+                    posicion = listaImagendetalle.Count - 1;
+                }
+
+                Session["posicion"] = posicion;
+                imgModalProducto.ImageUrl = listaImagendetalle[posicion].UrlImagen;
+                UpdatePanelModal.Update();
+            }
+
+
+
+        }
+
+        protected void btnImgSiguiente_Click(object sender, EventArgs e)
+        {
+            List<Imagen> listaImagendetalle = (List<Imagen>)Session["listaDetalleActual"];
+            int posicion = Session["posicion"] != null ? (int)Session["posicion"] : 0;
+
+            if (listaImagendetalle != null && listaImagendetalle.Count > 0)
+            {
+                posicion++;
+                if (posicion >= listaImagendetalle.Count)
+                {
+                    posicion = 0;
+                }
+
+                Session["posicion"] = posicion;
+                imgModalProducto.ImageUrl = listaImagendetalle[posicion].UrlImagen;
+                UpdatePanelModal.Update();
+
+            }
+        }
 
     }
-
 }
 

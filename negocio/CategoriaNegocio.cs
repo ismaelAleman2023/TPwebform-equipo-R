@@ -98,7 +98,7 @@ namespace negocio
             try
             {
                 datos.consultaSql("update categorias set estado_C=1 where id_C=@id");
-                datos.setearParametros("id_C", id);
+                datos.setearParametros("id", id);
                 datos.ejecutarAccion();
 
             }
@@ -168,7 +168,7 @@ namespace negocio
 
 
 
-        //validaciones para duplicado de categorias
+     
 
         public int EstadoCategoria(int id)
         {
@@ -177,29 +177,19 @@ namespace negocio
 
             try
             {
-
                 foreach (Categoria c in listCate)
                 {
                     if (c.IdCategoria == id)
                     {
-
                         return c.Estado;
-
                     }
-
-
-
                 }
                 return 0;
-
             }
             catch (Exception)
             {
-
                 throw;
             }
-
-
         }
 
         public bool valiModiCate(string descri, int id) { 

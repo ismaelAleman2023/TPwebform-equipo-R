@@ -936,7 +936,7 @@ namespace tpc_webform_grupo_R
                 switch ((int)ViewState["TablaActiva"])
                 {
                     case 1://categoria
-                        reactivarCliente();
+                        reactivarCategoria();
                         cargarGrillaCategoria();
 
                         break;
