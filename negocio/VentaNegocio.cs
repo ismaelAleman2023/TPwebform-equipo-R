@@ -173,7 +173,7 @@ namespace negocio
                 {
                     ven.IdVenta_V = (int)datos.Lector["IdVenta"];
                     ven.IdCliente_V = (int)datos.Lector["IdCliente_Venta"];
-                    ven.FechaVenta_V = (DateTime)datos.Lector["FechaVenta_Venta"];
+                    ven.FechaVenta_V = (DateTime)datos.Lector["FechaVenta"];
                     ven.TotalPago_V = (decimal)datos.Lector["Total_venta"];
                     ven.TipoPago_V = (int)datos.Lector["TipoPago_Venta"];
                     ven.Estado_V = (bool)datos.Lector["Estado_Venta"];

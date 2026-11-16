@@ -1,9 +1,9 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Principal.Master" AutoEventWireup="true" CodeBehind="MisPedidos.aspx.cs" Inherits="tpc_webform_grupo_R.MisPedidos" %>
+﻿<%@ Page Title="Mis Pedidos" Language="C#" MasterPageFile="~/Principal.Master" AutoEventWireup="true" CodeBehind="MisPedidos.aspx.cs" Inherits="tpc_webform_grupo_R.MisPedidos" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="container mt-4 mb-5">
+   <div class="container mt-4 mb-5">
         <h2 class="mb-4 text-white">Mis Pedidos</h2>
 
         <div class="card p-4 shadow-sm border-0 bg-white rounded-3">
@@ -54,5 +54,5 @@
         </div>
     </div>
 
-
+  
 </asp:Content>

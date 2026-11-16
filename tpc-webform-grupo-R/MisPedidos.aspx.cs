@@ -15,25 +15,71 @@ namespace tpc_webform_grupo_R
         {
 
 
-            Cliente cli = (Cliente)Session["usuarioActivo"];
-            if (Session["usuarioActivo"] != null)
+            if (!IsPostBack)
             {
-                VentaNegocio ventN = new VentaNegocio();
-                List<Venta> listVen = ventN.buscarVentasXCliente(cli.IdPersona);
-                repPedidos.DataSource = listVen;
-                repPedidos.DataBind();
-            }
-            else {
-
-                lblSinPedidos.Text = "No tiene ningun pedido";
-            
-            
+                if (Session["usuarioActivo"] != null)
+                {
+                    Cliente cli = (Cliente)Session["usuarioActivo"];
+                    cargarDetalle(cli.IdPersona);
+                }
+                else
+                {
+                    repPedidos.Visible = false;
+                    lblSinPedidos.Text = "No tiene ningun pedido";
+                    lblSinPedidos.Visible = true;
+                }
             }
         }
 
         protected void btnVerDetalle_Click(object sender, EventArgs e)
         {
+            int valor = int.Parse(((Button)sender).CommandArgument);
+            Response.Redirect("DetallePedidos.aspx?detalleVenta=" + valor, false);
+
+
 
         }
+
+
+        private void cargarDetalle(int cli)
+        {
+
+            VentaNegocio ventN = new VentaNegocio();
+            EstadoNegocio esta = new EstadoNegocio();
+            var listVen = ventN.buscarVentasXCliente(cli).Select(v => new
+            {
+                v.IdVenta_V,
+                v.IdCliente_V,
+                v.FechaVenta_V,
+                v.TotalPago_V,
+                v.TipoPago_V,
+                v.Estado_V,
+                EstadoPedido_v = esta.buscarEstado(v.EstadoPedido_v)
+            }
+                ).ToList();
+
+            Session["ListaMisPedidos"] = listVen;
+
+            if (listVen != null & listVen.Count > 0)
+            {
+
+
+                repPedidos.DataSource = listVen;
+                repPedidos.DataBind();
+                repPedidos.Visible = true;
+                lblSinPedidos.Visible = false;
+            }
+            else
+            {
+                repPedidos.Visible = false;
+                lblSinPedidos.Text = "No tiene ningun pedido";
+                lblSinPedidos.Visible = true;
+
+            }
+
+
+
+        }
+
     }
 }
