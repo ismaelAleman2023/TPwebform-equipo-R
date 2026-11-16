@@ -37,15 +37,23 @@ namespace negocio
         }
 
 
-        public List<Stock> listaStock()
+        public List<Stock> listaStock(int estado =2)
         {
             AccesoDatos datos = new AccesoDatos();
             List<Stock> lst = new List<Stock>();
 
             try
             {
+                string consulta = "select id_stock ,idProducto_stk,cantidad_stk,estado_stk from stocks";
 
-                datos.consultaSql("select id_stock ,idProducto_stk,cantidad_stk,estado_stk from stocks");
+                if (estado == 0 || estado == 1)
+                {
+                    consulta += " where estado_stk = @estado";
+                    datos.setearParametros("estado", estado);
+                }
+
+
+                datos.consultaSql(consulta);
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
