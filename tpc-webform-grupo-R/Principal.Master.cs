@@ -14,18 +14,27 @@ namespace tpc_webform_grupo_R
         protected void Page_Load(object sender, EventArgs e)
         {
             textoLogin();
-            
-                if (Session["usuarioActivo"] != null)
+            imgUserPerfil.ImageUrl = "~/images/Perfiles/fotoDefault.jpg";
+
+            if (Session["usuarioActivo"] != null && Session["RolActivo"] != null)
+            {
+                if ((int)Session["RolActivo"] == 2)
                 {
-                string v= "~/images/Perfiles/" + ((Cliente)Session["usuarioActivo"]).FotoPerfil;
-                imgUserPerfil.ImageUrl = v;
+                    Cliente cliente = (Cliente)Session["usuarioActivo"];
+                    
+                    if (cliente != null && !string.IsNullOrEmpty(cliente.FotoPerfil))
+                    {
+                        imgUserPerfil.ImageUrl = "~/images/Perfiles/" + cliente.FotoPerfil;
+                    }
                 }
-                else
-                {
+                else {
 
                     imgUserPerfil.ImageUrl = "~/images/Perfiles/fotoDefault.jpg";
                 }
 
+
+            }
+          
 
             if (Session["listaCarrito"] != null)
             {
@@ -39,6 +48,7 @@ namespace tpc_webform_grupo_R
 
             if (!IsPostBack)
             {
+
                 if (Session["tablaActiva"] == null)
                 {
                     Session["tablaActiva"] = "b1";
@@ -48,10 +58,10 @@ namespace tpc_webform_grupo_R
                 {
                     marcarBordeMarter();
 
-                }     
-                
-               
-                
+                }
+
+
+
 
             }
 
@@ -62,7 +72,7 @@ namespace tpc_webform_grupo_R
 
         protected void textoLogin()
         {
-            string nombre= "Login";
+            string nombre = "Login";
             if (Session["usuarioActivo"] == null)
             {
                 lblLogin.InnerText = nombre;
@@ -70,8 +80,8 @@ namespace tpc_webform_grupo_R
             }
             else
             {
-                int rol =(int) Session["rolActivo"];
-               
+                int rol = (int)Session["rolActivo"];
+
                 if (rol == 1)
                 {
                     Administrador admin = (Administrador)Session["usuarioActivo"];
@@ -85,14 +95,14 @@ namespace tpc_webform_grupo_R
                     nombre = cli.Nombre;
                     lblLogin.InnerText = nombre;
                 }
-                else if(rol == 3)
+                else if (rol == 3)
                 {
                     Vendedor ven = (Vendedor)Session["usuarioActivo"];
                     nombre = ven.Nombre;
                     lblLogin.InnerText = nombre;
                 }
             }
-           
+
         }
 
 
@@ -110,8 +120,8 @@ namespace tpc_webform_grupo_R
 
         public string ObtenerIdContador()
         {
-             return lblContadorCarrito.ClientID;
-           
+            return lblContadorCarrito.ClientID;
+
         }
 
 
@@ -120,7 +130,7 @@ namespace tpc_webform_grupo_R
             LinkButton btn = (LinkButton)sender;
             string eleccionTablaSuperior = btn.CommandArgument;
             Session["tablaActiva"] = eleccionTablaSuperior;
-                    
+
             switch (eleccionTablaSuperior)
             {
                 case "b1":
@@ -201,7 +211,7 @@ namespace tpc_webform_grupo_R
                     break;
                 case "b8":
                     lnkAdministrar.Style["border"] = "2px solid #ffc107";
-                  
+
                     break;
                 case "b9":
                     lnkInformes.Style["border"] = "2px solid #ffc107";
@@ -209,5 +219,5 @@ namespace tpc_webform_grupo_R
             }
         }
 
-        }
+    }
 }

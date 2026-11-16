@@ -18,15 +18,25 @@ namespace tpc_webform_grupo_R
         {
             if (!IsPostBack) {
 
-                if (Request.QueryString["detalleVenta"] !=null) {
+                if (Request.QueryString["detalleVenta"] != null && (int)Session["RolActivo"] == 2)
+                {
 
                     string idVenta = Request.QueryString["detalleVenta"];
                     int idv = int.Parse(idVenta);
                     cargarDetalle(idv);
                 }
-                else {
+                else if (Request.QueryString["detalleVenta"] != null && (int)Session["RolActivo"] != 2)
+                {
 
+                    string idVenta = Request.QueryString["detalleVenta"];
+                    int idv = int.Parse(idVenta);
+                    cargarDetalle(idv);
+
+                }
+                else { 
+                
                     Response.Redirect("MisPedidos.aspx", false);
+                
                 }
                
             }
@@ -37,7 +47,18 @@ namespace tpc_webform_grupo_R
         protected void btnVolver_Click(object sender, EventArgs e)
         {
 
-            Response.Redirect("MisPedidos.aspx", false);
+            if ((int)Session["RolActivo"] == 2)
+            {
+
+                Response.Redirect("MisPedidos.aspx", false);
+
+            }
+            else {
+
+                Response.Redirect("AdministrarPedidos.aspx", false);
+
+
+            }
         }
 
         private void cargarDetalle(int idVenta) {

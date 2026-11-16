@@ -17,7 +17,7 @@ namespace tpc_webform_grupo_R
 
             if (!IsPostBack)
             {
-                if (Session["usuarioActivo"] != null)
+                if (Session["usuarioActivo"] != null && (int)Session["rolActivo"] ==2 )
                 {
                     Cliente cli = (Cliente)Session["usuarioActivo"];
                     cargarDetalle(cli.IdPersona);
@@ -58,7 +58,6 @@ namespace tpc_webform_grupo_R
             }
                 ).ToList();
 
-            Session["ListaMisPedidos"] = listVen;
 
             if (listVen != null & listVen.Count > 0)
             {
