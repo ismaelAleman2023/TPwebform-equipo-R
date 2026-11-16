@@ -6,7 +6,7 @@ namespace negocio
 {
     public class TipoPagoNegocio
     {
-        public List<TipoPago> ListarTipoPago()
+        public List<TipoPago> ListarTipoPago(int estado=2)
         {
 
             List<TipoPago> lista = new List<TipoPago>();
@@ -15,6 +15,12 @@ namespace negocio
             {
                 string consulta = "select idTipoPago, descripcion_tipo, estado_tipo from tipoPagos";
                                
+                if(estado == 1 || estado ==0 ) 
+                {
+                    consulta += " where estado_tipo = @estado ";
+                    datos.setearParametros("@estado", estado);
+
+                }
 
                 datos.consultaSql(consulta);
                 datos.ejecutarLectura();

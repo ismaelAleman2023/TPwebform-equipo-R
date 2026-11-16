@@ -9,7 +9,7 @@ namespace negocio
     public class MarcaNegocio
     {
 
-        public List<Marca> ListarMarca()
+        public List<Marca> ListarMarca(int estado =2)
         {
 
             AccesoDatos datos = new AccesoDatos();
@@ -19,6 +19,11 @@ namespace negocio
             {
                 string consulta = "select id_m ,descripcion_m,estado_m from marcas";
               
+                if(estado ==0 || estado == 1)
+                {
+                    consulta += " where estado_m = @estado";
+                    datos.setearParametros("estado", estado);
+                }
 
                 datos.consultaSql(consulta);
                 datos.ejecutarLectura();

@@ -96,15 +96,6 @@ namespace tpc_webform_grupo_R
         protected global::System.Web.UI.WebControls.Button btnRol;
 
         /// <summary>
-        /// Control btnVent.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnVent;
-
-        /// <summary>
         /// Control btnPago.
         /// </summary>
         /// <remarks>
@@ -112,15 +103,6 @@ namespace tpc_webform_grupo_R
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnPago;
-
-        /// <summary>
-        /// Control btnDir.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnDir;
 
         /// <summary>
         /// Control btnEst.

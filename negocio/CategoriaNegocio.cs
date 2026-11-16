@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -32,7 +33,7 @@ namespace negocio
         }
 
 
-        public List<Categoria> listarCate()
+        public List<Categoria> listarCate(int estado =2)
         {
 
             AccesoDatos datos = new AccesoDatos();
@@ -42,6 +43,12 @@ namespace negocio
             try
             {
                 string consulta="select id_C,descripcion_C,estado_C from categorias";
+
+                if(estado == 1 || estado == 0)
+                {
+                    consulta += " where estado_c = @estado";
+                    datos.setearParametros("@estado", estado);
+                }
 
                 datos.consultaSql(consulta);
                 datos.ejecutarLectura();

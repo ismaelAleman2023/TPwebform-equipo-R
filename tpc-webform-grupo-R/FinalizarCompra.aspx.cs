@@ -44,7 +44,9 @@ namespace tpc_webform_grupo_R
         private void cargarTipoPago()
         {
             TipoPagoNegocio pagoN = new TipoPagoNegocio();
-            List<TipoPago> listaPago = pagoN.ListarTipoPago();
+            int seleccion = (int)Session["eleccionfiltro"];
+            List<TipoPago> listaPago = pagoN.ListarTipoPago(seleccion);
+
 
             repetformaPago.DataSource = listaPago;
             repetformaPago.DataBind();                
