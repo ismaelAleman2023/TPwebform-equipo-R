@@ -23,18 +23,12 @@ namespace tpc_webform_grupo_R
                     string idVenta = Request.QueryString["detalleVenta"];
                     int idv = int.Parse(idVenta);
                     cargarDetalle(idv);
-
-
                 }
                 else {
 
                     Response.Redirect("MisPedidos.aspx", false);
                 }
                
-
-
-
-
             }
 
 
@@ -72,20 +66,22 @@ namespace tpc_webform_grupo_R
             DireccionNegocio direN=new DireccionNegocio();
             Venta ven= ventN.buscarVenta(idVenta);
             DetalleVenta deta=detaVenta.buscarDetalleVenta(idVenta);
+            
+            //direccion 
 
-
-            int idclie = ((Cliente)Session["usuarioActivo"]).IdPersona;
-            Direccion dire= direN.buscarDireccionActiva(idclie);
+            Direccion dire= direN.buscarDireccion(ven.idDireccion);
+           
             string DirecActiva= dire.Calle.ToString() + " " + dire.Numero.ToString();
 
             idpedi = ven.IdVenta_V;
             if (ven != null) {
 
-                lblFecha.Text = ven.FechaVenta_V.ToString("dd/mm/yyyy");
+                lblFecha.Text = ven.FechaVenta_V.ToString("dd/MM/yyyy");
                 lblTotal.Text = ven.TotalPago_V.ToString("C");
                 lblTipoPago.Text = ven.TipoPago_V.ToString();
                 lblEstado.Text = estaN.buscarEstado(ven.EstadoPedido_v).ToString();
                 lblDireccionEnvio.Text = DirecActiva;
+                
 
             }
 

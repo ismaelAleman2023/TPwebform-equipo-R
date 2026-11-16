@@ -281,55 +281,7 @@ namespace negocio
 
         }
 
-        public Direccion buscarDireccionActiva(int idClie)
-        {
-            Direccion dir = new Direccion();
-            AccesoDatos datos = new AccesoDatos();
-            try
-            {
-                datos.consultaSql("select idDireccion, idcliente_dir, calle, numero, codigoPostal, localidad, provincia, observacion_dir, estado from direccionesEnvio where idcliente_dir = @id and estado = 1");
-                datos.setearParametros("@id", idClie);
-                datos.ejecutarLectura();
-                if (datos.Lector.Read())
-                {
-                    dir.IdDireccion = (int)datos.Lector["idDireccion"];
-                    dir.IdCliente = (int)datos.Lector["idcliente_dir"];
-                    dir.Calle = (string)datos.Lector["calle"];
-                    dir.Numero = (string)datos.Lector["numero"];
-                    dir.CodigoPostal = (string)datos.Lector["codigoPostal"];
-                    dir.Localidad = (string)datos.Lector["localidad"];
-                    dir.Provincia = (string)datos.Lector["provincia"];
-
-
-                    if (!(datos.Lector["observacion_dir"] is DBNull))
-                    {
-                        dir.Observacion = (string)datos.Lector["observacion_dir"];
-                    }
-                    else
-                    {
-                        dir.Observacion = "";
-                    }
-
-                    if (!(datos.Lector["estado"] is DBNull))
-                    {
-                        dir.estado = (bool)datos.Lector["estado"];
-                    }
-                    else
-                    {
-                        dir.estado = false;
-                    }
-                }
-                return dir;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            finally
-            {
-                datos.cerrarConexion();
-            }
-        }
+       
 
 
     }

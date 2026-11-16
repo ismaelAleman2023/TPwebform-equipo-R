@@ -23,7 +23,7 @@
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <h5 class="card-title text-primary m-0">Forma de Entrega</h5>
             
-                                <!-- Grupo de Radio Buttons (con envío / retiro por tienda) -->
+                                <!-- tipo envio -->
 
                                     
                                                 <div class="d-flex gap-4">

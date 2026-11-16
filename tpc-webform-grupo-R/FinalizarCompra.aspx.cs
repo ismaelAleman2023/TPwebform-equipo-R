@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using dominio;
+using Microsoft.Ajax.Utilities;
 using negocio;
 
 namespace tpc_webform_grupo_R
@@ -50,6 +51,21 @@ namespace tpc_webform_grupo_R
 
         }
 
+
+        private int formaDePago()
+        {
+            string valorSeleccionado = Request.Form["grupoPago"];
+
+           
+            if (int.TryParse(valorSeleccionado, out int idFormaPago))
+            {
+                return idFormaPago;
+            }
+
+           
+            return 0;
+        }
+
         private void cargarResumen()
         {
             List<DetalleVenta> listaDetalle = (List<DetalleVenta>) Session["listaCarrito"];
@@ -57,8 +73,7 @@ namespace tpc_webform_grupo_R
             lblCantidadItems.Text= listaDetalle.Count.ToString();
             lblSubtotal.Text =subTotal(listaDetalle).ToString("C");
             lblCostoEnvio.Text = "0";
-            lblTotalGeneral.Text= subTotal(listaDetalle).ToString("C");
-
+            lblTotalGeneral.Text= totalPago().ToString("C");
 
         }
 
@@ -73,6 +88,27 @@ namespace tpc_webform_grupo_R
             return subTotal;            
 
         }
+
+        private decimal totalPago()
+        {
+            List<DetalleVenta> listaDetalle = (List<DetalleVenta>)Session["listaCarrito"];
+
+            decimal total = 0;
+
+            if(listaDetalle.Count>0 || listaDetalle != null)
+            {
+            /// subtotal + envio( FALTA AGREGAR EL PRECIO DEL ENVIO)
+               return total = subTotal(listaDetalle);
+
+            }
+
+            return total;
+
+        }
+
+
+
+
 
         private void cargarDireccion()
         {
@@ -126,15 +162,12 @@ namespace tpc_webform_grupo_R
 
             if (Session["direccionActivo"] == null)
             {
-                Response.Redirect("RegistroDireccion.aspx");
-               
+                Response.Redirect("RegistroDireccion.aspx");               
             }
             else
             {
                 Response.Redirect("DireccionEnvio.aspx");
             }
-
-
         }
 
            
@@ -159,15 +192,44 @@ namespace tpc_webform_grupo_R
         }
             
 
-        
+       
 
         protected void btnPagarYFinalizar_Click(object sender, EventArgs e)
         {
-                  
+            DireccionNegocio direN = new DireccionNegocio();
+            VentaNegocio venN = new VentaNegocio();
+            DetalleVentaNegocio detaN = new DetalleVentaNegocio();                               
+
+            Venta ven = new Venta();
+            Direccion dir = (Direccion)Session["direccionUso"];
             
+            List<DetalleVenta> listaCarrito = (List<DetalleVenta>)Session["listaCarrito"];
+
+            ven.FechaVenta_V = DateTime.Now;
+            ven.Estado_V =true;
+            ven.TotalPago_V = totalPago();
+            ven.EstadoPedido_v = 0;
+            ven.IdCliente_V = (int)Session["idActivo"];
+            ven.idDireccion = dir.IdDireccion;
+            ven.TipoPago_V = formaDePago();
+            ven.TipoEnvio = rbConEnvio.Checked ? 1 : 0;
+
+            venN.agregar(ven);
+
+            int idVenta= venN.ultimoIdVenta();
+
+            foreach (DetalleVenta item in listaCarrito)
+            {
+                item.IdVenta_Detalle = idVenta;
+                detaN.agregar(item);
+            }                        
           
             
         }
+
+
+
+
 
     }
 }

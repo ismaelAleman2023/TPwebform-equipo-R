@@ -150,6 +150,11 @@ namespace tpc_webform_grupo_R
                 case "b9":
                     Response.Redirect("~/Informes.aspx");
                     break;
+                case "b10":
+                    Response.Redirect("~/MisPedidos.aspx");
+                    break;
+                default:
+                    break;
             }
 
         }
