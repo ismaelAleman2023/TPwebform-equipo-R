@@ -26,77 +26,78 @@
         <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
 
         <!--NAVBAR-->
+  <!--NAVBAR-->
         <nav class="navbar navbar-expand-lg navbar-dark navbar-custom sticky-top">
             <div class="navbar-layout container-fluid px-3">
 
                 <!--LOGO IMAGEN A LA IZQUIERDA-->
-                <div class="logo-container">
+                <div class="logo-container ">
                     <a href="Default.aspx">
-                        <img runat="server" src="~/images/icons/dorregoDesign.png" alt="V.Dorrego Design" class="logo-img" />
+                        <img runat="server" src="~/images/icons/dorregoDesign.png" alt="V.Dorrego Design" class="logo-img imgLogo" />
                     </a>
                 </div>
 
-                <!--BOTÓN HAMBURGUESA BLANCO (CELULAR)-->
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+                <!-- GRUPO DERECHO (CELULAR: ARRIBA / PC: SU LUGAR ORIGINAL) -->
+                <div class="d-flex align-items-center flex-wrap gap-2 order-lg-3 barra-opciones">
 
-                <!--CONTENEDOR DESPLEGABLE-->
-                <div class="collapse navbar-collapse justify-content-center" id="navbarContent">
-                    <!--BOTONES CENTRALES EN CAJITAS-->
-                    <div class="nav-cajitas-wrapper">
-                       <asp:LinkButton ID="lnkDestacados" runat="server" CommandArgument="b1" OnClick="btnBar_click" CssClass="nav-cajita">Destacados</asp:LinkButton>
-                        <asp:LinkButton ID="lnkProductos" runat="server" CommandArgument="b2" OnClick="btnBar_click" CssClass="nav-cajita">Catalogo</asp:LinkButton>
-                        <asp:LinkButton ID="lnkNovedades" runat="server" CommandArgument="b3" OnClick="btnBar_click" CssClass="nav-cajita">Novedades</asp:LinkButton>
-                        <asp:LinkButton ID="lnkSobreNosotros" runat="server" CommandArgument="b4" OnClick="btnBar_click" CssClass="nav-cajita">Sobre nosotros</asp:LinkButton>
-                        <asp:LinkButton ID="lnkComoComprar" runat="server" CommandArgument="b5" OnClick="btnBar_click" CssClass="nav-cajita">Como comprar</asp:LinkButton>
-                        <asp:LinkButton ID="lnkContactanos" runat="server" CommandArgument="b6" OnClick="btnBar_click" CssClass="nav-cajita">Contactanos</asp:LinkButton>
-                        <asp:LinkButton ID="lnkPerfil" runat="server" CommandArgument="b7" OnClick="btnBar_click" CssClass="nav-cajita">Perfil</asp:LinkButton>
-                        <asp:LinkButton ID="LnkMisPedidos" runat="server" CommandArgument="b10" OnClick="btnBar_click" CssClass="nav-cajita">Mis Pedidos</asp:LinkButton>
-                        <asp:LinkButton ID="lnkAdministrar" runat="server" CommandArgument="b8" OnClick="btnBar_click" CssClass="nav-cajita">Administrar</asp:LinkButton>
-                        <asp:LinkButton ID="LnkAdminPedidos" runat="server" CommandArgument="b11" OnClick="btnBar_click" CssClass="nav-cajita">Administrar Pedidos</asp:LinkButton>
-                        <asp:LinkButton ID="lnkInformes" runat="server" CommandArgument="b9" OnClick="btnBar_click" CssClass="nav-cajita">Informes</asp:LinkButton>
+                    <!-- DESPLEGABLE ADMINISTRADOR -->
+                    <asp:Panel ID="pnlMenuAdmin" runat="server" CssClass="nav-item dropdown d-inline-block" Visible="false" style="display: inline-flex; align-items: center;">
+                        <a class="nav-link dropdown-toggle nav-cajita text-warning fw-bold " href="#" id="navbarDropdownAdmin" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Administrar
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end " aria-labelledby="navbarDropdownAdmin">
+                            <li>
+                                <asp:LinkButton ID="lnkAdministrar" runat="server" CommandArgument="b8" OnClick="btnBar_click" CssClass="dropdown-item">Administrar</asp:LinkButton>
+                            </li>
+                            <li>                                
+                                <asp:LinkButton ID="lnkAdminPedidosDropdown" runat="server" CommandArgument="b11" OnClick="btnBar_click" CssClass="dropdown-item">Administrar Pedidos</asp:LinkButton>
+                            </li>
+                            <li>
+                                <asp:LinkButton ID="lnkInformes" runat="server" CommandArgument="b9" OnClick="btnBar_click" CssClass="dropdown-item">Informes</asp:LinkButton>
+                            </li>
+                        </ul>
+                    </asp:Panel>
 
-                    </div>
-                </div>
-
-
-
-                <!--LOGIN Y CARRITO ESCRITORIO (PC) -->
-
-
-                <div class="nav-actions-wrapper d-none d-lg-flex">
-
+                    <!-- LOGIN / PERFIL -->
                     <asp:HyperLink ID="lnkLogin" runat="server" NavigateUrl="~/Login.aspx" CssClass="action-item text-decoration-none d-flex align-items-center">
-                        <asp:Image ID="imgUserPerfil" runat="server" CssClass="rounded-circle shadow-sm mb-2" Style="width: 40px; height: 40px; object-fit: cover; " />
-                       
-                        
-                        <span class="action-label " id="lblLogin" runat="server" > </span>
+                        <asp:Image ID="imgUserPerfil" runat="server" CssClass="rounded-circle shadow-sm mb-2" Style="width: 35px; height: 35px; object-fit: cover;" />
+                        <span class="action-label ms-1" id="lblLogin" runat="server"></span>
                     </asp:HyperLink>
 
-                    <%-- <asp:HyperLink ID="lnkLogin" runat="server" NavigateUrl="~/Login.aspx" CssClass="action-item">
-                        <i class="fa-solid fa-circle-user" "></i>
-                        <span class="action-label">Login</span>
-                    </asp:HyperLink>--%>
-
-                    <asp:HyperLink ID="lnkCarrito" runat="server" NavigateUrl="~/Carrito.aspx" CssClass="action-item">
-
-                        <div class="carrito-circulo ">
-                            <i class="fa-solid fa-cart-shopping mt-1 "></i>
-
+                    <!-- CARRITO -->
+                    <asp:HyperLink ID="lnkCarrito" runat="server" NavigateUrl="~/Carrito.aspx" CssClass="action-item ms-1">
+                        <div class="carrito-circulo">
+                            <i class="fa-solid fa-cart-shopping mt-1"></i>
                             <div class="circulo-contador">
-                                <!-- contador carrito -->
-                                <asp:Label ID="lblContadorCarrito" CssClass="contador-Carrito" runat="server" Style="font-size: 1rem; font-weight: 700; font-family: Arial, sans-serif"></asp:Label>
+                                <asp:Label ID="lblContadorCarrito" CssClass="contador-Carrito" runat="server" Style="font-size: 0.9rem; font-weight: 700; font-family: Arial, sans-serif"></asp:Label>
                             </div>
                         </div>
-
-
-                        <span class="action-label micarrito ">Mi carrito</span>
+                        <span class="action-label micarrito">Mi carrito</span>
                     </asp:HyperLink>
+
+                    <!-- BOTÓN HAMBURGUESA (SOLO APARECE EN CELULAR) -->
+                    <button class="navbar-toggler ms-2 d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
                 </div>
 
-
-
+                <!--CONTENEDOR DESPLEGABLE (LAS CAJITAS CENTRALES DE NAVEGACIÓN)-->
+                <div class="collapse navbar-collapse justify-content-center order-lg-2" id="navbarContent">
+                    <div class="nav-cajitas-wrapper">
+                         <asp:LinkButton ID="lnkDestacados" runat="server" CommandArgument="b1" OnClick="btnBar_click" CssClass="nav-cajita">Destacados</asp:LinkButton>
+                          <asp:LinkButton ID="lnkProductos" runat="server" CommandArgument="b2" OnClick="btnBar_click" CssClass="nav-cajita">Catalogo</asp:LinkButton>
+                          <asp:LinkButton ID="lnkNovedades" runat="server" CommandArgument="b3" OnClick="btnBar_click" CssClass="nav-cajita">Novedades</asp:LinkButton>
+                          <asp:LinkButton ID="lnkSobreNosotros" runat="server" CommandArgument="b4" OnClick="btnBar_click" CssClass="nav-cajita">Sobre nosotros</asp:LinkButton>
+                          <asp:LinkButton ID="lnkComoComprar" runat="server" CommandArgument="b5" OnClick="btnBar_click" CssClass="nav-cajita">Como comprar</asp:LinkButton>
+                          <asp:LinkButton ID="lnkContactanos" runat="server" CommandArgument="b6" OnClick="btnBar_click" CssClass="nav-cajita">Contactanos</asp:LinkButton>
+                          <asp:LinkButton ID="lnkPerfil" runat="server" CommandArgument="b7" OnClick="btnBar_click" CssClass="nav-cajita">Perfil</asp:LinkButton>
+                          <asp:LinkButton ID="LnkMisPedidos" runat="server" CommandArgument="b10" OnClick="btnBar_click" CssClass="nav-cajita">Mis Pedidos</asp:LinkButton>
+                         
+                          <!-- Botón de vendedor -->
+                          <asp:LinkButton ID="LnkAdminPedidos" runat="server" CommandArgument="b11" OnClick="btnBar_click" CssClass="nav-cajita" Visible="false">Administrar Pedidos</asp:LinkButton>
+                    </div>
+                </div>
 
             </div>
         </nav>
@@ -141,8 +142,7 @@
 
 
 
-
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>

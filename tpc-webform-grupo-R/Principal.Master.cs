@@ -100,17 +100,21 @@ namespace tpc_webform_grupo_R
         {
             lnkAdministrar.Visible = true;
             lnkInformes.Visible = true;
-            LnkAdminPedidos.Visible = true;
+            lnkAdminPedidosDropdown.Visible = true;
+            pnlMenuAdmin.Visible = true;
 
         }
 
         private void ocultarbtn()
         {
+            pnlMenuAdmin.Visible = false;
             LnkMisPedidos.Visible = false;
             lnkPerfil.Visible = false;
+            LnkAdminPedidos.Visible = false;
+            
             lnkAdministrar.Visible = false;
             lnkInformes.Visible = false;
-            LnkAdminPedidos.Visible = false;
+            lnkAdminPedidosDropdown.Visible = false;
         }
 
 

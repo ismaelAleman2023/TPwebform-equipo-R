@@ -25,7 +25,6 @@ namespace tpc_webform_grupo_R
             if (!IsPostBack)
             {
 
-
                 ProductoNegocio negocio = new ProductoNegocio();
                 ImagenNegocio imgN = new ImagenNegocio();
                 List<Producto> listaProductos = negocio.listarProduc(1);
