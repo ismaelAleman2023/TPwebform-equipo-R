@@ -92,8 +92,9 @@ namespace tpc_webform_grupo_R
 
         private void activarbtnVendedor()
         {
-            LnkAdminPedidos.Visible = true;          
-           
+            lnkAdminPedidosDropdown.Visible = true ;
+            pnlMenuAdmin.Visible = true;
+
         }
 
         private void activarbtnAdmin()
@@ -110,8 +111,7 @@ namespace tpc_webform_grupo_R
             pnlMenuAdmin.Visible = false;
             LnkMisPedidos.Visible = false;
             lnkPerfil.Visible = false;
-            LnkAdminPedidos.Visible = false;
-            
+                     
             lnkAdministrar.Visible = false;
             lnkInformes.Visible = false;
             lnkAdminPedidosDropdown.Visible = false;

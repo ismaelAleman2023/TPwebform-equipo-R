@@ -94,8 +94,7 @@
                           <asp:LinkButton ID="lnkPerfil" runat="server" CommandArgument="b7" OnClick="btnBar_click" CssClass="nav-cajita">Perfil</asp:LinkButton>
                           <asp:LinkButton ID="LnkMisPedidos" runat="server" CommandArgument="b10" OnClick="btnBar_click" CssClass="nav-cajita">Mis Pedidos</asp:LinkButton>
                          
-                          <!-- Botón de vendedor -->
-                          <asp:LinkButton ID="LnkAdminPedidos" runat="server" CommandArgument="b11" OnClick="btnBar_click" CssClass="nav-cajita" Visible="false">Administrar Pedidos</asp:LinkButton>
+                      
                     </div>
                 </div>
 
