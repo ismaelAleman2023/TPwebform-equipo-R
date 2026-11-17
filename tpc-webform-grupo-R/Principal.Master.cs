@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.EnterpriseServices;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -17,9 +18,11 @@ namespace tpc_webform_grupo_R
             imgUserPerfil.ImageUrl = "~/images/Perfiles/fotoDefault.jpg";
             ocultarbtn();
 
+            int rol=0;
+            
             if (Session["usuarioActivo"] != null && Session["RolActivo"] != null)
             {
-                int rol = (int)Session["RolActivo"];
+                 rol = (int)Session["RolActivo"];
 
                 if (rol == 2)
                 {
@@ -49,11 +52,32 @@ namespace tpc_webform_grupo_R
            
             if (!(Page is Carrito || Page is Default || Page is Login || Page is Contactanos || Page is ComoComprar || Page is SobreNosotros))
             {
-                
+
                 if (Session["usuarioActivo"] == null)
                 {
                     Response.Redirect("Login.aspx", false);
                 }
+
+                if (rol == 2)
+                {
+                    if(!(Page is Perfil || Page is MisPedidos))
+                    {
+                        Response.Redirect("Default.aspx");
+                    }
+                }else if(rol == 3)
+                {
+                    if(!(Page is AdministrarPedidos))
+                    {
+                        Response.Redirect("Default.aspx");
+                    }
+                }else if (rol == 1)
+                {
+                    if(!(Page is Administrar || Page is AdministrarPedidos || Page is Informes))
+                    {
+                        Response.Redirect("Default.aspx");
+                    }
+                }             
+
             }
 
             if (Session["listaCarrito"] != null)

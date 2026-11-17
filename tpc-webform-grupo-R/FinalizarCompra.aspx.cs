@@ -192,19 +192,24 @@ namespace tpc_webform_grupo_R
 
 
         }
-            
 
-       
+
+
 
         protected void btnPagarYFinalizar_Click(object sender, EventArgs e)
         {
             DireccionNegocio direN = new DireccionNegocio();
             VentaNegocio venN = new VentaNegocio();
-            DetalleVentaNegocio detaN = new DetalleVentaNegocio();                               
+            DetalleVentaNegocio detaN = new DetalleVentaNegocio();
 
             Venta ven = new Venta();
-            Direccion dir = (Direccion)Session["direccionUso"];
-            
+
+            Direccion dir = null;
+            if (rbRetiroTienda.Checked)
+            {
+              dir = (Direccion)Session["direccionUso"];
+            }
+
             List<DetalleVenta> listaCarrito = (List<DetalleVenta>)Session["listaCarrito"];
 
             ven.FechaVenta_V = DateTime.Now;
