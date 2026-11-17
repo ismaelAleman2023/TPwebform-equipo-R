@@ -50,7 +50,7 @@ namespace tpc_webform_grupo_R
             }
 
            
-            if (!(Page is Carrito || Page is Default || Page is Login || Page is Contactanos || Page is ComoComprar || Page is SobreNosotros))
+            if (!(Page is Carrito || Page is Default || Page is Login || Page is Contactanos || Page is ComoComprar || Page is SobreNosotros || Page is RegistroCliente))
             {
 
                 if (Session["usuarioActivo"] == null)
@@ -60,19 +60,23 @@ namespace tpc_webform_grupo_R
 
                 if (rol == 2)
                 {
+
                     if(!(Page is Perfil || Page is MisPedidos || Page is DetallePedidos))
+
+                    if(!(Page is Perfil || Page is MisPedidos || Page is FinalizarCompra || Page is DireccionEnvio || Page is RegistroDireccion || Page is RegistroCliente))
+
                     {
                         Response.Redirect("Default.aspx");
                     }
                 }else if(rol == 3)
                 {
-                    if(!(Page is AdministrarPedidos))
+                    if(Page is Perfil || Page is MisPedidos || Page is Informes || Page is Administrar)
                     {
                         Response.Redirect("Default.aspx");
                     }
                 }else if (rol == 1)
                 {
-                    if(!(Page is Administrar || Page is AdministrarPedidos || Page is Informes))
+                    if(Page is Perfil || Page is MisPedidos )
                     {
                         Response.Redirect("Default.aspx");
                     }
