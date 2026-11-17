@@ -16,7 +16,18 @@ namespace tpc_webform_grupo_R
         {
             if (!IsPostBack)
             {
+                int rol=0;
                 cargarDireccion();
+                if (Session["rolActivo"]!=null)
+                {
+                    rol = (int)Session["rolActivo"];
+                }
+
+                if (rol!= 2)
+                {
+                    Response.Redirect("default.aspx");
+                    return;
+                }
 
                 clie = (Cliente)Session["usuarioActivo"];
 

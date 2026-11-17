@@ -44,13 +44,13 @@ namespace tpc_webform_grupo_R
         private void cargarTipoPago()
         {
             TipoPagoNegocio pagoN = new TipoPagoNegocio();
-            int seleccion = (int)Session["eleccionfiltro"];
-            List<TipoPago> listaPago = pagoN.ListarTipoPago(seleccion);
+                        
+           
 
+            List<TipoPago> listaPago = pagoN.ListarTipoPago(1);
 
             repetformaPago.DataSource = listaPago;
-            repetformaPago.DataBind();                
-
+            repetformaPago.DataBind();
         }
 
 
@@ -205,9 +205,28 @@ namespace tpc_webform_grupo_R
             Venta ven = new Venta();
 
             Direccion dir = null;
-            if (rbRetiroTienda.Checked)
+            if (rbConEnvio.Checked)
             {
-              dir = (Direccion)Session["direccionUso"];
+                 dir = (Direccion)Session["direccionUso"];
+               
+                if (dir != null)
+                {
+                    ven.idDireccion = dir.IdDireccion;
+                }
+                else
+                {
+                    
+                    ven.idDireccion = 0; 
+                }
+                ven.TipoEnvio = 1;
+
+                
+            }
+            else
+            {
+                
+                ven.idDireccion = 0; 
+                ven.TipoEnvio = 0;
             }
 
             List<DetalleVenta> listaCarrito = (List<DetalleVenta>)Session["listaCarrito"];
@@ -225,13 +244,19 @@ namespace tpc_webform_grupo_R
 
             int idVenta= venN.ultimoIdVenta();
 
-            foreach (DetalleVenta item in listaCarrito)
+            if (listaCarrito != null)
             {
-                item.IdVenta_Detalle = idVenta;
-                detaN.agregar(item);
-            }                        
-          
-            
+                foreach (DetalleVenta item in listaCarrito)
+                {
+                    item.IdVenta_Detalle = idVenta;
+                    detaN.agregar(item);
+                }
+
+               
+                Session.Remove("listaCarrito");
+            }
+
+            //agregar redireccion y cartel de exito
         }
 
 
