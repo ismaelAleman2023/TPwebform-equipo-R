@@ -15,26 +15,46 @@ namespace tpc_webform_grupo_R
         {
             textoLogin();
             imgUserPerfil.ImageUrl = "~/images/Perfiles/fotoDefault.jpg";
+            ocultarbtn();
 
             if (Session["usuarioActivo"] != null && Session["RolActivo"] != null)
             {
-                if ((int)Session["RolActivo"] == 2)
+                int rol = (int)Session["RolActivo"];
+
+                if (rol == 2)
                 {
                     Cliente cliente = (Cliente)Session["usuarioActivo"];
-                    
+
                     if (cliente != null && !string.IsNullOrEmpty(cliente.FotoPerfil))
                     {
                         imgUserPerfil.ImageUrl = "~/images/Perfiles/" + cliente.FotoPerfil;
                     }
+                    activarBtnCliente();
                 }
-                else {
-
+                else
+                {
                     imgUserPerfil.ImageUrl = "~/images/Perfiles/fotoDefault.jpg";
                 }
 
-
+                if (rol == 3)
+                {
+                    activarbtnVendedor();
+                }
+                else if (rol == 1)
+                {
+                    activarbtnAdmin();
+                }
             }
-          
+
+           
+            if (!(Page is Carrito || Page is Default || Page is Login || Page is Contactanos || Page is ComoComprar || Page is SobreNosotros))
+            {
+                
+                if (Session["usuarioActivo"] == null)
+                {
+                    Response.Redirect("Login.aspx", false);
+                }
+            }
 
             if (Session["listaCarrito"] != null)
             {
@@ -59,13 +79,38 @@ namespace tpc_webform_grupo_R
                     marcarBordeMarter();
 
                 }
-
-
-
-
             }
 
             marcarBordeMarter();
+        }
+
+        private void activarBtnCliente()
+        {
+            LnkMisPedidos .Visible = true;
+            lnkPerfil.Visible = true;
+        }
+
+        private void activarbtnVendedor()
+        {
+            LnkAdminPedidos.Visible = true;          
+           
+        }
+
+        private void activarbtnAdmin()
+        {
+            lnkAdministrar.Visible = true;
+            lnkInformes.Visible = true;
+            LnkAdminPedidos.Visible = true;
+
+        }
+
+        private void ocultarbtn()
+        {
+            LnkMisPedidos.Visible = false;
+            lnkPerfil.Visible = false;
+            lnkAdministrar.Visible = false;
+            lnkInformes.Visible = false;
+            LnkAdminPedidos.Visible = false;
         }
 
 
@@ -162,6 +207,9 @@ namespace tpc_webform_grupo_R
                     break;
                 case "b10":
                     Response.Redirect("~/MisPedidos.aspx");
+                    break;
+                case "b11":
+                    Response.Redirect("~/AdministrarPedidos.aspx");
                     break;
                 default:
                     break;

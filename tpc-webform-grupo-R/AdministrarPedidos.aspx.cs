@@ -16,7 +16,7 @@ namespace tpc_webform_grupo_R
         {
             if (!IsPostBack) {
 
-                if (Session["usuarioAcrivo"] != null && (int)Session["rolActivo"] == 3 || (int)Session["rolActivo"] == 1 ) {
+                if (Session["usuarioActivo"] != null && (int)Session["rolActivo"] == 3 || Session["usuarioActivo"] != null && (int)Session["rolActivo"] == 1 ) {
 
                     cargarDetalle();
                    

@@ -105,13 +105,13 @@ namespace tpc_webform_grupo_R
         protected global::System.Web.UI.WebControls.LinkButton lnkPerfil;
 
         /// <summary>
-        /// Control LknMisPedidos.
+        /// Control LnkMisPedidos.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton LknMisPedidos;
+        protected global::System.Web.UI.WebControls.LinkButton LnkMisPedidos;
 
         /// <summary>
         /// Control lnkAdministrar.
@@ -121,6 +121,15 @@ namespace tpc_webform_grupo_R
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton lnkAdministrar;
+
+        /// <summary>
+        /// Control LnkAdminPedidos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton LnkAdminPedidos;
 
         /// <summary>
         /// Control lnkInformes.

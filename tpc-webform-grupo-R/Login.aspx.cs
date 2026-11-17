@@ -13,6 +13,20 @@ namespace tpc_webform_grupo_R
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+           
+                if (Session["usuarioActivo"] != null)
+                {
+                    int rol = (int)Session["rolActivo"];
+
+                    if(rol == 2)
+                    {
+
+
+                    }
+                }
+
+
+
             
 
         }

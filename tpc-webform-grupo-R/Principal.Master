@@ -52,8 +52,9 @@
                         <asp:LinkButton ID="lnkComoComprar" runat="server" CommandArgument="b5" OnClick="btnBar_click" CssClass="nav-cajita">Como comprar</asp:LinkButton>
                         <asp:LinkButton ID="lnkContactanos" runat="server" CommandArgument="b6" OnClick="btnBar_click" CssClass="nav-cajita">Contactanos</asp:LinkButton>
                         <asp:LinkButton ID="lnkPerfil" runat="server" CommandArgument="b7" OnClick="btnBar_click" CssClass="nav-cajita">Perfil</asp:LinkButton>
-                        <asp:LinkButton ID="LknMisPedidos" runat="server" CommandArgument="b10" OnClick="btnBar_click" CssClass="nav-cajita">Mis Pedidos</asp:LinkButton>
+                        <asp:LinkButton ID="LnkMisPedidos" runat="server" CommandArgument="b10" OnClick="btnBar_click" CssClass="nav-cajita">Mis Pedidos</asp:LinkButton>
                         <asp:LinkButton ID="lnkAdministrar" runat="server" CommandArgument="b8" OnClick="btnBar_click" CssClass="nav-cajita">Administrar</asp:LinkButton>
+                        <asp:LinkButton ID="LnkAdminPedidos" runat="server" CommandArgument="b11" OnClick="btnBar_click" CssClass="nav-cajita">Administrar Pedidos</asp:LinkButton>
                         <asp:LinkButton ID="lnkInformes" runat="server" CommandArgument="b9" OnClick="btnBar_click" CssClass="nav-cajita">Informes</asp:LinkButton>
 
                     </div>
