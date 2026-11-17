@@ -60,7 +60,7 @@ namespace tpc_webform_grupo_R
 
                 if (rol == 2)
                 {
-                    if(!(Page is Perfil || Page is MisPedidos))
+                    if(!(Page is Perfil || Page is MisPedidos || Page is DetallePedidos))
                     {
                         Response.Redirect("Default.aspx");
                     }

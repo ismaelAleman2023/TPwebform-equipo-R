@@ -93,15 +93,31 @@ namespace tpc_webform_grupo_R
             Direccion dire= direN.buscarDireccion(ven.idDireccion);
            
             string DirecActiva= dire.Calle.ToString() + " " + dire.Numero.ToString();
+            TipoPagoNegocio tipopago=new TipoPagoNegocio();
+            TipoPago tp= tipopago.buscarTipoPago(ven.TipoPago_V);
 
             idpedi = ven.IdVenta_V;
             if (ven != null) {
 
                 lblFecha.Text = ven.FechaVenta_V.ToString("dd/MM/yyyy");
                 lblTotal.Text = ven.TotalPago_V.ToString("C");
-                lblTipoPago.Text = ven.TipoPago_V.ToString();
+                lblTipoPago.Text = tp.Descripcion;
                 lblEstado.Text = estaN.buscarEstado(ven.EstadoPedido_v).ToString();
-                lblDireccionEnvio.Text = DirecActiva;
+
+                if (ven.TipoEnvio == 1)
+                {
+
+                    lblDireccionEnvio.Text = DirecActiva;
+                    lblTipoEnvio.Text = "Con Envio";
+
+                }
+                else  if (ven.TipoEnvio ==0) {
+
+                    lblDireccionEnvio.Text =" Retiro por el local";
+                    lblTipoEnvio.Text = "Retiro";
+
+                }
+                
                 
 
             }
