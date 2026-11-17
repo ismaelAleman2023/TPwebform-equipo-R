@@ -42,22 +42,31 @@ namespace tpc_webform_grupo_R
         protected global::System.Web.UI.WebControls.TextBox txtCodigoPostal;
 
         /// <summary>
-        /// Control txtLocalidad.
+        /// Control ddlProvincia.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtLocalidad;
+        protected global::System.Web.UI.WebControls.DropDownList ddlProvincia;
 
         /// <summary>
-        /// Control txtProvincia.
+        /// Control ddlLocalidad.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtProvincia;
+        protected global::System.Web.UI.WebControls.DropDownList ddlLocalidad;
+
+        /// <summary>
+        /// Control lblErrorDireccion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblErrorDireccion;
 
         /// <summary>
         /// Control txtObservacion.

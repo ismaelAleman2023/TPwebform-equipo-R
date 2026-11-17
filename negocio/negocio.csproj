@@ -38,6 +38,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -57,6 +60,7 @@
     <Compile Include="TipoPagoNegocio.cs" />
     <Compile Include="VendedorNegocio.cs" />
     <Compile Include="VentaNegocio.cs" />
+    <Compile Include="UbicacionNegocio.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\dominio\dominio.csproj">

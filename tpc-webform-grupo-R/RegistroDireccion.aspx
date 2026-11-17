@@ -19,22 +19,26 @@
                             <asp:TextBox ID="txtNumero" runat="server" CssClass="form-control" placeholder="Ej: 1234" MaxLength="5" required="true"></asp:TextBox>
                         </div>
                     </div>
+                    <asp:UpdatePanel runat="server"><ContentTemplate>
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="txtCodigoPostal" class="form-label">Codigo postal</label>
                             <asp:TextBox ID="txtCodigoPostal" runat="server" CssClass="form-control" placeholder="Ej: C1425" MaxLength="10" required="true"></asp:TextBox>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="txtLocalidad" class="form-label">Localidad</label>
-                            <asp:TextBox ID="txtLocalidad" runat="server" CssClass="form-control" placeholder="Ingrese la localidad" MaxLength="50" required="true"></asp:TextBox>
+                            <label for="ddlProvincia" class="form-label">Provincia</label>
+                            <asp:DropDownList ID="ddlProvincia" runat="server" CssClass="form-select" AutoPostBack="true"
+                                OnSelectedIndexChanged="ddlProvincia_SelectedIndexChanged"></asp:DropDownList>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12 mb-3">
-                            <label for="txtProvincia" class="form-label">Provincia</label>
-                            <asp:TextBox ID="txtProvincia" runat="server" CssClass="form-control" placeholder="Ingrese la provincia" MaxLength="50" required="true"></asp:TextBox>
+                            <label for="ddlLocalidad" class="form-label">Localidad</label>
+                            <asp:DropDownList ID="ddlLocalidad" runat="server" CssClass="form-select"></asp:DropDownList>
                         </div>
                     </div>
+                    <asp:Label ID="lblErrorDireccion" runat="server" CssClass="text-danger small fw-bold d-block mb-3"></asp:Label>
+                    </ContentTemplate></asp:UpdatePanel>
                     <div class="row">
                         <div class="col-md-12 mb-3">
                             <label for="txtObservacion" class="form-label">Observaciones (opcional)</label>
