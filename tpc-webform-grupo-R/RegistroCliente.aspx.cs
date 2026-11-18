@@ -30,7 +30,7 @@ namespace tpc_webform_grupo_R
                 Cli = (Cliente)Session["clienteAModificar"];
                 clieActivo = (Cliente)Session["usuarioActivo"];
 
-                if ((bool)Session["EsAgregar"])
+                if (Session["EsAgregar"] != null &&(bool)Session["EsAgregar"])
                 {
 
                     ViewState["modificar"] = false;

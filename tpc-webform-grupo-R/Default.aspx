@@ -19,19 +19,19 @@
 
                     <div class="p-5 bg-dark border border-secondary rounded">
                         <div class="row align-items-center w-100 m-0">
-            
+    
                             <!-- Izquierda: Textos -->
                             <div class="col-lg-6 text-start ps-0 mb-4 mb-lg-0">
                                 <h1 class="display-5 fw-bold text-white mb-3">Pequeños detalles.<br><em class="text-warning">Grandes momentos.</em></h1>
                                 <p class="text-muted mb-4">Una selección de objetos pensados para hacer especial lo cotidiano.</p>
                                 <a class="text-warning text-decoration-none fw-semibold" href="#catalogo1">Descubrir la colección &or;</a>
                             </div>
-            
+    
                             <!-- Derecha: El Carrusel básico de Bootstrap -->
                             <div class="col-lg-6 d-flex justify-content-center pe-0">
                                 <div id="miCarrusel" class="carousel slide shadow-sm overflow-hidden rounded-circle border border-warning border-2" data-bs-ride="carousel" style="width: 320px; height: 320px;">
                                     <div class="carousel-inner w-100 h-100">
-                        
+    
                                         <asp:Repeater ID="repSimpleCarousel" runat="server">
                                             <ItemTemplate>
                                                 <div class='<%# Container.ItemIndex == 0 ? "carousel-item active w-100 h-100" : "carousel-item w-100 h-100" %>'>
@@ -138,10 +138,11 @@
                 <div class="modal-dialog modal-lg modal-dialog-centered">
 
           <asp:UpdatePanel ID="UpdatePanelModal" runat="server" UpdateMode="Conditional">
-             <ContentTemplate>
+               <ContentTemplate>
             <!-- Modal -->
 
                     <div class="modal-content text-uppercase bg-dark text-light border border-secondary shadow-lg" style="background-color: #212529 !important;">
+
 
 
                                 <div class="modal-body py-4 px-4">
@@ -226,7 +227,6 @@
 
                             </ContentTemplate>
                         </asp:UpdatePanel>
-                    </div>
                 </div>
             </div>
         </section>

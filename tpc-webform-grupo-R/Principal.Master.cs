@@ -61,7 +61,6 @@ namespace tpc_webform_grupo_R
                 if (rol == 2)
                 {
 
-                    if(!(Page is Perfil || Page is MisPedidos || Page is DetallePedidos))
 
                     if(!(Page is Perfil || Page is MisPedidos || Page is FinalizarCompra || Page is DireccionEnvio || Page is RegistroDireccion || Page is RegistroCliente))
 

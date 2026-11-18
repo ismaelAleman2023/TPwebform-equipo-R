@@ -13,21 +13,7 @@ namespace tpc_webform_grupo_R
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-           
-                if (Session["usuarioActivo"] != null)
-                {
-                    int rol = (int)Session["rolActivo"];
-
-                    if(rol == 2)
-                    {
-
-
-                    }
-                }
-
-
-
-            
+                              
 
         }
 
@@ -48,6 +34,7 @@ namespace tpc_webform_grupo_R
                 return;
             }
                        
+            Session["idActivo"] = idPersona;
 
                          
             if(rol == 1)
@@ -58,7 +45,6 @@ namespace tpc_webform_grupo_R
             else if (rol == 2)
             {    
                 Session["usuarioActivo"] = cliN.buscarCliente(idPersona);
-                Session["idActivo"] = idPersona;
             }
             else if (rol==3)
             {
@@ -84,7 +70,11 @@ namespace tpc_webform_grupo_R
 
         }
 
-
+        protected void lnkBtnRegistrarse_Click(object sender, EventArgs e)
+        {
+            Session["EsAgregar"] = true;        
+            Response.Redirect("RegistroCliente.aspx", false);
+        }
 
 
 
