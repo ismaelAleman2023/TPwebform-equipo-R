@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.EnterpriseServices;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -14,18 +15,75 @@ namespace tpc_webform_grupo_R
         protected void Page_Load(object sender, EventArgs e)
         {
             textoLogin();
-            
-                if (Session["usuarioActivo"] != null)
+            imgUserPerfil.ImageUrl = "~/images/Perfiles/fotoDefault.jpg";
+            ocultarbtn();
+
+            int rol = 0;
+
+            if (Session["usuarioActivo"] != null && Session["rolActivo"] != null)
+            {
+                rol = (int)Session["rolActivo"];
+
+                if (rol == 2)
                 {
-                string v= "~/images/Perfiles/" + ((Cliente)Session["usuarioActivo"]).FotoPerfil;
-                imgUserPerfil.ImageUrl = v;
+                    Cliente cliente = (Cliente)Session["usuarioActivo"];
+
+                    if (cliente != null && !string.IsNullOrEmpty(cliente.FotoPerfil))
+                    {
+                        imgUserPerfil.ImageUrl = "~/images/Perfiles/" + cliente.FotoPerfil;
+                    }
+                    activarBtnCliente();
                 }
                 else
                 {
-
                     imgUserPerfil.ImageUrl = "~/images/Perfiles/fotoDefault.jpg";
                 }
 
+                if (rol == 3)
+                {
+                    activarbtnVendedor();
+                }
+                else if (rol == 1)
+                {
+                    activarbtnAdmin();
+                }
+            }
+
+
+            if (!(Page is Carrito || Page is Default || Page is Login || Page is Contactanos || Page is ComoComprar || Page is SobreNosotros || Page is RegistroCliente))
+            {
+
+                if (Session["usuarioActivo"] == null)
+                {
+                    Response.Redirect("Login.aspx", false);
+                }
+
+                if (rol == 2)
+                {
+
+
+                    if (!(Page is Perfil || Page is DetallePedidos || Page is MisPedidos || Page is FinalizarCompra || Page is DireccionEnvio || Page is RegistroDireccion || Page is RegistroCliente))
+
+                    {
+                        Response.Redirect("Default.aspx");
+                    }
+                }
+                else if (rol == 3)
+                {
+                    if (Page is Perfil || Page is MisPedidos || Page is Informes || Page is Administrar)
+                    {
+                        Response.Redirect("Default.aspx");
+                    }
+                }
+                else if (rol == 1)
+                {
+                    if (Page is Perfil || Page is MisPedidos)
+                    {
+                        Response.Redirect("Default.aspx");
+                    }
+                }
+
+            }
 
             if (Session["listaCarrito"] != null)
             {
@@ -39,6 +97,7 @@ namespace tpc_webform_grupo_R
 
             if (!IsPostBack)
             {
+
                 if (Session["tablaActiva"] == null)
                 {
                     Session["tablaActiva"] = "b1";
@@ -48,21 +107,50 @@ namespace tpc_webform_grupo_R
                 {
                     marcarBordeMarter();
 
-                }     
-                
-               
-                
-
+                }
             }
 
             marcarBordeMarter();
+        }
+
+        private void activarBtnCliente()
+        {
+            LnkMisPedidos.Visible = true;
+            lnkPerfil.Visible = true;
+        }
+
+        private void activarbtnVendedor()
+        {
+            lnkAdminPedidosDropdown.Visible = true;
+            pnlMenuAdmin.Visible = true;
+
+        }
+
+        private void activarbtnAdmin()
+        {
+            lnkAdministrar.Visible = true;
+            lnkInformes.Visible = true;
+            lnkAdminPedidosDropdown.Visible = true;
+            pnlMenuAdmin.Visible = true;
+
+        }
+
+        private void ocultarbtn()
+        {
+            pnlMenuAdmin.Visible = false;
+            LnkMisPedidos.Visible = false;
+            lnkPerfil.Visible = false;
+
+            lnkAdministrar.Visible = false;
+            lnkInformes.Visible = false;
+            lnkAdminPedidosDropdown.Visible = false;
         }
 
 
 
         protected void textoLogin()
         {
-            string nombre= "Login";
+            string nombre = "Login";
             if (Session["usuarioActivo"] == null)
             {
                 lblLogin.InnerText = nombre;
@@ -70,8 +158,8 @@ namespace tpc_webform_grupo_R
             }
             else
             {
-                int rol =(int) Session["rolActivo"];
-               
+                int rol = (int)Session["rolActivo"];
+
                 if (rol == 1)
                 {
                     Administrador admin = (Administrador)Session["usuarioActivo"];
@@ -85,22 +173,16 @@ namespace tpc_webform_grupo_R
                     nombre = cli.Nombre;
                     lblLogin.InnerText = nombre;
                 }
-                else if(rol == 3)
+                else if (rol == 3)
                 {
                     Vendedor ven = (Vendedor)Session["usuarioActivo"];
                     nombre = ven.Nombre;
                     lblLogin.InnerText = nombre;
                 }
             }
-           
-        }
-
-
-
-        protected void btnLoginModal_Click(object sender, EventArgs e)
-        {
 
         }
+
 
 
         public void actualizarContador(int cantidad)
@@ -110,8 +192,8 @@ namespace tpc_webform_grupo_R
 
         public string ObtenerIdContador()
         {
-             return lblContadorCarrito.ClientID;
-           
+            return lblContadorCarrito.ClientID;
+
         }
 
 
@@ -120,7 +202,7 @@ namespace tpc_webform_grupo_R
             LinkButton btn = (LinkButton)sender;
             string eleccionTablaSuperior = btn.CommandArgument;
             Session["tablaActiva"] = eleccionTablaSuperior;
-                    
+
             switch (eleccionTablaSuperior)
             {
                 case "b1":
@@ -149,6 +231,14 @@ namespace tpc_webform_grupo_R
                     break;
                 case "b9":
                     Response.Redirect("~/Informes.aspx");
+                    break;
+                case "b10":
+                    Response.Redirect("~/MisPedidos.aspx");
+                    break;
+                case "b11":
+                    Response.Redirect("~/AdministrarPedidos.aspx");
+                    break;
+                default:
                     break;
             }
 
@@ -196,7 +286,7 @@ namespace tpc_webform_grupo_R
                     break;
                 case "b8":
                     lnkAdministrar.Style["border"] = "2px solid #ffc107";
-                  
+
                     break;
                 case "b9":
                     lnkInformes.Style["border"] = "2px solid #ffc107";
@@ -204,5 +294,21 @@ namespace tpc_webform_grupo_R
             }
         }
 
+        protected void lnkLogin_Click(object sender, EventArgs e)
+        {
+
+            if (Session["idActivo"] == null)
+            {
+                Response.Redirect("~/Login.aspx", false);
+
+            }
+            else
+            {
+
+            }
+
+
+
         }
+    }
 }

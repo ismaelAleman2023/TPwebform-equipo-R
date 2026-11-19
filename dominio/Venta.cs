@@ -13,11 +13,10 @@ namespace dominio
         public DateTime FechaVenta_V { get; set; }
         public decimal TotalPago_V { get; set; }
         public int TipoPago_V { get; set; }
-        
+        public int TipoEnvio { get; set; }
+        public int idDireccion { get; set; }        
         public bool Estado_V { get; set; }
-
         public int EstadoPedido_v {  get; set; }
-
 
     }
 }

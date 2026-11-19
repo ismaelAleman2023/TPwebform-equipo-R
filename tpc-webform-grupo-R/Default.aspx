@@ -10,41 +10,74 @@
     <div id="destacado1" style="position: relative; top: -150px; visibility: hidden;"></div>
     <div class="container my-4 text-light">
 
+
+
         <!-- 1. SECCIÓN DESTACADOS -->
-        <section class="mb-5" >
-            <h3 class="border-bottom border-secondary pb-2 mb-3">Destacados</h3>
+                       <!-- SECCIÓN DESTACADOS CON CARRUSEL SIMPLE DE BOOTSTRAP -->
+                <section class="mb-5">
+                    <h3 class="border-bottom border-secondary pb-2 mb-3 text-white">Destacados</h3>
 
-            <div class="p-4 bg-dark border border-secondary rounded text-center">
+                    <div class="p-5 bg-dark border border-secondary rounded">
+                        <div class="row align-items-center w-100 m-0">
+    
+                            <!-- Izquierda: Textos -->
+                            <div class="col-lg-6 text-start ps-0 mb-4 mb-lg-0">
+                                <h1 class="display-5 fw-bold text-white mb-3">Pequeños detalles.<br><em class="text-warning">Grandes momentos.</em></h1>
+                                <p class="text-muted mb-4">Una selección de objetos pensados para hacer especial lo cotidiano.</p>
+                                <a class="text-warning text-decoration-none fw-semibold" href="#catalogo1">Descubrir la colección &or;</a>
+                            </div>
+    
+                            <!-- Derecha: El Carrusel básico de Bootstrap -->
+                            <div class="col-lg-6 d-flex justify-content-center pe-0">
+                                <div id="miCarrusel" class="carousel slide shadow-sm overflow-hidden rounded-circle border border-warning border-2" data-bs-ride="carousel" style="width: 320px; height: 320px;">
+                                    <div class="carousel-inner w-100 h-100">
+    
+                                        <asp:Repeater ID="repSimpleCarousel" runat="server">
+                                            <ItemTemplate>
+                                                <div class='<%# Container.ItemIndex == 0 ? "carousel-item active w-100 h-100" : "carousel-item w-100 h-100" %>'>
+                                                    <img src='<%# Eval("RutaImagen") %>' class="d-block w-100 h-100 object-fit-cover" alt="Imagen">
+                                                </div>
+                                            </ItemTemplate>
+                                        </asp:Repeater>
 
-                <p class="text-muted mb-0">[ Espacio o Carrusel para Productos Destacados ]</p>
-            </div>
-        </section>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+                     
+
+        <!--    -->
         <div id="catalogo1" style="position: relative; top: -100px; visibility: hidden;"></div>
+
         <hr class="border-secondary my-4" />
 
         <!-- 2. SECCIÓN CATÁLOGO Y FILTROS -->
-        <section class="mb-5" >
+
+        <section class="mb-5">
             <h3 class="mb-3">Catálogo</h3>
             <p class=" small mb-3">Encontrá tu favorito</p>
 
-            
-         <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
-           <ContentTemplate>
-            <!-- Barra de botones de filtro -->
-            <div class="d-flex flex-wrap gap-2 mb-4">
-                <asp:Button ID="btnFiltroTodo" runat="server" Text="Todos" CommandArgument='0' OnClick="btnFiltroTodo_Click" CssClass="btn btn-warning btn-sm rounded-pill px-3 fw-bold text-dark" />
-                <asp:Button ID="btnFiltroPolyfan" runat="server" Text="Polyfan" CommandArgument='6' OnClick="btnFiltroTodo_Click" CssClass="btn btn-outline-secondary btn-sm rounded-pill px-3 text-light" />
-                <asp:Button ID="btnFiltroImpresion" runat="server" Text="Impresión 3D" CommandArgument='1' OnClick="btnFiltroTodo_Click" CssClass="btn btn-outline-secondary btn-sm rounded-pill px-3 text-light" />
-                <asp:Button ID="btnFiltroPapeleria" runat="server" Text="Papelería" CommandArgument='5' OnClick="btnFiltroTodo_Click" CssClass="btn btn-outline-secondary btn-sm rounded-pill px-3 text-light" />
-                <asp:Button ID="btnFiltroCorteLaser" runat="server" Text="Conte Laser" CommandArgument='2' OnClick="btnFiltroTodo_Click" CssClass="btn btn-outline-secondary btn-sm rounded-pill px-3 text-light" />
-                <asp:Button ID="btnFiltroEgrasados" runat="server" Text="Egresados" CommandArgument='3' OnClick="btnFiltroTodo_Click" CssClass="btn btn-outline-secondary btn-sm rounded-pill px-3 text-light" />
-                <asp:Button ID="btnFiltroOtros" runat="server" Text="Otros" CommandArgument='4' OnClick="btnFiltroTodo_Click" CssClass="btn btn-outline-secondary btn-sm rounded-pill px-3 text-light" />
+
+            <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
+                <ContentTemplate>
+                    <!-- Barra de botones de filtro -->
+                    <div class="d-flex flex-wrap gap-2 mb-4">
+                        <asp:Button ID="btnFiltroTodo" runat="server" Text="Todos" CommandArgument='0' OnClick="btnFiltroTodo_Click" CssClass="btn btn-warning btn-sm rounded-pill px-3 fw-bold text-dark" />
+                        <asp:Button ID="btnFiltroPolyfan" runat="server" Text="Polyfan" CommandArgument='6' OnClick="btnFiltroTodo_Click" CssClass="btn btn-outline-secondary btn-sm rounded-pill px-3 text-light" />
+                        <asp:Button ID="btnFiltroImpresion" runat="server" Text="Impresión 3D" CommandArgument='1' OnClick="btnFiltroTodo_Click" CssClass="btn btn-outline-secondary btn-sm rounded-pill px-3 text-light" />
+                        <asp:Button ID="btnFiltroPapeleria" runat="server" Text="Papelería" CommandArgument='5' OnClick="btnFiltroTodo_Click" CssClass="btn btn-outline-secondary btn-sm rounded-pill px-3 text-light" />
+                        <asp:Button ID="btnFiltroCorteLaser" runat="server" Text="Conte Laser" CommandArgument='2' OnClick="btnFiltroTodo_Click" CssClass="btn btn-outline-secondary btn-sm rounded-pill px-3 text-light" />
+                        <asp:Button ID="btnFiltroEgrasados" runat="server" Text="Egresados" CommandArgument='3' OnClick="btnFiltroTodo_Click" CssClass="btn btn-outline-secondary btn-sm rounded-pill px-3 text-light" />
+                        <asp:Button ID="btnFiltroOtros" runat="server" Text="Otros" CommandArgument='4' OnClick="btnFiltroTodo_Click" CssClass="btn btn-outline-secondary btn-sm rounded-pill px-3 text-light" />
 
 
-            </div>
+                    </div>
 
-            <!-- Línea de separación  -->
-            <hr class="border-secondary my-4" />
+                    <!-- Línea de separación  -->
+                    <hr class="border-secondary my-4" />
 
 
 
@@ -65,13 +98,13 @@
                                         </div>
 
                                         <!-- Imagen con tamaño equilibrado para PC (~140px) -->
-                                       <div class="bg-secondary rounded mb-3 d-flex align-items-center justify-content-center position-relative" style="height: 140px; overflow: hidden;">
-                                       
-                                        <asp:Image ID="imgCard" runat="server" 
-                                            ImageUrl='<%# ObtenerImagenProducto(Convert.ToInt32(Eval("IdProducto"))) %>' 
-                                            style="width: 100%; height: 100%; object-fit: cover;" 
-                                            alt="Producto" />
-                                    </div>
+                                        <div class="bg-secondary rounded mb-3 d-flex align-items-center justify-content-center position-relative" style="height: 140px; overflow: hidden;">
+
+                                            <asp:Image ID="imgCard" runat="server"
+                                                ImageUrl='<%# ObtenerImagenProducto(Convert.ToInt32(Eval("IdProducto"))) %>'
+                                                Style="width: 100%; height: 100%; object-fit: cover;"
+                                                alt="Producto" />
+                                        </div>
 
                                         <!-- Nombre y Precio -->
                                         <h6 class="card-title fw-bold mb-1 text-truncate"><%#Eval("Nombre")   %> </h6>
@@ -85,14 +118,14 @@
 
                                     </div>
                                 </div>
-                                <!-- Fin de la Card -->
+                                <!-- Fin Card -->
 
                             </ItemTemplate>
                         </asp:Repeater>
 
                     </div>
 
-                    <!-- Línea de separación al final de las cards -->
+                    <!-- Línea de separación  -->
                     <hr class="border-secondary my-4" />
 
 
@@ -101,14 +134,15 @@
             </asp:UpdatePanel>
 
 
-            <!-- Modal -->
             <div class="modal fade" id="productoModal" tabindex="-1" aria-labelledby="productoModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg modal-dialog-centered">
 
+          <asp:UpdatePanel ID="UpdatePanelModal" runat="server" UpdateMode="Conditional">
+               <ContentTemplate>
+            <!-- Modal -->
+
                     <div class="modal-content text-uppercase bg-dark text-light border border-secondary shadow-lg" style="background-color: #212529 !important;">
 
-                        <asp:UpdatePanel ID="UpdatePanelModal" runat="server" UpdateMode="Conditional">
-                            <ContentTemplate>
 
 
                                 <div class="modal-body py-4 px-4">
@@ -129,8 +163,9 @@
                                                 </p>
 
                                                 <p class="small mb-0">
-                                                    Disponibles: <span ><asp:Label ID="lblModalStock" runat="server"></asp:Label></span>
-                                                    <asp:Label ID="LblModalDisponibles" runat="server" class="fw-bold text-warning" >Disponibles: </asp:Label>
+                                                    Disponibles: <span>
+                                                        <asp:Label ID="lblModalStock" runat="server"></asp:Label></span>
+                                                    <asp:Label ID="LblModalDisponibles" runat="server" class="fw-bold text-warning">Disponibles: </asp:Label>
                                                 </p>
 
 
@@ -145,8 +180,8 @@
 
                                             <!-- Flechas de Navegación -->
                                             <div class="d-flex gap-2 justify-content-center mt-3" style="height: 45px;">
-                                                <asp:Button ID="btnImgAnterior" runat="server" Text="&larr;" CssClass="btn btn-outline-light px-3 py-2 fw-bold" Style="width: 50px;" />
-                                                <asp:Button ID="btnImgSiguiente" runat="server" Text="&rarr;" CssClass="btn btn-outline-light px-3 py-2 fw-bold" Style="width: 50px;" />
+                                                <asp:Button ID="btnImgAnterior" runat="server" OnClick="btnImgAnterior_Click" Text="&larr;" CssClass="btn btn-outline-light px-3 py-2 fw-bold" Style="width: 50px;" />
+                                                <asp:Button ID="btnImgSiguiente" runat="server" onclick="btnImgSiguiente_Click" Text="&rarr;" CssClass="btn btn-outline-light px-3 py-2 fw-bold" Style="width: 50px;" />
                                             </div>
                                         </div>
 
@@ -192,9 +227,8 @@
 
                             </ContentTemplate>
                         </asp:UpdatePanel>
-                        </div>
-                    </div>
                 </div>
+            </div>
         </section>
 
 

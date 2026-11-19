@@ -2,11 +2,17 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <!-- Estilos o scripts específicos para esta vista si necesitás -->
+   
+
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="container py-5">
-        <h2 class="mb-4 fw-bold">Finalizar tu Compra</h2>
+       
+        <div class="d-flex align-items-center gap-3 mb-4">
+        <h2 class="fw-bold m-0">Finalizar tu Compra</h2>
+        <asp:Label ID="lblerror" runat="server" CssClass="text-danger fw-semibold" Style="display: none;"></asp:Label>
+         </div>
 
         <div class="row g-4">
             
@@ -23,7 +29,7 @@
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <h5 class="card-title text-primary m-0">Forma de Entrega</h5>
             
-                                <!-- Grupo de Radio Buttons (con envío / retiro por tienda) -->
+                                <!-- tipo envio -->
 
                                     
                                                 <div class="d-flex gap-4">
@@ -65,19 +71,21 @@
                         <div class="mb-3">
 
 
-                <asp:Repeater ID="repetformaPago" runat="server">
-                <ItemTemplate>
-                    <div class="form-check mb-2">
-                        <!-- Input radio nativo de HTML con el mismo 'name' para que sean excluyentes -->
-                        <input class="form-check-input" type="radio" name="grupoPago" value='<%# Eval("IdTipoPago") %>' id='<%# "radio_" + Eval("IdTipoPago") %>' />
-                        
-                        <!-- Label asociado por el 'for' con el id único de cada elemento -->
-                        <label class="form-check-label" for='<%# "radio_" + Eval("IdTipoPago") %>'>
-                            <%# Eval("Descripcion") %>
-                        </label>
-                    </div>
-                </ItemTemplate>
-            </asp:Repeater>
+              <asp:Repeater ID="repetformaPago" runat="server">
+                    <ItemTemplate>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="radio" name="grupoPago"
+                                  
+                                value='<%# Eval("IdTipoPago") %>' id='<%# "radio_" + Eval("IdTipoPago") %>'
+                                   <%# Convert.ToInt32(Eval("IdTipoPago")) == 1 ? "checked=\"checked\"" : "" %> />
+                            
+                            <label class="form-check-label" for='<%# "radio_" + Eval("IdTipoPago") %>'>
+                               
+                                <%# Eval("Descripcion") %>
+                            </label>
+                        </div>
+                    </ItemTemplate>
+               </asp:Repeater>
 
                         </div>
                     </div>
@@ -104,6 +112,12 @@
                             <span><asp:Label ID="lblCostoEnvio" runat="server" Text="$ XXX"></asp:Label></span>
                         </div>
 
+                          <!-- Descuento -->
+                          <div class="d-flex justify-content-between mb-3 pb-3 border-bottom">
+                              <span>Descuento </span>
+                              <span><asp:Label ID="lblDescuento" runat="server" Text="$ -XXX"></asp:Label></span>
+                          </div>
+
                         <!-- Total Final -->
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <span class="fw-bold fs-4">Total</span>
@@ -119,4 +133,20 @@
 
         </div>
     </div>
+
+    <script>    
+
+        function limpiarLabel(clientId, segundos) {
+            setTimeout(function () {
+                var lbl = document.getElementById(clientId);
+                if (lbl) {
+                    lbl.innerText = "";           // Borra el texto
+                    lbl.style.display = "none";    // Lo oculta para que no ocupe espacio
+                }
+            }, segundos * 1000);
+        }
+
+    </script>
+
+
 </asp:Content>

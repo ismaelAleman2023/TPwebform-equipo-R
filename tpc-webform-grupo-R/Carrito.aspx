@@ -9,6 +9,10 @@
         <h2 class="mb-4">
             <i class="fa-solid fa-cart-shopping text-warning me-2"></i> Tu Carrito de Compras
         </h2>
+        
+
+    <asp:UpdatePanel runat="server">
+          <ContentTemplate>
 
         <!-- Fila dividida en dos columnas -->
         <div class="row g-4">
@@ -21,8 +25,6 @@
                     <asp:Repeater ID="reapetCarrito" runat="server">
                         <ItemTemplate>
 
-               <asp:UpdatePanel runat="server">
-                 <ContentTemplate>
 
                                     
                         
@@ -65,8 +67,6 @@
                         </div>
                     </div>
                     <!-- Fin de la Card -->
-        </ContentTemplate>
-    </asp:UpdatePanel>
             </ItemTemplate>
          </asp:Repeater>
 
@@ -74,6 +74,7 @@
 
             </div>
 
+     
             <!-- COLUMNA DERECHA: RECUADRO DE RESUMEN DE COMPRA -->
             <div class="col-lg-4">
                 <div class="card bg-dark text-light border-secondary p-4 sticky-top" style="top: 90px;">
@@ -104,9 +105,11 @@
                 </div>
             </div>
 
-        </div>
     </div>
+  </ContentTemplate>
+</asp:UpdatePanel>
 
+   </div>
 </asp:Content>
     
      

@@ -126,6 +126,7 @@ namespace tpc_webform_grupo_R
 
             string codigo = txtCodigo.Text;
             string nombre = txtNombre.Text;
+            
             string descripcion = txtDescripcion.Text;
             int marca = int.Parse(ddlMarca.SelectedValue);
             int categoria = int.Parse(ddlCategoria.SelectedValue);
@@ -194,7 +195,7 @@ namespace tpc_webform_grupo_R
                 pro.Descripcion = descripcion;
                 pro.Marca = marca;
                 pro.Categoria = categoria;
-                pro.Estado = 1;
+             
                 pro.Precio = precio;
                 pro.OnDemand = ondemand;
 
@@ -220,6 +221,7 @@ namespace tpc_webform_grupo_R
                 }
                 else
                 {
+                    pro.Estado = 1;
 
                     if (Helper.Ayudante.ExisteProduc(codigo))
                     {
@@ -230,13 +232,13 @@ namespace tpc_webform_grupo_R
 
 
                     List<Imagen> lista = new List<Imagen>();
-                foreach (string url in listImg)
-                {
-                    Imagen img = new Imagen();
-                    img.UrlImagen = url;
-                    lista.Add(img);
-                }
-                pro.ListaImagen = lista;
+                    foreach (string url in listImg)
+                    {
+                        Imagen img = new Imagen();
+                        img.UrlImagen = url;
+                        lista.Add(img);
+                    }
+                    pro.ListaImagen = lista;
 
                     proNeg.agregarProducto(pro);
 

@@ -35,7 +35,7 @@ namespace tpc_webform_grupo_R
 
                 actualizarEleccion(idDire);
 
-                Session["IdDireccionEnUso"] = idDire;
+               // Session["IdDireccionEnUso"] = idDire;
 
             
             if (Session["esPerfil"] != null && (bool)Session["esPerfil"] == true) { 

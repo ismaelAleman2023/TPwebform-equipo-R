@@ -98,13 +98,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Administrar.aspx" />
+    <Content Include="AdministrarPedidos.aspx" />
     <Content Include="Carrito.aspx" />
     <Content Include="ComoComprar.aspx" />
     <Content Include="Contactanos.aspx" />
     <Content Include="Default.aspx" />
+    <Content Include="DetallePedidos.aspx" />
     <Content Include="DireccionEnvio.aspx" />
     <Content Include="FinalizarCompra.aspx" />
     <Content Include="Informes.aspx" />
+    <Content Include="MisPedidos.aspx" />
     <Content Include="Perfil.aspx" />
     <Content Include="Principal.Master" />
     <Content Include="RegistroEstado.aspx" />
@@ -225,6 +228,13 @@
     <Compile Include="Administrar.aspx.designer.cs">
       <DependentUpon>Administrar.aspx</DependentUpon>
     </Compile>
+    <Compile Include="AdministrarPedidos.aspx.cs">
+      <DependentUpon>AdministrarPedidos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdministrarPedidos.aspx.designer.cs">
+      <DependentUpon>AdministrarPedidos.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Carrito.aspx.cs">
       <DependentUpon>Carrito.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -253,6 +263,13 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="DetallePedidos.aspx.cs">
+      <DependentUpon>DetallePedidos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DetallePedidos.aspx.designer.cs">
+      <DependentUpon>DetallePedidos.aspx</DependentUpon>
+    </Compile>
     <Compile Include="DireccionEnvio.aspx.cs">
       <DependentUpon>DireccionEnvio.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -273,6 +290,13 @@
     </Compile>
     <Compile Include="Informes.aspx.designer.cs">
       <DependentUpon>Informes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MisPedidos.aspx.cs">
+      <DependentUpon>MisPedidos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MisPedidos.aspx.designer.cs">
+      <DependentUpon>MisPedidos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Perfil.aspx.cs">
       <DependentUpon>Perfil.aspx</DependentUpon>
@@ -402,6 +426,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="images\temp\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -33,7 +33,7 @@ namespace negocio
                         aux.Observacion = "";
                     }
 
-                                   
+
                     if (!(datos.Lector["estado"] is DBNull))
                     {
                         aux.estado = (bool)datos.Lector["estado"];
@@ -146,7 +146,7 @@ namespace negocio
                     dir.CodigoPostal = (string)datos.Lector["codigoPostal"];
                     dir.Localidad = (string)datos.Lector["localidad"];
                     dir.Provincia = (string)datos.Lector["provincia"];
-                  
+
 
                     if (!(datos.Lector["observacion_dir"] is DBNull))
                     {
@@ -191,7 +191,7 @@ namespace negocio
                 datos.consultaSql("select idDireccion, idcliente_dir, calle, numero, codigoPostal, localidad, provincia, observacion_dir, estado from direccionesEnvio where idcliente_dir= @id");
                 datos.setearParametros("@id", idCliente);
                 datos.ejecutarLectura();
-                
+
                 while (datos.Lector.Read())
                 {
                     dir = new Direccion();
@@ -281,6 +281,7 @@ namespace negocio
 
         }
 
+       
 
 
     }

@@ -42,7 +42,9 @@
 
                             <!-- Enlace de registro -->
                             <div class="text-center mt-3">
-                                <small class="text-muted">¿No tenés cuenta? <a href="RegistroCliente.aspx" class="text-decoration-none text-dark fw-bold">Registrarse</a></small>
+                               <small id="lblMensajeRegistro" runat="server" class="text-muted"> ¿No tenés cuenta? 
+                                <asp:LinkButton ID="lnkBtnRegistrarse" runat="server" OnClick="lnkBtnRegistrarse_Click" CssClass="text-decoration-none text-dark fw-bold">Registrarse</asp:LinkButton>
+                                </small>
                             </div>
 
                         </div>

@@ -66,7 +66,7 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.consultaSql("select idDetalleVenta, idVenta_dv, idProducto_dv, precioUnitario_dv, subtotal_dv, cantidad_dv from detalleVentas where idDetalleVenta = @id");
+                datos.consultaSql("select idDetalleVenta, idVenta_dv, idProducto_dv, precioUnitario_dv, subtotal_dv, cantidad_dv from detalleVentas where idVenta_dv = @id");
                 datos.setearParametros("@id", id);
                 datos.ejecutarLectura();
                 if (datos.Lector.Read())
@@ -89,6 +89,45 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+
+        public List<DetalleVenta> buscarDetalleVentas(int idVenta)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.consultaSql("select idDetalleVenta, idVenta_dv, idProducto_dv, precioUnitario_dv, subtotal_dv, cantidad_dv from detalleVentas where idVenta_dv = @id");
+                datos.setearParametros("@id", idVenta);
+                datos.ejecutarLectura();
+
+                List<DetalleVenta> listdeta= new List<DetalleVenta>();
+                while (datos.Lector.Read())
+                {
+                    DetalleVenta detalle = new DetalleVenta();
+                    detalle.IdDetalleVenta = (int)datos.Lector["idDetalleVenta"];
+                    detalle.IdVenta_Detalle = (int)datos.Lector["idVenta_dv"];
+                    detalle.IdProducto = (int)datos.Lector["idProducto_dv"];
+                    detalle.PrecioUnitario = (decimal)datos.Lector["precioUnitario_dv"];
+                    detalle.Subtotal = (decimal)datos.Lector["subtotal_dv"];
+                    detalle.Cantidad = (int)datos.Lector["cantidad_dv"];
+                    listdeta.Add(detalle);
+                }
+                return listdeta;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
+
+
+
+
 
         public void modificarDetalleVenta(DetalleVenta detalle)
         {

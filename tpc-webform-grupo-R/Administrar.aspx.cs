@@ -110,10 +110,10 @@ namespace tpc_webform_grupo_R
 
                     break;
                 case 9://direcciones
-                    cargarGrillaDireccion();
+                    // no usamos en la grilla
                     break;
                 case 10://ventas
-
+                    // no usamos en la grilla
                     break;
                 case 11://roles
                     cargarGrillaRol();
@@ -132,6 +132,7 @@ namespace tpc_webform_grupo_R
         {
             ClienteNegocio cliN = new ClienteNegocio();
             EstadoNegocio estadoN = new EstadoNegocio();
+            RolNegocio rolN = new RolNegocio();
             int seleccion = (int)Session["eleccionfiltro"];
             var listaClientesGrilla = cliN.listarClientes(seleccion).Select(c => new
             {
@@ -142,9 +143,9 @@ namespace tpc_webform_grupo_R
                 c.FechaDeNacimiento,
                 c.Password,
                 c.Telefono,
-                c.IdRol,
+                Rol = rolN.buscarRol(c.IdRol).Descripcion,
                 correoOk = c.CorreoOk ? "Verificado" : "no verifi",
-                Estado = estadoN.buscarEstado(c.Estado).Descripcion_estado
+                Estado = (c.Estado == 1) ? "Activo" : "Eliminado"
 
             }).ToList();
 
@@ -160,6 +161,7 @@ namespace tpc_webform_grupo_R
         {
             EstadoNegocio estadoN = new EstadoNegocio();
             VendedorNegocio vendedorN = new VendedorNegocio();
+            RolNegocio rolN = new RolNegocio();
             int seleccion = (int)Session["eleccionfiltro"];
 
             var listaVendedoresGrilla = vendedorN.listarVendedores(seleccion).Select(v => new
@@ -172,8 +174,8 @@ namespace tpc_webform_grupo_R
                 v.FechaDeNacimiento,
                 v.Password,
                 v.Telefono,
-                v.IdRol,
-                Estado = estadoN.buscarEstado(v.Estado).Descripcion_estado
+                Rol = rolN.buscarRol(v.IdRol).Descripcion,
+                Estado =(v.Estado==1) ? "Activo" : "Eliminado"
 
             }).ToList();
 
@@ -191,12 +193,14 @@ namespace tpc_webform_grupo_R
         {   
            
             EstadoNegocio estadoN = new EstadoNegocio();
+            RolNegocio rolN = new RolNegocio();
+           
             AdministrarNegocio adminN = new AdministrarNegocio();
             int seleccion = (int)Session["eleccionfiltro"];
 
             var listaAdministradoresGrilla = adminN.listarAdministradores(seleccion).Select(a => new
             {
-                
+
                 a.IdPersona,
                 a.Nombre,
                 a.Apellido,
@@ -205,9 +209,8 @@ namespace tpc_webform_grupo_R
                 a.FechaDeNacimiento,
                 a.Password,
                 a.Telefono,
-                a.IdRol,
-                Estado = estadoN.buscarEstado(a.Estado).Descripcion_estado
-
+                Rol = rolN.buscarRol(a.IdRol).Descripcion,
+                Estado = (a.Estado == 1) ? "Activo" : "Eliminado"
             }).ToList();
 
             dgvGrilla.DataSource = listaAdministradoresGrilla;
@@ -231,7 +234,17 @@ namespace tpc_webform_grupo_R
         {
 
             MarcaNegocio marcaNegocio = new MarcaNegocio();
-            dgvGrilla.DataSource = marcaNegocio.ListarMarca();
+
+            int seleccion = (int)Session["eleccionfiltro"];
+
+            var listaMarcagrilla = marcaNegocio.ListarMarca(seleccion).Select(m => new
+            {   m.IdMarca,
+               m.Descripcion,
+                Estado = (m.Estado == 1) ? "Activo" : "Eliminado",
+            }).ToList();
+
+
+            dgvGrilla.DataSource = listaMarcagrilla;
             dgvGrilla.DataKeyNames = new string[] { "IdMarca" };
             dgvGrilla.DataBind();
             ocultarItems();
@@ -243,7 +256,15 @@ namespace tpc_webform_grupo_R
         {
 
             CategoriaNegocio cateNego = new CategoriaNegocio();
-            dgvGrilla.DataSource = cateNego.listarCate();
+            int seleccion = (int)Session["eleccionfiltro"];
+            var listaCategoriaGrilla = cateNego.listarCate(seleccion).Select(c => new
+            {
+                c.IdCategoria,
+                c.Descripcion,
+                Estado = (c.Estado == 1) ? "Activo" : "Eliminado",
+            }).ToList();
+
+            dgvGrilla.DataSource = listaCategoriaGrilla;
             dgvGrilla.DataKeyNames = new string[] { "IdCategoria" };
             dgvGrilla.DataBind();
             ocultarItems();
@@ -255,7 +276,9 @@ namespace tpc_webform_grupo_R
         private void cargarGrillaTipoPago()
         {
             TipoPagoNegocio tpN = new TipoPagoNegocio();
-            dgvGrilla.DataSource = tpN.ListarTipoPago();
+            int seleccion = (int)Session["eleccionfiltro"];
+
+            dgvGrilla.DataSource = tpN.ListarTipoPago(seleccion);
             dgvGrilla.DataKeyNames = new string[] { "IdTipoPago" };
             dgvGrilla.DataBind();
             ocultarItems();
@@ -294,7 +317,7 @@ namespace tpc_webform_grupo_R
                 Categoria = Helper.Ayudante.idxCategoria(p.Categoria),
                 p.Precio,
                 OnDemand = p.OnDemand ? "Si" : "NO",
-                p.Estado
+                Estado = (p.Estado==1) ? "Activo" : "Eliminado"
 
             }).ToList();
 
@@ -311,12 +334,13 @@ namespace tpc_webform_grupo_R
         private void cargarGrillaStock() {
 
             StockNegocio stockNegocio = new StockNegocio();
+            int seleccion = (int)Session["eleccionfiltro"];
 
-            var listaActivos = stockNegocio.listaStock().Select(s => new {
+            var listaActivos = stockNegocio.listaStock(seleccion).Select(s => new {
                 s.IdStock,
                 Producto=Helper.Ayudante.idxNproduc(s.IdProducto_stk),
                 s.Cantidad,
-                s.Estado
+                Estado = (s.Estado == 1)?"Activo": "Ealiminado",
             }).ToList();
 
 
@@ -324,12 +348,11 @@ namespace tpc_webform_grupo_R
             dgvGrilla.DataKeyNames = new string[] { "IdStock" };
             dgvGrilla.DataBind();
             ocultarItems();
-            ViewState.Remove("eleccion");
-        
-        
+            ViewState.Remove("eleccion");            
         
         }
 
+       
 
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
@@ -936,7 +959,7 @@ namespace tpc_webform_grupo_R
                 switch ((int)ViewState["TablaActiva"])
                 {
                     case 1://categoria
-                        reactivarCliente();
+                        reactivarCategoria();
                         cargarGrillaCategoria();
 
                         break;
@@ -1101,6 +1124,7 @@ namespace tpc_webform_grupo_R
             try
             {
                 RolNegocio rolN = new RolNegocio();
+                rolN.AltaRol((int)ViewState["eleccion"]);
                 
                 ViewState.Remove("eleccion");
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaExito", "mostrarCartel('¡Rol reactivado!', 'success');", true);
@@ -1226,9 +1250,9 @@ namespace tpc_webform_grupo_R
             btnAdmin.Style["border"] = "1px solid #333";
             btnCli.Style["border"] = "1px solid #333";
             btnRol.Style["border"] = "1px solid #333";
-            btnVent.Style["border"] = "1px solid #333";
+            
             btnPago.Style["border"] = "1px solid #333";
-            btnDir.Style["border"] = "1px solid #333";
+           
             btnEst.Style["border"] = "1px solid #333";
 
 
@@ -1259,10 +1283,10 @@ namespace tpc_webform_grupo_R
                     btnCli.Style["border"] = "2px solid #ffc107";
                     break;
                 case 9://direccin
-                    btnDir.Style["border"] = "2px solid #ffc107";
+                   
                     break;
                 case 10://venta
-                    btnVent.Style["border"] = "2px solid #ffc107";
+                   
                     break;
                 case 11://rol
                     btnRol.Style["border"] = "2px solid #ffc107";

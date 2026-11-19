@@ -100,6 +100,7 @@
                             <!-- URL y Botones -->
                             <div class="mb-3">
                                 <label for="txtImagenUrl" class="form-label small fw-semibold">URL de la Imagen</label>
+                              
                                 <div class="input-group input-group-sm mb-2">
                                     <asp:TextBox ID="txtImagenUrl" runat="server" CssClass="form-control" placeholder="https://.../img.jpg"></asp:TextBox>
                                 </div>
@@ -112,8 +113,12 @@
                             <!-- Vista Previa de la Imagen -->
                             <div class="text-center p-2 bg-light border rounded mb-3">
                                 <span class="small fw-semibold text-muted d-block mb-2">Vista previa actual</span>
-                             <asp:Image ID="imgPrevisualizacion" runat="server" CssClass="rounded mx-auto border bg-white shadow-sm" Style="width: 140px; height: 140px; object-fit: cover;" ImageUrl="https://us.123rf.com/450wm/koblizeek/koblizeek2204/koblizeek220400315/185376169-no-image-vector-symbol-missing-available-icon-no-gallery-for-this-moment-placeholder.jpg" onerror="this.onerror=null; this.src='https://placehold.co/140?text=Sin+Imagen';" />
-                            </div>
+                            
+                                <asp:Image ID="imgPrevisualizacion" runat="server" CssClass="rounded mx-auto border bg-white shadow-sm" Style="width: 140px; height: 140px; object-fit: contain; padding: 5px;" />
+
+
+                           
+                             </div>
                         </div>
 
                         <!-- Controles de Navegación inferior dentro del segundo contenedor -->

@@ -35,9 +35,9 @@
                             <asp:Button ID="btnAdmin" runat="server" Text="Administradores" CommandArgument="7" OnClick="SeleccionarTabla_Click" CssClass="btn btn-sm text-nowrap" Style="background-color: #1a1a1a; color: #ddd; border: 1px solid #333;" />
                             <asp:Button ID="btnCli" runat="server" Text="Clientes" CommandArgument="8" OnClick="SeleccionarTabla_Click" CssClass="btn btn-sm text-nowrap" Style="background-color: #1a1a1a; color: #ddd; border: 1px solid #333;" />
                             <asp:Button ID="btnRol" runat="server" Text="Roles" CommandArgument="11" OnClick="SeleccionarTabla_Click" CssClass="btn btn-sm text-nowrap" Style="background-color: #1a1a1a; color: #ddd; border: 1px solid #333;" />
-                            <asp:Button ID="btnVent" runat="server" Text="Ventas" CommandArgument="10" OnClick="SeleccionarTabla_Click" CssClass="btn btn-sm text-nowrap" Style="background-color: #1a1a1a; color: #ddd; border: 1px solid #333;" />
+                            
                             <asp:Button ID="btnPago" runat="server" Text="Tipo Pago" CommandArgument="4" OnClick="SeleccionarTabla_Click" CssClass="btn btn-sm text-nowrap" Style="background-color: #1a1a1a; color: #ddd; border: 1px solid #333;" />
-                            <asp:Button ID="btnDir" runat="server" Text="Direcciónes" CommandArgument="9" OnClick="SeleccionarTabla_Click" CssClass="btn btn-sm text-nowrap" Style="background-color: #1a1a1a; color: #ddd; border: 1px solid #333;" />
+                            
                             <asp:Button ID="btnEst" runat="server" Text="Estados" CommandArgument="12" OnClick="SeleccionarTabla_Click" CssClass="btn btn-sm text-nowrap" Style="background-color: #1a1a1a; color: #ddd; border: 1px solid #333;" />
                         </div>
                     </div>

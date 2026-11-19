@@ -217,5 +217,24 @@
         text-align: center;
         padding: 10px;
     }
+    
+}
 
+@media (max-width: 412px) {
+
+    .logo-img {
+        margin-left:90px !important;
+    }
+
+    .barra-opciones {
+        margin-left: 40px !important;
+        margin-top:7px;
+    }
+
+    #pnlMenuAdmin{
+        margin-right:5px;
+    }
+    #lnkLogin {
+        margin-right: 5px;
+    }
 }

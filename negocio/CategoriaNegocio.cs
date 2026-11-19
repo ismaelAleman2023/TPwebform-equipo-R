@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -32,7 +33,7 @@ namespace negocio
         }
 
 
-        public List<Categoria> listarCate()
+        public List<Categoria> listarCate(int estado =2)
         {
 
             AccesoDatos datos = new AccesoDatos();
@@ -42,6 +43,12 @@ namespace negocio
             try
             {
                 string consulta="select id_C,descripcion_C,estado_C from categorias";
+
+                if(estado == 1 || estado == 0)
+                {
+                    consulta += " where estado_c = @estado";
+                    datos.setearParametros("@estado", estado);
+                }
 
                 datos.consultaSql(consulta);
                 datos.ejecutarLectura();
@@ -98,7 +105,7 @@ namespace negocio
             try
             {
                 datos.consultaSql("update categorias set estado_C=1 where id_C=@id");
-                datos.setearParametros("id_C", id);
+                datos.setearParametros("id", id);
                 datos.ejecutarAccion();
 
             }
@@ -168,7 +175,7 @@ namespace negocio
 
 
 
-        //validaciones para duplicado de categorias
+     
 
         public int EstadoCategoria(int id)
         {
@@ -177,29 +184,19 @@ namespace negocio
 
             try
             {
-
                 foreach (Categoria c in listCate)
                 {
                     if (c.IdCategoria == id)
                     {
-
                         return c.Estado;
-
                     }
-
-
-
                 }
                 return 0;
-
             }
             catch (Exception)
             {
-
                 throw;
             }
-
-
         }
 
         public bool valiModiCate(string descri, int id) { 
