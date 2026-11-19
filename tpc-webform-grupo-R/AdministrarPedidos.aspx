@@ -63,10 +63,7 @@
 
                                 </div>
 
-                                <!-- Boton ver detalle -->
-
-
-
+                              
 
                             </div>
 

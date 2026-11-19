@@ -71,19 +71,21 @@
                         <div class="mb-3">
 
 
-                <asp:Repeater ID="repetformaPago" runat="server">
-                <ItemTemplate>
-                    <div class="form-check mb-2">
-                        <!-- Input radio nativo de HTML con el mismo 'name' para que sean excluyentes -->
-                        <input class="form-check-input" type="radio" name="grupoPago" value='<%# Eval("IdTipoPago") %>' id='<%# "radio_" + Eval("IdTipoPago") %>' />
-                        
-                        <!-- Label asociado por el 'for' con el id único de cada elemento -->
-                        <label class="form-check-label" for='<%# "radio_" + Eval("IdTipoPago") %>'>
-                            <%# Eval("Descripcion") %>
-                        </label>
-                    </div>
-                </ItemTemplate>
-            </asp:Repeater>
+              <asp:Repeater ID="repetformaPago" runat="server">
+                    <ItemTemplate>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="radio" name="grupoPago"
+                                  
+                                value='<%# Eval("IdTipoPago") %>' id='<%# "radio_" + Eval("IdTipoPago") %>'
+                                   <%# Convert.ToInt32(Eval("IdTipoPago")) == 1 ? "checked=\"checked\"" : "" %> />
+                            
+                            <label class="form-check-label" for='<%# "radio_" + Eval("IdTipoPago") %>'>
+                               
+                                <%# Eval("Descripcion") %>
+                            </label>
+                        </div>
+                    </ItemTemplate>
+               </asp:Repeater>
 
                         </div>
                     </div>
@@ -109,7 +111,7 @@
                             <span><asp:Label ID="lblCostoEnvio" runat="server" Text="$ XXX"></asp:Label></span>
                         </div>
 
-                          <!-- Costo de Envío -->
+                          <!-- Descuento -->
                           <div class="d-flex justify-content-between mb-3 pb-3 border-bottom">
                               <span>Descuento </span>
                               <span><asp:Label ID="lblDescuento" runat="server" Text="$ -XXX"></asp:Label></span>

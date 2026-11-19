@@ -18,6 +18,7 @@ namespace tpc_webform_grupo_R
             if (!IsPostBack) { 
 
                 cargarTipoPago();
+                
                 cargarDireccion();
                 if (Session["listaCarrito"] == null)
                 {
@@ -26,9 +27,14 @@ namespace tpc_webform_grupo_R
                 else
                 {
                  cargarResumen();
-                    
+                                     
                 }
+
             }
+
+
+
+
         }
 
 
@@ -59,14 +65,10 @@ namespace tpc_webform_grupo_R
         {
             string valorSeleccionado = Request.Form["grupoPago"];
 
-           
-            if (int.TryParse(valorSeleccionado, out int idFormaPago))
-            {
-                return idFormaPago;
-            }
+            if (string.IsNullOrEmpty(valorSeleccionado))
+                return 1;
 
-           
-            return 0;
+            return int.TryParse(valorSeleccionado, out int eleccion) ? eleccion : 1;
         }
 
         private void cargarResumen()
@@ -77,6 +79,9 @@ namespace tpc_webform_grupo_R
             lblSubtotal.Text =subTotal(listaDetalle).ToString("C");
             lblCostoEnvio.Text = "0";
             lblTotalGeneral.Text= totalPago().ToString("C");
+
+            decimal descuento = subTotal(listaDetalle) * (aplicarDescuento() / 100m);
+            lblDescuento.Text = " - " + descuento.ToString("C");
 
         }
 
@@ -101,7 +106,7 @@ namespace tpc_webform_grupo_R
             if(listaDetalle.Count>0 || listaDetalle != null)
             {
             /// subtotal + envio( FALTA AGREGAR EL PRECIO DEL ENVIO)
-               return total = subTotal(listaDetalle);
+               return total = subTotal(listaDetalle) ;
 
             }
 
@@ -212,10 +217,7 @@ namespace tpc_webform_grupo_R
                 return;
 
             }
-
-            
-
-
+                      
 
             if (rbConEnvio.Checked)
             {
@@ -298,7 +300,6 @@ namespace tpc_webform_grupo_R
             return descuento;
         }
 
-
-
+     
     }
 }
