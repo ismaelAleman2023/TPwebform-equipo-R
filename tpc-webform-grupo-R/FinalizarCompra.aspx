@@ -2,11 +2,17 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <!-- Estilos o scripts específicos para esta vista si necesitás -->
+   
+
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="container py-5">
-        <h2 class="mb-4 fw-bold">Finalizar tu Compra</h2>
+       
+        <div class="d-flex align-items-center gap-3 mb-4">
+        <h2 class="fw-bold m-0">Finalizar tu Compra</h2>
+        <asp:Label ID="lblerror" runat="server" CssClass="text-danger fw-semibold" Style="display: none;"></asp:Label>
+         </div>
 
         <div class="row g-4">
             
@@ -103,6 +109,12 @@
                             <span><asp:Label ID="lblCostoEnvio" runat="server" Text="$ XXX"></asp:Label></span>
                         </div>
 
+                          <!-- Costo de Envío -->
+                          <div class="d-flex justify-content-between mb-3 pb-3 border-bottom">
+                              <span>Descuento </span>
+                              <span><asp:Label ID="lblDescuento" runat="server" Text="$ -XXX"></asp:Label></span>
+                          </div>
+
                         <!-- Total Final -->
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <span class="fw-bold fs-4">Total</span>
@@ -117,4 +129,20 @@
 
         </div>
     </div>
+
+    <script>    
+
+        function limpiarLabel(clientId, segundos) {
+            setTimeout(function () {
+                var lbl = document.getElementById(clientId);
+                if (lbl) {
+                    lbl.innerText = "";           // Borra el texto
+                    lbl.style.display = "none";    // Lo oculta para que no ocupe espacio
+                }
+            }, segundos * 1000);
+        }
+
+    </script>
+
+
 </asp:Content>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.EnterpriseServices;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -201,10 +202,21 @@ namespace tpc_webform_grupo_R
             DireccionNegocio direN = new DireccionNegocio();
             VentaNegocio venN = new VentaNegocio();
             DetalleVentaNegocio detaN = new DetalleVentaNegocio();
-
             Venta ven = new Venta();
-
             Direccion dir = null;
+
+
+            if (formaDePago()<1 || formaDePago()>3)
+            {
+                mostrarMensaje("¡Debe elegir una forma de pago!");
+                return;
+
+            }
+
+            
+
+
+
             if (rbConEnvio.Checked)
             {
                  dir = (Direccion)Session["direccionUso"];
@@ -218,17 +230,13 @@ namespace tpc_webform_grupo_R
                     
                     ven.idDireccion = 0; 
                 }
-                ven.TipoEnvio = 1;
-
-                
-            }
-            else
+                                
+            }else
             {
-                
                 ven.idDireccion = 0; 
-                ven.TipoEnvio = 0;
             }
 
+           
             List<DetalleVenta> listaCarrito = (List<DetalleVenta>)Session["listaCarrito"];
 
             ven.FechaVenta_V = DateTime.Now;
@@ -236,7 +244,7 @@ namespace tpc_webform_grupo_R
             ven.TotalPago_V = totalPago();
             ven.EstadoPedido_v = 0;
             ven.IdCliente_V = (int)Session["idActivo"];
-            ven.idDireccion = dir.IdDireccion;
+  
             ven.TipoPago_V = formaDePago();
             ven.TipoEnvio = rbConEnvio.Checked ? 1 : 0;
 
@@ -256,10 +264,39 @@ namespace tpc_webform_grupo_R
                 Session.Remove("listaCarrito");
             }
 
+            mostrarMensaje("Venta agregada correctamente");
+
+            Response.Redirect("MisPedidos.aspx");
+
             //agregar redireccion y cartel de exito
         }
 
 
+        private void mostrarMensaje(string mensaje)
+        {
+            lblerror.Text = mensaje;
+            lblerror.Style["display"] = "inline"; 
+
+            string script = $"limpiarLabel('{lblerror.ClientID}', 2);";
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "borrarLabel", script, true);
+        }
+
+
+        private int aplicarDescuento()
+        {
+            int fPago = formaDePago();
+            int descuento = 0;
+            if (fPago == 1)
+            {
+                descuento = 10;
+            }
+            else if (fPago == 3 )
+            {
+                descuento = 5;
+            }
+
+            return descuento;
+        }
 
 
 

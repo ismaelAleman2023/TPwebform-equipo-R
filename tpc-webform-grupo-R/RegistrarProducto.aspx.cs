@@ -232,13 +232,13 @@ namespace tpc_webform_grupo_R
 
 
                     List<Imagen> lista = new List<Imagen>();
-                foreach (string url in listImg)
-                {
-                    Imagen img = new Imagen();
-                    img.UrlImagen = url;
-                    lista.Add(img);
-                }
-                pro.ListaImagen = lista;
+                    foreach (string url in listImg)
+                    {
+                        Imagen img = new Imagen();
+                        img.UrlImagen = url;
+                        lista.Add(img);
+                    }
+                    pro.ListaImagen = lista;
 
                     proNeg.agregarProducto(pro);
 
