@@ -20,54 +20,56 @@ namespace tpc_webform_grupo_R
 
         protected void btnLogin_Click(object sender, EventArgs e)
         {
-            ClienteNegocio cliN = new ClienteNegocio();
+            if(Session["usuarioActivo"]== null)
+            {            
+                    ClienteNegocio cliN = new ClienteNegocio();
 
-            string correo = txtCorreoLogin.Text;
-            string pass = txtPassLogin.Text;
-            int idPersona = 0;
-            int rol = 0;
+                    string correo = txtCorreoLogin.Text;
+                    string pass = txtPassLogin.Text;
+                    int idPersona = 0;
+                    int rol = 0;
 
             
-            if (!cliN.validarInicio(correo, pass, ref idPersona, ref rol))
-            {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaExito", "mostrarCartel('¡Correo o Pasword incorrecto!', 'Alert');", true);
-                return;
-            }
+                    if (!cliN.validarInicio(correo, pass, ref idPersona, ref rol))
+                    {
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaExito", "mostrarCartel('¡Correo o Pasword incorrecto!', 'Alert');", true);
+                        return;
+                    }
                        
-            Session["idActivo"] = idPersona;
+                    Session["idActivo"] = idPersona;
 
                          
-            if(rol == 1)
-            {
-                AdministrarNegocio adminN = new AdministrarNegocio();
-                Session["usuarioActivo"] = adminN.buscarAdministrador(idPersona);
-            }
-            else if (rol == 2)
-            {    
-                Session["usuarioActivo"] = cliN.buscarCliente(idPersona);
-            }
-            else if (rol==3)
-            {
-                VendedorNegocio venN = new VendedorNegocio();
-                Session["usuarioActivo"] = venN.buscarVendedor(idPersona);
+                    if(rol == 1)
+                    {
+                        AdministrarNegocio adminN = new AdministrarNegocio();
+                        Session["usuarioActivo"] = adminN.buscarAdministrador(idPersona);
+                    }
+                    else if (rol == 2)
+                    {    
+                        Session["usuarioActivo"] = cliN.buscarCliente(idPersona);
+                    }
+                    else if (rol==3)
+                    {
+                        VendedorNegocio venN = new VendedorNegocio();
+                        Session["usuarioActivo"] = venN.buscarVendedor(idPersona);
                 
-            }
+                    }
 
 
             
-            Session["rolActivo"] = rol;
+                    Session["rolActivo"] = rol;
 
-            if (Session["urlVolver"]!= null)
-            {                
-                Response.Redirect((string)Session["urlVolver"]);
+                    if (Session["urlVolver"]!= null)
+                    {                
+                        Response.Redirect((string)Session["urlVolver"]);
+                    }
+                    else
+                    {
+                        Response.Redirect("Default.aspx");
+
+                    }
+
             }
-            else
-            {
-                Response.Redirect("Default.aspx");
-
-            }
-
-
         }
 
         protected void lnkBtnRegistrarse_Click(object sender, EventArgs e)

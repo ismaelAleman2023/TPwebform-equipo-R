@@ -60,10 +60,10 @@
                     </asp:Panel>
 
                     <!-- LOGIN / PERFIL -->
-                    <asp:HyperLink ID="lnkLogin" runat="server" NavigateUrl="~/Login.aspx" CssClass="action-item text-decoration-none d-flex align-items-center">
+                    <asp:LinkButton ID="lnkLogin" runat="server" OnClick="lnkLogin_Click" CssClass="action-item text-decoration-none d-flex align-items-center">
                         <asp:Image ID="imgUserPerfil" runat="server" CssClass="rounded-circle shadow-sm mb-2" Style="width: 35px; height: 35px; object-fit: cover;" />
                         <span class="action-label ms-1" id="lblLogin" runat="server"></span>
-                    </asp:HyperLink>
+                    </asp:LinkButton>
 
                     <!-- CARRITO -->
                     <asp:HyperLink ID="lnkCarrito" runat="server" NavigateUrl="~/Carrito.aspx" CssClass="action-item ms-1">
