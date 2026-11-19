@@ -55,9 +55,10 @@ namespace tpc_webform_grupo_R
             List<DetalleVenta> listaDetalle = (List<DetalleVenta>) Session["listaCarrito"];
 
             lblCantidadItems.Text= listaDetalle.Count.ToString();
+            decimal envio = calcularEnvio();
             lblSubtotal.Text =subTotal(listaDetalle).ToString("C");
-            lblCostoEnvio.Text = "0";
-            lblTotalGeneral.Text= subTotal(listaDetalle).ToString("C");
+            lblCostoEnvio.Text = envio.ToString("C");
+            lblTotalGeneral.Text= (subTotal(listaDetalle) + envio).ToString("C");
 
 
         }
@@ -72,6 +73,15 @@ namespace tpc_webform_grupo_R
             }
             return subTotal;            
 
+        }
+
+        private decimal calcularEnvio()
+        {
+            if (!rbConEnvio.Checked || Session["direccionUso"] == null)
+            {
+                return 0;
+            }
+            return new EnvioNegocio().calcularCostoEnvio((Direccion)Session["direccionUso"]);
         }
 
         private void cargarDireccion()
@@ -153,6 +163,11 @@ namespace tpc_webform_grupo_R
                 pnlDireccionEnvio.Enabled = true;
                 pnlDireccionEnvio.CssClass = "";
                 Session["conEnvio"]=true;            
+            }
+
+            if (Session["listaCarrito"] != null)
+            {
+                cargarResumen();
             }
 
 

@@ -16,12 +16,17 @@ namespace tpc_webform_grupo_R
                 ddlProvincia.DataTextField = "Nombre";
                 ddlProvincia.DataValueField = "Id";
                 ddlProvincia.DataBind();
+                if (ddlProvincia.Items.Count == 0)
+                {
+                    lblErrorDireccion.Text = "No pudimos cargar las provincias, intentá de nuevo más tarde.";
+                }
                 ddlProvincia.Items.Insert(0, new ListItem("Elegi una provincia", ""));
             }
         }
 
         protected void ddlProvincia_SelectedIndexChanged(object sender, EventArgs e)
         {
+            lblErrorDireccion.Text = "";
             if (ddlProvincia.SelectedValue == "")
             {
                 ddlLocalidad.Items.Clear();
@@ -31,6 +36,10 @@ namespace tpc_webform_grupo_R
             ddlLocalidad.DataTextField = "Nombre";
             ddlLocalidad.DataValueField = "Id";
             ddlLocalidad.DataBind();
+            if (ddlLocalidad.Items.Count == 0)
+            {
+                lblErrorDireccion.Text = "No pudimos cargar las localidades, intentá de nuevo.";
+            }
         }
 
         protected void btnGuardar_Click(object sender, EventArgs e)

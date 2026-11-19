@@ -87,6 +87,7 @@
 
             <!-- COLUMNA DERECHA: Resumen de Compra -->
             <div class="col-lg-5">
+                <asp:UpdatePanel ID="UpdatePanelResumen" runat="server"><ContentTemplate>
                 <div class="card shadow-sm">
                     <div class="card-body">
                         <h5 class="card-title text-primary mb-3">Resumen de Compra</h5>
@@ -113,6 +114,7 @@
                         <asp:Button ID="btnPagarYFinalizar" runat="server" CssClass="btn btn-success w-100 py-2 fw-bold fs-5" Text="Pagar y Finalizar" OnClick="btnPagarYFinalizar_Click" />
                     </div>
                 </div>
+                </ContentTemplate></asp:UpdatePanel>
             </div>
 
         </div>

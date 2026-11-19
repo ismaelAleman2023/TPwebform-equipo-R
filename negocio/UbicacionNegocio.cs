@@ -78,5 +78,22 @@ namespace negocio
                 return true;
             }
         }
+
+        public Coordenada obtenerCoordenadas(string localidad, string provincia)
+        {
+            try
+            {
+                string ruta = "/localidades?nombre=" + Uri.EscapeDataString(localidad)
+                            + "&provincia=" + Uri.EscapeDataString(provincia)
+                            + "&campos=centroide&max=1";
+                JObject respuesta = JObject.Parse(obtenerTexto(ruta));
+                JToken centro = respuesta["localidades"][0]["centroide"];
+                return new Coordenada { Latitud = (double)centro["lat"], Longitud = (double)centro["lon"] };
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
     }
 }
