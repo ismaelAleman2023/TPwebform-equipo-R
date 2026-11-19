@@ -95,8 +95,8 @@ namespace negocio
                     ven.TipoPago_V = (int)datos.Lector["TipoPago_Venta"];
                     ven.Estado_V = (bool)datos.Lector["Estado_Venta"];
                     ven.EstadoPedido_v = (int)datos.Lector["EstadoPedido_venta"];
-                    ven.idDireccion = (int)datos.Lector["tipoenvio"];
-                    ven.TipoEnvio = (int)datos.Lector["idDireccion"];
+                    ven.idDireccion = (int)datos.Lector["idDireccion"];
+                    ven.TipoEnvio = (int)datos.Lector["tipoenvio"];
 
                     ventas.Add(ven);
                 }              
