@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using negocio;
 using dominio;
+using System.Runtime.InteropServices;
 
 
 namespace Helper
@@ -156,8 +157,10 @@ namespace Helper
                     proN.AltaoBajaProducto(pro.IdProducto, 1);
 
                 }
-            } else if (AlBj.Equals("baja")) {
-               
+            }
+            else if (AlBj.Equals("baja"))
+            {
+
                 if (pro.Estado == 1)
                 {
                     proN.AltaoBajaProducto(pro.IdProducto, 0);
@@ -166,6 +169,64 @@ namespace Helper
 
 
             }
+
+        }
+
+
+        public static bool validarCorreo(string correo)
+        {
+
+            ClienteNegocio clieN = new ClienteNegocio();
+            VendedorNegocio venN = new VendedorNegocio();
+            AdministrarNegocio admN = new AdministrarNegocio();
+            List<Cliente> listClie = clieN.listarClientes(2);
+            List<Vendedor> listVen = venN.listarVendedores(2);
+            List<Administrador> listAdmin = admN.listarAdministradores(2);
+
+            string correoBuscar = correo.ToLower();
+
+            foreach (Cliente cliente in listClie)
+            {
+
+                if (cliente.Email != null && cliente.Email.ToLower() == correoBuscar)
+                {
+
+
+                    return true;
+
+                }
+
+            }
+
+            foreach (Vendedor ven in listVen)
+            {
+
+
+                if (ven.Email != null && ven.Email.ToLower() == correoBuscar)
+                {
+
+                    return true;
+
+
+                }
+
+
+            }
+
+            foreach (Administrador adm in listAdmin) {
+
+                if (adm.Email  != null && adm.Email.ToLower() == correoBuscar) {
+
+                    return true;
+                
+                
+                }
+
+            
+            }
+
+            return false;
+
 
         }
 
