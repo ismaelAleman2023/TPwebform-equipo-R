@@ -17,9 +17,7 @@ namespace tpc_webform_grupo_R
             if (!IsPostBack) {
 
                 if (Session["usuarioActivo"] != null && (int)Session["rolActivo"] == 3 || Session["usuarioActivo"] != null && (int)Session["rolActivo"] == 1 ) {
-
-                    cargarDetalle();
-                   
+                    cargarDetalle();                  
 
                 }
                 else
@@ -27,12 +25,7 @@ namespace tpc_webform_grupo_R
                     repPedidosVendedor.Visible = true;
                     lblSinPedidos.Text = "No tiene ningun pedido";
                     lblSinPedidos.Visible = true;
-
-
-                } 
-
-
-            
+                }                        
             
             
             }

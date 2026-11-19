@@ -13,41 +13,42 @@
 
 
         <!-- 1. SECCIÓN DESTACADOS -->
-                       <!-- SECCIÓN DESTACADOS CON CARRUSEL SIMPLE DE BOOTSTRAP -->
-                <section class="mb-5">
-                    <h3 class="border-bottom border-secondary pb-2 mb-3 text-white">Destacados</h3>
 
-                    <div class="p-5 bg-dark border border-secondary rounded">
-                        <div class="row align-items-center w-100 m-0">
-    
-                            <!-- Izquierda: Textos -->
-                            <div class="col-lg-6 text-start ps-0 mb-4 mb-lg-0">
-                                <h1 class="display-5 fw-bold text-white mb-3">Pequeños detalles.<br><em class="text-warning">Grandes momentos.</em></h1>
-                                <p class="text-muted mb-4">Una selección de objetos pensados para hacer especial lo cotidiano.</p>
-                                <a class="text-warning text-decoration-none fw-semibold" href="#catalogo1">Descubrir la colección &or;</a>
+        <section class="mb-5">
+            <h3 class="border-bottom border-secondary pb-2 mb-3 text-white">Destacados</h3>
+
+            <div class="p-5 bg-dark border border-secondary rounded">
+                <div class="row align-items-center w-100 m-0">
+
+                    <!-- Izquierda: Textos -->
+                    <div class="col-lg-6 text-start ps-0 mb-4 mb-lg-0">
+                        <h1 class="display-5 fw-bold text-white mb-3">Pequeños detalles.<br>
+                            <em class="text-warning">Grandes momentos.</em></h1>
+                        <p class="text-muted mb-4">Una selección de objetos pensados para hacer especial lo cotidiano.</p>
+                        <a class="text-warning text-decoration-none fw-semibold" href="#catalogo1">Descubrir la colección &or;</a>
+                    </div>
+
+                    <!-- Derecha: El Carrusel básico de Bootstrap -->
+                    <div class="col-lg-6 d-flex justify-content-center pe-0">
+                        <div id="miCarrusel" class="carousel slide shadow-sm overflow-hidden rounded-circle border border-warning border-2" data-bs-interval="4000" data-bs-ride="carousel" style="width: 320px; height: 320px;">
+                            <div class="carousel-inner w-100 h-100">
+
+                                <asp:Repeater ID="repSimpleCarousel" runat="server">
+                                    <ItemTemplate>
+                                        <div class='<%# Container.ItemIndex == 0 ? "carousel-item active w-100 h-100" : "carousel-item w-100 h-100" %>'>
+                                            <asp:Image ID="ImgCarru" runat="server" ImageUrl='<%# Container.DataItem %>' class="d-block w-100 h-100 object-fit-cover" alt="Imagen" />
+                                        </div>
+                                    </ItemTemplate>
+                                </asp:Repeater>
+
                             </div>
-    
-                            <!-- Derecha: El Carrusel básico de Bootstrap -->
-                            <div class="col-lg-6 d-flex justify-content-center pe-0">
-                                <div id="miCarrusel" class="carousel slide shadow-sm overflow-hidden rounded-circle border border-warning border-2" data-bs-ride="carousel" style="width: 320px; height: 320px;">
-                                    <div class="carousel-inner w-100 h-100">
-    
-                                        <asp:Repeater ID="repSimpleCarousel" runat="server">
-                                            <ItemTemplate>
-                                                <div class='<%# Container.ItemIndex == 0 ? "carousel-item active w-100 h-100" : "carousel-item w-100 h-100" %>'>
-                                                    <img src='<%# Eval("RutaImagen") %>' class="d-block w-100 h-100 object-fit-cover" alt="Imagen">
-                                                </div>
-                                            </ItemTemplate>
-                                        </asp:Repeater>
-
-                                    </div>
-                                </div>
-                            </div>
-
                         </div>
                     </div>
-                </section>
-                     
+
+                </div>
+            </div>
+        </section>
+
 
         <!--    -->
         <div id="catalogo1" style="position: relative; top: -100px; visibility: hidden;"></div>
@@ -137,11 +138,11 @@
             <div class="modal fade" id="productoModal" tabindex="-1" aria-labelledby="productoModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg modal-dialog-centered">
 
-          <asp:UpdatePanel ID="UpdatePanelModal" runat="server" UpdateMode="Conditional">
-               <ContentTemplate>
-            <!-- Modal -->
+                    <asp:UpdatePanel ID="UpdatePanelModal" runat="server" UpdateMode="Conditional">
+                        <ContentTemplate>
+                            <!-- Modal -->
 
-                    <div class="modal-content text-uppercase bg-dark text-light border border-secondary shadow-lg" style="background-color: #212529 !important;">
+                            <div class="modal-content text-uppercase bg-dark text-light border border-secondary shadow-lg" style="background-color: #212529 !important;">
 
 
 
@@ -181,7 +182,7 @@
                                             <!-- Flechas de Navegación -->
                                             <div class="d-flex gap-2 justify-content-center mt-3" style="height: 45px;">
                                                 <asp:Button ID="btnImgAnterior" runat="server" OnClick="btnImgAnterior_Click" Text="&larr;" CssClass="btn btn-outline-light px-3 py-2 fw-bold" Style="width: 50px;" />
-                                                <asp:Button ID="btnImgSiguiente" runat="server" onclick="btnImgSiguiente_Click" Text="&rarr;" CssClass="btn btn-outline-light px-3 py-2 fw-bold" Style="width: 50px;" />
+                                                <asp:Button ID="btnImgSiguiente" runat="server" OnClick="btnImgSiguiente_Click" Text="&rarr;" CssClass="btn btn-outline-light px-3 py-2 fw-bold" Style="width: 50px;" />
                                             </div>
                                         </div>
 
@@ -220,13 +221,13 @@
                                     </div>
                                 </div>
 
-                                </div>
-                                
-                        </div>
+                            </div>
+
+                            </div>
                     </div>
 
-                            </ContentTemplate>
-                        </asp:UpdatePanel>
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
                 </div>
             </div>
         </section>

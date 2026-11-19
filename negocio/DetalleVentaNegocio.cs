@@ -170,5 +170,48 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+
+
+        public List<string> MasVendidos()
+        {
+
+            List<string> listaMasVendidos= new List<string>();
+
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.consultaSql(" SELECT i.idProducto_img,MIN(i.urlImagen) AS urlImagen,SUM(dv.cantidad_dv) AS UnidadesVendidas "
+
+                    + " FROM Imagenes i INNER JOIN detalleVentas dv ON dv.idProducto_dv = i.idProducto_img "
+                    + " INNER JOIN Ventas v ON v.idVenta = dv.idVenta_dv WHERE v.fechaVenta >= DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()), 1) "
+                    + " AND v.fechaVenta < DATEADD(MONTH, 1, DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()), 1))"
+                    + " GROUP BY i.idProducto_img ORDER BY SUM(dv.cantidad_dv) DESC;");
+
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    string url = datos.Lector["urlImagen"].ToString();
+                   
+                    listaMasVendidos.Add(url);
+
+                }
+
+                return listaMasVendidos;    
+             }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+        } 
+
+
+
     }
 }

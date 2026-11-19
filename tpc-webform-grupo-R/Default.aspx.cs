@@ -22,6 +22,7 @@ namespace tpc_webform_grupo_R
         protected void Page_Load(object sender, EventArgs e)
         {
 
+            cargarCarrusel();
             if (!IsPostBack)
             {
 
@@ -330,6 +331,28 @@ namespace tpc_webform_grupo_R
 
             }
         }
+
+
+
+        private void cargarCarrusel()
+        {
+            DetalleVentaNegocio detaN = new DetalleVentaNegocio();
+            List<string> listaUrl = detaN.MasVendidos();
+
+
+
+            if (listaUrl != null && listaUrl.Count > 0)
+            {
+                repSimpleCarousel.DataSource = listaUrl.Take(5).ToList();
+                repSimpleCarousel.DataBind();
+            }
+        }
+
+
+
+
+
+
 
     }
 }
