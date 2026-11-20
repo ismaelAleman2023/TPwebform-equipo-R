@@ -8,6 +8,7 @@ using System.Web.UI.WebControls;
 using dominio;
 using Microsoft.Ajax.Utilities;
 using negocio;
+using Helper;
 
 namespace tpc_webform_grupo_R
 {
@@ -15,10 +16,11 @@ namespace tpc_webform_grupo_R
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack) { 
+            if (!IsPostBack)
+            {
 
                 cargarTipoPago();
-                
+
                 cargarDireccion();
                 if (Session["listaCarrito"] == null)
                 {
@@ -26,8 +28,8 @@ namespace tpc_webform_grupo_R
                 }
                 else
                 {
-                 cargarResumen();
-                                     
+                    cargarResumen();
+
                 }
 
             }
@@ -51,8 +53,8 @@ namespace tpc_webform_grupo_R
         private void cargarTipoPago()
         {
             TipoPagoNegocio pagoN = new TipoPagoNegocio();
-                        
-           
+
+
 
             List<TipoPago> listaPago = pagoN.ListarTipoPago(1);
 
@@ -73,28 +75,28 @@ namespace tpc_webform_grupo_R
 
         private void cargarResumen()
         {
-            List<DetalleVenta> listaDetalle = (List<DetalleVenta>) Session["listaCarrito"];
+            List<DetalleVenta> listaDetalle = (List<DetalleVenta>)Session["listaCarrito"];
 
-            lblCantidadItems.Text= listaDetalle.Count.ToString();
+            lblCantidadItems.Text = listaDetalle.Count.ToString();
             decimal envio = calcularEnvio();
-            lblSubtotal.Text =subTotal(listaDetalle).ToString("C");
+            decimal sub = subTotal(listaDetalle);
+            decimal descuento = sub * (aplicarDescuento() / 100m);
+            lblSubtotal.Text = sub.ToString("C");
             lblCostoEnvio.Text = envio.ToString("C");
-            lblTotalGeneral.Text= (subTotal(listaDetalle) + envio).ToString("C");
-
-            decimal descuento = subTotal(listaDetalle) * (aplicarDescuento() / 100m);
+            lblTotalGeneral.Text = (sub + envio - descuento).ToString("C");
             lblDescuento.Text = " - " + descuento.ToString("C");
 
         }
 
         private decimal subTotal(List<DetalleVenta> listadeta)
-        {            
+        {
             decimal subTotal = 0;
 
             foreach (DetalleVenta item in listadeta)
             {
                 subTotal += item.Subtotal;
             }
-            return subTotal;            
+            return subTotal;
 
         }
 
@@ -113,10 +115,11 @@ namespace tpc_webform_grupo_R
 
             decimal total = 0;
 
-            if(listaDetalle.Count>0 || listaDetalle != null)
+            if (listaDetalle != null && listaDetalle.Count > 0)
             {
-               return total = subTotal(listaDetalle) + calcularEnvio();
-
+                decimal sub = subTotal(listaDetalle);
+                decimal descuento = sub * (aplicarDescuento() / 100m);
+                return total = sub + calcularEnvio() - descuento;
             }
 
             return total;
@@ -129,7 +132,7 @@ namespace tpc_webform_grupo_R
 
         private void cargarDireccion()
         {
-            if (Session["rolActivo"]!= null && (int)Session["rolActivo"] == 2)
+            if (Session["rolActivo"] != null && (int)Session["rolActivo"] == 2)
             {
                 DireccionNegocio direN = new DireccionNegocio();
                 List<Direccion> listaDire = direN.buscarDireccionCliente((int)Session["idActivo"]);
@@ -145,7 +148,7 @@ namespace tpc_webform_grupo_R
                         {
                             btnDireccion.Text = "cambiar direccion";
                             lblDireccionEnvio.Text = item.Calle.ToString() + " " + item.Numero.ToString();
-                            Session["direccionUso"]= item ;
+                            Session["direccionUso"] = item;
 
                         }
 
@@ -170,7 +173,7 @@ namespace tpc_webform_grupo_R
 
 
 
-    
+
         protected void btnDireccion_Click(object sender, EventArgs e)
         {
             DireccionNegocio direN = new DireccionNegocio();
@@ -179,7 +182,7 @@ namespace tpc_webform_grupo_R
 
             if (Session["direccionActivo"] == null)
             {
-                Response.Redirect("RegistroDireccion.aspx");               
+                Response.Redirect("RegistroDireccion.aspx");
             }
             else
             {
@@ -187,7 +190,7 @@ namespace tpc_webform_grupo_R
             }
         }
 
-           
+
 
         protected void rbRetiroTienda_CheckedChanged(object sender, EventArgs e)
         {
@@ -202,7 +205,7 @@ namespace tpc_webform_grupo_R
             {
                 pnlDireccionEnvio.Enabled = true;
                 pnlDireccionEnvio.CssClass = "";
-                Session["conEnvio"]=true;            
+                Session["conEnvio"] = true;
             }
 
             if (Session["listaCarrito"] != null)
@@ -225,58 +228,74 @@ namespace tpc_webform_grupo_R
             Direccion dir = null;
 
 
-            if (formaDePago()<1 || formaDePago()>3)
+            if (formaDePago() < 1 || formaDePago() > 3)
             {
                 mostrarMensaje("¡Debe elegir una forma de pago!");
                 return;
 
             }
-                      
+
 
             if (rbConEnvio.Checked)
             {
-                 dir = (Direccion)Session["direccionUso"];
-               
+                dir = (Direccion)Session["direccionUso"];
+
                 if (dir != null)
                 {
                     ven.idDireccion = dir.IdDireccion;
                 }
                 else
                 {
-                    
-                    ven.idDireccion = 0; 
+
+                    ven.idDireccion = 0;
                 }
-                                
-            }else
+
+            }
+            else
             {
-                ven.idDireccion = 0; 
+                ven.idDireccion = 0;
             }
 
-           
+
             List<DetalleVenta> listaCarrito = (List<DetalleVenta>)Session["listaCarrito"];
 
             ven.FechaVenta_V = DateTime.Now;
-            ven.Estado_V =true;
+            ven.Estado_V = true;
             ven.TotalPago_V = totalPago();
             ven.EstadoPedido_v = 0;
             ven.IdCliente_V = (int)Session["idActivo"];
-  
+
             ven.TipoPago_V = formaDePago();
             ven.TipoEnvio = rbConEnvio.Checked ? 1 : 0;
 
             venN.agregar(ven);
 
-            int idVenta= venN.ultimoIdVenta();
+            int idVenta = venN.ultimoIdVenta();
 
             if (listaCarrito != null)
             {
+                ProductoNegocio prodN = new ProductoNegocio();
+                var itemsComprobante = new List<ItemComprobante>();
+
                 foreach (DetalleVenta item in listaCarrito)
                 {
                     item.IdVenta_Detalle = idVenta;
                     detaN.agregar(item);
+
+                    Producto prod = prodN.buscarProduc(item.IdProducto);
+                    string nombreProd = prod != null ? prod.Nombre : $"Producto #{item.IdProducto}";
+
+                    itemsComprobante.Add(new ItemComprobante
+                    {
+                        Producto = nombreProd,
+                        Cantidad = item.Cantidad,
+                        PrecioUnitario = item.PrecioUnitario
+                    });
                 }
 
-               
+                enviarComprobanteVenta(idVenta, ven.FechaVenta_V, ven.TotalPago_V, listaCarrito, itemsComprobante);
+
+
                 Session.Remove("listaCarrito");
             }
 
@@ -291,11 +310,13 @@ namespace tpc_webform_grupo_R
         private void mostrarMensaje(string mensaje)
         {
             lblerror.Text = mensaje;
-            lblerror.Style["display"] = "inline"; 
+            lblerror.Style["display"] = "inline";
 
             string script = $"limpiarLabel('{lblerror.ClientID}', 2);";
             ScriptManager.RegisterStartupScript(this, this.GetType(), "borrarLabel", script, true);
         }
+
+
 
 
         private int aplicarDescuento()
@@ -306,7 +327,7 @@ namespace tpc_webform_grupo_R
             {
                 descuento = 10;
             }
-            else if (fPago == 3 )
+            else if (fPago == 3)
             {
                 descuento = 5;
             }
@@ -314,6 +335,45 @@ namespace tpc_webform_grupo_R
             return descuento;
         }
 
-     
+
+
+        private void enviarComprobanteVenta(int idVenta, DateTime fechaVenta, decimal totalPago, List<DetalleVenta> listaCarrito, List<ItemComprobante> itemsComprobante)
+        {
+            Cliente cliente = Session["usuarioActivo"] as Cliente;
+
+            if (cliente == null || string.IsNullOrEmpty(cliente.Email))
+                return;
+
+            try
+            {
+                decimal subtotalCalc = subTotal(listaCarrito);
+                decimal envioCalc = calcularEnvio();
+                decimal descuentoCalc = subtotalCalc * (aplicarDescuento() / 100m);
+
+                var datosComprobante = new DatosComprobante
+                {
+                    NumeroPedido = idVenta.ToString(),
+                    NombreCliente = $"{cliente.Nombre} {cliente.Apellido}".Trim(),
+                    EmailCliente = cliente.Email,
+                    Fecha = fechaVenta,
+                    RutaLogo = Server.MapPath("~/images/icons/dorregoDesign.png"),
+                    Items = itemsComprobante,
+                    Descuento = descuentoCalc,
+                    Envio = envioCalc,
+                    Total = totalPago
+                };
+
+                EnvioEmail envioEmail = new EnvioEmail();
+                envioEmail.EnviarConfirmacionPedido(datosComprobante);
+            }
+            catch (Exception )
+            {
+              
+                // No frenamos la compra si falla el envío del correo
+            }
+        }
+
+
+
     }
 }

@@ -110,6 +110,7 @@
     <Content Include="MisPedidos.aspx" />
     <Content Include="Perfil.aspx" />
     <Content Include="Principal.Master" />
+    <Content Include="RegistrarProducto.aspx" />
     <Content Include="RegistroEstado.aspx" />
     <Content Include="images\icons\carrusel_1.jpg" />
     <Content Include="images\icons\carrusel_2.jpg" />
@@ -126,7 +127,6 @@
     <Content Include="images\products\producto1.svg" />
     <Content Include="images\products\producto2.svg" />
     <Content Include="images\products\producto3.svg" />
-    <Content Include="RegistrarProducto.aspx" />
     <Content Include="RegistroEstado.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="RegistroCategoria.aspx" />
