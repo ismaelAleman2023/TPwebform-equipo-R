@@ -151,6 +151,8 @@ namespace negocio
         public void modificarVendedor(Vendedor vendedorN, int id)
         {
             AccesoDatos datos = new AccesoDatos();
+            AccesoDatos datosVendedor = new AccesoDatos();
+
             try
             {
                 datos.consultaSql("update personas set nombre_per=@nombre, apellido_per=@apellido, email_per=@email, telefono_per=@telefono, contrasenia_per=@pass, fecha_nacimiento_per=@fechaNacimiento where idPersona=@id");
@@ -162,11 +164,11 @@ namespace negocio
                 datos.setearParametros("@fechaNacimiento", vendedorN.FechaDeNacimiento);
                 datos.setearParametros("@id", id);
                 datos.ejecutarAccion();
-                datos.cerrarConexion();
-                datos.consultaSql("update vendedores set legajo_V=@legajo where idpersona_v=@id");
-                datos.setearParametros("@legajo", vendedorN.Legajo);
-                datos.setearParametros("@id", id);
-                datos.ejecutarAccion();
+
+                datosVendedor.consultaSql("update vendedores set legajo_V=@legajo where idpersona_v=@id");
+                datosVendedor.setearParametros("@legajo", vendedorN.Legajo);
+                datosVendedor.setearParametros("@id", id);
+                datosVendedor.ejecutarAccion();
             }
             catch (Exception)
             {
@@ -175,8 +177,8 @@ namespace negocio
             finally
             {
                 datos.cerrarConexion();
+                datosVendedor.cerrarConexion();
             }
-
         }
 
         public Vendedor buscarVendedor(int id)
