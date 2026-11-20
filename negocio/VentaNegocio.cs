@@ -271,9 +271,29 @@ namespace negocio
 
         }
 
-        
 
-        
+
+        public void actualizarEstadoPago(int idVenta, int nuevoEstado)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.consultaSql("UPDATE Ventas SET EstadoPedido_venta = @estado WHERE IdVenta = @idVenta");
+                datos.setearParametros("@estado", nuevoEstado);
+                datos.setearParametros("@idVenta", idVenta);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
 
 
     }

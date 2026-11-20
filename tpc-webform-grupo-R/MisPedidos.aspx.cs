@@ -7,14 +7,13 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
+
 namespace tpc_webform_grupo_R
 {
     public partial class MisPedidos : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
-
             if (!IsPostBack)
             {
                 if (Session["usuarioActivo"] != null && (int)Session["rolActivo"] ==2 )
@@ -35,8 +34,6 @@ namespace tpc_webform_grupo_R
         {
             int valor = int.Parse(((Button)sender).CommandArgument);
             Response.Redirect("DetallePedidos.aspx?detalleVenta=" + valor, false);
-
-
 
         }
 
@@ -79,6 +76,19 @@ namespace tpc_webform_grupo_R
 
 
         }
+
+        private void VerificarRetornoMercadoPago()
+        {
+            string status = Request.QueryString["status"];
+            string externalReference = Request.QueryString["external_reference"];
+
+            if (status == "approved" && int.TryParse(externalReference, out int idVenta))
+            {
+                VentaNegocio venN = new VentaNegocio();
+                venN.actualizarEstadoPago(idVenta, 3); // 3 Pago recibido
+            }
+        }
+
 
     }
 }

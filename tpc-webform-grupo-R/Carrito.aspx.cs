@@ -189,15 +189,20 @@ namespace tpc_webform_grupo_R
         protected void btnContinuar_Click(object sender, EventArgs e)
         {
 
-            if (Session["usuarioActivo"] == null)
+            if (Session["usuarioActivo"] == null )
             {
                 Session["urlVolver"] = "Carrito.aspx";
                 Response.Redirect("Login.aspx");
 
             }
+            else if (Session["listaCarrito"] == null || ((List<DetalleVenta>)Session["listaCarrito"]).Count <1)
+            {
+                //agregar mensaje que no puede avanzar sin tenes nada en el carrito
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaExito", "mostrarCartel('No puede avanzar con el carrito vacio', 'error');", true);
+            }
             else
             {
-              Response.Redirect("FinalizarCompra.aspx");
+                Response.Redirect("FinalizarCompra.aspx");
             }
 
 

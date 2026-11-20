@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Finalizar Compra" Language="C#" MasterPageFile="~/Principal.Master" AutoEventWireup="true" CodeBehind="FinalizarCompra.aspx.cs" Inherits="tpc_webform_grupo_R.FinalizarCompra" %>
+﻿<%@ Page Title="Finalizar Compra" Language="C#" MasterPageFile="~/Principal.Master" AutoEventWireup="true" CodeBehind="FinalizarCompra.aspx.cs" Inherits="tpc_webform_grupo_R.FinalizarCompra" Async="true" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <!-- Estilos o scripts específicos para esta vista si necesitás -->
@@ -99,6 +99,7 @@
                 <asp:UpdatePanel ID="UpdatePanelResumen" runat="server" UpdateMode="Conditional">
                     <Triggers>
                         <asp:AsyncPostBackTrigger ControlID="btnCambiarPago" EventName="Click" />
+                        <asp:PostBackTrigger ControlID="btnPagarYFinalizar" />
                     </Triggers>
                     <ContentTemplate>
                         <div class="card shadow-sm">
@@ -134,14 +135,15 @@
 
                                 <!-- Botón Pagar y Finalizar -->
                                 <asp:Button ID="btnPagarYFinalizar" runat="server" CssClass="btn btn-success w-100 py-2 fw-bold fs-5" Text="Pagar y Finalizar" OnClick="btnPagarYFinalizar_Click" />
+
                             </div>
                         </div>
                     </ContentTemplate>
                 </asp:UpdatePanel>
             </div> <!-- Cierre de col-lg-5 -->
 
-        </div> <!-- Cierre de row g-4 -->
-    </div> <!-- Cierre de container -->
+        </div> <!-- Cierre de row -->
+    </div>
 
     <script type="text/javascript">
         function seleccionarMedioPago(idTipoPago) {

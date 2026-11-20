@@ -1,14 +1,20 @@
-﻿using System;
+﻿using dominio;
+using Helper;
+using Microsoft.Ajax.Utilities;
+using negocio;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.EnterpriseServices;
 using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using dominio;
-using Microsoft.Ajax.Utilities;
-using negocio;
-using Helper;
+using MercadoPago.Client.Preference;
+using MercadoPago.Config;
+using MercadoPago.Resource.Preference;
 
 namespace tpc_webform_grupo_R
 {
@@ -16,6 +22,8 @@ namespace tpc_webform_grupo_R
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
             if (!IsPostBack)
             {
 
@@ -219,7 +227,7 @@ namespace tpc_webform_grupo_R
 
 
 
-        protected void btnPagarYFinalizar_Click(object sender, EventArgs e)
+        protected async void btnPagarYFinalizar_Click(object sender, EventArgs e)
         {
             DireccionNegocio direN = new DireccionNegocio();
             VentaNegocio venN = new VentaNegocio();
@@ -295,16 +303,64 @@ namespace tpc_webform_grupo_R
 
                 enviarComprobanteVenta(idVenta, ven.FechaVenta_V, ven.TotalPago_V, listaCarrito, itemsComprobante);
 
-
                 Session.Remove("listaCarrito");
             }
 
-            mostrarMensaje("Venta agregada correctamente");
-
-            Response.Redirect("MisPedidos.aspx");
-
-            //agregar redireccion y cartel de exito
+            if (formaDePago() == 2 //MP
+                )
+            {
+                await RedirigirAMercadoPago(idVenta, ven.TotalPago_V);
+            }
+            else
+            {
+                mostrarMensaje("Venta agregada correctamente");
+                Response.Redirect("MisPedidos.aspx",false);
+                Context.ApplicationInstance.CompleteRequest();
+            }
         }
+
+        private async Task RedirigirAMercadoPago(int idVenta, decimal montoTotal)
+        {
+            try
+            {
+                MercadoPagoConfig.AccessToken = ConfigurationManager.AppSettings["MP_AccessToken"];
+                string baseUrl = Request.Url.GetLeftPart(UriPartial.Authority);
+
+                var request = new PreferenceRequest
+                {
+                    Items = new List<PreferenceItemRequest>
+                    {
+                        new PreferenceItemRequest
+                        {
+                            Title = $"Compra en Tienda - Pedido #{idVenta}",
+                            Quantity = 1,
+                            CurrencyId = "ARS",
+                            UnitPrice = montoTotal
+                        }
+                    },
+                    BackUrls = new PreferenceBackUrlsRequest
+                    {
+                        Success = baseUrl + "/MisPedidos.aspx",
+                        Failure = baseUrl + "/MisPedidos.aspx",
+                        Pending = baseUrl + "/MisPedidos.aspx"
+                    },
+                    AutoReturn = "approved",
+                    ExternalReference = idVenta.ToString()
+                };
+
+                var client = new PreferenceClient();
+                Preference preference = await client.CreateAsync(request);
+
+                Response.Redirect(preference.InitPoint, false);
+                Context.ApplicationInstance.CompleteRequest();
+            }
+            catch (Exception ex)
+            {
+                mostrarMensaje("Error al conectar con Mercado Pago: " + ex.Message);
+            }
+
+        }
+
 
 
         private void mostrarMensaje(string mensaje)
@@ -369,7 +425,7 @@ namespace tpc_webform_grupo_R
             catch (Exception )
             {
               
-                // No frenamos la compra si falla el envío del correo
+               
             }
         }
 
