@@ -65,13 +65,12 @@ namespace tpc_webform_grupo_R
 
         private int formaDePago()
         {
-            string valorSeleccionado = Request.Form["grupoPago"];
-
-            if (string.IsNullOrEmpty(valorSeleccionado))
+            if (string.IsNullOrEmpty(hfIdTipoPago.Value))
                 return 1;
 
-            return int.TryParse(valorSeleccionado, out int eleccion) ? eleccion : 1;
+            return int.TryParse(hfIdTipoPago.Value, out int eleccion) ? eleccion : 1;
         }
+
 
         private void cargarResumen()
         {
@@ -213,7 +212,8 @@ namespace tpc_webform_grupo_R
                 cargarResumen();
             }
 
-
+            UpdatePanelResumen.Update();
+        
         }
 
 
@@ -374,6 +374,16 @@ namespace tpc_webform_grupo_R
         }
 
 
-
+        protected void btnCambiarPago_Click(object sender, EventArgs e)
+        {
+            if (Session["listaCarrito"] != null)
+            {
+                cargarResumen();
+            }
+            UpdatePanelResumen.Update();
+        }
     }
+
+
+    
 }
