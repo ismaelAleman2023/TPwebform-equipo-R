@@ -53,7 +53,7 @@ namespace tpc_webform_grupo_R
                 v.Estado_V,
                 EstadoPedido_v = esta.buscarEstado(v.EstadoPedido_v)
             }
-                ).ToList();
+                ).OrderByDescending(v => v.IdVenta_V).ToList();
 
 
             if (listVen != null & listVen.Count > 0)

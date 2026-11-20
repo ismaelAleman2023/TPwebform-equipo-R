@@ -27,8 +27,14 @@ namespace tpc_webform_grupo_R
         {
             if (!IsPostBack)
             {
+                if (Session["clienteAModificar"]!=null) { 
+                
                 Cli = (Cliente)Session["clienteAModificar"];
+                }
+                else {
                 clieActivo = (Cliente)Session["usuarioActivo"];
+                
+                }
 
                 if (Session["EsAgregar"] != null &&(bool)Session["EsAgregar"])
                 {
@@ -50,7 +56,7 @@ namespace tpc_webform_grupo_R
                     tipo.InnerText = "Modificar Cliente";
                     btnRegistrar.Text = "Guardar";
                     subtitulo.InnerText = "Modifique los datos y haga click en 'Guardar' .";
-
+                    
                     textInicio = "<--- Volver a ";
                     textFinal = "Admistrador";
                     UrlVolver = "Administrar.aspx";
@@ -63,7 +69,7 @@ namespace tpc_webform_grupo_R
                     tipo.InnerText = "Modificar perfil";
                     btnRegistrar.Text = "Guardar";
                     subtitulo.InnerText = "Modifique los datos y haga click en 'Guardar' .";
-
+                    txtPassword.ReadOnly = true;
                     UrlVolver = (string)Session["VolverPerfil"];
                     textInicio = "<--- Volver a ";
                     textFinal = "Perfil";
@@ -77,8 +83,16 @@ namespace tpc_webform_grupo_R
         private void cargarDatosCliente()
         {
 
-            Cli = (Cliente)Session["clienteAModificar"];
-            clieActivo = (Cliente)Session["usuarioActivo"];
+            if (Session["clienteAModificar"] != null)
+            {
+
+                Cli = (Cliente)Session["clienteAModificar"];
+            }
+            else
+            {
+                clieActivo = (Cliente)Session["usuarioActivo"];
+
+            }
             if (Cli != null)
             {
 
@@ -86,7 +100,12 @@ namespace tpc_webform_grupo_R
                 txtApellido.Text = Cli.Apellido;
                 txtCorreo.Text = Cli.Email;
                 txtTelefono.Text = Cli.Telefono;
-                txtPassword.Text = Cli.Password;
+                if (Cli.Password != null)
+                {
+                    txtPassword.Text = Cli.Password;
+                    txtPassword.Attributes["value"] = Cli.Password;
+                }
+
                 txtFechaNacimiento.Text = Cli.FechaDeNacimiento.ToString("yyyy-MM-dd");
 
             }
@@ -97,7 +116,12 @@ namespace tpc_webform_grupo_R
                 txtApellido.Text = clieActivo.Apellido;
                 txtCorreo.Text = clieActivo.Email;
                 txtTelefono.Text = clieActivo.Telefono;
-                txtPassword.Text = clieActivo.Password;
+
+                if (clieActivo.Password != null)
+                {
+                    txtPassword.Text = clieActivo.Password;
+                    txtPassword.Attributes["value"] = clieActivo.Password;
+                }
                 txtFechaNacimiento.Text = clieActivo.FechaDeNacimiento.ToString("yyyy-MM-dd");
 
             }
@@ -125,7 +149,7 @@ namespace tpc_webform_grupo_R
                     return;
                 }
 
-                string numTele = txtTelefono.Text.Trim();
+                string numTele ="+54"+ txtTelefono.Text.Trim();
                 if (!validarTelefono(numTele))
                 {
                     return;
@@ -240,7 +264,7 @@ namespace tpc_webform_grupo_R
 
         private bool validarTelefono(string numTele)
         {
-            bool esValido = numTele != null && numTele.Length == 13 && numTele[0] == '+';
+            bool esValido = numTele != null && numTele.Length == 10 && numTele[0] == '+';
 
             for (int i = 1; i < numTele.Length && esValido; i++)
             {

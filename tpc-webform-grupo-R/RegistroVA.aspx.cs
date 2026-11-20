@@ -13,13 +13,13 @@ namespace tpc_webform_grupo_R
     {
         public string nombre = string.Empty;
         //int valor = 0;
-        
+
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                
+
                 if (Session["vendedorAModificar"] != null || Session["adminAModificar"] != null)
                 {
                     ViewState["modificar"] = true;
@@ -28,20 +28,22 @@ namespace tpc_webform_grupo_R
                     {
                         int valor = (int)Session["btnAgregar"];
                         cargarTexto(valor, true);
-                                               
+
                         if (valor == 6 && Session["vendedorAModificar"] != null)
                         {
                             cargarDatosVendedor((Vendedor)Session["vendedorAModificar"]);
+                            txtLegajo.ReadOnly = true;
                         }
                         else if (valor == 7 && Session["adminAModificar"] != null)
                         {
                             cargarDatosAdministrador((Administrador)Session["adminAModificar"]);
+                            txtCuit.ReadOnly = true;
                         }
                     }
                 }
                 else
                 {
-                  
+
                     ViewState["modificar"] = false;
 
                     if (Session["btnAgregar"] != null)
@@ -51,12 +53,12 @@ namespace tpc_webform_grupo_R
                     }
                 }
             }
-        
+
 
         }
 
 
-        private void cargarTexto(int valor , bool modificar)
+        private void cargarTexto(int valor, bool modificar)
         {
             if (modificar)
             {
@@ -77,7 +79,8 @@ namespace tpc_webform_grupo_R
                 btnRegistrar.Text = "Guardar";
 
             }
-            else {
+            else
+            {
 
                 texto3.Visible = true;
                 if (valor == 6)
@@ -128,7 +131,8 @@ namespace tpc_webform_grupo_R
             VendedorNegocio venN = new VendedorNegocio();
             AdministrarNegocio adminN = new AdministrarNegocio();
 
-            if (Session["btnAgregar"]!=null){
+            if (Session["btnAgregar"] != null)
+            {
 
                 int aux = (int)Session["btnAgregar"];
 
@@ -142,10 +146,10 @@ namespace tpc_webform_grupo_R
                     ven.Telefono = txtTelefono.Text;
                     ven.Password = txtPassword.Text;
                     ven.FechaDeNacimiento = DateTime.Parse(txtFechaNacimiento.Text);
-                    ven.Legajo= txtLegajo.Text;
+                    ven.Legajo = txtLegajo.Text;
                     venN.agregarVendedor(ven);
                 }
-                else if (aux== 7)//administrador
+                else if (aux == 7)//administrador
                 {
                     Administrador admin = new Administrador();
                     admin.Nombre = txtNombre.Text;
@@ -154,16 +158,25 @@ namespace tpc_webform_grupo_R
                     admin.Telefono = txtTelefono.Text;
                     admin.Password = txtPassword.Text;
                     admin.FechaDeNacimiento = DateTime.Parse(txtFechaNacimiento.Text);
-                    admin.Cuil = txtCuit.Text;  
+                    admin.Cuil = txtCuit.Text;
                     adminN.agregarAdministrador(admin);
 
                 }
 
             }
-           
+
             Response.Redirect("administrar.aspx");
 
 
         }
+
+
+
+
+
+
+
+
+
     }
 }

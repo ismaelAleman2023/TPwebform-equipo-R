@@ -24,8 +24,8 @@ namespace tpc_webform_grupo_R
             {            
                     ClienteNegocio cliN = new ClienteNegocio();
 
-                    string correo = txtCorreoLogin.Text;
-                    string pass = txtPassLogin.Text;
+                    string correo = txtCorreoLogin.Text.Trim();
+                    string pass = txtPassword.Text.Trim();
                     int idPersona = 0;
                     int rol = 0;
 
