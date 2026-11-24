@@ -109,6 +109,7 @@
     <Content Include="Default.aspx" />
     <Content Include="DetallePedidos.aspx" />
     <Content Include="DireccionEnvio.aspx" />
+    <Content Include="Error.aspx" />
     <Content Include="FinalizarCompra.aspx" />
     <Content Include="Informes.aspx" />
     <Content Include="MisPedidos.aspx" />
@@ -280,6 +281,13 @@
     </Compile>
     <Compile Include="DireccionEnvio.aspx.designer.cs">
       <DependentUpon>DireccionEnvio.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Error.aspx.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Error.aspx.designer.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
     </Compile>
     <Compile Include="FinalizarCompra.aspx.cs">
       <DependentUpon>FinalizarCompra.aspx</DependentUpon>

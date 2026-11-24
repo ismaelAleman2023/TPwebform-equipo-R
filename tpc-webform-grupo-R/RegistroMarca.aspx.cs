@@ -16,34 +16,46 @@ namespace tpc_webform_grupo_R
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            try
+            {
+                if (!IsPostBack)
+                {
 
-            if (!IsPostBack)
+
+                    marc = (Marca)Session["MarcaModi"];
+                    if (marc != null)
+                    {
+
+                        txtDescripcionMarca.Text = marc.Descripcion;
+                        ViewState["modi"] = true;
+                        h2Titulo.InnerText = "Modificar Marca";
+                        btnRegistrarMarca.Text = "Modificar";
+                    }
+                    else
+                    {
+
+
+                        ViewState["modi"] = false;
+                        h2Titulo.InnerText = "Registrar Marca";
+                        btnRegistrarMarca.Text = "Registrar";
+
+
+                    }
+
+
+
+
+                }
+
+
+
+            }
+            catch (Exception ex)
             {
 
-
-                marc = (Marca)Session["MarcaModi"];
-                if (marc != null)
-                {
-
-                    txtDescripcionMarca.Text = marc.Descripcion;
-                    ViewState["modi"] = true;
-                    h2Titulo.InnerText = "Modificar Marca";
-                    btnRegistrarMarca.Text = "Modificar";
-                }
-                else
-                {
-
-
-                    ViewState["modi"] = false;
-                    h2Titulo.InnerText = "Registrar Marca";
-                    btnRegistrarMarca.Text = "Registrar";
-
-
-                }
-
-
-
-
+                Session["error"] = Ayudante.aTexto(ex);
+                Response.Redirect("Error.aspx", false);
+                return;
             }
 
 
@@ -53,22 +65,32 @@ namespace tpc_webform_grupo_R
 
         protected void btnRegistrarMarca_Click(object sender, EventArgs e)
         {
-            string nombreMarca = txtDescripcionMarca.Text;
             MarcaNegocio mar = new MarcaNegocio();
-            Marca marc = null;
-
-
-            if (Ayudante.ValidarNoNumero(nombreMarca))
-            {
-
-                lblMensajeMarca.Text = "El nombre de la marca no puede contener numeros.";
-                return;
-
-            }
-
 
             try
             {
+
+
+                string nombreMarca = txtDescripcionMarca.Text;
+
+                if (string.IsNullOrWhiteSpace(nombreMarca))
+                {
+                    lblMensajeMarca.Text = "Debe ingresar un nombre para la marca.";
+                    lblMensajeMarca.CssClass = "small fw-semibold text-danger";
+                    return;
+                }
+
+                if (Ayudante.ValidarNoNumero(nombreMarca))
+                {
+
+                    lblMensajeMarca.Text = "El nombre de la marca no puede contener numeros.";
+                    lblMensajeMarca.CssClass = "small fw-semibold text-danger";
+                    return;
+
+                }
+
+
+
                 bool esModificar = false;
 
                 if (ViewState["modi"] != null && (bool)ViewState["modi"] == true)
@@ -83,26 +105,26 @@ namespace tpc_webform_grupo_R
                     marc = (Marca)Session["MarcaModi"];
 
 
-                if (mar.existeOtraMarca(nombreMarca,marc.IdMarca))
+                }
+                else
                 {
 
+                    marc = new Marca();
+
+                }
+
+                if (mar.existeOtraMarca(nombreMarca, marc.IdMarca))
+                {
                     lblMensajeMarca.Text = "Ya esta registrado una marca con ese nombre.";
+                    lblMensajeMarca.CssClass = "small fw-semibold text-danger";
                     return;
-
-
                 }
-
-                }
-                else{
-                
-                marc=new Marca();
-                }
-
                 marc.Descripcion = nombreMarca;
 
 
 
-                if (esModificar) {
+                if (esModificar)
+                {
 
                     mar.modificar(marc);
 
@@ -112,14 +134,6 @@ namespace tpc_webform_grupo_R
                 }
                 else
                 {
-                    if (mar.existeOtraMarca(nombreMarca, marc.IdMarca))
-                    {
-
-                        lblMensajeMarca.Text = "Ya esta registrado una marca con ese nombre.";
-                        return;
-
-
-                    }
 
                     mar.AgregarMarca(marc);
 
@@ -131,15 +145,17 @@ namespace tpc_webform_grupo_R
 
 
                 Session.Remove("MarcaModi");
-                ViewState["modi"]= false;
+                ViewState["modi"] = false;
 
-               
+
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                Session["error"] = Ayudante.aTexto(ex);
+                Response.Redirect("Error.aspx", false);
+                return;
             }
 
         }

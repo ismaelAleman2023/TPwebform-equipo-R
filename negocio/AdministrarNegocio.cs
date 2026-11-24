@@ -166,6 +166,7 @@ namespace negocio
         public void modificarAdministrador(Administrador admin , int idAdmin)
         {
             AccesoDatos datos = new AccesoDatos();
+            AccesoDatos datosAdmin = new AccesoDatos();
             try
             {
                 datos.consultaSql("update personas set nombre_per=@nombre, apellido_per=@apellido, email_per=@email, telefono_per=@telefono, contrasenia_per=@pass, fecha_nacimiento_per=@fechaNacimiento where idPersona=@idPersona");
@@ -178,12 +179,11 @@ namespace negocio
                 datos.setearParametros("@idPersona", idAdmin);
 
                 datos.ejecutarAccion();
-                datos.cerrarConexion();
 
-                datos.consultaSql("update administradores set cuil_admin=@cuil where idpersona_admin=@idPersona");
-                datos.setearParametros("@cuil", admin.Cuil);
-                datos.setearParametros("@idPersona", admin.IdPersona);
-                datos.ejecutarAccion();
+                datosAdmin.consultaSql("update administradores set cuil_admin=@cuil where idpersona_admin=@idPersona");
+                datosAdmin.setearParametros("@cuil", admin.Cuil);
+                datosAdmin.setearParametros("@idPersona", admin.IdPersona);
+                datosAdmin.ejecutarAccion();
             }
             catch (Exception)
             {
@@ -192,6 +192,7 @@ namespace negocio
             finally
             {
                 datos.cerrarConexion();
+                datosAdmin.cerrarConexion();
             }
 
 

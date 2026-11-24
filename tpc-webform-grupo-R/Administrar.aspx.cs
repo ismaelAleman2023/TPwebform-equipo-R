@@ -340,7 +340,7 @@ namespace tpc_webform_grupo_R
                 s.IdStock,
                 Producto=Helper.Ayudante.idxNproduc(s.IdProducto_stk),
                 s.Cantidad,
-                Estado = (s.Estado == 1)?"Activo": "Ealiminado",
+                Estado = (s.Estado == 1)?"Activo": "Eliminado",
             }).ToList();
 
 

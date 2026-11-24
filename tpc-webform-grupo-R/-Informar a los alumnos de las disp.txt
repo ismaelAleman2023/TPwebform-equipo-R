@@ -1,0 +1,54 @@
+-Informar a los alumnos de las disponibilidad de 20 becas dadas por HP.
+-comunicar los requisitos necesarios para poder inscribirse.
+-Recibir las inscripciones y verificar que cumplan los requisitos.
+-De los que cumplen los requisitos, seleccionar los 20 mejores promedios.
+-Informar a los alumnos seleccionados y solicitarles los datos necesarios.
+-Comunicar la fecha y el horario del primer día del curso.
+-Controlador la asistencia del primer día.
+
+Adjudicación de las 20 becas a los alumnos que hayan cursado por completo el 4.º cuatrimestre y no adeuden más de 4 finales, seleccionando los 20 mejores promedios entre los postulantes que cumplan los requisitos, con comunicación a los alumnos seleccionados sobre el inicio del curso y registro de asistencia al primer día.
+
+use master
+go
+
+use PRUEBA308
+GO
+
+CREATE TABLE Profesores
+(Legajo_Prof char(4) not null,
+Nombre_Prof varchar(25) not null,
+Apellido_Prof varchar(25) not null,
+Materia varchar(25) null,
+CONSTRAINT PK_PROFESORES PRIMARY KEY (Legajo_Prof)
+)
+use PRUEBA308
+GO
+
+CREATE TABLE Cursos
+(Codigo_Curso char(4)not null,
+Nombre_Curso varchar(20) not null,
+LegajoProf_Curso char(4)not null,
+CONSTRAINT PK_CURSOS PRIMARY KEY (Codigo_Curso),
+CONSTRAINT FK_PROFESORES FOREIGN KEY (LegajoProf_Curso) REFERENCES Profesores (Legajo_Prof)
+)
+
+CREATE TABLE Alumnos(
+Legajo_Alum char(4) not null,
+Nombre_Alum varchar(25) not null,
+Edad_Alum char(2) null,
+FechaNacimiento_Alum date NOT NULL,
+Apellido_Alum varchar(25)NOT NULL,
+CONSTRAINT PK_ALUMNOS PRIMARY KEY (Legajo_Alum)
+)
+
+CREATE TABLE Alumnos_Cursos
+(Codigocur_AlumCur char(4) not null,
+LegajoAlum_AlumCur char(4)not null,
+CONSTRAINT PK_ALUMNOS_CURSOS PRIMARY KEY (Codigocur_AlumCur,LegajoAlum_AlumCur),
+CONSTRAINT FK_CODIGOCURSO FOREIGN KEY (Codigocur_AlumCur) REFERENCES Cursos(Codigo_Curso),
+CONSTRAINT FK_LEGAJOALUMNO FOREIGN KEY (LegajoAlum_AlumCur) REFERENCES Alumnos(Legajo_Alum)
+)
+
+
+
+agregado validaciones y excepciones en registroCliente,registroProductos,registroCategoria,registroMarca,SumarStock,RegistroRol,RegistroTipoPago

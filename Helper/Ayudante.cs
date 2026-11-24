@@ -231,6 +231,26 @@ namespace Helper
         }
 
 
+        public static string aTexto(object valor) {
+
+            if (valor == null) {
+
+                return "No se pudo obtener el detalle del error.";
+            
+            }
+
+            Exception ex = valor as Exception;
+            if (ex != null) {
+               return string.IsNullOrWhiteSpace(ex.Message) ? ex.ToString() : ex.Message;
+
+            }
+
+            string texto = valor.ToString();
+            return string.IsNullOrWhiteSpace(texto) ? "No se pudo obtener el detalle del error." : texto;
+
+        }
+
+
 
     }
 

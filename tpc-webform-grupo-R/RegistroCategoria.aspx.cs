@@ -1,45 +1,56 @@
-﻿using System;
+﻿using dominio;
+using Helper;
+using negocio;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using dominio;
-using negocio;
 namespace tpc_webform_grupo_R
 {
     public partial class RegistroCategoria : System.Web.UI.Page
     {
-       Categoria cate = null;
+        Categoria cate = null;
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            if (!IsPostBack)
+            try
             {
-
-                cate = (Categoria)Session["CategoriaModi"];
-                if (cate != null)
+                if (!IsPostBack)
                 {
 
-                    h2Titulo.InnerText = "Modificar Categoria";
-                    txtRegistrarCategoria.Text = cate.Descripcion;
-                    ViewState["modi"] = true;
-                    BtnRegistrarCategoria.Text = "Modificar";
+                    cate = (Categoria)Session["CategoriaModi"];
+                    if (cate != null)
+                    {
+
+                        h2Titulo.InnerText = "Modificar Categoria";
+                        txtRegistrarCategoria.Text = cate.Descripcion;
+                        ViewState["modi"] = true;
+                        BtnRegistrarCategoria.Text = "Modificar";
+
+
+                    }
+                    else
+                    {
+
+
+                        ViewState["modi"] = false;
+                        h2Titulo.InnerText = "Registrar Categoria";
+                        BtnRegistrarCategoria.Text = "Registrar";
+
+                    }
 
 
                 }
-                else
-                {
-
-
-                    ViewState["modi"] = false;
-                    h2Titulo.InnerText = "Registrar Categoria";
-                    BtnRegistrarCategoria.Text = "Registrar";
-
-                }
-
 
             }
+            catch (Exception ex)
+            {
+                Session["error"] = Ayudante.aTexto(ex);
+                Response.Redirect("Error.aspx", false);
+                return;
+            }
+
 
 
         }
@@ -52,35 +63,47 @@ namespace tpc_webform_grupo_R
             {
                 string nombre = txtRegistrarCategoria.Text;
 
+                if (string.IsNullOrWhiteSpace(nombre))
+                {
+                    LblMensajeError.Text = "Debe ingresar un nombre para la categoría.";
+                    LblMensajeError.CssClass = "small fw-semibold text-danger";
+                    return;
+                }
+
                 bool esModificar = false;
 
-                if (ViewState["modi"] !=null && (bool)ViewState["modi"] == true) {
+                if (ViewState["modi"] != null && (bool)ViewState["modi"] == true)
+                {
 
                     esModificar = true;
-                
+
                 }
 
                 if (esModificar)
                 {
-                    
+
 
 
                     cate = (Categoria)Session["CategoriaModi"];
 
-                    if (cateNego.existeOtraCategoria(nombre, cate.IdCategoria))
-                    {
-                        LblMensajeError.Text = "Ya está registrada otra categoría con ese nombre.";
-                        return;
-                    }
+
 
                 }
-                else { 
-                
-              
+                else
+                {
+
+
                     cate = new Categoria();
 
+
                 }
 
+                if (cateNego.existeOtraCategoria(nombre, cate.IdCategoria))
+                {
+                    LblMensajeError.Text = "Ya está registrada una categoría con ese nombre.";
+                    LblMensajeError.CssClass = "small fw-semibold text-danger";
+                    return;
+                }
                 cate.Descripcion = nombre;
 
                 if (esModificar)
@@ -90,15 +113,8 @@ namespace tpc_webform_grupo_R
                     LblMensajeError.CssClass = "small fw-semibold text-success";
 
                 }
-                else {
-
-                    if (cateNego.existeOtraCategoria(nombre, cate.IdCategoria))
-                    {
-
-                        LblMensajeError.Text = "Ya esta registrado una categoria con ese nombre.";
-                        return;
-
-                    }
+                else
+                {
 
 
                     cateNego.AgregarCategoria(cate);
@@ -113,10 +129,11 @@ namespace tpc_webform_grupo_R
                 ViewState["modi"] = false;
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                Session["error"] = Ayudante.aTexto(ex);
+                Response.Redirect("Error.aspx", false);
+                return;
             }
 
 
