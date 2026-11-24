@@ -35,6 +35,7 @@ namespace negocio
                 {
                     admin.IdPersona = (int)datos.Lector[0];
                 }
+
                 datos.cerrarConexion();
                 datos.consultaSql("insert into administradores(idpersona_admin,cuil_admin) values(@idPersona,@cuil)");
                 datos.setearParametros("@idPersona", admin.IdPersona);
@@ -197,6 +198,8 @@ namespace negocio
 
 
         }
+
+        
 
 
      }

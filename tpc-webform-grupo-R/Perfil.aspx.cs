@@ -48,7 +48,7 @@ namespace tpc_webform_grupo_R
                     }
                     else{
 
-                        imgPerfil.ImageUrl ="~/images/Perfiles/" + clie.FotoPerfil; 
+                        imgPerfil.ImageUrl ="~/images/Perfiles/" + clie.FotoPerfil + "?v=" + DateTime.Now.Ticks;
 
 
                     }

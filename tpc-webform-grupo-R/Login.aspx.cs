@@ -70,6 +70,7 @@ namespace tpc_webform_grupo_R
                     }
 
             }
+           
         }
 
         protected void lnkBtnRegistrarse_Click(object sender, EventArgs e)

@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="Finalizar Compra" Language="C#" MasterPageFile="~/Principal.Master" AutoEventWireup="true" CodeBehind="FinalizarCompra.aspx.cs" Inherits="tpc_webform_grupo_R.FinalizarCompra" Async="true" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <!-- Estilos o scripts específicos para esta vista si necesitás -->
+   
 
 
 </asp:Content>
@@ -46,7 +46,7 @@
                                     </div>
                                 </div>
 
-                                <!-- Sección de la Dirección (que podrías ocultar o mostrar según el radio seleccionado si quisieras después) -->
+                                <!-- Sección de la Dirección -->
                                 <asp:Panel ID="pnlDireccionEnvio" runat="server" Enabled="true">
                                     <div class="d-flex justify-content-between align-items-center mt-3">
                                         <div>
@@ -92,7 +92,7 @@
                     </div>
                 </div>
 
-            </div> <!-- Cierre de col-lg-7 -->
+            </div> 
 
             <!-- COLUMNA DERECHA: Resumen de Compra -->
             <div class="col-lg-5">
@@ -140,9 +140,9 @@
                         </div>
                     </ContentTemplate>
                 </asp:UpdatePanel>
-            </div> <!-- Cierre de col-lg-5 -->
+            </div> 
 
-        </div> <!-- Cierre de row -->
+        </div> 
     </div>
 
     <script type="text/javascript">

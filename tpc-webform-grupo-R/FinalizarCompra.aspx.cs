@@ -344,14 +344,14 @@ namespace tpc_webform_grupo_R
                         Failure = baseUrl + "/MisPedidos.aspx",
                         Pending = baseUrl + "/MisPedidos.aspx"
                     },
-                    AutoReturn = "approved",
+                    //AutoReturn = "approved",
                     ExternalReference = idVenta.ToString()
                 };
 
                 var client = new PreferenceClient();
                 Preference preference = await client.CreateAsync(request);
 
-                Response.Redirect(preference.InitPoint, false);
+                Response.Redirect(preference.SandboxInitPoint, false);
                 Context.ApplicationInstance.CompleteRequest();
             }
             catch (Exception ex)
