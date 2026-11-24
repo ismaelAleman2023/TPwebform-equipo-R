@@ -36,6 +36,7 @@ namespace tpc_webform_grupo_R
 
         protected void btnRangoFechas_Click(object sender, EventArgs e)
         {
+            dgvInformes.Visible = false;
             lblMensajeInicial.Visible = false;
             pnlTarjetaUnica.Visible = false;
             pnlFiltroFechas.Visible = true;
@@ -84,7 +85,7 @@ namespace tpc_webform_grupo_R
             lblMensajeInicial.Visible = false;
             pnlTarjetaUnica.Visible = false;
             pnlTarjetaUnica.Visible=true;
-
+            dgvInformes.Visible = true;
 
             try
             {
@@ -165,7 +166,7 @@ namespace tpc_webform_grupo_R
                     lblTituloInforme.Visible = false;
                     lblMensajeInicial.Visible = false;
                     pnlTarjetaUnica.Visible = true;
-
+                    dgvInformes.Visible = true;
                     pnlFiltroFechas.Visible = false;
 
 
@@ -225,7 +226,7 @@ namespace tpc_webform_grupo_R
                     lblTituloInforme.Visible = false;
                     lblMensajeInicial.Visible = false;
                     pnlTarjetaUnica.Visible = true;
-
+                    dgvInformes.Visible = true;
                     pnlFiltroFechas.Visible = false;
 
 
@@ -233,7 +234,7 @@ namespace tpc_webform_grupo_R
                     decimal total = 0;
                     foreach (Venta vn in listvent)
                     {
-                        string diavn = vn.FechaVenta_V.ToString("dd");
+                        
                         string mesvn = vn.FechaVenta_V.ToString("MM");
                         string añovn = vn.FechaVenta_V.ToString("yyyy");
 
@@ -286,7 +287,7 @@ namespace tpc_webform_grupo_R
                     lblTituloInforme.Visible = false;
                     lblMensajeInicial.Visible = false;
                     pnlTarjetaUnica.Visible = true;
-
+                    dgvInformes.Visible = true;
                     pnlFiltroFechas.Visible = false;
 
 
@@ -294,8 +295,6 @@ namespace tpc_webform_grupo_R
                     decimal total = 0;
                     foreach (Venta vn in listvent)
                     {
-                        string diavn = vn.FechaVenta_V.ToString("dd");
-                        string mesvn = vn.FechaVenta_V.ToString("MM");
                         string añovn = vn.FechaVenta_V.ToString("yyyy");
 
                         if (añovn == añohoy)
@@ -392,13 +391,13 @@ namespace tpc_webform_grupo_R
                     lblMensajeInicial.Visible = false;
                     pnlTarjetaUnica.Visible = false;
                     pnlFiltroFechas.Visible = false;
-
+                    dgvInformes.Visible = true;
 
                     foreach (Venta vn in listvent)
                     {
 
 
-                        if (vn.EstadoPedido_v == 2 || vn.EstadoPedido_v == 0 || vn.EstadoPedido_v == 9 || vn.EstadoPedido_v == 10)
+                        if (vn.EstadoPedido_v == 9 || vn.EstadoPedido_v == 10)
                         {
 
 

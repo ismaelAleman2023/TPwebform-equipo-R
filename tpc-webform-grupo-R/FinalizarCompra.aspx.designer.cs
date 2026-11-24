@@ -96,6 +96,24 @@ namespace tpc_webform_grupo_R
         protected global::System.Web.UI.WebControls.Button btnDireccion;
 
         /// <summary>
+        /// Control hfIdTipoPago.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfIdTipoPago;
+
+        /// <summary>
+        /// Control btnCambiarPago.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCambiarPago;
+
+        /// <summary>
         /// Control repetformaPago.
         /// </summary>
         /// <remarks>
@@ -103,6 +121,15 @@ namespace tpc_webform_grupo_R
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Repeater repetformaPago;
+
+        /// <summary>
+        /// Control UpdatePanelResumen.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanelResumen;
 
         /// <summary>
         /// Control lblCantidadItems.

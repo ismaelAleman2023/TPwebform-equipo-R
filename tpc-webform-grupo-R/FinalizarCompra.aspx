@@ -1,152 +1,154 @@
-﻿<%@ Page Title="Finalizar Compra" Language="C#" MasterPageFile="~/Principal.Master" AutoEventWireup="true" CodeBehind="FinalizarCompra.aspx.cs" Inherits="tpc_webform_grupo_R.FinalizarCompra" %>
+﻿<%@ Page Title="Finalizar Compra" Language="C#" MasterPageFile="~/Principal.Master" AutoEventWireup="true" CodeBehind="FinalizarCompra.aspx.cs" Inherits="tpc_webform_grupo_R.FinalizarCompra" Async="true" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <!-- Estilos o scripts específicos para esta vista si necesitás -->
-   
+
 
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="container py-5">
-       
+
         <div class="d-flex align-items-center gap-3 mb-4">
-        <h2 class="fw-bold m-0">Finalizar tu Compra</h2>
-        <asp:Label ID="lblerror" runat="server" CssClass="text-danger fw-semibold" Style="display: none;"></asp:Label>
-         </div>
+            <h2 class="fw-bold m-0">Finalizar tu Compra</h2>
+            <asp:Label ID="lblerror" runat="server" CssClass="text-danger fw-semibold" Style="display: none;"></asp:Label>
+        </div>
 
         <div class="row g-4">
-            
+
             <!-- COLUMNA IZQUIERDA: Envío y Medio de Pago -->
             <div class="col-lg-7">
-                
-                                <asp:UpdatePanel ID="UpdatePanelEnvio" runat="server">
-                                    <ContentTemplate>
-               <!-- 1. FORMA DE ENTREGA -->
-                    <div class="card shadow-sm mb-4">
-                        <div class="card-body">
-        
-                            <!-- Cabecera con el Título y los Radio Buttons alineados a la derecha -->
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <h5 class="card-title text-primary m-0">Forma de Entrega</h5>
-            
-                                <!-- tipo envio -->
 
-                                    
-                                                <div class="d-flex gap-4">
-                                                        <div class="form-check">
-                                                            <asp:RadioButton ID="rbConEnvio" runat="server" GroupName="grupoFormaEntrega" 
-                                                                             CssClass="form-check-input" Text=""
-                                                                             AutoPostBack="true" Checked="true" OnCheckedChanged="rbRetiroTienda_CheckedChanged" />
-                                                                            <asp:Label ID="Label1" runat="server" Text="con envío"></asp:Label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <asp:RadioButton ID="rbRetiroTienda" runat="server" GroupName="grupoFormaEntrega" 
-                                                                             CssClass="form-check-input"  Text=""
-                                                                             AutoPostBack="true" OnCheckedChanged="rbRetiroTienda_CheckedChanged" />
-                                                                            <asp:Label ID="Label2" runat="server" Text="retiro por tienda"></asp:Label>
-                                                        </div>
-                                                    </div>
-                                            </div>
+                <asp:UpdatePanel ID="UpdatePanelEnvio" runat="server" UpdateMode="Conditional">
+                    <ContentTemplate>
+                        <!-- 1. FORMA DE ENTREGA -->
+                        <div class="card shadow-sm mb-4">
+                            <div class="card-body">
 
-                                            <!-- Sección de la Dirección (que podrías ocultar o mostrar según el radio seleccionado si quisieras después) -->
-                                          <asp:Panel ID="pnlDireccionEnvio" runat="server" Enabled="true">
-                                            <div class="d-flex justify-content-between align-items-center mt-3">
-                                                <div>
-                                                    <p class="mb-1 text-muted">Dirección de envío:</p>
-                                                    <asp:Label ID="lblDireccionEnvio" runat="server" CssClass="fw-bold fs-5"> </asp:Label>
-                                                </div>
-                             
-                                                <asp:Button ID="btnDireccion" runat="server" CssClass="btn btn-outline-secondary btn-sm" OnClick="btnDireccion_Click" />
-                                            </div>
-                                         </asp:Panel>
+                                <!-- Cabecera con el Título y los Radio Buttons alineados a la derecha -->
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h5 class="card-title text-primary m-0">Forma de Entrega</h5>
 
+                                    <!-- tipo envio -->
+                                    <div class="d-flex gap-4">
+                                        <div class="form-check">
+                                            <asp:RadioButton ID="rbConEnvio" runat="server" GroupName="grupoFormaEntrega"
+                                                CssClass="form-check-input" Text=""
+                                                AutoPostBack="true" Checked="true" OnCheckedChanged="rbRetiroTienda_CheckedChanged" />
+                                            <asp:Label ID="Label1" runat="server" Text="con envío"></asp:Label>
+                                        </div>
+                                        <div class="form-check">
+                                            <asp:RadioButton ID="rbRetiroTienda" runat="server" GroupName="grupoFormaEntrega"
+                                                CssClass="form-check-input" Text=""
+                                                AutoPostBack="true" OnCheckedChanged="rbRetiroTienda_CheckedChanged" />
+                                            <asp:Label ID="Label2" runat="server" Text="retiro por tienda"></asp:Label>
                                         </div>
                                     </div>
-                              </ContentTemplate>
-                            </asp:UpdatePanel>
+                                </div>
+
+                                <!-- Sección de la Dirección (que podrías ocultar o mostrar según el radio seleccionado si quisieras después) -->
+                                <asp:Panel ID="pnlDireccionEnvio" runat="server" Enabled="true">
+                                    <div class="d-flex justify-content-between align-items-center mt-3">
+                                        <div>
+                                            <p class="mb-1 text-muted">Dirección de envío:</p>
+                                            <asp:Label ID="lblDireccionEnvio" runat="server" CssClass="fw-bold fs-5"> </asp:Label>
+                                        </div>
+
+                                        <asp:Button ID="btnDireccion" runat="server" CssClass="btn btn-outline-secondary btn-sm" OnClick="btnDireccion_Click" />
+                                    </div>
+                                </asp:Panel>
+
+                            </div>
+                        </div>
+                    </ContentTemplate>
+                </asp:UpdatePanel>
+
                 <!-- 2. MEDIO DE PAGO -->
                 <div class="card shadow-sm mb-4">
                     <div class="card-body">
                         <h5 class="card-title text-primary mb-3">Medio de Pago</h5>
                         <div class="mb-3">
 
+                            <asp:HiddenField ID="hfIdTipoPago" runat="server" Value="1" />
+                            <asp:Button ID="btnCambiarPago" runat="server" OnClick="btnCambiarPago_Click" Style="display:none;" />
 
-              <asp:Repeater ID="repetformaPago" runat="server">
-                    <ItemTemplate>
-                        <div class="form-check mb-2">
-                            <input class="form-check-input" type="radio" name="grupoPago"
-                                  
-                                value='<%# Eval("IdTipoPago") %>' id='<%# "radio_" + Eval("IdTipoPago") %>'
-                                   <%# Convert.ToInt32(Eval("IdTipoPago")) == 1 ? "checked=\"checked\"" : "" %> />
-                            
-                            <label class="form-check-label" for='<%# "radio_" + Eval("IdTipoPago") %>'>
-                               
-                                <%# Eval("Descripcion") %>
-                            </label>
-                        </div>
-                    </ItemTemplate>
-               </asp:Repeater>
+                            <asp:Repeater ID="repetformaPago" runat="server">
+                                <ItemTemplate>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input radio-pago" type="radio" name="grupoPago"
+                                            value='<%# Eval("IdTipoPago") %>'
+                                            id='<%# "radio_" + Eval("IdTipoPago") %>'
+                                            onchange="seleccionarMedioPago(this.value)"
+                                            <%# Convert.ToInt32(Eval("IdTipoPago")) == 1 ? "checked=\"checked\"" : "" %> />
+
+                                        <label class="form-check-label" for='<%# "radio_" + Eval("IdTipoPago") %>'>
+                                            <%# Eval("Descripcion") %>
+                                        </label>
+                                    </div>
+                                </ItemTemplate>
+                            </asp:Repeater>
 
                         </div>
                     </div>
                 </div>
 
-            </div>
+            </div> <!-- Cierre de col-lg-7 -->
 
             <!-- COLUMNA DERECHA: Resumen de Compra -->
             <div class="col-lg-5">
-                <asp:UpdatePanel ID="UpdatePanelResumen" runat="server"><ContentTemplate>
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title text-primary mb-3">Resumen de Compra</h5>
-                        
-                        <!-- Detalle de Productos -->
-                        <div class="d-flex justify-content-between mb-2">
-                            <span>Productos (<asp:Label ID="lblCantidadItems" runat="server" ></asp:Label>)</span>
-                            <span><asp:Label ID="lblSubtotal" runat="server" Text=""></asp:Label></span>
+                <asp:UpdatePanel ID="UpdatePanelResumen" runat="server" UpdateMode="Conditional">
+                    <Triggers>
+                        <asp:AsyncPostBackTrigger ControlID="btnCambiarPago" EventName="Click" />
+                        <asp:PostBackTrigger ControlID="btnPagarYFinalizar" />
+                    </Triggers>
+                    <ContentTemplate>
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title text-primary mb-3">Resumen de Compra</h5>
+
+                                <!-- Detalle de Productos -->
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>Productos (<asp:Label ID="lblCantidadItems" runat="server"></asp:Label>)</span>
+                                    <span>
+                                        <asp:Label ID="lblSubtotal" runat="server" Text=""></asp:Label></span>
+                                </div>
+
+                                <!-- Costo de Envío -->
+                                <div class="d-flex justify-content-between mb-3 pb-3 border-bottom">
+                                    <span>Envío</span>
+                                    <span>
+                                        <asp:Label ID="lblCostoEnvio" runat="server" Text="$ XXX"></asp:Label></span>
+                                </div>
+
+                                <!-- Descuento -->
+                                <div class="d-flex justify-content-between mb-3 pb-3 border-bottom">
+                                    <span>Descuento </span>
+                                    <span>
+                                        <asp:Label ID="lblDescuento" runat="server" Text="$ -XXX"></asp:Label></span>
+                                </div>
+
+                                <!-- Total Final -->
+                                <div class="d-flex justify-content-between align-items-center mb-4">
+                                    <span class="fw-bold fs-4">Total</span>
+                                    <asp:Label ID="lblTotalGeneral" runat="server" CssClass="fw-bold fs-4 text-success" Text="$ XXX"></asp:Label>
+                                </div>
+
+                                <!-- Botón Pagar y Finalizar -->
+                                <asp:Button ID="btnPagarYFinalizar" runat="server" CssClass="btn btn-success w-100 py-2 fw-bold fs-5" Text="Pagar y Finalizar" OnClick="btnPagarYFinalizar_Click" />
+
+                            </div>
                         </div>
+                    </ContentTemplate>
+                </asp:UpdatePanel>
+            </div> <!-- Cierre de col-lg-5 -->
 
-                        <!-- Costo de Envío -->
-                        <div class="d-flex justify-content-between mb-3 pb-3 border-bottom">
-                            <span>Envío</span>
-                            <span><asp:Label ID="lblCostoEnvio" runat="server" Text="$ XXX"></asp:Label></span>
-                        </div>
-
-                          <!-- Descuento -->
-                          <div class="d-flex justify-content-between mb-3 pb-3 border-bottom">
-                              <span>Descuento </span>
-                              <span><asp:Label ID="lblDescuento" runat="server" Text="$ -XXX"></asp:Label></span>
-                          </div>
-
-                        <!-- Total Final -->
-                        <div class="d-flex justify-content-between align-items-center mb-4">
-                            <span class="fw-bold fs-4">Total</span>
-                            <asp:Label ID="lblTotalGeneral" runat="server" CssClass="fw-bold fs-4 text-success" Text="$ XXX"></asp:Label>
-                        </div>
-
-                        <!-- Botón Pagar y Finalizar -->
-                        <asp:Button ID="btnPagarYFinalizar" runat="server" CssClass="btn btn-success w-100 py-2 fw-bold fs-5" Text="Pagar y Finalizar" OnClick="btnPagarYFinalizar_Click" />
-                    </div>
-                </div>
-                </ContentTemplate></asp:UpdatePanel>
-            </div>
-
-        </div>
+        </div> <!-- Cierre de row -->
     </div>
 
-    <script>    
-
-        function limpiarLabel(clientId, segundos) {
-            setTimeout(function () {
-                var lbl = document.getElementById(clientId);
-                if (lbl) {
-                    lbl.innerText = "";           // Borra el texto
-                    lbl.style.display = "none";    // Lo oculta para que no ocupe espacio
-                }
-            }, segundos * 1000);
+    <script type="text/javascript">
+        function seleccionarMedioPago(idTipoPago) {
+            document.getElementById('<%= hfIdTipoPago.ClientID %>').value = idTipoPago;
+            document.getElementById('<%= btnCambiarPago.ClientID %>').click();
         }
-
     </script>
-
-
 </asp:Content>

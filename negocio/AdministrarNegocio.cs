@@ -163,7 +163,7 @@ namespace negocio
         }
 
 
-        public void modificarAdministrador(Administrador admin)
+        public void modificarAdministrador(Administrador admin , int idAdmin)
         {
             AccesoDatos datos = new AccesoDatos();
             try
@@ -175,7 +175,7 @@ namespace negocio
                 datos.setearParametros("@telefono", admin.Telefono);
                 datos.setearParametros("@pass", admin.Password);
                 datos.setearParametros("@fechaNacimiento", admin.FechaDeNacimiento);
-                datos.setearParametros("@idPersona", admin.IdPersona);
+                datos.setearParametros("@idPersona", idAdmin);
 
                 datos.ejecutarAccion();
                 datos.cerrarConexion();

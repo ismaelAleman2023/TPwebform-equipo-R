@@ -333,7 +333,6 @@ namespace tpc_webform_grupo_R
         }
 
 
-
         private void cargarCarrusel()
         {
             DetalleVentaNegocio detaN = new DetalleVentaNegocio();

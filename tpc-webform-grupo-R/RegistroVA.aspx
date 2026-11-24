@@ -43,7 +43,7 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="txtPassword" class="form-label">Contraseña</label>
-                            <asp:TextBox ID="txtPassword" runat="server" TextMode="Password" CssClass="form-control" placeholder="••••••••" required="true"></asp:TextBox>
+                            <asp:TextBox ID="txtPassword" runat="server" TextMode="Password" CssClass="form-control" placeholder="••••••••"></asp:TextBox>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="txtFechaNacimiento" class="form-label">Fecha de nacimiento</label>
@@ -77,5 +77,22 @@
             </div>
         </div>
     </div>
+
+     <div id="contenedorAlerta" class="position-fixed top-50 start-50 translate-middle p-3" style="z-index: 1050; display: none;">
+     <div id="miAlerta" class="toast align-items-center text-white bg-dark border-0 shadow-lg" role="alert" aria-live="assertive" aria-atomic="true">
+         <div class="d-flex">
+             <div id="textoAlerta" class="toast-body fw-semibold px-4 py-3">
+                 <!-- Aquí se inyecta el mensaje dinámicamente -->
+             </div>
+             <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+         </div>
+     </div>
+ </div>
+        
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="Scripts/CartelFlotante.js"></script>
+
+
+
 
 </asp:Content>

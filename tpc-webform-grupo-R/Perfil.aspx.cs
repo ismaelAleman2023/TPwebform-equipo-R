@@ -48,7 +48,7 @@ namespace tpc_webform_grupo_R
                     }
                     else{
 
-                        imgPerfil.ImageUrl ="~/images/Perfiles/" + clie.FotoPerfil; ;
+                        imgPerfil.ImageUrl ="~/images/Perfiles/" + clie.FotoPerfil; 
 
 
                     }
@@ -98,14 +98,14 @@ namespace tpc_webform_grupo_R
                     cli.FotoPerfil = "Perfil-" + cli.IdPersona + ".jpg";
                     clieNe.modificarFtPerfil(cli);
 
-                    imgPerfil.ImageUrl = "~/images/Perfiles/" + cli.FotoPerfil;
+                    imgPerfil.ImageUrl = "~/images/Perfiles/" + cli.FotoPerfil + "?v=" + DateTime.Now.Ticks; 
 
                     //leer
                     Image img = (Image)Master.FindControl("imgUserPerfil");
 
                     if (img != null)
                     {
-                        img.ImageUrl = "~/images/Perfiles/" + cli.FotoPerfil;
+                        img.ImageUrl = "~/images/Perfiles/" + cli.FotoPerfil + "?v=" + DateTime.Now.Ticks;
 
                     }
                 }
