@@ -71,6 +71,8 @@
 
         </div>
 
+        <asp:Label ID="lblErrorDireccionEnvio" runat="server" CssClass="text-danger small fw-bold d-block mb-3"></asp:Label>
+
         <!-- Botón de Guardar / Aceptar al final -->
         <div class="row">
             <div class="col-12 text-end">

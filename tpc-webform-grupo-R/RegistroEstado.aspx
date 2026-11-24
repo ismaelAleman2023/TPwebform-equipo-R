@@ -19,7 +19,8 @@
                         <!-- textbox Descripción -->
                         <div class="mb-3">
                             <label for="LblDescripcionEstado" class="form-label fw-semibold">Nombre de estado</label>
-                            <asp:TextBox ID="txtDescripcionEstado" runat="server" CssClass="form-control" required="true"></asp:TextBox>
+                            <asp:TextBox ID="txtDescripcionEstado" runat="server" CssClass="form-control" required="true" MaxLength="25"></asp:TextBox>
+                            <asp:Label ID="lblMensajeEstado" runat="server" CssClass="small fw-bold text-danger"></asp:Label>
                         </div>
                                           
                         <!-- Botón Registrar -->

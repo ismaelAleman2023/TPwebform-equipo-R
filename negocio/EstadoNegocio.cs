@@ -58,7 +58,17 @@ namespace negocio
             }
         }
 
-      
+        public bool ExisteDescripcion(string descrip, int idExcluido = 0)
+        {
+            foreach (Estado e in listarEstados())
+            {
+                if (e.IdEstado != idExcluido && e.Descripcion_estado.Equals(descrip, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 
         public void eliminarEstado (int id)
         {

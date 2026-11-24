@@ -24,6 +24,15 @@ namespace tpc_webform_grupo_R
         protected global::System.Web.UI.WebControls.TextBox txtDescripcionEstado;
 
         /// <summary>
+        /// Control lblMensajeEstado.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMensajeEstado;
+
+        /// <summary>
         /// Control btnRegistrarEstado.
         /// </summary>
         /// <remarks>

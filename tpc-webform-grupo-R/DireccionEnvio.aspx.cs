@@ -31,51 +31,75 @@ namespace tpc_webform_grupo_R
         protected void btnGuardarDireccion_Click(object sender, EventArgs e)
         {
 
-            int idDire = idDireSeleccionado();
+            try
+            {
+                if (Session["idActivo"] == null)
+                {
+                    Response.Redirect("Login.aspx", false);
+                    return;
+                }
+
+                int idDire = idDireSeleccionado();
+                if (!esDireccionPropia(idDire))
+                {
+                    lblErrorDireccionEnvio.Text = "Elegí una de tus direcciones.";
+                    return;
+                }
 
                 actualizarEleccion(idDire);
 
-               // Session["IdDireccionEnUso"] = idDire;
-
-            
-            if (Session["esPerfil"] != null && (bool)Session["esPerfil"] == true) { 
-            
-                Session.Remove("esPerfil");
-                Response.Redirect("Perfil.aspx");
-
+                if (Session["esPerfil"] != null && (bool)Session["esPerfil"] == true)
+                {
+                    Session.Remove("esPerfil");
+                    Response.Redirect("Perfil.aspx", false);
+                }
+                else
+                {
+                    Response.Redirect("FinalizarCompra.aspx", false);
+                }
             }
-            else
+            catch (Exception)
             {
-
-                Response.Redirect("FinalizarCompra.aspx");
+                Session["error"] = "No pudimos guardar la dirección elegida. Intentá de nuevo más tarde.";
+                Response.Redirect("Error.aspx", false);
             }
-
-
-            
-          
         }
 
 
 
         private int idDireSeleccionado()
         {
-            int idDireccion = 0;
-            string idSeleccionado = Request.Form["grupoDireccion"];
-            if (!string.IsNullOrEmpty(idSeleccionado))
+            int idDireccion;
+            if (int.TryParse(Request.Form["grupoDireccion"], out idDireccion))
             {
-                idDireccion = int.Parse(idSeleccionado);
-
                 return idDireccion;
             }
 
             return 0;
         }
 
+        private bool esDireccionPropia(int idDireccion)
+        {
+            List<Direccion> propias = Session["direccionActivo"] as List<Direccion>;
+            if (propias == null)
+            {
+                return false;
+            }
+            foreach (Direccion d in propias)
+            {
+                if (d.IdDireccion == idDireccion)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
 
 
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
-            if (!(bool)Session["esPerfil"] || Session["esPerfil"] == null)
+            if (Session["esPerfil"] == null || !(bool)Session["esPerfil"])
             {
 
 
@@ -121,15 +145,31 @@ namespace tpc_webform_grupo_R
 
         protected void btnEliminar_Click(object sender, EventArgs e)
         {
-            DireccionNegocio direN = new DireccionNegocio();
-            int idDire = idDireSeleccionado();
-            direN.EliminarDireccion(idDire);
+            try
+            {
+                if (Session["idActivo"] == null)
+                {
+                    Response.Redirect("Login.aspx", false);
+                    return;
+                }
 
+                int idDire = idDireSeleccionado();
+                if (!esDireccionPropia(idDire))
+                {
+                    lblErrorDireccionEnvio.Text = "Elegí una de tus direcciones para eliminarla.";
+                    return;
+                }
 
-            Session["direccionActivo"] = direN.buscarDireccionCliente((int)Session["idActivo"]);
-
-            cargarCard();
-
+                DireccionNegocio direN = new DireccionNegocio();
+                direN.EliminarDireccion(idDire);
+                Session["direccionActivo"] = direN.buscarDireccionCliente((int)Session["idActivo"]);
+                cargarCard();
+            }
+            catch (Exception)
+            {
+                Session["error"] = "No pudimos eliminar la dirección. Intentá de nuevo más tarde.";
+                Response.Redirect("Error.aspx", false);
+            }
         }
     }
 }

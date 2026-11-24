@@ -146,7 +146,8 @@ namespace tpc_webform_grupo_R
             catch (Exception)
             {
 
-                throw;
+                Session["error"] = "No pudimos generar el informe. Intentá de nuevo más tarde.";
+                Response.Redirect("Error.aspx", false);
             }
 
 
@@ -207,7 +208,8 @@ namespace tpc_webform_grupo_R
             catch (Exception)
             {
 
-                throw;
+                Session["error"] = "No pudimos generar el informe. Intentá de nuevo más tarde.";
+                Response.Redirect("Error.aspx", false);
             }
 
 
@@ -267,7 +269,8 @@ namespace tpc_webform_grupo_R
             catch (Exception)
             {
 
-                throw;
+                Session["error"] = "No pudimos generar el informe. Intentá de nuevo más tarde.";
+                Response.Redirect("Error.aspx", false);
             }
 
 
@@ -326,7 +329,8 @@ namespace tpc_webform_grupo_R
             catch (Exception)
             {
 
-                throw;
+                Session["error"] = "No pudimos generar el informe. Intentá de nuevo más tarde.";
+                Response.Redirect("Error.aspx", false);
             }
 
         }
@@ -419,7 +423,8 @@ namespace tpc_webform_grupo_R
             catch (Exception)
             {
 
-                throw;
+                Session["error"] = "No pudimos generar el informe. Intentá de nuevo más tarde.";
+                Response.Redirect("Error.aspx", false);
             }
 
 
