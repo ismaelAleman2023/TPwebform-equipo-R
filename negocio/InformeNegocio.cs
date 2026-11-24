@@ -36,6 +36,34 @@ namespace negocio
             }
         }
 
+        public List<ResumenInforme> ventasPorEstado()
+        {
+            List<ResumenInforme> lista = new List<ResumenInforme>();
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.consultaSql("select e.descripcion_estado as descripcion, count(*) as cantidad, sum(v.total_venta) as total from ventas v inner join estadoPedidos e on e.idEstado = v.estadoPedido_venta group by e.idEstado, e.descripcion_estado order by e.idEstado");
+                datos.ejecutarLectura();
+                while (datos.Lector.Read())
+                {
+                    ResumenInforme aux = new ResumenInforme();
+                    aux.Descripcion = (string)datos.Lector["descripcion"];
+                    aux.Cantidad = (int)datos.Lector["cantidad"];
+                    aux.Total = (decimal)datos.Lector["total"];
+                    lista.Add(aux);
+                }
+                return lista;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
         public List<ResumenInforme> mejoresClientes()
         {
             List<ResumenInforme> lista = new List<ResumenInforme>();

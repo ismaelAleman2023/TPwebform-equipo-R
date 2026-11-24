@@ -63,7 +63,7 @@ namespace tpc_webform_grupo_R
 
         protected void btnPorEstado_Click(object sender, EventArgs e)
         {
-
+            mostrarResumen("Ventas por Estado", new InformeNegocio().ventasPorEstado());
         }
 
         protected void btnPorPago_Click(object sender, EventArgs e)
