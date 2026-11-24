@@ -44,9 +44,20 @@ namespace tpc_webform_grupo_R
 
         }
 
+        private void mostrarResumen(string titulo, List<ResumenInforme> lista)
+        {
+            lblMensajeInicial.Visible = false;
+            pnlTarjetaUnica.Visible = false;
+            pnlFiltroFechas.Visible = false;
+            lblTituloInforme.Visible = true;
+            lblTituloInforme.Text = titulo;
+            dgvInformes.DataSource = lista;
+            dgvInformes.DataBind();
+        }
+
         protected void btnTopProductos_Click(object sender, EventArgs e)
         {
-
+            mostrarResumen("Productos Mas Vendidos", new InformeNegocio().productosMasVendidos());
         }
 
         protected void btnPorEstado_Click(object sender, EventArgs e)
@@ -56,12 +67,12 @@ namespace tpc_webform_grupo_R
 
         protected void btnPorPago_Click(object sender, EventArgs e)
         {
-
+            mostrarResumen("Ventas por Forma de Pago", new InformeNegocio().ventasPorFormaDePago());
         }
 
         protected void btnTopClientes_Click(object sender, EventArgs e)
         {
-
+            mostrarResumen("Mejores Clientes", new InformeNegocio().mejoresClientes());
         }
 
         protected void btnFiltrarFechas_Click(object sender, EventArgs e)
