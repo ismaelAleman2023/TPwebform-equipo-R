@@ -44,9 +44,29 @@ namespace tpc_webform_grupo_R
 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
+            if (Session["idActivo"] == null)
+            {
+                Response.Redirect("Login.aspx", false);
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(txtCalle.Text) || string.IsNullOrWhiteSpace(txtNumero.Text) || string.IsNullOrWhiteSpace(txtCodigoPostal.Text))
+            {
+                lblErrorDireccion.Text = "Completá calle, número y código postal.";
+                return;
+            }
+            if (txtCalle.Text.Length > 50 || txtNumero.Text.Length > 5 || txtCodigoPostal.Text.Length > 10 || txtObservacion.Text.Length > 300)
+            {
+                lblErrorDireccion.Text = "Alguno de los datos es demasiado largo.";
+                return;
+            }
             if (ddlLocalidad.SelectedItem == null)
             {
                 lblErrorDireccion.Text = "Elegí una provincia y una localidad.";
+                return;
+            }
+            if (!new UbicacionNegocio().localidadValida(ddlLocalidad.SelectedItem.Text, ddlProvincia.SelectedValue))
+            {
+                lblErrorDireccion.Text = "La localidad no corresponde a la provincia elegida.";
                 return;
             }
             Direccion dir = new Direccion();
@@ -60,19 +80,18 @@ namespace tpc_webform_grupo_R
 
 
 
-            dir.IdCliente = (int)Session["idActivo"];
-            dirN.agregarDireccion(dir);                   
-
-
-            Session["direccionActivo"] = dirN.buscarDireccionCliente((int)Session["idActivo"]);
-         
-            
-
-              Response.Redirect("DireccionEnvio.aspx");      
-
-            
-
-
+            try
+            {
+                dir.IdCliente = (int)Session["idActivo"];
+                dirN.agregarDireccion(dir);
+                Session["direccionActivo"] = dirN.buscarDireccionCliente((int)Session["idActivo"]);
+                Response.Redirect("DireccionEnvio.aspx", false);
+            }
+            catch (Exception)
+            {
+                Session["error"] = "No pudimos guardar la dirección. Intentá de nuevo más tarde.";
+                Response.Redirect("Error.aspx", false);
+            }
         }
 
 
