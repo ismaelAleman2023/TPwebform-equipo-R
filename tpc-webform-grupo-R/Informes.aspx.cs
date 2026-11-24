@@ -47,12 +47,21 @@ namespace tpc_webform_grupo_R
 
         private void mostrarResumen(string titulo, List<ResumenInforme> lista)
         {
+            dgvInformes.Visible = true;
             lblMensajeInicial.Visible = false;
             pnlTarjetaUnica.Visible = false;
             pnlFiltroFechas.Visible = false;
             lblTituloInforme.Visible = true;
             lblTituloInforme.Text = titulo;
-            dgvInformes.DataSource = lista;
+            var listaModificada = lista.Select(l => new {
+                l.Descripcion,
+                l.Cantidad,
+                Total= l.Total.ToString("C") 
+
+            }).ToList();
+
+
+            dgvInformes.DataSource = listaModificada;
             dgvInformes.DataBind();
         }
 

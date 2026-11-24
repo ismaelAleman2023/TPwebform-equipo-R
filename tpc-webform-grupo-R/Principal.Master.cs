@@ -305,10 +305,32 @@ namespace tpc_webform_grupo_R
             else
             {
 
+
+                cerrarSession();
+                Response.Redirect("~/Default.aspx#destacado1");
+
+
             }
 
+            
+        }
 
+
+        private void cerrarSession()
+        {
+            Session.Remove("idActivo");
+            Session.Remove("rolActivo");
+            Session.Remove("usuarioActivo");
+            Session.Remove("direccionActivo");
+            Session.Remove("direccionUso");
+            Session.Remove("listaprod");
+            Session.Remove("listaimg");
+            Session.Remove("conEnvio");   
 
         }
+
+
+
+
     }
 }

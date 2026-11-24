@@ -1,4 +1,5 @@
-﻿using dominio;
+﻿using Antlr.Runtime.Misc;
+using dominio;
 using negocio;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,8 @@ namespace tpc_webform_grupo_R
             {
                 Session["eleccionfiltro"] = 2;
             }
+            
+           
 
             if (!IsPostBack)
             {
@@ -140,7 +143,8 @@ namespace tpc_webform_grupo_R
                 c.Nombre,
                 c.Apellido,
                 c.Email,
-                c.FechaDeNacimiento,
+                FechaDeNacimiento = c.FechaDeNacimiento.ToString("dd/MM/yyyy"),
+                
                 c.Password,
                 c.Telefono,
                 Rol = rolN.buscarRol(c.IdRol).Descripcion,
@@ -171,7 +175,7 @@ namespace tpc_webform_grupo_R
                 v.Nombre,
                 v.Apellido,
                 v.Email,
-                v.FechaDeNacimiento,
+                FechaDeNacimiento = v.FechaDeNacimiento.ToString("dd/MM/yyyy"),
                 v.Password,
                 v.Telefono,
                 Rol = rolN.buscarRol(v.IdRol).Descripcion,
@@ -206,7 +210,7 @@ namespace tpc_webform_grupo_R
                 a.Apellido,
                 a.Cuil,
                 a.Email,
-                a.FechaDeNacimiento,
+                FechaDeNacimiento = a.FechaDeNacimiento.ToString("dd/MM/yyyy")  ,
                 a.Password,
                 a.Telefono,
                 Rol = rolN.buscarRol(a.IdRol).Descripcion,
@@ -278,7 +282,14 @@ namespace tpc_webform_grupo_R
             TipoPagoNegocio tpN = new TipoPagoNegocio();
             int seleccion = (int)Session["eleccionfiltro"];
 
-            dgvGrilla.DataSource = tpN.ListarTipoPago(seleccion);
+            var listaTipo = tpN.ListarTipoPago(seleccion).Select(t => new
+            {
+                t.IdTipoPago,
+                t.Descripcion,
+                Estado = t.Estado ==1?"Activo" : "Eliminado"
+            }).ToList();
+
+            dgvGrilla.DataSource = listaTipo;
             dgvGrilla.DataKeyNames = new string[] { "IdTipoPago" };
             dgvGrilla.DataBind();
             ocultarItems();
@@ -288,7 +299,15 @@ namespace tpc_webform_grupo_R
         private void cargarGrillaRol()
         {
             RolNegocio rolN = new RolNegocio();
-            dgvGrilla.DataSource = rolN.ListarRol((int)Session["eleccionfiltro"]);
+            var listarol = rolN.ListarRol((int)Session["eleccionfiltro"]).Select(r => new
+            {
+                r.IdRol,
+                r.Descripcion,
+                Estado = r.IdRol == 1 ? "Activo" : "Eliminado"
+
+            }).ToList();
+
+            dgvGrilla.DataSource = listarol;
             dgvGrilla.DataKeyNames = new string[] { "IdRol" };
             dgvGrilla.DataBind();
             ViewState.Remove("eleccion");
@@ -297,6 +316,8 @@ namespace tpc_webform_grupo_R
         private void cargarGrillaEstado()
         {
             EstadoNegocio estadoN = new EstadoNegocio();
+            
+
             dgvGrilla.DataSource = estadoN.listarEstados();
             dgvGrilla.DataKeyNames = new string[] { "IdEstado" };
             dgvGrilla.DataBind();
@@ -356,7 +377,7 @@ namespace tpc_webform_grupo_R
 
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
-
+            string texto;
             removerSessionModificar();
             Session["EsAgregar"] = true;
             Session["btnAgregar"] = ViewState["TablaActiva"];
@@ -391,15 +412,19 @@ namespace tpc_webform_grupo_R
                     Response.Redirect("RegistroVA.aspx");
                     break;
                 case 8://clientes
-                    Response.Redirect("RegistroCliente.aspx");
+                    texto = "No se puede crear un cliente";
+                    Session["error"] = texto;
+                    Response.Redirect("Error.aspx", false);
                     break;
                 case 9://direcciones
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaExito", "mostrarCartel('No disponible', 'error');", true);
-
+                    texto = "No puede crear una direccion solo los usuarios";
+                    Session["error"] = texto;
+                    Response.Redirect("Error.aspx", false);
                     break;
                 case 10:// ventas
-
-                    break;
+                    texto = "No puede crear una venta en este lugar";
+                    Session["error"] = texto;
+                    Response.Redirect("Error.aspx", false); break;
                 case 11:// roles
                     Response.Redirect("RegistroRol.aspx");
                     break;
@@ -450,8 +475,94 @@ namespace tpc_webform_grupo_R
         {
             int seleccion = int.Parse(dgvGrilla.SelectedDataKey.Value.ToString());
             ViewState["eleccion"] = seleccion;
-           
+            desactivarBtn(seleccion);
+
         }
+
+
+
+        private void desactivarBtn(int eleccion)
+        {
+            int activo=3;
+
+            switch (ViewState["TablaActiva"])
+            {
+                case 1://categoria
+                    CategoriaNegocio catN = new CategoriaNegocio();
+                    activo = catN.buscarCategoria(eleccion).Estado;
+                    actualizarBtn(activo);
+                    
+                    break;
+                case 2://marca
+                    MarcaNegocio marN = new MarcaNegocio();
+                    activo= marN.buscarMarca(eleccion).Estado;
+                    actualizarBtn(activo);
+                    break;
+                case 3://stock
+                    StockNegocio stN = new StockNegocio();
+                    activo = stN.buscarStock(eleccion).Estado;
+                    actualizarBtn(activo);
+                    break;
+                case 4://tipo pago
+                    TipoPagoNegocio pagoN = new TipoPagoNegocio();
+                    activo = pagoN.buscarTipoPago(eleccion).Estado;
+                    actualizarBtn(activo);
+                    break;
+                case 5://productos
+                    ProductoNegocio proN = new ProductoNegocio();
+                    activo = proN.buscarProduc(eleccion).Estado;
+                    actualizarBtn(activo);
+                    break;
+                case 6://vendedores
+                    VendedorNegocio venN = new VendedorNegocio();
+                    activo = venN.buscarVendedor(eleccion).Estado;
+                    actualizarBtn(activo);
+                    break;
+                case 7://administradores
+                    AdministrarNegocio admN = new AdministrarNegocio();
+                    activo = admN.buscarAdministrador(eleccion).Estado;
+                    actualizarBtn(activo);
+                    break;
+                case 8://cliente
+                    ClienteNegocio cliN = new ClienteNegocio();
+                    activo = cliN.buscarCliente(eleccion).Estado;
+                    actualizarBtn(activo);
+                    break;                
+                case 11:// roles
+                    RolNegocio rN = new RolNegocio();
+                    activo = rN.buscarRol(eleccion).Estado;
+                    actualizarBtn(activo);
+                    break;
+                case 12:// estados
+
+                    break;
+
+                default:
+                    break;
+            }
+
+             
+
+        }
+
+        private void actualizarBtn(int estado) {
+
+            if (estado == 1)
+            {
+                btnEliminar.Enabled = true;
+                btnReactivar.Enabled = false;
+            }
+            else if(estado == 0) 
+            {
+                btnEliminar.Enabled = false;
+                btnReactivar.Enabled = true;
+            }
+          
+
+        }
+
+
+
 
         protected void btnEliminar_Click(object sender, EventArgs e)
         {
@@ -532,6 +643,7 @@ namespace tpc_webform_grupo_R
 
         protected void btnModificar_Click(object sender, EventArgs e)
         {
+            string texto;
             if (ViewState["eleccion"] == null)
             {
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaError", "mostrarCartel('¡Seleccione un elemento de la grilla para modificar!', 'error');", true);
@@ -564,12 +676,18 @@ namespace tpc_webform_grupo_R
                     case 7://administradores
                         modificarAdministrador();
                         break;
-                    case 8://clientes
-                        modificarCliente();
-                        break;
-                    case 9://direcciones
+                    case 8://cliente
+                    texto = "solo el cliente puede modificar su perfil";
+                    Session["error"] = texto;
+                    Response.Redirect("Error.aspx", false);
+                    break;
 
-                        break;
+                    case 9://direcciones
+                    texto = "Solo el usuario puede modificar la direccion";
+                    Session["error"] = texto;
+                    Response.Redirect("Error.aspx", false);
+
+                    break;
                     case 10:// ventas
 
                         break;
