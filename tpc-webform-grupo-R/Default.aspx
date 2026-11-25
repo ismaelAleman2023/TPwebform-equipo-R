@@ -233,13 +233,93 @@
         </section>
 
 
-        <!-- 3. SECCIÓN NOVEDADES -->
-        <section class="mb-4" id="novedades1">
-            <h3 class="border-bottom border-secondary pb-2 mb-3">Promociones / Novedades</h3>
-            <div class="p-4 bg-dark border border-secondary rounded text-center">
-                <p class="text-muted mb-0">[ Espacio para sección de Novedades ]</p>
-            </div>
-        </section>
+       <!-- 3. SECCIÓN NOVEDADES -->
+                <section class="mb-4" id="novedades1">
+                    <h3 class="border-bottom border-secondary pb-2 mb-3">Promociones / Novedades</h3>
+
+                    <div class="promo-banner-container p-4 p-md-5 rounded-4 border border-secondary">
+                        <div class="row align-items-center g-4">
+            
+                            <!-- Columna Izquierda -->
+                            <div class="col-lg-5 text-start">
+                                <span class="promo-eyebrow text-uppercase fw-bold d-block mb-2">
+                                    <asp:Literal ID="litPromoEyebrow" runat="server" />
+                                </span>
+                
+                                <h2 class="display-6 fw-bold text-white mb-3">
+                                    <asp:Literal ID="litPromoTitulo" runat="server" />
+                                </h2>
+                
+                                <p class="text-light opacity-75 mb-4">
+                                    <asp:Literal ID="litPromoDescripcion" runat="server"  />
+                                </p>
+
+                                <div class="promo-pill d-inline-flex align-items-center px-3 py-2 rounded-pill">
+                                    <span class="me-2 text-warning">✓</span>
+                                    <span class="small fw-semibold text-uppercase">
+                                        <asp:Literal ID="litPromoBadgeInferior" runat="server" Text="SIN CÓDIGOS NI CUPONES" />
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Columna Derecha-->
+                            <div class="col-lg-7">
+                                <div class="row g-3">
+                    
+                                    <!-- Tarjeta 1 -->
+                                    <div class="col-md-4">
+                                        <div class="promo-card h-100 p-4 rounded-4 d-flex flex-column justify-content-center">
+                                            <span class="promo-card-label text-uppercase small mb-2">
+                                                <asp:Literal ID="litCard1Titulo" runat="server" Text="PARA EMPEZAR" />
+                                            </span>
+                                            <div class="promo-card-price fw-bold text-white mb-2">
+                                                <asp:Literal ID="litCard1Precio" runat="server" Text="$6.000" />
+                                            </div>
+                                            <span class="promo-card-sub small text-light opacity-75">
+                                                <asp:Literal ID="litCard1Subtitulo" runat="server" Text="1 figura · precio unitario" />
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                   <!-- Tarjeta 2 -->
+                                    <div class="col-md-4">
+                                        <div class="promo-card h-100 p-4 rounded-4 d-flex flex-column justify-content-center">
+                                            <span class="promo-card-label text-uppercase small mb-2">
+                                                <asp:Literal ID="litCard2Titulo" runat="server" Text="PROMO X6" />
+                                            </span>
+                                            <div class="promo-card-price fw-bold text-white mb-2">
+                                                <asp:Literal ID="litCard2Precio" runat="server" Text="$25.000" />
+                                            </div>
+                                            <span class="promo-card-sub small text-light opacity-75">
+                                                <asp:Literal ID="litCard2Subtitulo" runat="server" Text="6 figuras · combiná modelos" />
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Tarjeta 3 -->
+                                    <div class="col-md-4">
+                                        <div class="promo-card promo-card-featured h-100 p-4 rounded-4 d-flex flex-column justify-content-center position-relative">
+                                            <span class="promo-featured-tag badge rounded-pill text-uppercase">
+                                                <asp:Literal ID="litCard3Badge" runat="server" Text="El que conviene" />
+                                            </span>
+                                            <span class="promo-card-label text-uppercase small mb-2 mt-2">
+                                                <asp:Literal ID="litCard3Titulo" runat="server" Text="recomendado" />
+                                            </span>
+                                            <div class="promo-card-price fw-bold text-white mb-2">
+                                                <asp:Literal ID="litCard3Precio" runat="server" Text="$40.000" />
+                                            </div>
+                                            <span class="promo-card-sub small text-light opacity-75">
+                                                <asp:Literal ID="litCard3Subtitulo" runat="server" Text="12 figuras · mejor valor" />
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
 
     </div>
 

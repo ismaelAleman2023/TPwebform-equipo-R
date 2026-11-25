@@ -21,7 +21,7 @@ namespace tpc_webform_grupo_R
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            actualizarNovedades();
             cargarCarrusel();
             if (!IsPostBack)
             {
@@ -50,6 +50,17 @@ namespace tpc_webform_grupo_R
 
             string script = $"document.getElementById('{Master.FindControl("lblContadorCarrito").ClientID}').innerText = '{carritoCompra.Count}';";
             ScriptManager.RegisterStartupScript(this, this.GetType(), "ActualizarBadge", script, true);
+        }
+
+        private void actualizarNovedades()
+        {
+            litPromoEyebrow.Text = "ELEGÍ MÁS · APROVECHÁ MÁS";
+            litPromoTitulo.Text = "Una promo que se adapta a tu idea.";
+            litPromoDescripcion.Text = "En breve habilitamos la promo de figuras de polyfan, elije los que mas te guste, mas te llevas menos pagas.";
+
+            litCard1Precio.Text = "$6.000";
+            litCard2Precio.Text = "$25.000";
+            litCard3Precio.Text = "$40.000";
         }
 
         protected void btnDetalle_Click(object sender, EventArgs e)

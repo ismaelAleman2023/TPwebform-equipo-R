@@ -176,7 +176,7 @@
     color: #ffcc00 !important;
 }
 
-/* Forzamos que el dibujo del carrito (el ícono) se mantenga SIEMPRE en negro, incluso en hover */
+
 .carrito-circulo i,
 .action-item:hover .carrito-circulo i {
     color: #0b0b0b !important;
@@ -185,12 +185,11 @@
 
 
 
-/* El botón de hamburguesa NO se muestra en computadoras */
+
 .menu-hamburguesa-btn {
     display: none;
 }
 
-/* Solo se activa en celulares / pantallas chicas */
 @media (max-width: 992px) {
    
     .navbar-collapse.collapse:not(.show) {
@@ -237,4 +236,57 @@
     #lnkLogin {
         margin-right: 5px;
     }
+}
+
+.promo-banner-container {
+    background-color: #121212;
+}
+
+.promo-eyebrow {
+    color: #ffc107; /* Dorado/Amarillo de tu web */
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+}
+
+.promo-pill {
+    background-color: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #e0e0e0;
+    letter-spacing: 0.06em;
+}
+
+.promo-card {
+    background-color: #1b1b1b;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.promo-card:hover {
+    transform: translateY(-3px);
+    border-color: #ffc107;
+}
+
+.promo-card-label {
+    color: #b0b0b0;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+}
+
+.promo-card-price {
+    font-size: 2.1rem;
+    line-height: 1.1;
+}
+
+
+
+.promo-featured-tag {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background-color: rgba(255, 193, 7, 0.25);
+    color: #ffc107;
+    border: 1px solid rgba(255, 193, 7, 0.5);
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    padding: 0.35em 0.75em;
 }
