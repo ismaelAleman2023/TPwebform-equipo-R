@@ -37,13 +37,25 @@ namespace tpc_webform_grupo_R
                     }
                     int idPersona = 0;
                     int rol = 0;
+                    bool activo=false;
 
 
-                    if (!cliN.validarInicio(correo, pass, ref idPersona, ref rol))
+                    if (!cliN.validarInicio(correo, pass, ref idPersona, ref rol, ref activo))
                     {
+                        
+
                         ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaExito", "mostrarCartel('¡Correo o Pasword incorrecto!', 'Alert');", true);
                         return;
                     }
+
+                    if (!activo)
+                    {
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaExito", "mostrarCartel('¡Su usuario esta eliminado, no puede acceder!', 'Alert');", true);
+                        return;
+                    }
+
+
+
 
                     Session["idActivo"] = idPersona;
 

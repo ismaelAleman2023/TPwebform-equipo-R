@@ -246,10 +246,10 @@ namespace negocio
 
                     if (!(datos.Lector["imgPerfil"] is DBNull))
                     {
-                    aux.FotoPerfil = (string)datos.Lector["imgPerfil"];
+                        aux.FotoPerfil = (string)datos.Lector["imgPerfil"];
                     }
 
-                   
+
                     foreach (Direccion dire in listaDire)
                     {
                         if (dire.IdCliente == aux.IdPersona)
@@ -270,16 +270,20 @@ namespace negocio
             }
 
 
-            
         }
+        
+       
+        
 
 
-        public bool validarInicio(string correo, string pass, ref int idPersona, ref int rol)
+
+
+        public bool validarInicio(string correo, string pass, ref int idPersona, ref int rol, ref bool activo)
         {
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.consultaSql("select idPersona,idroll_per from Personas where email_per = @correo and contrasenia_per = @pass");
+                datos.consultaSql("select idPersona,idroll_per, estado_per from Personas where email_per = @correo and contrasenia_per = @pass");
                 datos.setearParametros("@correo", correo);
                 datos.setearParametros("@pass", pass);
                 datos.ejecutarLectura();
@@ -287,6 +291,17 @@ namespace negocio
                 {
                     idPersona = (int)datos.Lector["idPersona"];
                     rol = (int)datos.Lector["idroll_per"];
+                  
+                    if (datos.Lector["estado_per"] !=null && (int)datos.Lector["estado_per"] == 1)
+                    {
+                        activo = true;
+                    }
+                    else
+                    {
+                        activo = false;
+                    }
+                    
+                   
                     return true;
                 }
 
