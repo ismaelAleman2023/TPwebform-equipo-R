@@ -171,6 +171,11 @@ namespace negocio
 
                 throw;
             }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
         }
 
 
@@ -197,6 +202,7 @@ namespace negocio
             {
                 throw;
             }
+
         }
 
         public bool valiModiCate(string descri, int id) { 

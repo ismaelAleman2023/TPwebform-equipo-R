@@ -58,6 +58,7 @@
                         </ul>
                     </asp:Panel>
 
+                    <asp:Button Id="btnCerrarSession" Text="Cerrar Session" runat="server" OnClick="btnCerrarSession_Click" CssClass="btn btn-warning btn-xs me-2 my-auto"/>
                     <!-- LOGIN / PERFIL -->
                     <asp:LinkButton ID="lnkLogin" runat="server" OnClick="lnkLogin_Click" CssClass="action-item text-decoration-none d-flex align-items-center">
                         <asp:Image ID="imgUserPerfil" runat="server" CssClass="rounded-circle shadow-sm mb-2" Style="width: 35px; height: 35px; object-fit: cover;" />

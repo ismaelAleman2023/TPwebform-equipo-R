@@ -160,6 +160,10 @@ namespace negocio
             {
                 throw;
             }
+            finally
+            {
+                datos.cerrarConexion();
+            }
 
         }
 

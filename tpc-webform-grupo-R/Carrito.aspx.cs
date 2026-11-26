@@ -146,8 +146,12 @@ namespace tpc_webform_grupo_R
                     else
                     {
 
-                        item.Cantidad++;
-                        item.Subtotal = item.Cantidad * item.PrecioUnitario;
+                        if (item.Cantidad +1 <= 10)
+                        {
+                            item.Cantidad++;
+                            item.Subtotal = item.Cantidad * item.PrecioUnitario;
+                        }
+
                     }
                 }
 

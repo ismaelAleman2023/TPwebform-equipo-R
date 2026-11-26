@@ -146,8 +146,18 @@ namespace tpc_webform_grupo_R
                     return;
                 }
 
-                string codigo = txtCodigo.Text;
+                string codigo = "Prod-"+txtCodigo.Text;
                 string nombre = txtNombre.Text;
+                
+                int aux = txtDescripcion.Text.Length;
+
+                if(aux >350)
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaCamposVacios", "mostrarCartel('Se a exedido el maximo de caracteres (max 350 caracteres)', 'error');", true);
+                    return;
+                }                
+                
+
                 string descripcion = txtDescripcion.Text;
                 int marca = int.Parse(ddlMarca.SelectedValue);
                 int categoria = int.Parse(ddlCategoria.SelectedValue);

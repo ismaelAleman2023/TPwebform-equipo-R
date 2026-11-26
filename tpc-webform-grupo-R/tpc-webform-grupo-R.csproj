@@ -117,21 +117,12 @@
     <Content Include="Principal.Master" />
     <Content Include="RegistrarProducto.aspx" />
     <Content Include="RegistroEstado.aspx" />
-    <Content Include="images\icons\carrusel_1.jpg" />
-    <Content Include="images\icons\carrusel_2.jpg" />
-    <Content Include="images\icons\carrusel_3.jpg" />
-    <Content Include="images\icons\carrusel_4.jpg" />
-    <Content Include="images\icons\carrusel_5.jpg" />
-    <Content Include="images\icons\carrusel_6.jpg" />
     <Content Include="images\icons\dorregoDesign.png" />
     <Content Include="images\icons\face.png" />
     <Content Include="images\icons\IngreseImagen.jpg" />
     <Content Include="images\icons\insta.png" />
     <Content Include="images\icons\logoDorregoDesign.jpg" />
     <Content Include="images\icons\whatsap.png" />
-    <Content Include="images\products\producto1.svg" />
-    <Content Include="images\products\producto2.svg" />
-    <Content Include="images\products\producto3.svg" />
     <Content Include="RegistroEstado.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="RegistroCategoria.aspx" />
@@ -438,6 +429,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="images\products\" />
     <Folder Include="images\temp\" />
   </ItemGroup>
   <ItemGroup>

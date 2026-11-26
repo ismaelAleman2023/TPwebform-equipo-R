@@ -193,9 +193,6 @@ namespace negocio
 
                 datos.ejecutarAccion();
 
-                datos.cerrarConexion();
-
-
                 if( cli.Apellido != null && cli.direccion.Count>0 )
                 {
                     foreach (Direccion item in cli.direccion)
@@ -212,6 +209,10 @@ namespace negocio
             {
 
                 throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
             }
 
         }

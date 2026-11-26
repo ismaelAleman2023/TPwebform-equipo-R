@@ -17,6 +17,7 @@ namespace tpc_webform_grupo_R
             textoLogin();
             imgUserPerfil.ImageUrl = "~/images/Perfiles/fotoDefault.jpg";
             ocultarbtn();
+            btnCerrarSession.Visible = Session["usuarioActivo"] != null;
 
             int rol = 0;
 
@@ -52,6 +53,7 @@ namespace tpc_webform_grupo_R
 
             if (!(Page is Carrito || Page is Default || Page is Login || Page is Contactanos || Page is ComoComprar || Page is SobreNosotros || Page is RegistroCliente))
             {
+               
 
                 if (Session["usuarioActivo"] == null)
                 {
@@ -304,10 +306,7 @@ namespace tpc_webform_grupo_R
             }
             else
             {
-
-
-                cerrarSession();
-                Response.Redirect("~/Default.aspx#destacado1");
+              
 
 
             }
@@ -329,8 +328,13 @@ namespace tpc_webform_grupo_R
 
         }
 
+        protected void btnCerrarSession_Click(object sender, EventArgs e)
+        {
 
+            cerrarSession();
+            Response.Redirect("~/Default.aspx#destacado1");
+                    
 
-
+        }
     }
 }

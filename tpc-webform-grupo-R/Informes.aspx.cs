@@ -1,4 +1,5 @@
 ﻿using dominio;
+using Helper;
 using Microsoft.Ajax.Utilities;
 using negocio;
 using System;
@@ -25,8 +26,6 @@ namespace tpc_webform_grupo_R
 
                 if (ViewState["ListaVentas"] == null)
                 {
-
-
 
                 }
             }
@@ -152,11 +151,12 @@ namespace tpc_webform_grupo_R
                 }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                Session["error"] = "No pudimos generar el informe. Intentá de nuevo más tarde.";
+                Session["error"] = Ayudante.aTexto(ex);
                 Response.Redirect("Error.aspx", false);
+                return;
             }
 
 
@@ -214,11 +214,12 @@ namespace tpc_webform_grupo_R
                 }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                Session["error"] = "No pudimos generar el informe. Intentá de nuevo más tarde.";
+                Session["error"] = Ayudante.aTexto(ex);
                 Response.Redirect("Error.aspx", false);
+                return;
             }
 
 
@@ -275,11 +276,12 @@ namespace tpc_webform_grupo_R
                 }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                Session["error"] = "No pudimos generar el informe. Intentá de nuevo más tarde.";
+                Session["error"] = Ayudante.aTexto(ex);
                 Response.Redirect("Error.aspx", false);
+                return;
             }
 
 
@@ -335,11 +337,12 @@ namespace tpc_webform_grupo_R
                 }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                Session["error"] = "No pudimos generar el informe. Intentá de nuevo más tarde.";
+                Session["error"] = Ayudante.aTexto(ex);
                 Response.Redirect("Error.aspx", false);
+                return;
             }
 
         }
@@ -418,22 +421,18 @@ namespace tpc_webform_grupo_R
 
                         }
 
-
-
-
                     }
-
 
                     dgvInformes.DataSource = ArreglarLista(listvetFiltrada);
                     dgvInformes.DataBind();
                 }
 
             }
-            catch (Exception)
+            catch (Exception ex )
             {
-
-                Session["error"] = "No pudimos generar el informe. Intentá de nuevo más tarde.";
+                Session["error"] = Ayudante.aTexto(ex);
                 Response.Redirect("Error.aspx", false);
+                return;
             }
 
 
