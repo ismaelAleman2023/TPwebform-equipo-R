@@ -14,6 +14,8 @@ namespace tpc_webform_grupo_R
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            try
+            {
             if (!IsPostBack)
             {
                 if (Session["usuarioActivo"] != null && (int)Session["rolActivo"] ==2 )
@@ -28,19 +30,41 @@ namespace tpc_webform_grupo_R
                     lblSinPedidos.Visible = true;
                 }
             }
+
+            }
+            catch (Exception)
+            {
+
+                Session["error"] = "No pudimos cargar tus pedidos. Intentá de nuevo más tarde.";
+                Response.Redirect("Error.aspx", false);
+                return;
+            }
+
         }
 
         protected void btnVerDetalle_Click(object sender, EventArgs e)
         {
+            try
+            {
             int valor = int.Parse(((Button)sender).CommandArgument);
             Response.Redirect("DetallePedidos.aspx?detalleVenta=" + valor, false);
+            return;
+
+            }
+            catch (Exception)
+            {
+                Session["error"] = "No pudimos abrir el detalle del pedido. Intentá de nuevo más tarde.";
+                Response.Redirect("Error.aspx", false);
+                return;
+            }
 
         }
 
 
         private void cargarDetalle(int cli)
         {
-
+            try
+            {
             VentaNegocio ventN = new VentaNegocio();
             EstadoNegocio esta = new EstadoNegocio();
             var listVen = ventN.buscarVentasXCliente(cli).Select(v => new
@@ -72,6 +96,15 @@ namespace tpc_webform_grupo_R
                 lblSinPedidos.Visible = true;
 
             }
+
+            }
+            catch (Exception)
+            {
+                Session["error"] = "No pudimos cargar tus pedidos. Intentá de nuevo más tarde.";
+                Response.Redirect("Error.aspx", false);
+                return;
+            }
+
 
 
 

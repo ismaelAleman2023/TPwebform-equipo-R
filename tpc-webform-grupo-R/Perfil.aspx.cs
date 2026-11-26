@@ -14,58 +14,70 @@ namespace tpc_webform_grupo_R
         Cliente clie = null;
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            try
             {
-                int rol=0;
-                cargarDireccion();
-                if (Session["rolActivo"]!=null)
+                if (!IsPostBack)
                 {
-                    rol = (int)Session["rolActivo"];
-                }
+                    int rol = 0;
+                    if (Session["rolActivo"] != null)
+                    {
+                        rol = (int)Session["rolActivo"];
+                    }
 
-                if (rol!= 2)
-                {
-                    Response.Redirect("default.aspx");
-                    return;
-                }
+                    if (rol != 2)
+                    {
+                        Response.Redirect("default.aspx", false);
+                        return;
+                    }
 
-                clie = (Cliente)Session["usuarioActivo"];
+                    cargarDireccion();
+                    clie = (Cliente)Session["usuarioActivo"];
 
 
-                if (clie != null)
-                {
-                    Session["VolverPerfil"] = "Perfil.aspx";
-                    txtNombre.Text = clie.Nombre;
-                    txtApellido.Text = clie.Apellido;
-                    txtEmail.Text = clie.Email;
-                    txtTelefomo.Text = clie.Telefono;
+                    if (clie != null)
+                    {
+                        Session["VolverPerfil"] = "Perfil.aspx";
+                        txtNombre.Text = clie.Nombre;
+                        txtApellido.Text = clie.Apellido;
+                        txtEmail.Text = clie.Email;
+                        txtTelefomo.Text = clie.Telefono;
 
-                    if (clie.FotoPerfil ==null) {
+                        if (clie.FotoPerfil == null)
+                        {
 
-                        imgPerfil.ImageUrl= "~/Images/Perfiles/fotoDefault.jpg";
+                            imgPerfil.ImageUrl = "~/Images/Perfiles/fotoDefault.jpg";
+
+
+                        }
+                        else
+                        {
+
+                            imgPerfil.ImageUrl = "~/images/Perfiles/" + clie.FotoPerfil + "?v=" + DateTime.Now.Ticks;
+
+
+                        }
+
+                    }
+                    else
+                    {
+                        txtNombre.Text = "";
+                        txtApellido.Text = "";
+                        txtEmail.Text = "";
+                        txtTelefomo.Text = "";
+
 
 
                     }
-                    else{
-
-                        imgPerfil.ImageUrl ="~/images/Perfiles/" + clie.FotoPerfil + "?v=" + DateTime.Now.Ticks;
-
-
-                    }
-                
-                }
-                else
-                {
-                    txtNombre.Text = "";
-                    txtApellido.Text = "";
-                    txtEmail.Text = "";
-                    txtTelefomo.Text = "";
-
-
+                    Session.Remove("esPerfil");
 
                 }
-                Session.Remove("esPerfil");
 
+            }
+            catch (Exception)
+            {
+                Session["error"] = "No pudimos cargar tu perfil. Intentá de nuevo más tarde.";
+                Response.Redirect("Error.aspx", false);
+                return;
             }
 
 
@@ -75,17 +87,29 @@ namespace tpc_webform_grupo_R
 
         protected void btnEditarDireccion_Click(object sender, EventArgs e)
         {
-            Session["esPerfil"] = true;
-            Response.Redirect("DireccionEnvio.aspx");
+
+            try
+            {
+                Session["esPerfil"] = true;
+                Response.Redirect("DireccionEnvio.aspx", false);
+                return;
+
+            }
+            catch (Exception)
+            {
+                Session["error"] = "No pudimos abrir la edición de dirección. Intentá de nuevo más tarde.";
+                Response.Redirect("Error.aspx", false);
+                return;
+            }
+
 
         }
-
         protected void btnEditarFoto_Click(object sender, EventArgs e)
         {
             try
             {
                 //escribir
-                if (txtImagenPerf.PostedFile != null && txtImagenPerf.PostedFile.ContentLength >0)
+                if (txtImagenPerf.PostedFile != null && txtImagenPerf.PostedFile.ContentLength > 0)
                 {
 
                     ClienteNegocio clieNe = new ClienteNegocio();
@@ -98,7 +122,7 @@ namespace tpc_webform_grupo_R
                     cli.FotoPerfil = "Perfil-" + cli.IdPersona + ".jpg";
                     clieNe.modificarFtPerfil(cli);
 
-                    imgPerfil.ImageUrl = "~/images/Perfiles/" + cli.FotoPerfil + "?v=" + DateTime.Now.Ticks; 
+                    imgPerfil.ImageUrl = "~/images/Perfiles/" + cli.FotoPerfil + "?v=" + DateTime.Now.Ticks;
 
                     //leer
                     Image img = (Image)Master.FindControl("imgUserPerfil");
@@ -109,15 +133,16 @@ namespace tpc_webform_grupo_R
 
                     }
                 }
-            
+
 
 
 
             }
             catch (Exception)
             {
-
-                throw;
+                Session["error"] = "No pudimos actualizar la foto de perfil. Intentá de nuevo más tarde.";
+                Response.Redirect("Error.aspx", false);
+                return;
             }
 
 
@@ -127,8 +152,19 @@ namespace tpc_webform_grupo_R
 
         protected void btnEditarDatos_Click(object sender, EventArgs e)
         {
-            Session["EsAgregar"] = false;
-            Response.Redirect("RegistroCliente.aspx");
+
+            try
+            {
+                Session["EsAgregar"] = false;
+                Response.Redirect("RegistroCliente.aspx",false);
+                return;
+            }
+            catch (Exception)
+            {
+                Session["error"] = "No pudimos abrir la edición de tus datos. Intentá de nuevo más tarde.";
+                Response.Redirect("Error.aspx", false);
+                return;
+            }
         }
 
 
@@ -173,8 +209,9 @@ namespace tpc_webform_grupo_R
             }
             catch (Exception)
             {
-
-                throw;
+                Session["error"] = "No pudimos cargar tu dirección. Intentá de nuevo más tarde.";
+                Response.Redirect("Error.aspx", false);
+                return;
             }
         }
 

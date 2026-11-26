@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -13,19 +14,26 @@ namespace tpc_webform_grupo_R
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            try
             {
-
-                cargarCard();
-
-
+                if (!IsPostBack)
+                {
+                    cargarCard();
+                }
+            }
+            catch (Exception)
+            {
+                Session["error"] = "No pudimos cargar las direcciones. Intentá de nuevo más tarde.";
+                Response.Redirect("Error.aspx", false);
+                return;
             }
 
         }
 
         protected void btnAgregarDire_Click(object sender, EventArgs e)
         {           
-            Response.Redirect("RegistroDireccion.aspx");
+            Response.Redirect("RegistroDireccion.aspx", false);
+            return;
         }
 
         protected void btnGuardarDireccion_Click(object sender, EventArgs e)
@@ -52,16 +60,19 @@ namespace tpc_webform_grupo_R
                 {
                     Session.Remove("esPerfil");
                     Response.Redirect("Perfil.aspx", false);
+                    return;
                 }
                 else
                 {
                     Response.Redirect("FinalizarCompra.aspx", false);
+                    return;
                 }
             }
             catch (Exception)
             {
                 Session["error"] = "No pudimos guardar la dirección elegida. Intentá de nuevo más tarde.";
                 Response.Redirect("Error.aspx", false);
+                return;
             }
         }
 
@@ -103,14 +114,15 @@ namespace tpc_webform_grupo_R
             {
 
 
-                Response.Redirect("FinalizarCompra.aspx");
+                Response.Redirect("FinalizarCompra.aspx", false);
+                return;
 
             }
             else
             {
 
-                Response.Redirect("Perfil.aspx");
-
+                Response.Redirect("Perfil.aspx", false);
+                return;
             }
         }
 
@@ -169,6 +181,7 @@ namespace tpc_webform_grupo_R
             {
                 Session["error"] = "No pudimos eliminar la dirección. Intentá de nuevo más tarde.";
                 Response.Redirect("Error.aspx", false);
+                return;
             }
         }
     }

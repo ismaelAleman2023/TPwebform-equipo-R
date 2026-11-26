@@ -251,6 +251,19 @@ namespace Helper
         }
 
 
+        public static bool soloLetrasYEspacios(string texto)
+        {
+            foreach (char c in texto)
+            {
+                if (!char.IsLetter(c) && !char.IsWhiteSpace(c))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+
 
     }
 

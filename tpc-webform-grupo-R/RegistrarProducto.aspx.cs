@@ -29,12 +29,12 @@ namespace tpc_webform_grupo_R
             {
                 if (!IsPostBack)
                 {
-                    ddlCategoria.DataSource = categoriaNegocio.listarCate();
+                    ddlCategoria.DataSource = categoriaNegocio.listarCate(1);
                     ddlCategoria.DataTextField = "Descripcion";
                     ddlCategoria.DataValueField = "IdCategoria";
                     ddlCategoria.DataBind();
 
-                    ddlMarca.DataSource = marcaNegocio.ListarMarca();
+                    ddlMarca.DataSource = marcaNegocio.ListarMarca(1);
                     ddlMarca.DataTextField = "Descripcion";
                     ddlMarca.DataValueField = "IdMarca";
                     ddlMarca.DataBind();

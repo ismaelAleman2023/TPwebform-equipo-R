@@ -21,35 +21,40 @@ namespace tpc_webform_grupo_R
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            actualizarNovedades();
-            cargarCarrusel();
-            if (!IsPostBack)
+            try
             {
-
-                ProductoNegocio negocio = new ProductoNegocio();
-                ImagenNegocio imgN = new ImagenNegocio();
-                List<Producto> listaProductos = negocio.listarProduc(1);
-                List<Imagen> listaImagen = imgN.ListaImagen();
-                Session["listaprod"] = listaProductos;
-                Session["listaimg"] = listaImagen;
-
-                cargarGrillaCard();
-
-                if (Session["listaCarrito"] == null)
+                actualizarNovedades();
+                cargarCarrusel();
+                if (!IsPostBack)
                 {
-                    Session["listaCarrito"] = new List<DetalleVenta>();
+                    ProductoNegocio negocio = new ProductoNegocio();
+                    ImagenNegocio imgN = new ImagenNegocio();
+                    List<Producto> listaProductos = negocio.listarProduc(1);
+                    List<Imagen> listaImagen = imgN.ListaImagen();
+                    Session["listaprod"] = listaProductos;
+                    Session["listaimg"] = listaImagen;
 
+                    cargarGrillaCard();
+
+                    if (Session["listaCarrito"] == null)
+                    {
+                        Session["listaCarrito"] = new List<DetalleVenta>();
+                    }
                 }
 
+                carritoCompra = (List<DetalleVenta>)Session["listaCarrito"];
+
+                Master.actualizarContador(carritoCompra.Count);
+
+                string script = $"document.getElementById('{Master.FindControl("lblContadorCarrito").ClientID}').innerText = '{carritoCompra.Count}';";
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "ActualizarBadge", script, true);
             }
-
-            carritoCompra = (List<DetalleVenta>)Session["listaCarrito"];
-
-            Master.actualizarContador(carritoCompra.Count);
-
-
-            string script = $"document.getElementById('{Master.FindControl("lblContadorCarrito").ClientID}').innerText = '{carritoCompra.Count}';";
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "ActualizarBadge", script, true);
+            catch (Exception)
+            {
+                Session["error"] = "No pudimos cargar la página principal. Intentá de nuevo más tarde.";
+                Response.Redirect("Error.aspx", false);
+                return;
+            }
         }
 
         private void actualizarNovedades()
@@ -65,6 +70,9 @@ namespace tpc_webform_grupo_R
 
         protected void btnDetalle_Click(object sender, EventArgs e)
         {
+            try
+            {
+
             int valor = int.Parse(((Button)sender).CommandArgument);
 
             ProductoNegocio negocioP = new ProductoNegocio();
@@ -72,16 +80,29 @@ namespace tpc_webform_grupo_R
             CategoriaNegocio negocioC = new CategoriaNegocio();
             StockNegocio negocioStk = new StockNegocio();
             ImagenNegocio imgN = new ImagenNegocio();
+            
 
             Producto prod = negocioP.buscarProduc(valor);
+            if (prod == null)
+            {
+                lblModalNombre.Text = "Producto no disponible";
+                lblModalDescripcion.Text = "Este producto no está disponible en este momento.";
+                lblModalCategoria.Text = "";
+                lblModalMarca.Text = "";
+                lblModalPrecio.Text = "";
+                LblModalDisponibles.Text = "";
+                UpdatePanelModal.Update();
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "var myModal = new bootstrap.Modal(document.getElementById('productoModal')); myModal.show();", true);
+                return;
+            }
+
+
             Marca marca = negocioM.buscarMarca(prod.Marca);
             Categoria categoria = negocioC.buscarCategoria(prod.Categoria);
-            Imagen imgDetalle = new Imagen();
-
 
             btnAgregarModal.CommandArgument = valor.ToString();
-            lblModalCategoria.Text = categoria.Descripcion;
-            lblModalMarca.Text = marca.Descripcion;
+            lblModalCategoria.Text = categoria != null ? categoria.Descripcion : "";
+            lblModalMarca.Text = marca != null ? marca.Descripcion : "";
             lblModalNombre.Text = prod.Nombre;
             lblModalDescripcion.Text = prod.Descripcion;
             lblModalPrecio.Text = prod.Precio.ToString("C");
@@ -122,36 +143,45 @@ namespace tpc_webform_grupo_R
 
             // abrir el modal
             ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "var myModal = new bootstrap.Modal(document.getElementById('productoModal')); myModal.show();", true);
+            }
+            catch (Exception)
+            {
+
+                Session["error"] = "No pudimos cargar el detalle del producto. Intentá de nuevo más tarde.";
+                Response.Redirect("Error.aspx", false);
+                return;
+            }
         }
 
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
 
             Button btn = (Button)sender;
-            int seleccionProd = int.Parse(btn.CommandArgument);
-
-            agregarProducto(seleccionProd);
-
-            aplicarFiltroActual();
-
+            if (int.TryParse(btn.CommandArgument, out int seleccionProd))
+            {
+                agregarProducto(seleccionProd);
+                aplicarFiltroActual();
+            }
         }
 
 
         private Producto buscarProducto(int id)
         {
 
-            Producto prod = null;
-            List<Producto> listaProd = (List<Producto>)Session["listaprod"];
+            List<Producto> listaProd = Session["listaprod"] as List<Producto>;
+            if (listaProd == null)
+            {
+                return null;
+            }
 
             foreach (Producto item in listaProd)
             {
                 if (id == item.IdProducto)
                 {
-                    prod = item;
-                    return prod;
+                    return item;
                 }
             }
-            return prod;
+            return null;
         }
 
 
@@ -164,13 +194,15 @@ namespace tpc_webform_grupo_R
 
         public string ObtenerImagenProducto(int idProducto)
         {
-            List<Imagen> listaImagenes = (List<Imagen>)Session["listaimg"];
-
-            foreach (Imagen img in listaImagenes)
+            List<Imagen> listaImagenes = Session["listaimg"] as List<Imagen>;
+            if (listaImagenes != null)
             {
-                if (img.idProducto_img == idProducto)
+                foreach (Imagen img in listaImagenes)
                 {
-                    return img.UrlImagen;
+                    if (img.idProducto_img == idProducto)
+                    {
+                        return img.UrlImagen;
+                    }
                 }
             }
 
@@ -207,11 +239,20 @@ namespace tpc_webform_grupo_R
 
         private void agregarProducto(int seleccionProd)
         {
+            try
+            {
+            if (Session["listaCarrito"] == null) {
+                Session["listaCarrito"] = new List<DetalleVenta>();
+            }
+
+
 
             carritoCompra = (List<DetalleVenta>)Session["listaCarrito"];
 
-            DetalleVenta detaven = new DetalleVenta();
             Producto pro = buscarProducto(seleccionProd);
+            if (pro == null ) {
+                return;
+            }
             bool enlista = false;
 
             foreach (DetalleVenta item in carritoCompra)
@@ -228,6 +269,7 @@ namespace tpc_webform_grupo_R
 
             if (!enlista)
             {
+                DetalleVenta detaven = new DetalleVenta();
                 detaven.IdProducto = pro.IdProducto;
                 detaven.PrecioUnitario = pro.Precio;
                 detaven.Cantidad = 1;
@@ -248,27 +290,43 @@ namespace tpc_webform_grupo_R
 
             ScriptManager.RegisterStartupScript(this, this.GetType(), "ActualizarBadgeKey", script, true);
 
+            }
+            catch (Exception)
+            {
+                Session["error"] = "No pudimos agregar el producto al carrito. Intentá de nuevo más tarde.";
+                Response.Redirect("Error.aspx", false);
+                return;
+            }
+
         }
 
 
         protected void btnFiltroTodo_Click(object sender, EventArgs e)
         {
-            Button btn = (Button)sender;
-            int filtro = int.Parse(btn.CommandArgument);
+            try
+            {
+                Button btn = (Button)sender;
+                int filtro = int.Parse(btn.CommandArgument);
 
-            ViewState["filtroActual"] = filtro;
-            cargaFiltrada(filtro);
+                ViewState["filtroActual"] = filtro;
+                cargaFiltrada(filtro);
 
-            btnFiltroTodo.CssClass = "btn btn-outline-secondary btn-sm rounded-pill px-3 text-light";
-            btnFiltroPolyfan.CssClass = "btn btn-outline-secondary btn-sm rounded-pill px-3 text-light";
-            btnFiltroImpresion.CssClass = "btn btn-outline-secondary btn-sm rounded-pill px-3 text-light";
-            btnFiltroPapeleria.CssClass = "btn btn-outline-secondary btn-sm rounded-pill px-3 text-light";
-            btnFiltroCorteLaser.CssClass = "btn btn-outline-secondary btn-sm rounded-pill px-3 text-light";
-            btnFiltroEgrasados.CssClass = "btn btn-outline-secondary btn-sm rounded-pill px-3 text-light";
-            btnFiltroOtros.CssClass = "btn btn-outline-secondary btn-sm rounded-pill px-3 text-light";
+                btnFiltroTodo.CssClass = "btn btn-outline-secondary btn-sm rounded-pill px-3 text-light";
+                btnFiltroPolyfan.CssClass = "btn btn-outline-secondary btn-sm rounded-pill px-3 text-light";
+                btnFiltroImpresion.CssClass = "btn btn-outline-secondary btn-sm rounded-pill px-3 text-light";
+                btnFiltroPapeleria.CssClass = "btn btn-outline-secondary btn-sm rounded-pill px-3 text-light";
+                btnFiltroCorteLaser.CssClass = "btn btn-outline-secondary btn-sm rounded-pill px-3 text-light";
+                btnFiltroEgrasados.CssClass = "btn btn-outline-secondary btn-sm rounded-pill px-3 text-light";
+                btnFiltroOtros.CssClass = "btn btn-outline-secondary btn-sm rounded-pill px-3 text-light";
 
-
-            btn.CssClass = "btn btn-warning btn-sm rounded-pill px-3 fw-bold text-dark";
+                btn.CssClass = "btn btn-warning btn-sm rounded-pill px-3 fw-bold text-dark";
+            }
+            catch (Exception)
+            {
+                Session["error"] = "No pudimos filtrar los productos. Intentá de nuevo más tarde.";
+                Response.Redirect("Error.aspx", false);
+                return;
+            }
 
         }
 
@@ -276,85 +334,114 @@ namespace tpc_webform_grupo_R
 
         private void cargaFiltrada(int filtro)
         {
-
-            if (filtro > 0 && filtro < 7)
+            try
             {
-                List<Producto> listaP = (List<Producto>)Session["listaprod"];
-                List<Producto> listAux = new List<Producto>();
-                foreach (Producto prod in listaP)
+                if (filtro > 0 && filtro < 7)
                 {
-                    if (prod.Categoria == filtro)
+                    List<Producto> listaP = (List<Producto>)Session["listaprod"];
+                    List<Producto> listAux = new List<Producto>();
+                    foreach (Producto prod in listaP)
                     {
-                        listAux.Add(prod);
+                        if (prod.Categoria == filtro)
+                        {
+                            listAux.Add(prod);
+                        }
                     }
+
+                    reapet.DataSource = listAux;
+                    reapet.DataBind();
                 }
-
-                reapet.DataSource = listAux;
-                reapet.DataBind();
+                else
+                {
+                    cargarGrillaCard();
+                }
             }
-            else
+            catch (Exception)
             {
-                cargarGrillaCard();
+                Session["error"] = "No pudimos cargar los productos filtrados. Intentá de nuevo más tarde.";
+                Response.Redirect("Error.aspx", false);
+                return;
             }
-
 
         }
 
         protected void btnImgAnterior_Click(object sender, EventArgs e)
         {
-
-            List<Imagen> listaImagendetalle = (List<Imagen>)Session["listaDetalleActual"];
-            int posicion = Session["posicion"] != null ? (int)Session["posicion"] : 0;
-
-            if (listaImagendetalle != null && listaImagendetalle.Count > 0)
+            try
             {
-                posicion--;
-                if (posicion < 0)
+                List<Imagen> listaImagendetalle = (List<Imagen>)Session["listaDetalleActual"];
+                int posicion = Session["posicion"] != null ? (int)Session["posicion"] : 0;
+
+                if (listaImagendetalle != null && listaImagendetalle.Count > 0)
                 {
-                    posicion = listaImagendetalle.Count - 1;
+                    posicion--;
+                    if (posicion < 0)
+                    {
+                        posicion = listaImagendetalle.Count - 1;
+                    }
+
+                    Session["posicion"] = posicion;
+                    imgModalProducto.ImageUrl = listaImagendetalle[posicion].UrlImagen;
+                    UpdatePanelModal.Update();
                 }
-
-                Session["posicion"] = posicion;
-                imgModalProducto.ImageUrl = listaImagendetalle[posicion].UrlImagen;
-                UpdatePanelModal.Update();
             }
-
+            catch (Exception)
+            {
+                Session["error"] = "No pudimos cambiar la imagen. Intentá de nuevo más tarde.";
+                Response.Redirect("Error.aspx", false);
+                return;
+            }
 
 
         }
 
         protected void btnImgSiguiente_Click(object sender, EventArgs e)
         {
-            List<Imagen> listaImagendetalle = (List<Imagen>)Session["listaDetalleActual"];
-            int posicion = Session["posicion"] != null ? (int)Session["posicion"] : 0;
-
-            if (listaImagendetalle != null && listaImagendetalle.Count > 0)
+            try
             {
-                posicion++;
-                if (posicion >= listaImagendetalle.Count)
+                List<Imagen> listaImagendetalle = (List<Imagen>)Session["listaDetalleActual"];
+                int posicion = Session["posicion"] != null ? (int)Session["posicion"] : 0;
+
+                if (listaImagendetalle != null && listaImagendetalle.Count > 0)
                 {
-                    posicion = 0;
+                    posicion++;
+                    if (posicion >= listaImagendetalle.Count)
+                    {
+                        posicion = 0;
+                    }
+
+                    Session["posicion"] = posicion;
+                    imgModalProducto.ImageUrl = listaImagendetalle[posicion].UrlImagen;
+                    UpdatePanelModal.Update();
                 }
-
-                Session["posicion"] = posicion;
-                imgModalProducto.ImageUrl = listaImagendetalle[posicion].UrlImagen;
-                UpdatePanelModal.Update();
-
+            }
+            catch (Exception)
+            {
+                Session["error"] = "No pudimos cambiar la imagen. Intentá de nuevo más tarde.";
+                Response.Redirect("Error.aspx", false);
+                return;
             }
         }
 
 
         private void cargarCarrusel()
         {
-            DetalleVentaNegocio detaN = new DetalleVentaNegocio();
-            List<string> listaUrl = detaN.MasVendidos();
-
-
-
-            if (listaUrl != null && listaUrl.Count > 0)
+            try
             {
-                repSimpleCarousel.DataSource = listaUrl.Take(5).ToList();
-                repSimpleCarousel.DataBind();
+                DetalleVentaNegocio detaN = new DetalleVentaNegocio();
+                List<string> listaUrl = detaN.MasVendidos();
+
+                if (listaUrl != null && listaUrl.Count > 0)
+                {
+                    repSimpleCarousel.DataSource = listaUrl.Take(5).ToList();
+                    repSimpleCarousel.DataBind();
+                }
+            }
+            catch (Exception)
+            {
+                Session["error"] = "No pudimos cargar las imágenes destacadas. Intentá de nuevo más tarde.";
+                Response.Redirect("Error.aspx", false);
+                return;
             }
         }
 

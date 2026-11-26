@@ -118,7 +118,8 @@ namespace tpc_webform_grupo_R
                     txtNombre.Text = Cli.Nombre;
                     txtApellido.Text = Cli.Apellido;
                     txtCorreo.Text = Cli.Email;
-                    txtTelefono.Text = Cli.Telefono;
+                    string num = Cli.Telefono;
+                    txtTelefono.Text = num.Substring(3);
                     if (Cli.Password != null)
                     {
                         txtPassword.Text = Cli.Password;
@@ -131,7 +132,7 @@ namespace tpc_webform_grupo_R
                     txtNombre.Text = clieActivo.Nombre;
                     txtApellido.Text = clieActivo.Apellido;
                     txtCorreo.Text = clieActivo.Email;
-                    txtTelefono.Text = clieActivo.Telefono;
+                    txtTelefono.Text = clieActivo.Telefono.Substring(3);
                     if (clieActivo.Password != null)
                     {
                         txtPassword.Text = clieActivo.Password;
@@ -164,7 +165,7 @@ namespace tpc_webform_grupo_R
                     esModificar = true;
                 }
 
-                if (string.IsNullOrWhiteSpace(txtPassword.Text))
+                if (!esModificar && string.IsNullOrWhiteSpace(txtPassword.Text))
                 {
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaPass", "mostrarCartel('¡La contraseña es obligatoria!', 'error');", true);
                     return;
@@ -183,6 +184,12 @@ namespace tpc_webform_grupo_R
                 if (string.IsNullOrWhiteSpace(nombre) || string.IsNullOrWhiteSpace(apellido) || string.IsNullOrWhiteSpace(correo))
                 {
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaCampos", "mostrarCartel('Complete nombre, apellido y correo', 'error');", true);
+                    return;
+                }
+               
+                if (!Ayudante.soloLetrasYEspacios(nombre) || !Ayudante.soloLetrasYEspacios(apellido))
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaLetras", "mostrarCartel('Nombre y apellido solo pueden contener letras', 'error');", true);
                     return;
                 }
 
@@ -294,9 +301,9 @@ namespace tpc_webform_grupo_R
                     return;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Session["error"] = Ayudante.aTexto(ex);
+                Session["error"] = "No pudimos completar la operación en este momento. Por favor, intentá de nuevo más tarde.";
                 Response.Redirect("Error.aspx", false);
                 return;
             }

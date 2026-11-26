@@ -1,8 +1,11 @@
 ﻿using dominio;
+using Helper;
 using negocio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Runtime.Remoting.Messaging;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -17,46 +20,60 @@ namespace tpc_webform_grupo_R
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["btnAgregar"] == null)
+
+            try
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaSesion", "mostrarCartel('No se encontró el tipo de registro. Volvé a intentarlo desde Administrar.', 'error');", true);
-                return;
-            }
-
-            int valor = (int)Session["btnAgregar"];
-
-            if (!IsPostBack)
-            {
-                bool esMod = (Session["vendedorAModificar"] != null || Session["adminAModificar"] != null);
-                ViewState["modificar"] = esMod;
-
-                if (esMod)
+                if (Session["btnAgregar"] == null)
                 {
-                    if (valor == 6 && Session["vendedorAModificar"] != null)
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaSesion", "mostrarCartel('No se encontró el tipo de registro. Volvé a intentarlo desde Administrar.', 'error');", true);
+                    return;
+                }
+
+                int valor = (int)Session["btnAgregar"];
+
+                if (!IsPostBack)
+                {
+                    bool esMod = (Session["vendedorAModificar"] != null || Session["adminAModificar"] != null);
+                    ViewState["modificar"] = esMod;
+
+                    if (esMod)
                     {
-                        cargarDatosVendedor((Vendedor)Session["vendedorAModificar"]);
-                        txtLegajo.ReadOnly = true;
-                    }
-                    else if (valor == 7 && Session["adminAModificar"] != null)
-                    {
-                        cargarDatosAdministrador((Administrador)Session["adminAModificar"]);
-                        txtCuit.ReadOnly = true;
-                    }
-                    else
-                    {
-                        ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaDatos", "mostrarCartel('No se pudieron cargar los datos para modificar.', 'error');", true);
-                        return;
+                        if (valor == 6 && Session["vendedorAModificar"] != null)
+                        {
+                            cargarDatosVendedor((Vendedor)Session["vendedorAModificar"]);
+                            txtLegajo.ReadOnly = true;
+                        }
+                        else if (valor == 7 && Session["adminAModificar"] != null)
+                        {
+                            cargarDatosAdministrador((Administrador)Session["adminAModificar"]);
+                            txtCuit.ReadOnly = true;
+                        }
+                        else
+                        {
+                            ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaDatos", "mostrarCartel('No se pudieron cargar los datos para modificar.', 'error');", true);
+                            return;
+                        }
                     }
                 }
-            }
 
-            bool modificarActual = false;
-            if (ViewState["modificar"] != null && (bool)ViewState["modificar"])
+                bool modificarActual = false;
+                if (ViewState["modificar"] != null && (bool)ViewState["modificar"])
+                {
+                    modificarActual = true;
+                }
+
+                cargarTexto(valor, modificarActual);
+
+
+            }
+            catch (Exception ex)
             {
-                modificarActual = true;
-            }
+                Session["error"] = Ayudante.aTexto(ex);
+                Response.Redirect("Error.aspx", false);
+                return;
 
-            cargarTexto(valor, modificarActual);
+
+            }
         }
 
 
@@ -108,225 +125,304 @@ namespace tpc_webform_grupo_R
 
         private void cargarDatosVendedor(Vendedor ven)
         {
-            txtNombre.Text = ven.Nombre;
-            txtApellido.Text = ven.Apellido;
-            txtCorreo.Text = ven.Email;
-            txtTelefono.Text = ven.Telefono;
-            if (txtPassword.Text != null) { 
-            txtPassword.Text = ven.Password;
-                txtPassword.Attributes["value"] = txtPassword.Text;
+            try
+            {
+                txtNombre.Text = ven.Nombre;
+                txtApellido.Text = ven.Apellido;
+                txtCorreo.Text = ven.Email;
+
+                if (ven.Telefono != null && ven.Telefono.StartsWith("+54"))
+                {
+
+                    txtTelefono.Text = ven.Telefono.Substring(3);
+
+                }
+                else
+                {
+
+
+                    txtTelefono.Text = ven.Telefono;
+
+                }
+                if (!string.IsNullOrEmpty(ven.Password))
+                {
+                    txtPassword.Text = ven.Password;
+                    txtPassword.Attributes["value"] = txtPassword.Text;
+                }
+                txtFechaNacimiento.Text = ven.FechaDeNacimiento.ToString("yyyy-MM-dd");
+                txtLegajo.Text = ven.Legajo;
+
             }
-            txtFechaNacimiento.Text = ven.FechaDeNacimiento.ToString("yyyy-MM-dd");
-            txtLegajo.Text = ven.Legajo;
+            catch (Exception ex)
+            {
+                Session["error"] = Ayudante.aTexto(ex);
+                Response.Redirect("Error.aspx", false);
+                return;
+            }
         }
 
         private void cargarDatosAdministrador(Administrador admin)
         {
-            txtNombre.Text = admin.Nombre;
-            txtApellido.Text = admin.Apellido;
-            txtCorreo.Text = admin.Email;
-            txtTelefono.Text = admin.Telefono;
-            if (txtPassword.Text != null){ 
-                txtPassword.Text = admin.Password;
-                txtPassword.Attributes["value"]= txtPassword.Text;
+            try
+            {
+                txtNombre.Text = admin.Nombre;
+                txtApellido.Text = admin.Apellido;
+                txtCorreo.Text = admin.Email;
+
+                if (admin.Telefono != null && admin.Telefono.StartsWith("+54"))
+                {
+                    txtTelefono.Text = admin.Telefono.Substring(3);
+                }
+                else
+                {
+                    txtTelefono.Text = admin.Telefono;
+                }
+
+                if (!string.IsNullOrEmpty(admin.Password))
+                {
+                    txtPassword.Text = admin.Password;
+                    txtPassword.Attributes["value"] = admin.Password;
+                }
+                txtFechaNacimiento.Text = admin.FechaDeNacimiento.ToString("yyyy-MM-dd");
+                txtCuit.Text = admin.Cuil.ToString();
+
             }
-            txtFechaNacimiento.Text = admin.FechaDeNacimiento.ToString("yyyy-MM-dd");
-            txtCuit.Text = admin.Cuil.ToString();
+            catch (Exception ex)
+            {
+
+                Session["error"] = Ayudante.aTexto(ex);
+                Response.Redirect("Error.aspx", false);
+                return;
+            }
         }
 
         protected void btnRegistrar_Click(object sender, EventArgs e)
         {
-            VendedorNegocio venN = new VendedorNegocio();
-            AdministrarNegocio adminN = new AdministrarNegocio();
-
-            if (Session["btnAgregar"] != null)
+            try
             {
-                int aux = (int)Session["btnAgregar"];
-                bool esModificar = false;
 
-                if (ViewState["modificar"] != null && (bool)ViewState["modificar"])
-                {
-                    esModificar = true;
-                }
+                VendedorNegocio venN = new VendedorNegocio();
+                AdministrarNegocio adminN = new AdministrarNegocio();
 
-                if (string.IsNullOrWhiteSpace(txtPassword.Text))
+                if (Session["btnAgregar"] != null)
                 {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaPass", "mostrarCartel('¡La contraseña es obligatoria!', 'error');", true);
-                    return;
-                }
+                    int aux = (int)Session["btnAgregar"];
+                    bool esModificar = false;
 
-                string telIngresado = txtTelefono.Text.Trim();
-                string numTele = telIngresado;
-                if (!telIngresado.StartsWith("+54"))
-                {
-                    numTele = "+54" + telIngresado;
-                }
-
-                if (!validarTelefono(numTele))
-                {
-                    return;
-                }
-
-                string correo = txtCorreo.Text.Trim();
-
-                int estadoFecha = validarFechaNacimiento(txtFechaNacimiento.Text);
-                if (estadoFecha == 1)
-                {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaMenorEdad", "mostrarCartel('Debe ser mayor de 18 años', 'error');", true);
-                    return;
-                }
-                else if (estadoFecha == 0)
-                {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaFechaNac", "mostrarCartel('Fecha de nacimiento inválida', 'error');", true);
-                    return;
-                }
-                else if (estadoFecha == 3)
-                {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaFechaFutura", "mostrarCartel('La fecha de nacimiento no puede ser mayor a la actual', 'error');", true);
-                    return;
-                }
-
-                if (aux == 6) // vendedor
-                {
-                    Vendedor ven;
-
-                    if (esModificar)
+                    if (ViewState["modificar"] != null && (bool)ViewState["modificar"])
                     {
-                        ven = (Vendedor)Session["vendedorAModificar"];
-                        if (ven == null)
-                        {
-                            return;
-                        }
-
-                        if (correo != ven.Email && Helper.Ayudante.validarCorreo(correo))
-                        {
-                            ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaCorreo", "mostrarCartel('El correo que ingreso ya se encuentra registrado', 'error');", true);
-                            return;
-                        }
+                        esModificar = true;
                     }
-                    else
+
+                    if (!esModificar && string.IsNullOrWhiteSpace(txtPassword.Text))
                     {
-                        if (Helper.Ayudante.validarCorreo(correo))
-                        {
-                            ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaCorreo", "mostrarCartel('El correo que ingreso ya se encuentra registrado', 'error');", true);
-                            return;
-                        }
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaPass", "mostrarCartel('¡La contraseña es obligatoria!', 'error');", true);
+                        return;
+                    }
+                    string nombre = txtNombre.Text.Trim();
+                    string apellido = txtApellido.Text.Trim();
 
-                        string legajo = txtLegajo.Text.Trim();
-                        if (string.IsNullOrWhiteSpace(legajo))
-                        {
-                            ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaLegajo", "mostrarCartel('El legajo es obligatorio', 'error');", true);
-                            return;
-                        }
+                    if (!Ayudante.soloLetrasYEspacios(nombre) || !Ayudante.soloLetrasYEspacios(apellido))
+                    {
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaLetras", "mostrarCartel('Nombre y apellido solo pueden contener letras', 'error');", true);
+                        return;
+                    }
 
-                        bool legajoRepetido = false;
-                        foreach (Vendedor item in venN.listarVendedores(2))
+                    string telIngresado = txtTelefono.Text.Trim();
+                    string numTele = telIngresado;
+                    
+                    
+                    
+                    
+                    if (!telIngresado.StartsWith("+54"))
+                    {
+                        numTele = "+54" + telIngresado;
+                    }
+
+                    if (!validarTelefono(numTele))
+                    {
+                        return;
+                    }
+
+                    string correo = txtCorreo.Text.Trim();
+
+                    int estadoFecha = validarFechaNacimiento(txtFechaNacimiento.Text);
+                    if (estadoFecha == 1)
+                    {
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaMenorEdad", "mostrarCartel('Debe ser mayor de 18 años', 'error');", true);
+                        return;
+                    }
+                    else if (estadoFecha == 0)
+                    {
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaFechaNac", "mostrarCartel('Fecha de nacimiento inválida', 'error');", true);
+                        return;
+                    }
+                    else if (estadoFecha == 3)
+                    {
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaFechaFutura", "mostrarCartel('La fecha de nacimiento no puede ser mayor a la actual', 'error');", true);
+                        return;
+                    }
+
+                    if (aux == 6) // vendedor
+                    {
+                        Vendedor ven;
+
+                        if (esModificar)
                         {
-                            if (item.Legajo != null && item.Legajo.Trim().ToLower() == legajo.ToLower())
+                            ven = (Vendedor)Session["vendedorAModificar"];
+                            if (ven == null)
                             {
-                                legajoRepetido = true;
-                                break;
+                                return;
+                            }
+
+                            if (correo != ven.Email && Helper.Ayudante.validarCorreo(correo))
+                            {
+                                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaCorreo", "mostrarCartel('El correo que ingreso ya se encuentra registrado', 'error');", true);
+                                return;
                             }
                         }
-
-                        if (legajoRepetido)
+                        else
                         {
-                            ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaLegajoRep", "mostrarCartel('El legajo ingresado ya se encuentra registrado', 'error');", true);
-                            return;
-                        }
-
-                        ven = new Vendedor();
-                        ven.Legajo = legajo;
-                    }
-
-                    ven.Nombre = txtNombre.Text.Trim();
-                    ven.Apellido = txtApellido.Text.Trim();
-                    ven.Email = correo;
-                    ven.Telefono = numTele;
-                    ven.Password = txtPassword.Text;
-                    ven.FechaDeNacimiento = DateTime.Parse(txtFechaNacimiento.Text);
-
-                    if (esModificar)
-                    {
-                        venN.modificarVendedor(ven, ven.IdPersona);
-                    }
-                    else
-                    {
-                        venN.agregarVendedor(ven);
-                    }
-                }
-                else if (aux == 7) // administrador
-                {
-                    Administrador admin;
-
-                    if (esModificar)
-                    {
-                        admin = (Administrador)Session["adminAModificar"];
-                        if (admin == null)
-                        {
-                            return;
-                        }
-
-                        if (correo != admin.Email && Helper.Ayudante.validarCorreo(correo))
-                        {
-                            ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaCorreo", "mostrarCartel('El correo que ingreso ya se encuentra registrado', 'error');", true);
-                            return;
-                        }
-                    }
-                    else
-                    {
-                        if (Helper.Ayudante.validarCorreo(correo))
-                        {
-                            ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaCorreo", "mostrarCartel('El correo que ingreso ya se encuentra registrado', 'error');", true);
-                            return;
-                        }
-
-                        string cuil = txtCuit.Text.Trim();
-                        if (string.IsNullOrWhiteSpace(cuil))
-                        {
-                            ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaCuil", "mostrarCartel('El CUIL es obligatorio', 'error');", true);
-                            return;
-                        }
-
-                        bool cuilRepetido = false;
-                        foreach (Administrador item in adminN.listarAdministradores(2))
-                        {
-                            if (item.Cuil != null && item.Cuil.Trim().ToLower() == cuil.ToLower())
+                            if (Helper.Ayudante.validarCorreo(correo))
                             {
-                                cuilRepetido = true;
-                                break;
+                                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaCorreo", "mostrarCartel('El correo que ingreso ya se encuentra registrado', 'error');", true);
+                                return;
+                            }
+
+                            string legajo = txtLegajo.Text.Trim();
+                            if (string.IsNullOrWhiteSpace(legajo))
+                            {
+                                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaLegajo", "mostrarCartel('El legajo es obligatorio', 'error');", true);
+                                return;
+                            }
+
+                            bool legajoRepetido = false;
+                            foreach (Vendedor item in venN.listarVendedores(2))
+                            {
+                                if (item.Legajo != null && item.Legajo.Trim().ToLower() == legajo.ToLower())
+                                {
+                                    legajoRepetido = true;
+                                    break;
+                                }
+                            }
+
+                            if (legajoRepetido)
+                            {
+                                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaLegajoRep", "mostrarCartel('El legajo ingresado ya se encuentra registrado', 'error');", true);
+                                return;
+                            }
+
+                            ven = new Vendedor();
+                            ven.Legajo = legajo;
+                        }
+
+                        ven.Nombre = txtNombre.Text.Trim();
+                        ven.Apellido = txtApellido.Text.Trim();
+                        ven.Email = correo;
+                        ven.Telefono = numTele;
+                        if (!string.IsNullOrWhiteSpace(txtPassword.Text))
+                        {
+                            ven.Password = txtPassword.Text;
+                        }
+                        ven.FechaDeNacimiento = DateTime.Parse(txtFechaNacimiento.Text);
+
+                        if (esModificar)
+                        {
+                            venN.modificarVendedor(ven, ven.IdPersona);
+                            Session.Remove("vendedorAModificar");
+                        }
+                        else
+                        {
+                            venN.agregarVendedor(ven);
+                        }
+                    }
+                    else if (aux == 7) // administrador
+                    {
+                        Administrador admin;
+
+                        if (esModificar)
+                        {
+                            admin = (Administrador)Session["adminAModificar"];
+                            if (admin == null)
+                            {
+                                return;
+                            }
+
+                            if (correo != admin.Email && Helper.Ayudante.validarCorreo(correo))
+                            {
+                                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaCorreo", "mostrarCartel('El correo que ingreso ya se encuentra registrado', 'error');", true);
+                                return;
                             }
                         }
-
-                        if (cuilRepetido)
+                        else
                         {
-                            ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaCuilRep", "mostrarCartel('El CUIL ingresado ya se encuentra registrado', 'error');", true);
-                            return;
+                            if (Helper.Ayudante.validarCorreo(correo))
+                            {
+                                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaCorreo", "mostrarCartel('El correo que ingreso ya se encuentra registrado', 'error');", true);
+                                return;
+                            }
+
+                            string cuil = txtCuit.Text.Trim();
+                            if (string.IsNullOrWhiteSpace(cuil))
+                            {
+                                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaCuil", "mostrarCartel('El CUIL es obligatorio', 'error');", true);
+                                return;
+                            }
+
+                            bool cuilRepetido = false;
+                            foreach (Administrador item in adminN.listarAdministradores(2))
+                            {
+                                if (item.Cuil != null && item.Cuil.Trim().ToLower() == cuil.ToLower())
+                                {
+                                    cuilRepetido = true;
+                                    break;
+                                }
+                            }
+
+                            if (cuilRepetido)
+                            {
+                                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaCuilRep", "mostrarCartel('El CUIL ingresado ya se encuentra registrado', 'error');", true);
+                                return;
+                            }
+
+                            admin = new Administrador();
+                            admin.Cuil = cuil;
                         }
 
-                        admin = new Administrador();
-                        admin.Cuil = cuil;
-                    }
+                        admin.Nombre = txtNombre.Text.Trim();
+                        admin.Apellido = txtApellido.Text.Trim();
+                        admin.Email = correo;
+                        admin.Telefono = numTele;
+                        if (!string.IsNullOrWhiteSpace(txtPassword.Text))
+                        {
+                            admin.Password = txtPassword.Text;
+                        }
+                        admin.FechaDeNacimiento = DateTime.Parse(txtFechaNacimiento.Text);
 
-                    admin.Nombre = txtNombre.Text.Trim();
-                    admin.Apellido = txtApellido.Text.Trim();
-                    admin.Email = correo;
-                    admin.Telefono = numTele;
-                    admin.Password = txtPassword.Text;
-                    admin.FechaDeNacimiento = DateTime.Parse(txtFechaNacimiento.Text);
-
-                    if (esModificar)
-                    {
-                        adminN.modificarAdministrador(admin, admin.IdPersona);
-                    }
-                    else
-                    {
-                        adminN.agregarAdministrador(admin);
+                        if (esModificar)
+                        {
+                            adminN.modificarAdministrador(admin, admin.IdPersona);
+                            Session.Remove("adminAModificar");
+                        }
+                        else
+                        {
+                            adminN.agregarAdministrador(admin);
+                        }
                     }
                 }
+
+                Response.Redirect("administrar.aspx",false);
+                return;
+
             }
+            catch (Exception ex) {
 
-            Response.Redirect("administrar.aspx");
+                Session["error"] = Ayudante.aTexto(ex);
+                Response.Redirect("Error.aspx", false);
+                return;
+
+            }
+           
         }
 
 
@@ -344,7 +440,7 @@ namespace tpc_webform_grupo_R
 
             if (!esValido)
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaTel", "mostrarCartel('El teléfono debe tener un + y 10 números', 'error');", true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaTel", "mostrarCartel('El teléfono debe tener +54 y 10 números', 'error');", true);
             }
 
             return esValido;

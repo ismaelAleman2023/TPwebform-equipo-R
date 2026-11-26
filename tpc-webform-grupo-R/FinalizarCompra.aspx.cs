@@ -22,27 +22,36 @@ namespace tpc_webform_grupo_R
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-
-            if (!IsPostBack)
+            try
             {
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
-                cargarTipoPago();
+                if (!IsPostBack)
+                {
 
-                cargarDireccion();
-                if (Session["listaCarrito"] == null)
-                {
-                    cargaInicial();
-                }
-                else
-                {
-                    cargarResumen();
+                    cargarTipoPago();
+
+                    cargarDireccion();
+                    if (Session["listaCarrito"] == null)
+                    {
+                        cargaInicial();
+                    }
+                    else
+                    {
+                        cargarResumen();
+
+                    }
 
                 }
 
             }
+            catch (Exception ex)
+            {
 
-
+                Session["error"] = Ayudante.aTexto(ex);
+                Response.Redirect("Error.aspx", false);
+                return;
+            }
 
 
         }
@@ -60,14 +69,22 @@ namespace tpc_webform_grupo_R
 
         private void cargarTipoPago()
         {
-            TipoPagoNegocio pagoN = new TipoPagoNegocio();
+            try
+            {
+                TipoPagoNegocio pagoN = new TipoPagoNegocio();
+                List<TipoPago> listaPago = pagoN.ListarTipoPago(1);
 
+                repetformaPago.DataSource = listaPago;
+                repetformaPago.DataBind();
 
+            }
+            catch (Exception ex)
+            {
 
-            List<TipoPago> listaPago = pagoN.ListarTipoPago(1);
-
-            repetformaPago.DataSource = listaPago;
-            repetformaPago.DataBind();
+                Session["error"] = Ayudante.aTexto(ex);
+                Response.Redirect("Error.aspx", false);
+                return;
+            }
         }
 
 
@@ -82,17 +99,28 @@ namespace tpc_webform_grupo_R
 
         private void cargarResumen()
         {
-            List<DetalleVenta> listaDetalle = (List<DetalleVenta>)Session["listaCarrito"];
+            try
+            {
+                List<DetalleVenta> listaDetalle = (List<DetalleVenta>)Session["listaCarrito"];
 
-            lblCantidadItems.Text = listaDetalle.Count.ToString();
-            decimal envio = calcularEnvio();
-            decimal sub = subTotal(listaDetalle);
-            decimal descuento = sub * (aplicarDescuento() / 100m);
-            lblSubtotal.Text = sub.ToString("C");
-            lblCostoEnvio.Text = envio.ToString("C");
-            lblTotalGeneral.Text = (sub + envio - descuento).ToString("C");
-            lblDescuento.Text = " - " + descuento.ToString("C");
+                lblCantidadItems.Text = listaDetalle.Count.ToString();
+                decimal envio = calcularEnvio();
+                decimal sub = subTotal(listaDetalle);
+                decimal descuento = sub * (aplicarDescuento() / 100m);
+                lblSubtotal.Text = sub.ToString("C");
+                lblCostoEnvio.Text = envio.ToString("C");
+                lblTotalGeneral.Text = (sub + envio - descuento).ToString("C");
+                lblDescuento.Text = " - " + descuento.ToString("C");
 
+
+            }
+            catch (Exception ex)
+            {
+
+                Session["error"] = Ayudante.aTexto(ex);
+                Response.Redirect("Error.aspx", false);
+                return;
+            }
         }
 
         private decimal subTotal(List<DetalleVenta> listadeta)
@@ -109,11 +137,22 @@ namespace tpc_webform_grupo_R
 
         private decimal calcularEnvio()
         {
-            if (!rbConEnvio.Checked || Session["direccionUso"] == null)
+            try
             {
+                if (!rbConEnvio.Checked || Session["direccionUso"] == null)
+                {
+                    return 0;
+                }
+                return new EnvioNegocio().calcularCostoEnvio((Direccion)Session["direccionUso"]);
+
+            }
+            catch (Exception ex)
+            {
+
+                Session["error"] = Ayudante.aTexto(ex);
+                Response.Redirect("Error.aspx", false);
                 return 0;
             }
-            return new EnvioNegocio().calcularCostoEnvio((Direccion)Session["direccionUso"]);
         }
 
         private decimal totalPago()
@@ -139,26 +178,35 @@ namespace tpc_webform_grupo_R
 
         private void cargarDireccion()
         {
-            if (Session["rolActivo"] != null && (int)Session["rolActivo"] == 2)
+            try
             {
-                DireccionNegocio direN = new DireccionNegocio();
-                List<Direccion> listaDire = direN.buscarDireccionCliente((int)Session["idActivo"]);
-                btnPagarYFinalizar.Enabled = true;
-                btnDireccion.Enabled = true;
-
-                if (listaDire.Count > 0)
+                if (Session["rolActivo"] != null && (int)Session["rolActivo"] == 2)
                 {
-                    Session["direccionActivo"] = listaDire;
-                    foreach (Direccion item in listaDire)
+                    DireccionNegocio direN = new DireccionNegocio();
+                    List<Direccion> listaDire = direN.buscarDireccionCliente((int)Session["idActivo"]);
+                    btnPagarYFinalizar.Enabled = true;
+                    btnDireccion.Enabled = true;
+
+                    if (listaDire.Count > 0)
                     {
-                        if (item.estado)
+                        Session["direccionActivo"] = listaDire;
+                        foreach (Direccion item in listaDire)
                         {
-                            btnDireccion.Text = "cambiar direccion";
-                            lblDireccionEnvio.Text = item.Calle.ToString() + " " + item.Numero.ToString();
-                            Session["direccionUso"] = item;
+                            if (item.estado)
+                            {
+                                btnDireccion.Text = "cambiar direccion";
+                                lblDireccionEnvio.Text = item.Calle.ToString() + " " + item.Numero.ToString();
+                                Session["direccionUso"] = item;
+
+                            }
 
                         }
-
+                    }
+                    else
+                    {
+                        Session["direccionActivo"] = null;
+                        lblDireccionEnvio.Text = "No posee";
+                        btnDireccion.Text = "agregar Direccion";
                     }
                 }
                 else
@@ -166,16 +214,19 @@ namespace tpc_webform_grupo_R
                     Session["direccionActivo"] = null;
                     lblDireccionEnvio.Text = "No posee";
                     btnDireccion.Text = "agregar Direccion";
+                    btnDireccion.Enabled = false;
+                    btnPagarYFinalizar.Enabled = false;
                 }
+
             }
-            else
+            catch (Exception ex)
             {
-                Session["direccionActivo"] = null;
-                lblDireccionEnvio.Text = "No posee";
-                btnDireccion.Text = "agregar Direccion";
-                btnDireccion.Enabled = false;
-                btnPagarYFinalizar.Enabled = false;
+
+                Session["error"] = Ayudante.aTexto(ex);
+                Response.Redirect("Error.aspx", false);
+                return;
             }
+
         }
 
 
@@ -183,17 +234,29 @@ namespace tpc_webform_grupo_R
 
         protected void btnDireccion_Click(object sender, EventArgs e)
         {
-            DireccionNegocio direN = new DireccionNegocio();
-
-            List<Direccion> listaDire = direN.buscarDireccionCliente((int)Session["idActivo"]);
-
-            if (Session["direccionActivo"] == null)
+            try
             {
-                Response.Redirect("RegistroDireccion.aspx");
+                DireccionNegocio direN = new DireccionNegocio();
+
+                List<Direccion> listaDire = direN.buscarDireccionCliente((int)Session["idActivo"]);
+
+                if (Session["direccionActivo"] == null)
+                {
+                    Response.Redirect("RegistroDireccion.aspx",false);
+                    return;
+                }
+                else
+                {
+                    Response.Redirect("DireccionEnvio.aspx",false);
+                    return;
+                }
+
             }
-            else
+            catch (Exception ex)
             {
-                Response.Redirect("DireccionEnvio.aspx");
+                Session["error"] = Ayudante.aTexto(ex);
+                Response.Redirect("Error.aspx", false);
+                return;
             }
         }
 
@@ -201,27 +264,38 @@ namespace tpc_webform_grupo_R
 
         protected void rbRetiroTienda_CheckedChanged(object sender, EventArgs e)
         {
-            if (rbRetiroTienda.Checked)
+            try
             {
-                pnlDireccionEnvio.Enabled = false;
-                pnlDireccionEnvio.CssClass = "opacity-50";
-                Session["conEnvio"] = false;
+                if (rbRetiroTienda.Checked)
+                {
+                    pnlDireccionEnvio.Enabled = false;
+                    pnlDireccionEnvio.CssClass = "opacity-50";
+                    Session["conEnvio"] = false;
+
+                }
+                else if (rbConEnvio.Checked)
+                {
+                    pnlDireccionEnvio.Enabled = true;
+                    pnlDireccionEnvio.CssClass = "";
+                    Session["conEnvio"] = true;
+                }
+
+                if (Session["listaCarrito"] != null)
+                {
+                    cargarResumen();
+                }
+
+                UpdatePanelResumen.Update();
 
             }
-            else if (rbConEnvio.Checked)
+            catch (Exception ex)
             {
-                pnlDireccionEnvio.Enabled = true;
-                pnlDireccionEnvio.CssClass = "";
-                Session["conEnvio"] = true;
+                Session["error"] = Ayudante.aTexto(ex);
+                Response.Redirect("Error.aspx", false);
+                return;
+
             }
 
-            if (Session["listaCarrito"] != null)
-            {
-                cargarResumen();
-            }
-
-            UpdatePanelResumen.Update();
-        
         }
 
 
@@ -229,93 +303,105 @@ namespace tpc_webform_grupo_R
 
         protected async void btnPagarYFinalizar_Click(object sender, EventArgs e)
         {
-            DireccionNegocio direN = new DireccionNegocio();
-            VentaNegocio venN = new VentaNegocio();
-            DetalleVentaNegocio detaN = new DetalleVentaNegocio();
-            Venta ven = new Venta();
-            Direccion dir = null;
-
-
-            if (formaDePago() < 1 || formaDePago() > 3)
+            try
             {
-                mostrarMensaje("¡Debe elegir una forma de pago!");
-                return;
+                DireccionNegocio direN = new DireccionNegocio();
+                VentaNegocio venN = new VentaNegocio();
+                DetalleVentaNegocio detaN = new DetalleVentaNegocio();
+                Venta ven = new Venta();
+                Direccion dir = null;
 
-            }
 
-
-            if (rbConEnvio.Checked)
-            {
-                dir = (Direccion)Session["direccionUso"];
-
-                if (dir != null)
+                if (formaDePago() < 1 || formaDePago() > 3)
                 {
-                    ven.idDireccion = dir.IdDireccion;
+                    mostrarMensaje("¡Debe elegir una forma de pago!");
+                    return;
+
+                }
+
+
+                if (rbConEnvio.Checked)
+                {
+                    dir = (Direccion)Session["direccionUso"];
+
+                    if (dir != null)
+                    {
+                        ven.idDireccion = dir.IdDireccion;
+                    }
+                    else
+                    {
+
+                        ven.idDireccion = 0;
+                    }
+
                 }
                 else
                 {
-
                     ven.idDireccion = 0;
                 }
 
-            }
-            else
-            {
-                ven.idDireccion = 0;
-            }
 
+                List<DetalleVenta> listaCarrito = (List<DetalleVenta>)Session["listaCarrito"];
 
-            List<DetalleVenta> listaCarrito = (List<DetalleVenta>)Session["listaCarrito"];
+                ven.FechaVenta_V = DateTime.Now;
+                ven.Estado_V = true;
+                ven.TotalPago_V = totalPago();
+                ven.EstadoPedido_v = 0;
+                ven.IdCliente_V = (int)Session["idActivo"];
 
-            ven.FechaVenta_V = DateTime.Now;
-            ven.Estado_V = true;
-            ven.TotalPago_V = totalPago();
-            ven.EstadoPedido_v = 0;
-            ven.IdCliente_V = (int)Session["idActivo"];
+                ven.TipoPago_V = formaDePago();
+                ven.TipoEnvio = rbConEnvio.Checked ? 1 : 0;
 
-            ven.TipoPago_V = formaDePago();
-            ven.TipoEnvio = rbConEnvio.Checked ? 1 : 0;
+                venN.agregar(ven);
 
-            venN.agregar(ven);
+                int idVenta = venN.ultimoIdVenta();
 
-            int idVenta = venN.ultimoIdVenta();
-
-            if (listaCarrito != null)
-            {
-                ProductoNegocio prodN = new ProductoNegocio();
-                var itemsComprobante = new List<ItemComprobante>();
-
-                foreach (DetalleVenta item in listaCarrito)
+                if (listaCarrito != null)
                 {
-                    item.IdVenta_Detalle = idVenta;
-                    detaN.agregar(item);
+                    ProductoNegocio prodN = new ProductoNegocio();
+                    var itemsComprobante = new List<ItemComprobante>();
 
-                    Producto prod = prodN.buscarProduc(item.IdProducto);
-                    string nombreProd = prod != null ? prod.Nombre : $"Producto #{item.IdProducto}";
-
-                    itemsComprobante.Add(new ItemComprobante
+                    foreach (DetalleVenta item in listaCarrito)
                     {
-                        Producto = nombreProd,
-                        Cantidad = item.Cantidad,
-                        PrecioUnitario = item.PrecioUnitario
-                    });
+                        item.IdVenta_Detalle = idVenta;
+                        detaN.agregar(item);
+
+                        Producto prod = prodN.buscarProduc(item.IdProducto);
+                        string nombreProd = prod != null ? prod.Nombre : $"Producto #{item.IdProducto}";
+
+                        itemsComprobante.Add(new ItemComprobante
+                        {
+                            Producto = nombreProd,
+                            Cantidad = item.Cantidad,
+                            PrecioUnitario = item.PrecioUnitario
+                        });
+                    }
+
+                    enviarComprobanteVenta(idVenta, ven.FechaVenta_V, ven.TotalPago_V, listaCarrito, itemsComprobante);
+
+                    Session.Remove("listaCarrito");
                 }
 
-                enviarComprobanteVenta(idVenta, ven.FechaVenta_V, ven.TotalPago_V, listaCarrito, itemsComprobante);
+                if (formaDePago() == 2 //MP
+                    )
+                {
+                    await RedirigirAMercadoPago(idVenta, ven.TotalPago_V);
+                    return;
+                }
+                else
+                {
+                    mostrarMensaje("Venta agregada correctamente");
+                    Response.Redirect("MisPedidos.aspx", false);
+                    Context.ApplicationInstance.CompleteRequest();
+                    return;
+                }
 
-                Session.Remove("listaCarrito");
             }
-
-            if (formaDePago() == 2 //MP
-                )
+            catch (Exception)
             {
-                await RedirigirAMercadoPago(idVenta, ven.TotalPago_V);
-            }
-            else
-            {
-                mostrarMensaje("Venta agregada correctamente");
-                Response.Redirect("MisPedidos.aspx",false);
-                Context.ApplicationInstance.CompleteRequest();
+                Session["error"] = "No pudimos procesar la compra. Intentá de nuevo más tarde.";
+                Response.Redirect("Error.aspx", false);
+                return;
             }
         }
 
@@ -353,10 +439,12 @@ namespace tpc_webform_grupo_R
 
                 Response.Redirect(preference.SandboxInitPoint, false);
                 Context.ApplicationInstance.CompleteRequest();
+                return;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                mostrarMensaje("Error al conectar con Mercado Pago: " + ex.Message);
+                mostrarMensaje("No pudimos conectar con Mercado Pago en este momento. Intentá de nuevo más tarde.");
+                return;
             }
 
         }
@@ -422,24 +510,33 @@ namespace tpc_webform_grupo_R
                 EnvioEmail envioEmail = new EnvioEmail();
                 envioEmail.EnviarConfirmacionPedido(datosComprobante);
             }
-            catch (Exception )
+            catch (Exception)
             {
-              
-               
+
+
             }
         }
 
 
         protected void btnCambiarPago_Click(object sender, EventArgs e)
         {
-            if (Session["listaCarrito"] != null)
+            try
             {
-                cargarResumen();
+                if (Session["listaCarrito"] != null)
+                {
+                    cargarResumen();
+                }
+                UpdatePanelResumen.Update();
             }
-            UpdatePanelResumen.Update();
+            catch (Exception ex)
+            {
+                Session["error"] = Ayudante.aTexto(ex);
+                Response.Redirect("Error.aspx", false);
+                return;
+            }
         }
     }
 
 
-    
+
 }
