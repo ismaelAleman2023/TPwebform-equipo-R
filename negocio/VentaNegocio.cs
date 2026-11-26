@@ -41,7 +41,7 @@ namespace negocio
 
         public int ultimoIdVenta()
         {
-                AccesoDatos datos = new AccesoDatos();
+            AccesoDatos datos = new AccesoDatos();
             try
             {
                 int ultimoId = 0;
@@ -49,9 +49,9 @@ namespace negocio
                 datos.consultaSql("select max(idVenta) from Ventas");
                 datos.ejecutarLectura();
 
-                if (datos.Lector.Read())
+                if (datos.Lector.Read() && datos.Lector[0] != DBNull.Value)
                 {
-                    ultimoId = (int)datos.Lector[0];
+                    ultimoId = Convert.ToInt32(datos.Lector[0]);
                 }
                 return ultimoId;
             }
@@ -59,7 +59,7 @@ namespace negocio
             {
                 throw;
             }
-            finally 
+            finally
             {
                 datos.cerrarConexion();
             }
@@ -76,7 +76,7 @@ namespace negocio
 
                 if(estado==0 || estado == 1)
                 {
-                    consulta = " where Estado_Venta = @estado";
+                    consulta += " where Estado_Venta = @estado";
                     datos.setearParametros("@estado", estado);
                 }
 
@@ -94,10 +94,9 @@ namespace negocio
                     ven.TotalPago_V = (decimal)datos.Lector["Total_venta"];
                     ven.TipoPago_V = (int)datos.Lector["TipoPago_Venta"];
                     ven.Estado_V = (bool)datos.Lector["Estado_Venta"];
-                    ven.EstadoPedido_v = (int)datos.Lector["EstadoPedido_venta"];
-                    ven.idDireccion = (int)datos.Lector["idDireccion"];
-                    ven.TipoEnvio = (int)datos.Lector["tipoenvio"];
-
+                    ven.EstadoPedido_v = datos.Lector["estadoPedido_venta"] != DBNull.Value ? Convert.ToInt32(datos.Lector["estadoPedido_venta"]) : 0;
+                    ven.idDireccion = datos.Lector["idDireccion"] != DBNull.Value ? Convert.ToInt32(datos.Lector["idDireccion"]) : 0;
+                    ven.TipoEnvio = datos.Lector["tipoenvio"] != DBNull.Value ? Convert.ToInt32(datos.Lector["tipoenvio"]) : 0;
                     ventas.Add(ven);
                 }              
 
@@ -225,8 +224,8 @@ namespace negocio
                     ven.TipoPago_V = (int)datos.Lector["TipoPago_Venta"];
                     ven.Estado_V = (bool)datos.Lector["Estado_Venta"];
                     ven.EstadoPedido_v = (int)datos.Lector["EstadoPedido_venta"];
-                    ven.idDireccion = (int)datos.Lector["tipoenvio"];
-                    ven.TipoEnvio = (int)datos.Lector["idDireccion"];
+                    ven.idDireccion = (int)datos.Lector["idDireccion"];
+                    ven.TipoEnvio = (int)datos.Lector["tipoenvio"];
 
                     listaVentas.Add(ven);
                 }
@@ -283,9 +282,9 @@ namespace negocio
                 datos.setearParametros("@idVenta", idVenta);
                 datos.ejecutarAccion();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                throw;
             }
             finally
             {

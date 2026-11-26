@@ -78,12 +78,12 @@ namespace negocio
             }
             catch (SqlException)
             {
-
+                cerrarConexion();
                 throw;
             }
             catch (InvalidOperationException)
             {
-
+                cerrarConexion();
                 throw;
             }
 
@@ -103,12 +103,12 @@ namespace negocio
             }
             catch (SqlException)
             {
-
+                cerrarConexion();
                 throw;
             }
             catch (InvalidOperationException)
             {
-
+                cerrarConexion();
                 throw;
 
             }

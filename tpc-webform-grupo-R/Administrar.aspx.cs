@@ -303,7 +303,7 @@ namespace tpc_webform_grupo_R
             {
                 r.IdRol,
                 r.Descripcion,
-                Estado = r.IdRol == 1 ? "Activo" : "Eliminado"
+                Estado = r.Estado == 1 ? "Activo" : "Eliminado"
 
             }).ToList();
 
