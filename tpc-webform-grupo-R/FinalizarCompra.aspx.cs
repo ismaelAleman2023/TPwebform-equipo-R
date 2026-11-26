@@ -360,6 +360,7 @@ namespace tpc_webform_grupo_R
                 {
                     ProductoNegocio prodN = new ProductoNegocio();
                     var itemsComprobante = new List<ItemComprobante>();
+                    StockNegocio stkN = new StockNegocio();
 
                     foreach (DetalleVenta item in listaCarrito)
                     {
@@ -367,6 +368,21 @@ namespace tpc_webform_grupo_R
                         detaN.agregar(item);
 
                         Producto prod = prodN.buscarProduc(item.IdProducto);
+
+                        if (!prod.OnDemand)
+                        {
+                            stkN.ModificarStockCantidad(prod.IdProducto, item.Cantidad, "-");
+;                       }
+
+                        int cantidad=stkN.buscarStockProd(prod.IdProducto).Cantidad;
+
+                        if (cantidad == 0)
+                        {                                                   
+                            
+                            Helper.Ayudante.cambiarEstadoProducto(prod.IdProducto, "baja");
+                           
+                        }
+
                         string nombreProd = prod != null ? prod.Nombre : $"Producto #{item.IdProducto}";
 
                         itemsComprobante.Add(new ItemComprobante
@@ -404,6 +420,10 @@ namespace tpc_webform_grupo_R
                 return;
             }
         }
+
+
+
+
 
         private async Task RedirigirAMercadoPago(int idVenta, decimal montoTotal)
         {
