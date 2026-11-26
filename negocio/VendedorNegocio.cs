@@ -73,7 +73,7 @@ namespace negocio
                 if (estado == 0 || estado == 1)
                 {
                     consulta += " where p.estado_per = @estado";
-                    datos.setearParametros("estado", estado);
+                    datos.setearParametros("@estado", estado);
                 }
 
 

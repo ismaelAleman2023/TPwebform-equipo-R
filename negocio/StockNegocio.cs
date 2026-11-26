@@ -49,7 +49,7 @@ namespace negocio
                 if (estado == 0 || estado == 1)
                 {
                     consulta += " where estado_stk = @estado";
-                    datos.setearParametros("estado", estado);
+                    datos.setearParametros("@estado", estado);
                 }
 
 
@@ -79,7 +79,10 @@ namespace negocio
 
                 throw;
             }
-
+            finally
+            {
+                datos.cerrarConexion();
+            }
 
         }
 
@@ -319,7 +322,10 @@ namespace negocio
 
                 throw;
             }
-
+            finally
+            {
+                datos.cerrarConexion();
+            }
 
         }
 
@@ -359,7 +365,10 @@ namespace negocio
 
                 throw;
             }
-
+            finally
+            {
+                datos.cerrarConexion();
+            }
 
         }
 
