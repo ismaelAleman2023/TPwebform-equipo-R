@@ -57,6 +57,13 @@
                     <span class="fw-semibold text-dark">
                         <asp:Label ID="lblTipoEnvio" runat="server"></asp:Label></span>
                 </div>
+
+               <div class="col-md-3">
+                    <span class="d-block small text-muted">Costo de Envío:</span>
+                    <span class="fw-semibold text-dark">
+                        <asp:Label ID="lblCostoEnvio" runat="server"></asp:Label></span>
+               </div>
+
             </div>
 
         </div>

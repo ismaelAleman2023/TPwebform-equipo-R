@@ -80,6 +80,38 @@ namespace tpc_webform_grupo_R
             }
         }
 
+
+
+        public decimal costoEnvio(List<DetalleVenta> listaVen, int id)
+        {
+            VentaNegocio venN = new VentaNegocio();
+            Venta ven = venN.buscarVenta(id);
+
+            decimal costoEnvio = 0m;
+            decimal subtotal = 0m;
+            decimal descuento = 0m;
+
+            foreach (var item in listaVen)
+            {
+                subtotal += item.Subtotal;
+            }
+
+            int tipoPago = ven.TipoPago_V;
+            if (tipoPago == 1)
+            {
+                descuento = 0.1m * subtotal;
+            }
+            else if (tipoPago == 3)
+            {
+                descuento = 0.05m * subtotal;
+            }
+
+            costoEnvio = subtotal - descuento;
+
+            return costoEnvio;
+
+        }
+
         private void cargarDetalle(int idVenta)
         {
             try
@@ -101,6 +133,8 @@ namespace tpc_webform_grupo_R
                 repDetalleProductos.DataSource = listDetalles;
                 repDetalleProductos.DataBind();
 
+
+               
                 VentaNegocio ventN = new VentaNegocio();
                 Venta ven = ventN.buscarVenta(idVenta);
 
@@ -115,6 +149,7 @@ namespace tpc_webform_grupo_R
                     lblFecha.Text = ven.FechaVenta_V.ToString("dd/MM/yyyy");
                     lblTotal.Text = ven.TotalPago_V.ToString("C");
                     lblTipoPago.Text = tp != null ? tp.Descripcion : "";
+                    lblCostoEnvio.Text = ((decimal)ven.TotalPago_V - costoEnvio(detaVenta.buscarDetalleVentas(idVenta), idVenta)).ToString("C");
                     lblEstado.Text = estaN.buscarEstado(ven.EstadoPedido_v).ToString();
 
                     if (ven.TipoEnvio == 1)
