@@ -25,6 +25,7 @@ namespace tpc_webform_grupo_R
             {
                 actualizarNovedades();
                 cargarCarrusel();
+               
                 if (!IsPostBack)
                 {
                     ProductoNegocio negocio = new ProductoNegocio();

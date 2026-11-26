@@ -180,12 +180,15 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.consultaSql(" SELECT i.idProducto_img,MIN(i.urlImagen) AS urlImagen,SUM(dv.cantidad_dv) AS UnidadesVendidas "
-
-                    + " FROM Imagenes i INNER JOIN detalleVentas dv ON dv.idProducto_dv = i.idProducto_img "
-                    + " INNER JOIN Ventas v ON v.idVenta = dv.idVenta_dv WHERE v.fechaVenta >= DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()), 1) "
-                    + " AND v.fechaVenta < DATEADD(MONTH, 1, DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()), 1))"
-                    + " GROUP BY i.idProducto_img ORDER BY SUM(dv.cantidad_dv) DESC;");
+                datos.consultaSql("SELECT TOP 5 vta.idProducto_dv AS idProducto_img, img.urlImagen, vta.UnidadesVendidas " +
+                    "FROM (SELECT dv.idProducto_dv,SUM(dv.cantidad_dv) AS UnidadesVendidas,MAX(v.idVenta) AS ultimoIdVenta " +
+                    "FROM detalleVentas dv INNER JOIN Ventas v ON v.idVenta = dv.idVenta_dv " +
+                    "WHERE v.fechaVenta >= DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()), 1) " +
+                    "AND v.fechaVenta < DATEADD(MONTH, 1, DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()), 1)) " +
+                    "AND v.estadoPedido_venta NOT IN (0, 2, 9, 10)" +
+                    "GROUP BY dv.idProducto_dv) AS vta CROSS APPLY ( SELECT TOP 1 i.urlImagen FROM Imagenes i " +
+                    "WHERE i.idProducto_img = vta.idProducto_dv ORDER BY i.id_Img ASC ) AS img " +
+                    "ORDER BY vta.UnidadesVendidas DESC, vta.ultimoIdVenta DESC ");
 
                 datos.ejecutarLectura();
 
