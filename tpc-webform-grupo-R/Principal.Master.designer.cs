@@ -78,6 +78,15 @@ namespace tpc_webform_grupo_R
         protected global::System.Web.UI.WebControls.LinkButton lnkInformes;
 
         /// <summary>
+        /// Control lnkModificarNovedades.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lnkModificarNovedades;
+
+        /// <summary>
         /// Control btnCerrarSession.
         /// </summary>
         /// <remarks>

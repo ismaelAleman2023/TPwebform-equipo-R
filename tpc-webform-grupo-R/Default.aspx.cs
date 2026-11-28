@@ -58,17 +58,6 @@ namespace tpc_webform_grupo_R
             }
         }
 
-        private void actualizarNovedades()
-        {
-            litPromoEyebrow.Text = "ELEGÍ MÁS · APROVECHÁ MÁS";
-            litPromoTitulo.Text = "Una promo que se adapta a tu idea.";
-            litPromoDescripcion.Text = "En breve habilitamos la promo de figuras de polyfan, elije los que mas te guste, mas te llevas menos pagas.";
-
-            litCard1Precio.Text = "$6.000";
-            litCard2Precio.Text = "$25.000";
-            litCard3Precio.Text = "$40.000";
-        }
-
         protected void btnDetalle_Click(object sender, EventArgs e)
         {
             try
@@ -448,6 +437,39 @@ namespace tpc_webform_grupo_R
 
 
 
+        private void actualizarNovedades()
+        {
+            NovedadesNegocio novN = new NovedadesNegocio();
+            Novedades nov = novN.BuscarNovedadActiva();
+
+            if (nov != null)
+            {
+
+                litPromoEyebrow.Text = nov.TituloChicoIzq1;
+                litPromoTitulo.Text = nov.TituloGrandeIzq2;
+                litPromoDescripcion.Text = nov.DescripcionIzq3;
+                litPromoBadgeInferior.Text = nov.BotonInfIzq4;
+
+                litCard1Titulo.Text = nov.Card1Titulo;
+                litCard1Precio.Text = decimal.Parse(nov.Card1Precio).ToString("C");
+                litCard1Subtitulo.Text = nov.card1Subtitulo;
+
+                litCard2Titulo.Text = nov.Card2Titulo;
+                litCard2Precio.Text = decimal.Parse(nov.Card2Precio).ToString("C");
+                litCard2Subtitulo.Text = nov.Card2Subtitulo;
+
+                litCard3Titulo.Text = nov.Card3Titulo;
+                litCard3Precio.Text = decimal.Parse(nov.Card3Precio).ToString("C");
+                litCard3Subtitulo.Text = nov.Card3Subtitulo;
+                litCard3Badge.Text = nov.DestacadoCard;
+
+            }
+
+
+
+
+
+        }
 
 
 

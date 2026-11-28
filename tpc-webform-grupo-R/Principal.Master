@@ -55,6 +55,13 @@
                             <li>
                                 <asp:LinkButton ID="lnkInformes" runat="server" CommandArgument="b9" OnClick="btnBar_click" CssClass="dropdown-item">Informes</asp:LinkButton>
                             </li>
+
+                            <li>
+                                <asp:LinkButton ID="lnkModificarNovedades" runat="server" CommandArgument="b15" OnClick="btnBar_click" CssClass="dropdown-item">Modificar Novedades</asp:LinkButton>
+                            </li>
+
+
+
                         </ul>
                     </asp:Panel>
 

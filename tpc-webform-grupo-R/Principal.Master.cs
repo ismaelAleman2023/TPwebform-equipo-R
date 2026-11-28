@@ -240,6 +240,9 @@ namespace tpc_webform_grupo_R
                 case "b11":
                     Response.Redirect("~/AdministrarPedidos.aspx");
                     break;
+                case "b15":
+                    Response.Redirect("~/ModificarNovedades.aspx");
+                    break;
                 default:
                     break;
             }
@@ -259,6 +262,7 @@ namespace tpc_webform_grupo_R
             lnkPerfil.Style["border"] = "1px solid #333";
             lnkAdministrar.Style["border"] = "1px solid #333";
             lnkAdministrar.Style["border"] = "1px solid #333";
+            lnkModificarNovedades.Style["border"] = "1px solid #333";
 
             switch (eleccionTablaSuperior)
             {
@@ -292,6 +296,11 @@ namespace tpc_webform_grupo_R
                     break;
                 case "b9":
                     lnkInformes.Style["border"] = "2px solid #ffc107";
+                    break;
+                case "b15":
+                    lnkModificarNovedades.Style["border"] = "2px solid #ffc107";
+                    break;
+                default:
                     break;
             }
         }
